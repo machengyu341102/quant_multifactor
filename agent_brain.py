@@ -995,10 +995,67 @@ def conflict_resolve(findings: list) -> list:
             logger.info("[Agent] 冲突仲裁: %s — pause(%d) vs resume(%d), %s 胜出",
                         strategy, max_pause_auth, max_resume_auth,
                         "pause" if max_pause_auth >= max_resume_auth else "resume")
+
+            # 持久化冲突明细 (供夜班分析)
+            winner = "pause" if max_pause_auth >= max_resume_auth else "resume"
+            losers = resume_findings if winner == "pause" else pause_findings
+            _persist_conflict_audit(
+                strategy=strategy,
+                winner_action=winner,
+                winner_authority=max(max_pause_auth, max_resume_auth),
+                loser_action="resume" if winner == "pause" else "pause",
+                loser_authority=min(max_pause_auth, max_resume_auth),
+                loser_findings=losers,
+            )
         else:
             resolved.extend(group)
 
     return resolved
+
+
+def _persist_conflict_audit(strategy: str, winner_action: str, winner_authority: int,
+                            loser_action: str, loser_authority: int, loser_findings: list):
+    """持久化冲突仲裁明细到 conflict_audit.json, 供夜班分析"""
+    import os
+    from datetime import datetime
+    try:
+        from json_store import safe_load, safe_save
+    except ImportError:
+        return
+
+    audit_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "conflict_audit.json")
+
+    record = {
+        "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "strategy": strategy,
+        "winner": {"action": winner_action, "authority": winner_authority},
+        "loser": {
+            "action": loser_action,
+            "authority": loser_authority,
+            "findings": [
+                {
+                    "category": f.get("category", ""),
+                    "severity": f.get("severity", ""),
+                    "message": f.get("message", ""),
+                    "evidence": f.get("evidence", f.get("data", "")),
+                    "source_agent": f.get("source_agent", ""),
+                }
+                for f in loser_findings
+            ],
+        },
+    }
+
+    try:
+        history = safe_load(audit_path, default=[])
+        history.append(record)
+        # 保留最近 500 条
+        if len(history) > 500:
+            history = history[-500:]
+        safe_save(audit_path, history)
+        logger.info("[Agent] 冲突审计已持久化: %s (%s胜, %s败)",
+                    strategy, winner_action, loser_action)
+    except Exception as e:
+        logger.warning("[Agent] 冲突审计持久化失败: %s", e)
 
 
 def agent_health_check() -> list:

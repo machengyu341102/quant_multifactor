@@ -313,7 +313,21 @@ def scan_fund_flow(stock_list):
 # ================================================================
 
 def fetch_fundamental_batch():
-    """批量获取基本面数据: 业绩报表 + 业绩预告"""
+    """批量获取基本面数据: 业绩报表 + 业绩预告
+
+    持久化缓存: api_guard.DataCache, key=fundamental_snapshot, TTL=当日有效(6h)
+    当日多策略调用只拉取一次 API, 消除冗余请求
+    """
+    from api_guard import _global_cache
+
+    # 持久化缓存: 当日仅拉取一次 (TTL 6小时, 覆盖全天所有策略)
+    cache_key = "fundamental_snapshot"
+    cached = _global_cache.get(cache_key)
+    if cached is not None:
+        fund_df = pd.DataFrame(cached)
+        print(f"\n[v5] 基本面数据: 缓存命中 ({len(fund_df)} 条)")
+        return fund_df
+
     print("\n[v5] 获取基本面数据...")
     fund_df = pd.DataFrame()
 
@@ -359,6 +373,11 @@ def fetch_fundamental_batch():
         print("  警告: 基本面数据全部获取失败, 将跳过基本面过滤和评分")
     else:
         print(f"  基本面数据合并完成: {len(fund_df)} 条记录")
+        # 写入持久化缓存 (TTL 6小时 = 21600s, 覆盖全天所有策略)
+        try:
+            _global_cache.set(cache_key, fund_df.to_dict(orient="records"), 21600)
+        except Exception:
+            pass  # 缓存写入失败不影响主流程
     return fund_df
 
 

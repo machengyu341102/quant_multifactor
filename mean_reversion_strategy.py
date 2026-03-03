@@ -142,11 +142,32 @@ def _fetch_one_mr_kline(code, name_map, start_date, end_date):
 
 
 def _fetch_daily_klines(codes, name_map, days=120):
-    """拉日K线, 计算通用技术指标 (5线程并行)
+    """拉日K线, 计算通用技术指标 (20线程并行 + 持久化缓存)
+
+    缓存策略: api_guard.DataCache 持久化, key=mr_daily_klines, TTL=300s
+    同一轮运行内 dip_buy(09:50) 和 consolidation(10:15) 共享缓存
 
     Returns:
         list[dict] — 每只股票一条记录, 包含各种技术字段
     """
+    from api_guard import _global_cache
+
+    # 尝试从持久化缓存命中
+    cache_key = "mr_daily_klines"
+    cached = _global_cache.get(cache_key)
+    if cached is not None:
+        # 缓存命中: 过滤出请求的 codes
+        cached_codes = {r["code"] for r in cached}
+        hit = [r for r in cached if r["code"] in set(codes)]
+        miss_codes = [c for c in codes if c not in cached_codes]
+        if not miss_codes:
+            print(f"  日K技术指标: 全量缓存命中 ({len(hit)} 只)")
+            return hit
+        print(f"  日K技术指标: 缓存命中 {len(hit)} 只, 增量拉取 {len(miss_codes)} 只")
+        codes = miss_codes
+    else:
+        hit = []
+
     end_date = datetime.now().strftime("%Y%m%d")
     start_date = (datetime.now() - timedelta(days=days)).strftime("%Y%m%d")
     results = []
@@ -170,7 +191,11 @@ def _fetch_daily_klines(codes, name_map, days=120):
                 print(f"    日K进度: {done}/{total} (成功{len(results)} 失败{fail_count})")
 
     print(f"  日K技术指标完成: {len(results)}/{total} 只 (失败{fail_count})")
-    return results
+
+    # 合并缓存命中 + 新拉取, 写入持久化缓存 (TTL 300s)
+    all_results = hit + results
+    _global_cache.set(cache_key, all_results, 300)
+    return all_results
 
 
 # 模块级缓存: _fetch_candidates + enhance_candidates 结果 (10分钟有效)

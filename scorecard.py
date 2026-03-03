@@ -18,7 +18,7 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 
 from config import TRADE_COST, STOP_LOSS_PCT, TAKE_PROFIT_PCT, POSITION_FILE
-from json_store import safe_load, safe_save
+from json_store import safe_load, safe_load_strict, safe_save
 from log_config import get_logger
 
 logger = get_logger("scorecard")
@@ -155,7 +155,7 @@ def score_yesterday() -> list[dict]:
 
     logger.info("评分日期: %s (次日表现)", yesterday)
 
-    positions = safe_load(_POS_PATH)
+    positions = safe_load_strict(_POS_PATH)
     yesterday_entries = [
         p for p in positions
         if p.get("entry_date") == yesterday
@@ -165,7 +165,7 @@ def score_yesterday() -> list[dict]:
         logger.info("%s 无推荐记录, 跳过", yesterday)
         return []
 
-    existing = safe_load(_SCORECARD_PATH)
+    existing = safe_load_strict(_SCORECARD_PATH)
     existing_keys = {
         (r["rec_date"], r["code"], r["strategy"])
         for r in existing
@@ -273,7 +273,7 @@ def score_yesterday() -> list[dict]:
 
 def calc_cumulative_stats(days: int | None = None) -> dict:
     """累计统计: 总推荐数, 胜率, 平均收益, 分策略明细"""
-    records = safe_load(_SCORECARD_PATH)
+    records = safe_load_strict(_SCORECARD_PATH)
     if not records:
         return {
             "total": 0, "win_rate": 0,
@@ -335,7 +335,7 @@ def calc_equity_curve(days: int | None = None) -> dict:
       sharpe: 年化 Sharpe (无风险利率=2%)
       daily_returns: [float] 每日平均收益率序列
     """
-    records = safe_load(_SCORECARD_PATH)
+    records = safe_load_strict(_SCORECARD_PATH)
     if not records:
         return {"nav_series": [], "total_return": 0, "max_drawdown": 0,
                 "sharpe": 0, "daily_returns": []}
@@ -431,7 +431,7 @@ def generate_weekly_report() -> str:
     today_str = today.isoformat()
     week_ago_str = week_ago.isoformat()
 
-    records = safe_load(_SCORECARD_PATH)
+    records = safe_load_strict(_SCORECARD_PATH)
     week_records = [
         r for r in records
         if week_ago_str <= r.get("rec_date", "") <= today_str

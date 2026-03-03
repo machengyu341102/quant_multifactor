@@ -912,7 +912,7 @@ def _show_system_status():
     except Exception:
         pass
 
-    # 3. 持仓
+    # 3. 持仓 (严格模式: 文件损坏则熔断告警)
     try:
         from position_manager import get_positions
         pos = get_positions()
@@ -923,6 +923,9 @@ def _show_system_status():
                   f" 分:{p.get('score', 0):.2f}")
         if len(pos) > 5:
             print(f"  ... 共 {len(pos)} 只")
+    except ValueError as e:
+        print(f"\n[A股持仓] !! 熔断: positions.json 损坏 — {e}")
+        logger.error("positions.json 严格模式熔断: %s", e)
     except Exception:
         print("\n[A股持仓] 无数据")
 
@@ -1041,6 +1044,9 @@ def job_scorecard():
     try:
         from scorecard import score_yesterday
         score_yesterday()
+    except ValueError as e:
+        print(f"[记分卡熔断] scorecard.json/positions.json 损坏 — {e}")
+        logger.error("scorecard 严格模式熔断: %s", e)
     except Exception as e:
         print(f"[记分卡异常] {e}")
     try:
@@ -1075,6 +1081,9 @@ def job_weekly_report():
         except Exception:
             pass
         notify_scorecard(report)
+    except ValueError as e:
+        print(f"[周报熔断] scorecard.json 损坏 — {e}")
+        logger.error("周报 严格模式熔断: %s", e)
     except Exception as e:
         print(f"[周报异常] {e}")
 

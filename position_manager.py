@@ -17,7 +17,7 @@ from config import (
     STOP_LOSS_PCT, TAKE_PROFIT_PCT, FORCE_EXIT_TIME, POSITION_FILE,
     SMART_TRADE_ENABLED,
 )
-from json_store import safe_load, safe_save
+from json_store import safe_load, safe_load_strict, safe_save
 from log_config import get_logger
 
 logger = get_logger("position")
@@ -31,8 +31,8 @@ _POS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), POSITION_FI
 # ================================================================
 
 def load_positions() -> list[dict]:
-    """从 JSON 文件加载持仓"""
-    return safe_load(_POS_PATH)
+    """从 JSON 文件加载持仓 (严格模式: 文件损坏则抛异常, 不静默返回空)"""
+    return safe_load_strict(_POS_PATH)
 
 
 def save_positions(positions: list[dict]):
