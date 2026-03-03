@@ -57,8 +57,23 @@
 - [x] backtest_overnight 串行→10线程并行 (消除串行sleep瓶颈)
 - [x] 待办清理: _sina_batch_quote兼容性已自然解决 / overnight并行已完成
 
+## 2026-03-04
+
+### 已完成
+- [x] **OP-07**: scorecard/conflict_audit → SQLite WAL 迁移 (24301→23167条, 11模块切换)
+- [x] **OP-08**: Kelly准则 + Risk Parity 组合优化 (三信号融合: Health 40%+Kelly 30%+RP 30%)
+- [x] **OP-09**: FastAPI Web Dashboard (11个API端点, 暗色主题, 响应式)
+- [x] **EX-01**: WebSocket 实时推送 (ConnectionManager + push_event外部接口)
+- [x] **EX-02**: trade_journal → SQLite (179条迁移, learning_engine切换)
+- [x] **EX-03**: 因子重要性排名 API + 横向条形图可视化
+- [x] **EX-04**: 纸盘模拟交易面板 (持仓/交易/7天统计)
+- [x] 全量 637 tests passed, 0 failed
+- [x] OP-01~09 全部 💎已核准
+
 ### 待办队列
 - [ ] 系统运行满一周后: 信号追踪报告分析 + 参数首次调优
+- [ ] Dashboard launchd 集成: 开机自启动
+- [ ] push_event 接入策略执行链路 (strategy_loader → dashboard)
 
 ## 2026-03-02 晚
 
