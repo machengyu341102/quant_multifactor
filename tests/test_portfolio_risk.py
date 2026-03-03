@@ -176,11 +176,12 @@ class TestCalcPortfolioDrawdown:
 
 class TestSuggestAllocation:
     def test_default_when_no_health(self):
-        """无健康度数据时返回默认分配"""
+        """无健康度数据时返回 Kelly+RP 混合分配"""
         from portfolio_risk import suggest_allocation
         result = suggest_allocation(None)
         assert "allocation" in result
-        assert result["reason"] == "无健康度数据, 保持默认等权分配"
+        assert "kelly" in result
+        assert "risk_parity" in result
 
     def test_weighted_by_health(self):
         """健康度高的策略应分配更多"""

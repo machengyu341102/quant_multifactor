@@ -228,11 +228,166 @@ def calc_portfolio_drawdown() -> dict:
 
 
 # ================================================================
-#  动态资金分配建议
+#  凯利准则 (OP-08)
+# ================================================================
+
+def calc_kelly_fractions(days: int = None) -> dict:
+    """为每个策略计算 Half-Kelly 最优仓位比例
+
+    Kelly 公式: f* = W - (1-W)/R
+    W = 胜率, R = 平均盈利/平均亏损
+    使用 Half-Kelly (f*/2) 降低波动风险
+
+    Returns:
+        {
+            strategy_name: {
+                "kelly_full": float,      # 完整 Kelly
+                "kelly_half": float,      # Half-Kelly (实际使用)
+                "win_rate": float,
+                "avg_win": float,
+                "avg_loss": float,
+                "sample_count": int,
+            }
+        }
+    """
+    if days is None:
+        days = PORTFOLIO_RISK_PARAMS.get("correlation_window_days", 30)
+
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        scorecard = load_scorecard(days=days)
+    except Exception:
+        scorecard = safe_load(_SCORECARD_PATH, default=[])
+
+    cutoff = (date.today() - timedelta(days=days)).isoformat()
+
+    # 按策略分组收益
+    strategy_returns = {}
+    for r in scorecard:
+        if r.get("rec_date", "") < cutoff:
+            continue
+        strategy = r.get("strategy", "")
+        ret = r.get("net_return_pct", 0)
+        strategy_returns.setdefault(strategy, []).append(ret)
+
+    result = {}
+    for name in STRATEGY_NAMES:
+        rets = strategy_returns.get(name, [])
+        if len(rets) < 5:
+            result[name] = {
+                "kelly_full": 0.0, "kelly_half": 0.0,
+                "win_rate": 0.0, "avg_win": 0.0, "avg_loss": 0.0,
+                "sample_count": len(rets),
+            }
+            continue
+
+        wins = [r for r in rets if r > 0]
+        losses = [r for r in rets if r <= 0]
+
+        win_rate = len(wins) / len(rets) if rets else 0
+        avg_win = sum(wins) / len(wins) if wins else 0
+        avg_loss = abs(sum(losses) / len(losses)) if losses else 0.01
+
+        # Kelly: f* = W - (1-W)/R
+        R = avg_win / avg_loss if avg_loss > 0 else 1.0
+        kelly_full = win_rate - (1 - win_rate) / R if R > 0 else 0
+        kelly_full = max(0.0, kelly_full)  # 负值意味着不应下注
+        kelly_half = kelly_full / 2
+
+        result[name] = {
+            "kelly_full": round(kelly_full, 4),
+            "kelly_half": round(kelly_half, 4),
+            "win_rate": round(win_rate, 4),
+            "avg_win": round(avg_win, 4),
+            "avg_loss": round(avg_loss, 4),
+            "sample_count": len(rets),
+        }
+
+    return result
+
+
+# ================================================================
+#  风险平价 (OP-08)
+# ================================================================
+
+def calc_risk_parity_allocation(days: int = None) -> dict:
+    """风险平价: 按策略波动率的倒数分配权重, 使每个策略对组合风险贡献相等
+
+    Returns:
+        {
+            "weights": {strategy: float},    # 归一化权重
+            "volatilities": {strategy: float},
+            "equal_risk_contribution": float, # 每个策略的目标风险贡献
+        }
+    """
+    if days is None:
+        days = PORTFOLIO_RISK_PARAMS.get("correlation_window_days", 30)
+
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        scorecard = load_scorecard(days=days)
+    except Exception:
+        scorecard = safe_load(_SCORECARD_PATH, default=[])
+
+    cutoff = (date.today() - timedelta(days=days)).isoformat()
+
+    # 按策略+日期聚合收益
+    daily_returns = {}
+    for r in scorecard:
+        if r.get("rec_date", "") < cutoff:
+            continue
+        strategy = r.get("strategy", "")
+        rec_date = r.get("rec_date", "")
+        daily_returns.setdefault(strategy, {}).setdefault(rec_date, []).append(
+            r.get("net_return_pct", 0))
+
+    # 计算每个策略的波动率 (日收益标准差)
+    volatilities = {}
+    for name in STRATEGY_NAMES:
+        raw = daily_returns.get(name, {})
+        if len(raw) < 3:
+            volatilities[name] = 999.0  # 数据不足, 给高波动率(低权重)
+            continue
+        daily_means = [sum(v) / len(v) for v in raw.values()]
+        mean = sum(daily_means) / len(daily_means)
+        var = sum((x - mean) ** 2 for x in daily_means) / len(daily_means)
+        volatilities[name] = max(var ** 0.5, 0.01)
+
+    # 反波动率加权
+    inv_vols = {name: 1.0 / vol for name, vol in volatilities.items()}
+    total_inv = sum(inv_vols.values())
+
+    if total_inv <= 0:
+        n = len(STRATEGY_NAMES)
+        weights = {name: round(1.0 / n, 4) for name in STRATEGY_NAMES}
+    else:
+        weights = {name: round(iv / total_inv, 4) for name, iv in inv_vols.items()}
+
+    active = sum(1 for v in volatilities.values() if v < 999)
+    erc = round(1.0 / active, 4) if active > 0 else 0
+
+    return {
+        "weights": weights,
+        "volatilities": {k: round(v, 4) for k, v in volatilities.items()},
+        "equal_risk_contribution": erc,
+    }
+
+
+# ================================================================
+#  动态资金分配建议 (增强: Kelly + Risk Parity)
 # ================================================================
 
 def suggest_allocation(strategy_health: dict = None) -> dict:
-    """基于健康度+相关性建议资金分配
+    """基于健康度+Kelly+Risk Parity 综合建议资金分配
+
+    融合三个信号:
+      - 健康度加权 (40%): auto_optimizer 的 score
+      - Kelly 准则 (30%): 历史胜率+盈亏比 → 最优仓位
+      - Risk Parity (30%): 波动率倒数 → 等风险贡献
 
     Args:
         strategy_health: {strategy_name: health_dict} from auto_optimizer
@@ -242,68 +397,108 @@ def suggest_allocation(strategy_health: dict = None) -> dict:
             "allocation": {strategy: pct},
             "reason": str,
             "changes": [{strategy, old, new, reason}],
+            "kelly": {strategy: kelly_dict},
+            "risk_parity": {strategy: weight},
         }
     """
     default_alloc = PORTFOLIO_RISK_PARAMS.get("strategy_allocation", {})
     max_alloc = PORTFOLIO_RISK_PARAMS.get("max_strategy_allocation", 0.50)
     min_alloc = PORTFOLIO_RISK_PARAMS.get("min_strategy_allocation", 0.10)
 
+    kelly_data = calc_kelly_fractions()
+    rp_data = calc_risk_parity_allocation()
+    rp_weights = rp_data.get("weights", {})
+
     if not strategy_health:
+        # 无健康度数据时, 用 Kelly(50%) + RP(50%) 混合
+        allocation = {}
+        for name in STRATEGY_NAMES:
+            kelly_w = kelly_data.get(name, {}).get("kelly_half", 0)
+            rp_w = rp_weights.get(name, 1.0 / len(STRATEGY_NAMES))
+            # Kelly可能为0(样本不足), 降级到 RP
+            if kelly_w <= 0:
+                allocation[name] = rp_w
+            else:
+                allocation[name] = kelly_w * 0.5 + rp_w * 0.5
+        # 归一化 + 上下限
+        allocation = _normalize_with_bounds(allocation, min_alloc, max_alloc)
         return {
-            "allocation": dict(default_alloc),
-            "reason": "无健康度数据, 保持默认等权分配",
-            "changes": [],
+            "allocation": allocation,
+            "reason": "Kelly+RiskParity 混合 (无健康度数据)",
+            "changes": _calc_changes(default_alloc, allocation, {}),
+            "kelly": kelly_data,
+            "risk_parity": rp_weights,
         }
 
-    # 计算健康度加权分配
-    scores = {}
+    # 三信号融合
+    health_scores = {}
     for name in STRATEGY_NAMES:
         health = strategy_health.get(name, {})
-        scores[name] = health.get("score", 50)
+        health_scores[name] = health.get("score", 50)
 
-    total_score = sum(scores.values())
+    total_score = sum(health_scores.values())
     if total_score <= 0:
-        return {
-            "allocation": dict(default_alloc),
-            "reason": "所有策略评分为0, 保持默认分配",
-            "changes": [],
-        }
+        total_score = 1
 
-    # 按健康度加权
-    raw_alloc = {name: score / total_score for name, score in scores.items()}
-
-    # 应用上下限
     allocation = {}
-    for name, pct in raw_alloc.items():
-        allocation[name] = max(min_alloc, min(max_alloc, pct))
+    w_health, w_kelly, w_rp = 0.4, 0.3, 0.3
 
-    # 重新归一化
-    total = sum(allocation.values())
-    if total > 0:
-        allocation = {k: round(v / total, 4) for k, v in allocation.items()}
-
-    # 计算变化
-    changes = []
-    threshold = PORTFOLIO_RISK_PARAMS.get("rebalance_threshold", 0.15)
     for name in STRATEGY_NAMES:
-        old = default_alloc.get(name, 0.33)
-        new = allocation.get(name, 0.33)
-        if abs(new - old) >= threshold:
-            direction = "增加" if new > old else "减少"
-            changes.append({
-                "strategy": name,
-                "old": round(old, 4),
-                "new": round(new, 4),
-                "reason": f"{direction}配比 ({old:.0%}→{new:.0%}), 健康度={scores.get(name, 0):.0f}",
-            })
+        # 健康度权重
+        h_w = health_scores[name] / total_score
+        # Kelly 权重
+        k_w = kelly_data.get(name, {}).get("kelly_half", 0)
+        # Risk Parity 权重
+        rp_w = rp_weights.get(name, 1.0 / len(STRATEGY_NAMES))
 
-    reason = "基于策略健康度动态分配" if changes else "各策略健康度接近, 无需调整"
+        # Kelly 为 0 时, 将其份额分给 health 和 RP
+        if k_w <= 0:
+            allocation[name] = h_w * (w_health + w_kelly / 2) + rp_w * (w_rp + w_kelly / 2)
+        else:
+            allocation[name] = h_w * w_health + k_w * w_kelly + rp_w * w_rp
+
+    allocation = _normalize_with_bounds(allocation, min_alloc, max_alloc)
+
+    changes = _calc_changes(default_alloc, allocation, health_scores)
+    reason = "Health(40%)+Kelly(30%)+RiskParity(30%) 综合分配" if changes else "各策略综合评分接近, 无需调整"
 
     return {
         "allocation": allocation,
         "reason": reason,
         "changes": changes,
+        "kelly": kelly_data,
+        "risk_parity": rp_weights,
     }
+
+
+def _normalize_with_bounds(alloc: dict, min_w: float, max_w: float) -> dict:
+    """归一化权重并应用上下限"""
+    result = {}
+    for name, w in alloc.items():
+        result[name] = max(min_w, min(max_w, w))
+    total = sum(result.values())
+    if total > 0:
+        result = {k: round(v / total, 4) for k, v in result.items()}
+    return result
+
+
+def _calc_changes(default_alloc: dict, new_alloc: dict, scores: dict) -> list:
+    """计算分配变化"""
+    changes = []
+    threshold = PORTFOLIO_RISK_PARAMS.get("rebalance_threshold", 0.15)
+    for name in STRATEGY_NAMES:
+        old = default_alloc.get(name, 0.09)
+        new = new_alloc.get(name, 0.09)
+        if abs(new - old) >= threshold:
+            direction = "增加" if new > old else "减少"
+            score_str = f", 健康度={scores[name]:.0f}" if name in scores else ""
+            changes.append({
+                "strategy": name,
+                "old": round(old, 4),
+                "new": round(new, 4),
+                "reason": f"{direction}配比 ({old:.0%}→{new:.0%}){score_str}",
+            })
+    return changes
 
 
 # ================================================================

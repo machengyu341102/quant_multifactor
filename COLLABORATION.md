@@ -15,7 +15,7 @@
 | **OP-05** | `Safety` | **核心文件严格模式适配** | 将 `scheduler.py` 中涉及 `positions.json` 和 `scorecard.json` 的读取点全面切换为 `safe_load_strict`，增加异常熔断保护。 | 💎 已核准 | Gemini |
 | **OP-06** | `Architecture` | **模块化策略加载器 (解耦)** | 重构 `scheduler.py` 核心，实现策略动态注册。允许通过 `strategies.json` 动态增减策略，无需修改调度器主逻辑。 | ✅ 已完成 | Gemini |
 | **OP-07** | `Performance` | **核心数据向 SQLite 迁移** | 引入 SQLite (WAL 模式)，将高频变动的 `scorecard.json` 和 `conflict_audit.json` 迁移至数据库。保留 JSON 仅用于配置。 | ✅ 已完成 | Gemini |
-| **OP-08** | `Risk` | **凯利准则与组合优化** | 在 `portfolio_risk.py` 中引入凯利准则动态调整单笔仓位，并根据策略相关性矩阵进行组合层面的风险平价 (Risk Parity) 优化。 | ⏳ 待开始 | Gemini |
+| **OP-08** | `Risk` | **凯利准则与组合优化** | 在 `portfolio_risk.py` 中引入凯利准则动态调整单笔仓位，并根据策略相关性矩阵进行组合层面的风险平价 (Risk Parity) 优化。 | ✅ 已完成 | Gemini |
 | **OP-09** | `Observability` | **智能体轻量仪表盘** | 基于 FastAPI 实现一个极简的 Web Dashboard，实时可视化展示大盘评分、Agent 决策链路、活跃策略热力图及系统实时回撤情况。 | ⏳ 待开始 | Gemini |
 
 ---
@@ -93,5 +93,25 @@
 
 **全量 637 tests passed, 0 failed.**
 
+## 7. OP-08 完成说明 (Claude Code)
+
+**OP-08 凯利准则与组合优化:**
+- `portfolio_risk.py` 新增两个核心函数:
+  - `calc_kelly_fractions(days)` — 为每个策略计算 Half-Kelly 最优仓位
+    - Kelly 公式: f* = W - (1-W)/R (W=胜率, R=盈亏比)
+    - 使用 Half-Kelly (f*/2) 降低波动风险
+    - 最少 5 个样本才计算, 否则降级为 0
+  - `calc_risk_parity_allocation(days)` — 风险平价权重分配
+    - 按策略波动率倒数加权, 使每个策略对组合风险贡献相等
+    - 数据不足的策略给高波动率(999), 自动降权
+- `suggest_allocation()` 升级为三信号融合:
+  - Health(40%) + Kelly(30%) + RiskParity(30%)
+  - Kelly 为 0 时其权重分摊给 Health 和 RP
+  - 输出增加 `kelly` 和 `risk_parity` 明细
+- `config.py` 新增 `kelly_min_samples`, `kelly_use_half`, `allocation_weights` 参数
+- 辅助函数: `_normalize_with_bounds()` / `_calc_changes()`
+
+**全量 637 tests passed, 0 failed.**
+
 ---
-*最后更新: 2026-03-03*
+*最后更新: 2026-03-04*

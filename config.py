@@ -558,6 +558,14 @@ PORTFOLIO_RISK_PARAMS = {
     },
     "max_strategy_allocation": 0.50,
     "min_strategy_allocation": 0.10,
+    # Kelly / Risk Parity (OP-08)
+    "kelly_min_samples": 5,              # Kelly 最少样本数
+    "kelly_use_half": True,              # 使用 Half-Kelly (更保守)
+    "allocation_weights": {              # 三信号融合权重
+        "health": 0.4,
+        "kelly": 0.3,
+        "risk_parity": 0.3,
+    },
 }
 
 # ================================================================
