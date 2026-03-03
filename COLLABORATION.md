@@ -16,7 +16,7 @@
 | **OP-06** | `Architecture` | **模块化策略加载器 (解耦)** | 重构 `scheduler.py` 核心，实现策略动态注册。允许通过 `strategies.json` 动态增减策略，无需修改调度器主逻辑。 | ✅ 已完成 | Gemini |
 | **OP-07** | `Performance` | **核心数据向 SQLite 迁移** | 引入 SQLite (WAL 模式)，将高频变动的 `scorecard.json` 和 `conflict_audit.json` 迁移至数据库。保留 JSON 仅用于配置。 | ✅ 已完成 | Gemini |
 | **OP-08** | `Risk` | **凯利准则与组合优化** | 在 `portfolio_risk.py` 中引入凯利准则动态调整单笔仓位，并根据策略相关性矩阵进行组合层面的风险平价 (Risk Parity) 优化。 | ✅ 已完成 | Gemini |
-| **OP-09** | `Observability` | **智能体轻量仪表盘** | 基于 FastAPI 实现一个极简的 Web Dashboard，实时可视化展示大盘评分、Agent 决策链路、活跃策略热力图及系统实时回撤情况。 | ⏳ 待开始 | Gemini |
+| **OP-09** | `Observability` | **智能体轻量仪表盘** | 基于 FastAPI 实现一个极简的 Web Dashboard，实时可视化展示大盘评分、Agent 决策链路、活跃策略热力图及系统实时回撤情况。 | ✅ 已完成 | Gemini |
 
 ---
 *最后更新: 2026-03-03 (Gemini 最终审计完成)*
@@ -110,6 +110,36 @@
   - 输出增加 `kelly` 和 `risk_parity` 明细
 - `config.py` 新增 `kelly_min_samples`, `kelly_use_half`, `allocation_weights` 参数
 - 辅助函数: `_normalize_with_bounds()` / `_calc_changes()`
+
+**全量 637 tests passed, 0 failed.**
+
+## 8. OP-09 完成说明 (Claude Code)
+
+**OP-09 智能体轻量仪表盘:**
+- 新增 `dashboard.py` — FastAPI 单文件 Web Dashboard
+- 8 个 API 端点:
+  - `/api/overview` — 系统总览 (进程/策略执行/持仓/VaR/夜班)
+  - `/api/regime` — 大盘评分 + 市场状态
+  - `/api/drawdown` — 组合回撤 + Kelly + Risk Parity
+  - `/api/signals` — 信号追踪 7 天统计
+  - `/api/conflicts` — Agent 冲突仲裁日志 (SQLite)
+  - `/api/agents` — 子智能体注册状态
+  - `/api/equity` — 资金曲线
+  - `/api/heatmap` — 策略热力图 (近7天每策略每天平均收益)
+- 前端: 单页内嵌 HTML (暗色主题, CSS Grid 响应式)
+  - 大盘评分仪表 (渐变色条)
+  - VaR 风控卡片
+  - 组合回撤卡片
+  - 信号追踪统计
+  - A股持仓表格
+  - 策略执行状态
+  - 子智能体状态
+  - 策略热力图 (颜色编码)
+  - SVG 资金曲线
+  - 冲突仲裁日志
+  - Kelly 准则排名
+- 自动刷新: 60秒间隔
+- 启动: `python3 dashboard.py [--port 8501]`
 
 **全量 637 tests passed, 0 failed.**
 
