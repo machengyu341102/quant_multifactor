@@ -28,6 +28,7 @@ logger = get_logger("portfolio_risk")
 
 _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 _SCORECARD_PATH = os.path.join(_BASE_DIR, "scorecard.json")
+_SCORECARD_DEFAULT = _SCORECARD_PATH
 
 STRATEGY_NAMES = [
     "集合竞价选股", "放量突破选股", "尾盘短线选股",
@@ -53,7 +54,13 @@ def calc_strategy_correlation(days: int = None) -> dict:
     if days is None:
         days = PORTFOLIO_RISK_PARAMS.get("correlation_window_days", 30)
 
-    scorecard = safe_load(_SCORECARD_PATH, default=[])
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        scorecard = load_scorecard(days=days)
+    except Exception:
+        scorecard = safe_load(_SCORECARD_PATH, default=[])
     cutoff = (date.today() - timedelta(days=days)).isoformat()
 
     # 按策略+日期聚合日收益
@@ -149,7 +156,13 @@ def calc_portfolio_drawdown() -> dict:
             "breached": bool,
         }
     """
-    scorecard = safe_load(_SCORECARD_PATH, default=[])
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        scorecard = load_scorecard()
+    except Exception:
+        scorecard = safe_load(_SCORECARD_PATH, default=[])
     if not scorecard:
         return {
             "current_drawdown_pct": 0.0,

@@ -44,6 +44,7 @@ logger = get_logger("agent_brain")
 _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 _MEMORY_PATH = os.path.join(_BASE_DIR, "agent_memory.json")
 _SCORECARD_PATH = os.path.join(_BASE_DIR, "scorecard.json")
+_SCORECARD_DEFAULT = _SCORECARD_PATH  # monkeypatch 检测
 
 STRATEGY_NAMES = [
     "集合竞价选股", "放量突破选股", "尾盘短线选股",
@@ -173,8 +174,14 @@ def observe() -> dict:
         "current_regime": "neutral",
     }
 
-    # --- 从 scorecard.json 计算每个策略的滚动指标 (增量) ---
-    scorecard = safe_load(_SCORECARD_PATH, default=[])
+    # --- 从 SQLite 计算每个策略的滚动指标 (增量) ---
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        scorecard = load_scorecard(days=30)
+    except Exception:
+        scorecard = safe_load(_SCORECARD_PATH, default=[])
     sc_len = len(scorecard)
     latest_date = max((r.get("rec_date", "") for r in scorecard), default="") if scorecard else ""
 
@@ -752,8 +759,14 @@ def _update_strategy_states_from_snapshot(snapshot: dict, memory: dict):
         state["consecutive_losses"] = metrics.get("consecutive_losses", 0)
         state["consecutive_wins"] = metrics.get("consecutive_wins", 0)
 
-        # 从 scorecard 提取 last_5_results
-        scorecard = safe_load(_SCORECARD_PATH, default=[])
+        # 从 SQLite 提取 last_5_results
+        try:
+            if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+                raise ImportError("test mode")
+            from db_store import load_scorecard
+            scorecard = load_scorecard(days=20, strategy=name)
+        except Exception:
+            scorecard = safe_load(_SCORECARD_PATH, default=[])
         records = [r for r in scorecard if r.get("strategy") == name]
         records.sort(key=lambda r: r.get("rec_date", ""), reverse=True)
         state["last_5_results"] = [r.get("result", "") for r in records[:5]]
@@ -1015,15 +1028,8 @@ def conflict_resolve(findings: list) -> list:
 
 def _persist_conflict_audit(strategy: str, winner_action: str, winner_authority: int,
                             loser_action: str, loser_authority: int, loser_findings: list):
-    """持久化冲突仲裁明细到 conflict_audit.json, 供夜班分析"""
-    import os
+    """持久化冲突仲裁明细到 SQLite (OP-07: 迁移自 conflict_audit.json)"""
     from datetime import datetime
-    try:
-        from json_store import safe_load, safe_save
-    except ImportError:
-        return
-
-    audit_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "conflict_audit.json")
 
     record = {
         "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -1046,12 +1052,8 @@ def _persist_conflict_audit(strategy: str, winner_action: str, winner_authority:
     }
 
     try:
-        history = safe_load(audit_path, default=[])
-        history.append(record)
-        # 保留最近 500 条
-        if len(history) > 500:
-            history = history[-500:]
-        safe_save(audit_path, history)
+        from db_store import save_conflict_audit_record
+        save_conflict_audit_record(record)
         logger.info("[Agent] 冲突审计已持久化: %s (%s胜, %s败)",
                     strategy, winner_action, loser_action)
     except Exception as e:

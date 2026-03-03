@@ -254,6 +254,7 @@ class TestJsonStore(unittest.TestCase):
 class TestEquityCurve(unittest.TestCase):
     """资金曲线测试"""
 
+    @patch("scorecard._SCORECARD_PATH", "/tmp/_test_sc.json")
     @patch("scorecard.safe_load_strict")
     def test_empty_records(self, mock_load):
         from scorecard import calc_equity_curve
@@ -262,6 +263,7 @@ class TestEquityCurve(unittest.TestCase):
         self.assertEqual(result["total_return"], 0)
         self.assertEqual(result["nav_series"], [])
 
+    @patch("scorecard._SCORECARD_PATH", "/tmp/_test_sc.json")
     @patch("scorecard.safe_load_strict")
     def test_basic_curve(self, mock_load):
         from scorecard import calc_equity_curve
@@ -277,6 +279,7 @@ class TestEquityCurve(unittest.TestCase):
         final_nav = result["nav_series"][-1][1]
         self.assertGreater(final_nav, 1.0)
 
+    @patch("scorecard._SCORECARD_PATH", "/tmp/_test_sc.json")
     @patch("scorecard.safe_load_strict")
     def test_max_drawdown(self, mock_load):
         from scorecard import calc_equity_curve

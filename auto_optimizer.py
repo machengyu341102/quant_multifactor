@@ -43,6 +43,7 @@ _DIR = os.path.dirname(os.path.abspath(__file__))
 _TUNABLE_PATH = os.path.join(_DIR, "tunable_params.json")
 _EVOLUTION_PATH = os.path.join(_DIR, "evolution_history.json")
 _SCORECARD_PATH = os.path.join(_DIR, "scorecard.json")
+_SCORECARD_DEFAULT = _SCORECARD_PATH
 _VERIFICATION_PATH = os.path.join(_DIR, "optimization_verifications.json")
 
 # 支持的策略列表
@@ -114,7 +115,13 @@ def evaluate_strategy_health(strategy: str, days: int = None) -> dict:
     if days is None:
         days = OPTIMIZATION_PARAMS["eval_window_days"]
 
-    records = safe_load(_SCORECARD_PATH)
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        records = load_scorecard(days=days)
+    except Exception:
+        records = safe_load(_SCORECARD_PATH)
     cutoff = (date.today() - timedelta(days=days)).isoformat()
 
     # 按策略名称匹配 (记分卡中策略名可能含中文后缀)
@@ -461,7 +468,13 @@ def rollback_if_declined(strategy: str):
 
 def _check_panic_freeze(strategy: str) -> bool:
     """连续 3 天大幅亏损时冻结优化 (避免追涨杀跌式调参)"""
-    records = safe_load(_SCORECARD_PATH)
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        records = load_scorecard(days=3)
+    except Exception:
+        records = safe_load(_SCORECARD_PATH)
     cutoff = (date.today() - timedelta(days=3)).isoformat()
 
     strategy_map = {

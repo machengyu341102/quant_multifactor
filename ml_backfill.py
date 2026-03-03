@@ -191,7 +191,7 @@ def backfill(days: int = 60, max_stocks: int = 100):
 
     # 生成训练数据
     journal_entries = safe_load(JOURNAL_PATH, default=[])
-    scorecard_entries = safe_load(SCORECARD_PATH, default=[])
+    scorecard_entries = []
 
     existing_keys = {
         (e.get("date", ""), e.get("picks", [{}])[0].get("code", "") if e.get("picks") else "")
@@ -284,7 +284,13 @@ def backfill(days: int = 60, max_stocks: int = 100):
 
     # 保存
     safe_save(JOURNAL_PATH, journal_entries)
-    safe_save(SCORECARD_PATH, scorecard_entries)
+    try:
+        from db_store import save_scorecard_records
+        save_scorecard_records(scorecard_entries)
+    except Exception:
+        existing = safe_load(SCORECARD_PATH, default=[])
+        existing.extend(scorecard_entries)
+        safe_save(SCORECARD_PATH, existing)
 
     total_samples = new_scorecard
     print(f"回填完成:")

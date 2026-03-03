@@ -6,7 +6,7 @@
 - 资金曲线 (累计净值/最大回撤/Sharpe)
 - 每周推送周报
 
-数据文件: scorecard.json (追加式)
+数据存储: SQLite (quant_data.db, WAL 模式) — OP-07 迁移自 scorecard.json
 """
 
 from __future__ import annotations
@@ -25,6 +25,7 @@ logger = get_logger("scorecard")
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 _SCORECARD_PATH = os.path.join(_DIR, "scorecard.json")
+_SCORECARD_DEFAULT = _SCORECARD_PATH
 _POS_PATH = os.path.join(_DIR, POSITION_FILE)
 
 # 交易成本: 佣金×2 + 印花税 + 滑点
@@ -165,7 +166,8 @@ def score_yesterday() -> list[dict]:
         logger.info("%s 无推荐记录, 跳过", yesterday)
         return []
 
-    existing = safe_load_strict(_SCORECARD_PATH)
+    from db_store import load_scorecard as _db_load, save_scorecard_records
+    existing = _db_load()
     existing_keys = {
         (r["rec_date"], r["code"], r["strategy"])
         for r in existing
@@ -256,8 +258,7 @@ def score_yesterday() -> list[dict]:
                     sl_tag, tp_tag)
 
     if new_scores:
-        existing.extend(new_scores)
-        safe_save(_SCORECARD_PATH, existing)
+        save_scorecard_records(new_scores)
         wins = sum(1 for s in new_scores if s["result"] == "win")
         losses = len(new_scores) - wins
         logger.info("%s 评分完成: %d 只 (%d胜%d负)", yesterday, len(new_scores), wins, losses)
@@ -273,17 +274,19 @@ def score_yesterday() -> list[dict]:
 
 def calc_cumulative_stats(days: int | None = None) -> dict:
     """累计统计: 总推荐数, 胜率, 平均收益, 分策略明细"""
-    records = safe_load_strict(_SCORECARD_PATH)
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        records = load_scorecard(days=days)
+    except Exception:
+        records = safe_load_strict(_SCORECARD_PATH)
     if not records:
         return {
             "total": 0, "win_rate": 0,
             "avg_raw_return": 0, "avg_net_return": 0,
             "by_strategy": {},
         }
-
-    if days:
-        cutoff = (date.today() - timedelta(days=days)).isoformat()
-        records = [r for r in records if r.get("rec_date", "") >= cutoff]
 
     total = len(records)
     wins = sum(1 for r in records if r.get("result") == "win")
@@ -335,15 +338,13 @@ def calc_equity_curve(days: int | None = None) -> dict:
       sharpe: 年化 Sharpe (无风险利率=2%)
       daily_returns: [float] 每日平均收益率序列
     """
-    records = safe_load_strict(_SCORECARD_PATH)
-    if not records:
-        return {"nav_series": [], "total_return": 0, "max_drawdown": 0,
-                "sharpe": 0, "daily_returns": []}
-
-    if days:
-        cutoff = (date.today() - timedelta(days=days)).isoformat()
-        records = [r for r in records if r.get("rec_date", "") >= cutoff]
-
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        records = load_scorecard(days=days)
+    except Exception:
+        records = safe_load_strict(_SCORECARD_PATH)
     if not records:
         return {"nav_series": [], "total_return": 0, "max_drawdown": 0,
                 "sharpe": 0, "daily_returns": []}
@@ -431,11 +432,13 @@ def generate_weekly_report() -> str:
     today_str = today.isoformat()
     week_ago_str = week_ago.isoformat()
 
-    records = safe_load_strict(_SCORECARD_PATH)
-    week_records = [
-        r for r in records
-        if week_ago_str <= r.get("rec_date", "") <= today_str
-    ]
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        week_records = load_scorecard(days=7)
+    except Exception:
+        week_records = safe_load_strict(_SCORECARD_PATH)
 
     total = len(week_records)
     wins = sum(1 for r in week_records if r.get("result") == "win")

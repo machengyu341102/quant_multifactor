@@ -344,24 +344,18 @@ def verify_outcomes() -> dict:
 
 
 _SCORECARD_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "scorecard.json")
+_SCORECARD_DEFAULT = _SCORECARD_PATH
 
 
 def _sync_to_scorecard(signals: list):
-    """将已验证 T+1 的信号同步到 scorecard.json (agent_brain/learning_engine 数据源)"""
-    scorecard = safe_load(_SCORECARD_PATH, default=[])
-    existing_keys = {(r.get("rec_date"), r.get("code"), r.get("strategy"))
-                     for r in scorecard}
-
-    new_entries = 0
+    """将已验证 T+1 的信号同步到 SQLite scorecard (agent_brain/learning_engine 数据源)"""
+    new_records = []
     for sig in signals:
         t1 = sig.get("verify", {}).get("t1")
         if not t1:
             continue
-        key = (sig["date"], sig["code"], sig.get("strategy", ""))
-        if key in existing_keys:
-            continue
 
-        scorecard.append({
+        new_records.append({
             "rec_date": sig["date"],
             "code": sig["code"],
             "name": sig.get("name", ""),
@@ -375,11 +369,30 @@ def _sync_to_scorecard(signals: list):
             "factor_scores": sig.get("factor_scores", {}),
             "verify_date": t1["date"],
         })
-        new_entries += 1
 
-    if new_entries:
-        safe_save(_SCORECARD_PATH, scorecard)
-        logger.info("scorecard 同步: 新增 %d 条 (总 %d)", new_entries, len(scorecard))
+    if not new_records:
+        return
+
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import save_scorecard_records
+        count = save_scorecard_records(new_records)
+        logger.info("scorecard 同步 (SQLite): 新增 %d 条", count)
+    except Exception:
+        # 降级到 JSON
+        scorecard = safe_load(_SCORECARD_PATH, default=[])
+        existing_keys = {(r.get("rec_date"), r.get("code"), r.get("strategy"))
+                         for r in scorecard}
+        added = 0
+        for rec in new_records:
+            key = (rec["rec_date"], rec["code"], rec["strategy"])
+            if key not in existing_keys:
+                scorecard.append(rec)
+                added += 1
+        if added:
+            safe_save(_SCORECARD_PATH, scorecard)
+            logger.info("scorecard 同步 (JSON fallback): 新增 %d 条", added)
 
 
 # ================================================================

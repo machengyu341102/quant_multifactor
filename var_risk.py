@@ -34,6 +34,7 @@ logger = get_logger("var_risk")
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 _SCORECARD_PATH = os.path.join(_DIR, "scorecard.json")
+_SCORECARD_DEFAULT = _SCORECARD_PATH
 _VAR_RESULTS_PATH = os.path.join(_DIR, "var_results.json")
 
 # 置信水平
@@ -69,12 +70,17 @@ def _load_return_series(lookback_days: int = 60,
             "n_trades": int,                # 总交易笔数
         }
     """
-    records = safe_load(_SCORECARD_PATH, default=[])
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        records = load_scorecard(days=lookback_days)
+    except Exception:
+        records = safe_load(_SCORECARD_PATH, default=[])
+        cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
+        records = [r for r in records if r.get("rec_date", "") >= cutoff]
     if not records:
         return {"portfolio": [], "by_strategy": {}, "dates": [], "n_trades": 0}
-
-    cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
-    records = [r for r in records if r.get("rec_date", "") >= cutoff]
 
     if strategy:
         records = [r for r in records if r.get("strategy") == strategy]

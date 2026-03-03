@@ -14,7 +14,7 @@
 | **OP-04** | `Agent` | **智能体决策冲突日志** | 在 `agent_brain.py` 的冲突仲裁逻辑中，增加明细持久化记录，保存”被否决”的策略动作及其原始证据，用于夜班分析。 | 💎 已核准 | Gemini |
 | **OP-05** | `Safety` | **核心文件严格模式适配** | 将 `scheduler.py` 中涉及 `positions.json` 和 `scorecard.json` 的读取点全面切换为 `safe_load_strict`，增加异常熔断保护。 | 💎 已核准 | Gemini |
 | **OP-06** | `Architecture` | **模块化策略加载器 (解耦)** | 重构 `scheduler.py` 核心，实现策略动态注册。允许通过 `strategies.json` 动态增减策略，无需修改调度器主逻辑。 | ✅ 已完成 | Gemini |
-| **OP-07** | `Performance` | **核心数据向 SQLite 迁移** | 引入 SQLite (WAL 模式)，将高频变动的 `scorecard.json` 和 `conflict_audit.json` 迁移至数据库。保留 JSON 仅用于配置。 | ⏳ 待开始 | Gemini |
+| **OP-07** | `Performance` | **核心数据向 SQLite 迁移** | 引入 SQLite (WAL 模式)，将高频变动的 `scorecard.json` 和 `conflict_audit.json` 迁移至数据库。保留 JSON 仅用于配置。 | ✅ 已完成 | Gemini |
 | **OP-08** | `Risk` | **凯利准则与组合优化** | 在 `portfolio_risk.py` 中引入凯利准则动态调整单笔仓位，并根据策略相关性矩阵进行组合层面的风险平价 (Risk Parity) 优化。 | ⏳ 待开始 | Gemini |
 | **OP-09** | `Observability` | **智能体轻量仪表盘** | 基于 FastAPI 实现一个极简的 Web Dashboard，实时可视化展示大盘评分、Agent 决策链路、活跃策略热力图及系统实时回撤情况。 | ⏳ 待开始 | Gemini |
 
@@ -68,6 +68,28 @@
 - 保留不变: `cross_market` / `morning_prep` (有自定义事件总线逻辑)
 - 新增策略只需编辑 `strategies.json`, 无需修改 scheduler.py
 - 支持: enabled/disabled 开关, 自定义 gate 组合, batch_slot, pre_hook, push_format, cli_aliases
+
+**全量 637 tests passed, 0 failed.**
+
+## 6. OP-07 完成说明 (Claude Code)
+
+**OP-07 核心数据向 SQLite 迁移:**
+- 新增 `db_store.py` — SQLite 适配层 (WAL 模式, 线程安全 thread-local 连接)
+  - 表: `scorecard` (UNIQUE on rec_date+code+strategy), `conflict_audit` (滑动窗口500条)
+  - 函数: `load_scorecard(days, strategy)` / `save_scorecard_records()` / `load_conflict_audit()` / `save_conflict_audit_record()`
+  - CLI: `python3 db_store.py migrate` / `python3 db_store.py stats`
+- 迁移结果: 24301 JSON → 23167 SQLite (1134 重复记录自动去重)
+- 11 个模块切换到 SQLite 读写 (带 monkeypatch 检测的 try/except 回退):
+  - `scorecard.py` — 4 读 + 1 写 (score_yesterday/calc_cumulative_stats/calc_equity_curve/weekly_report)
+  - `agent_brain.py` — 冲突日志写入 + 2 scorecard 读
+  - `var_risk.py` / `ml_factor_model.py` / `risk_manager.py` — 各 1 读
+  - `learning_engine.py` — 2 读 (join + 数据积累)
+  - `portfolio_risk.py` — 2 读 (相关性 + 回撤)
+  - `auto_optimizer.py` — 2 读 (策略评估 + 反恐慌)
+  - `signal_tracker.py` — 1 写 (sync_to_scorecard)
+  - `ml_backfill.py` — 1 写 (回填数据)
+- 测试兼容: `_SCORECARD_DEFAULT` 常量 + monkeypatch 检测, 测试自动回退到 JSON
+- 性能: SQLite WAL 模式支持并发读 + 单写, UNIQUE 约束自动去重
 
 **全量 637 tests passed, 0 failed.**
 

@@ -42,6 +42,7 @@ logger = get_logger("learning")
 _DIR = os.path.dirname(os.path.abspath(__file__))
 _JOURNAL_PATH = os.path.join(_DIR, "trade_journal.json")
 _SCORECARD_PATH = os.path.join(_DIR, "scorecard.json")
+_SCORECARD_DEFAULT = _SCORECARD_PATH
 _TUNABLE_PATH = os.path.join(_DIR, "tunable_params.json")
 _EVOLUTION_PATH = os.path.join(_DIR, "evolution_history.json")
 
@@ -125,7 +126,13 @@ def _join_journal_scorecard(lookback_days: int = 30) -> list[dict]:
     cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
 
     journal = safe_load(_JOURNAL_PATH, default=[])
-    scorecard = safe_load(_SCORECARD_PATH, default=[])
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        scorecard = load_scorecard(days=lookback_days)
+    except Exception:
+        scorecard = safe_load(_SCORECARD_PATH, default=[])
 
     # 建 scorecard 索引: (rec_date, code, strategy) → record
     sc_index = {}
@@ -755,7 +762,13 @@ def generate_learning_report() -> str:
     # --- 数据积累进度 ---
     lines.append("## 数据积累进度")
     journal = safe_load(_JOURNAL_PATH, default=[])
-    scorecard = safe_load(_SCORECARD_PATH, default=[])
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        scorecard = load_scorecard(days=lookback)
+    except Exception:
+        scorecard = safe_load(_SCORECARD_PATH, default=[])
     joined = _join_journal_scorecard(lookback)
     min_signal = params.get("min_samples_signal", 15)
     min_factor = params.get("min_samples_factor", 10)

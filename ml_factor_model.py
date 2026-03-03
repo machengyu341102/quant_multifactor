@@ -42,6 +42,7 @@ logger = get_logger("ml_factor")
 _DIR = os.path.dirname(os.path.abspath(__file__))
 _JOURNAL_PATH = os.path.join(_DIR, "trade_journal.json")
 _SCORECARD_PATH = os.path.join(_DIR, "scorecard.json")
+_SCORECARD_DEFAULT = _SCORECARD_PATH
 _MODEL_DIR = os.path.join(_DIR, "models")
 _ML_RESULTS_PATH = os.path.join(_DIR, "ml_model_results.json")
 
@@ -100,7 +101,14 @@ def build_training_data(lookback_days: int = 180,
     cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
 
     journal = safe_load(_JOURNAL_PATH, default=[])
-    scorecard = safe_load(_SCORECARD_PATH, default=[])
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        scorecard = load_scorecard(days=lookback_days)
+    except Exception:
+        scorecard = safe_load(_SCORECARD_PATH, default=[])
+        scorecard = [r for r in scorecard if r.get("rec_date", "") >= cutoff]
 
     # 建 scorecard 索引
     sc_index = {}

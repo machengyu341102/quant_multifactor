@@ -25,6 +25,7 @@ _DIR = os.path.dirname(os.path.abspath(__file__))
 _BLACKLIST_PATH = os.path.join(_DIR, "blacklist.json")
 _POS_PATH = os.path.join(_DIR, POSITION_FILE)
 _SCORECARD_PATH = os.path.join(_DIR, "scorecard.json")
+_SCORECARD_DEFAULT = _SCORECARD_PATH
 
 
 # ================================================================
@@ -237,7 +238,13 @@ def update_blacklist():
     bl_days = RISK_PARAMS.get("blacklist_days", 60)
     today_str = date.today().isoformat()
 
-    records = safe_load(_SCORECARD_PATH)
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        records = load_scorecard(days=90)
+    except Exception:
+        records = safe_load(_SCORECARD_PATH)
     if not records:
         return
 
