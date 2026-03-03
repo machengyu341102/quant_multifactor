@@ -1,0 +1,73 @@
+[2026-03-03 18:25:39] quant.stock_analyzer WARNING: 获取实时行情失败 999999: 'str' object is not callable
+[2026-03-03 18:25:47] quant.stock_analyzer DEBUG: 资金流获取失败 999999: 'str' object is not callable
+[2026-03-03 18:27:49] quant.stock_analyzer WARNING: 获取实时行情失败 999999: 'str' object is not callable
+[2026-03-03 18:27:57] quant.stock_analyzer DEBUG: 资金流获取失败 999999: 'str' object is not callable
+[2026-03-03 18:31:04] quant.stock_analyzer WARNING: 获取K线失败 002221: 'str' object is not callable
+[2026-03-03 18:31:10] quant.stock_analyzer WARNING: 获取实时行情失败 002221: 'str' object is not callable
+[2026-03-03 18:33:17] quant.stock_analyzer WARNING: 获取实时行情失败 999999: 'str' object is not callable
+[2026-03-03 18:33:25] quant.stock_analyzer DEBUG: 资金流获取失败 999999: 'str' object is not callable
+[2026-03-03 18:38:29] quant.stock_analyzer WARNING: 获取实时行情失败 999999: 'str' object is not callable
+[2026-03-03 18:38:37] quant.stock_analyzer DEBUG: 资金流获取失败 999999: 'str' object is not callable
+[2026-03-03 18:42:27] quant.stock_analyzer WARNING: 获取实时行情失败 002221: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 18:43:10] quant.stock_analyzer WARNING: 获取实时行情失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 18:43:19] quant.stock_analyzer DEBUG: 资金流获取失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 18:45:41] quant.stock_analyzer WARNING: 获取实时行情失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 18:45:50] quant.stock_analyzer DEBUG: 资金流获取失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 18:51:08] quant.stock_analyzer WARNING: 获取实时行情失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 18:51:16] quant.stock_analyzer DEBUG: 资金流获取失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:13:33] quant.stock_analyzer WARNING: 获取实时行情失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:13:42] quant.stock_analyzer DEBUG: 资金流获取失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:17:44] quant.stock_analyzer WARNING: 获取实时行情失败 002221: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:17:58] quant.stock_analyzer INFO: 个股诊断 002221 写入 trade_journal
+[2026-03-03 19:21:03] quant.stock_analyzer WARNING: 获取实时行情失败 002036: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:21:17] quant.stock_analyzer INFO: 个股诊断 002036 写入 trade_journal
+[2026-03-03 19:21:40] quant.stock_analyzer WARNING: 获取实时行情失败 300827: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:21:42] quant.stock_analyzer INFO: 个股诊断 300827 写入 trade_journal
+[2026-03-03 19:22:04] quant.stock_analyzer WARNING: 获取实时行情失败 600179: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:22:06] quant.stock_analyzer INFO: 个股诊断 600179 写入 trade_journal
+[2026-03-03 19:22:30] quant.stock_analyzer WARNING: 获取实时行情失败 000420: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:22:31] quant.stock_analyzer INFO: 个股诊断 000420 写入 trade_journal
+[2026-03-03 19:22:53] quant.stock_analyzer WARNING: 获取实时行情失败 300641: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:22:55] quant.stock_analyzer INFO: 个股诊断 300641 写入 trade_journal
+[2026-03-03 19:23:18] quant.stock_analyzer WARNING: 获取实时行情失败 603128: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:23:19] quant.stock_analyzer INFO: 个股诊断 603128 写入 trade_journal
+[2026-03-03 19:23:42] quant.stock_analyzer WARNING: 获取实时行情失败 600717: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:23:44] quant.stock_analyzer INFO: 个股诊断 600717 写入 trade_journal
+[2026-03-03 19:24:07] quant.stock_analyzer WARNING: 获取实时行情失败 300415: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:24:08] quant.stock_analyzer INFO: 个股诊断 300415 写入 trade_journal
+[2026-03-03 19:24:32] quant.stock_analyzer WARNING: 获取实时行情失败 002216: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:24:34] quant.stock_analyzer INFO: 个股诊断 002216 写入 trade_journal
+[2026-03-03 19:24:56] quant.stock_analyzer WARNING: 获取实时行情失败 000930: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:24:58] quant.stock_analyzer INFO: 个股诊断 000930 写入 trade_journal
+[2026-03-03 19:25:20] quant.stock_analyzer WARNING: 获取实时行情失败 600125: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:25:22] quant.stock_analyzer INFO: 个股诊断 600125 写入 trade_journal
+[2026-03-03 19:25:49] quant.stock_analyzer WARNING: 获取实时行情失败 601963: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:25:50] quant.stock_analyzer INFO: 个股诊断 601963 写入 trade_journal
+[2026-03-03 19:26:14] quant.stock_analyzer WARNING: 获取实时行情失败 301109: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:26:16] quant.stock_analyzer INFO: 个股诊断 301109 写入 trade_journal
+[2026-03-03 19:26:37] quant.stock_analyzer WARNING: 获取实时行情失败 301565: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:26:39] quant.stock_analyzer INFO: 个股诊断 301565 写入 trade_journal
+[2026-03-03 19:27:01] quant.stock_analyzer WARNING: 获取实时行情失败 000065: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:27:03] quant.stock_analyzer INFO: 个股诊断 000065 写入 trade_journal
+[2026-03-03 19:27:25] quant.stock_analyzer WARNING: 获取实时行情失败 605090: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:27:27] quant.stock_analyzer INFO: 个股诊断 605090 写入 trade_journal
+[2026-03-03 19:27:50] quant.stock_analyzer WARNING: 获取实时行情失败 002245: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:27:52] quant.stock_analyzer INFO: 个股诊断 002245 写入 trade_journal
+[2026-03-03 19:28:15] quant.stock_analyzer WARNING: 获取实时行情失败 600867: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:28:17] quant.stock_analyzer INFO: 个股诊断 600867 写入 trade_journal
+[2026-03-03 19:28:39] quant.stock_analyzer WARNING: 获取实时行情失败 300595: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:28:41] quant.stock_analyzer INFO: 个股诊断 300595 写入 trade_journal
+[2026-03-03 19:38:00] quant.stock_analyzer WARNING: 获取实时行情失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:38:08] quant.stock_analyzer DEBUG: 资金流获取失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:43:13] quant.stock_analyzer WARNING: 获取实时行情失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:43:21] quant.stock_analyzer DEBUG: 资金流获取失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:48:29] quant.stock_analyzer WARNING: 获取实时行情失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:48:37] quant.stock_analyzer DEBUG: 资金流获取失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 21:22:57] quant.stock_analyzer WARNING: 获取实时行情失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 21:23:05] quant.stock_analyzer DEBUG: 资金流获取失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 21:32:39] quant.stock_analyzer WARNING: 获取实时行情失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 21:32:48] quant.stock_analyzer DEBUG: 资金流获取失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 21:45:18] quant.stock_analyzer WARNING: 获取实时行情失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 21:45:26] quant.stock_analyzer DEBUG: 资金流获取失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 22:01:33] quant.stock_analyzer WARNING: 获取实时行情失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 22:01:41] quant.stock_analyzer DEBUG: 资金流获取失败 999999: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))

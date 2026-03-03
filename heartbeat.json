@@ -1,0 +1,62 @@
+{
+  "last_heartbeat": "2026-03-03 22:04:44",
+  "pid": 64251,
+  "start_time": "2026-03-01 15:40:11",
+  "strategy_status": {
+    "集合竞价选股": {
+      "last_run": "2026-03-03 09:33:22",
+      "status": "success",
+      "error_msg": null,
+      "duration_sec": 492.6
+    },
+    "放量突破选股": {
+      "last_run": "2026-03-03 10:16:55",
+      "status": "success",
+      "error_msg": null,
+      "duration_sec": 244.5
+    },
+    "期货趋势选股": {
+      "last_run": "2026-03-03 21:10:48",
+      "status": "success",
+      "error_msg": null,
+      "duration_sec": 19.5
+    },
+    "板块轮动选股": {
+      "last_run": "2026-03-03 14:00:56",
+      "status": "success",
+      "error_msg": null,
+      "duration_sec": 47.8
+    },
+    "尾盘短线选股": {
+      "last_run": "2026-03-03 14:31:22",
+      "status": "success",
+      "error_msg": null,
+      "duration_sec": 73.4
+    },
+    "币圈趋势选股": {
+      "last_run": "2026-03-03 01:00:33",
+      "status": "success",
+      "error_msg": null,
+      "duration_sec": 11.7
+    },
+    "美股收盘分析": {
+      "last_run": "2026-03-03 05:30:28",
+      "status": "success",
+      "error_msg": null,
+      "duration_sec": 21.3
+    },
+    "事件驱动选股": {
+      "last_run": "2026-03-03 09:22:09",
+      "status": "success",
+      "error_msg": null,
+      "duration_sec": 1.7
+    },
+    "低吸回调选股": {
+      "last_run": "2026-03-03 10:12:21",
+      "status": "success",
+      "error_msg": null,
+      "duration_sec": 1317.5
+    }
+  },
+  "last_strategy_run": "2026-03-03 21:10:48"
+}

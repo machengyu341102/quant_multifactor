@@ -1,0 +1,1261 @@
+[2026-03-01 15:30:53] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-01 15:30:54] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-01 15:30:54] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-01 15:30:54] quant.risk WARNING: 已达持仓上限 9, 全部过滤
+[2026-03-01 15:30:54] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-01 15:30:54] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-01 15:31:02] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-01 15:31:04] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-01 15:31:04] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-01 15:31:04] quant.risk WARNING: 已达持仓上限 9, 全部过滤
+[2026-03-01 15:31:04] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-01 15:31:04] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-01 15:36:09] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-01 19:27:09] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 19:27:09] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 19:27:09] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 19:27:09] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 19:27:09] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 19:27:09] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-01 19:27:09] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-01 19:27:09] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 19:27:09] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-01 19:27:09] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 19:27:09] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-01 19:27:09] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-01 19:27:09] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-01 20:10:33] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 20:10:33] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 20:10:33] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 20:10:33] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 20:10:33] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 20:10:33] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-01 20:10:33] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-01 20:10:33] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 20:10:33] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-01 20:10:33] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 20:10:33] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-01 20:10:33] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-01 20:10:33] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-01 20:43:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 20:43:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 20:43:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 20:43:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 20:43:07] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 20:43:07] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-01 20:43:07] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-01 20:43:07] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 20:43:07] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-01 20:43:07] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 20:43:07] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-01 20:43:07] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-01 20:43:07] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-01 21:02:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 21:02:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 21:02:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 21:02:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 21:02:22] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 21:02:22] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-01 21:02:22] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-01 21:02:22] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 21:02:22] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-01 21:02:22] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 21:02:22] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-01 21:02:22] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-01 21:02:22] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-01 21:20:13] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 21:20:13] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 21:20:13] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 21:20:13] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 21:20:13] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 21:20:13] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-01 21:20:13] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-01 21:20:13] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 21:20:13] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-01 21:20:13] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 21:20:13] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-01 21:20:13] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-01 21:20:13] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-01 22:06:20] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 22:06:20] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 22:06:20] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 22:06:20] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 22:06:20] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 22:06:20] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-01 22:06:20] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-01 22:06:20] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 22:06:20] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-01 22:06:20] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 22:06:20] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-01 22:06:20] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-01 22:06:20] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-01 22:11:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 22:11:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 22:11:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 22:11:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-01 22:11:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 22:11:59] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-01 22:11:59] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-01 22:11:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 22:11:59] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-01 22:11:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-01 22:11:59] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-01 22:11:59] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-01 22:11:59] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 10:19:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:19:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:19:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:19:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:19:22] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:19:22] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 10:19:22] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 10:19:22] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:19:22] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 10:19:22] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:19:22] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 10:19:22] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 10:19:22] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 10:21:01] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:21:01] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:21:01] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:21:01] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:21:01] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:21:01] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 10:21:01] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 10:21:01] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:21:01] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 10:21:01] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:21:01] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 10:21:01] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 10:21:01] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 10:46:28] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:46:28] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:46:28] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:46:28] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:46:28] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:46:28] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 10:46:28] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 10:46:28] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:46:28] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 10:46:28] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:46:28] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 10:46:28] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 10:46:28] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 10:48:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:48:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:48:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:48:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 10:48:54] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:48:54] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 10:48:54] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 10:48:54] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:48:54] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 10:48:54] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 10:48:54] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 10:48:54] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 10:48:54] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 11:03:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 11:03:51] quant.risk INFO: 组合分配: 期货趋势选股 → 11% 资金
+[2026-03-02 11:03:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 11:07:04] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 11:07:04] quant.risk INFO: 行业集中度: IM 中证1000 (其他已2只, 上限2)
+[2026-03-02 11:07:04] quant.risk INFO: 行业集中度: CF 棉花 (其他已2只, 上限2)
+[2026-03-02 11:07:04] quant.risk INFO: 行业集中度: IC 中证500 (其他已2只, 上限2)
+[2026-03-02 11:07:04] quant.risk INFO: 期货趋势选股: 3 → 0 只
+[2026-03-02 11:08:05] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 11:08:05] quant.risk INFO: 行业集中度: IC 中证500 (其他已2只, 上限2)
+[2026-03-02 11:08:05] quant.risk INFO: 期货趋势选股: 3 → 2 只
+[2026-03-02 11:08:05] quant.risk INFO: 组合分配: 期货趋势选股 → 11% 资金
+[2026-03-02 11:08:05] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 11:29:26] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 11:29:26] quant.risk INFO: 行业集中度: 600459 贵研铂业 (其他已2只, 上限2)
+[2026-03-02 11:29:26] quant.risk INFO: 行业集中度: 300229 拓尔思 (其他已2只, 上限2)
+[2026-03-02 11:29:26] quant.risk INFO: 行业集中度: 002832 比音勒芬 (其他已2只, 上限2)
+[2026-03-02 11:29:26] quant.risk INFO: 集合竞价选股: 3 → 0 只
+[2026-03-02 11:32:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 11:32:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 11:32:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 11:32:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 11:32:54] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 11:32:54] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 11:32:54] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 11:32:54] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 11:32:54] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 11:32:54] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 11:32:54] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 11:32:54] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 11:32:54] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 12:41:05] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 12:41:05] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 12:41:05] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 12:41:05] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 12:41:05] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 12:41:05] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 12:41:05] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 12:41:05] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 12:41:05] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 12:41:05] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 12:41:05] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 12:41:05] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 12:41:05] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 13:25:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:25:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:25:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:25:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:25:18] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:25:18] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 13:25:18] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 13:25:18] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:25:18] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 13:25:18] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:25:18] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 13:25:18] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 13:25:18] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 13:28:41] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:28:41] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:28:41] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:28:41] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:28:41] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:28:41] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 13:28:41] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 13:28:41] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:28:41] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 13:28:41] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:28:41] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 13:28:41] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 13:28:41] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 13:31:53] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:31:53] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:31:53] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:31:53] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:31:53] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:31:53] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 13:31:53] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 13:31:53] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:31:53] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 13:31:53] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:31:53] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 13:31:53] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 13:31:53] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 13:35:20] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:35:20] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:35:20] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:35:20] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:35:20] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:35:20] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 13:35:20] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 13:35:20] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:35:20] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 13:35:20] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:35:20] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 13:35:20] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 13:35:20] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 13:38:36] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:38:36] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:38:36] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:38:36] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:38:36] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:38:36] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 13:38:36] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 13:38:36] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:38:36] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 13:38:36] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:38:36] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 13:38:36] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 13:38:36] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 13:41:47] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:41:47] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:41:47] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:41:47] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 13:41:47] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:41:47] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 13:41:47] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 13:41:47] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:41:47] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 13:41:47] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 13:41:47] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 13:41:47] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 13:41:47] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 14:22:32] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:22:32] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:22:32] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:22:32] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:22:32] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:22:32] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 14:22:32] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 14:22:32] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:22:32] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 14:22:32] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:22:32] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 14:22:32] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 14:22:32] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 14:25:46] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:25:46] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:25:46] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:25:46] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:25:46] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:25:46] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 14:25:46] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 14:25:46] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:25:46] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 14:25:46] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:25:46] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 14:25:46] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 14:25:46] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 14:29:14] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:29:14] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:29:14] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:29:14] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:29:14] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:29:14] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 14:29:14] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 14:29:14] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:29:14] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 14:29:14] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:29:14] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 14:29:14] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 14:29:14] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 14:32:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:32:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:32:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:32:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:32:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:32:37] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 14:32:37] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 14:32:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:32:37] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 14:32:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:32:37] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 14:32:37] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 14:32:37] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 14:35:50] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:35:50] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:35:50] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:35:50] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:35:50] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:35:50] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 14:35:50] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 14:35:50] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:35:50] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 14:35:50] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:35:50] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 14:35:50] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 14:35:50] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 14:39:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:39:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:39:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:39:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 14:39:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:39:59] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 14:39:59] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 14:39:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:39:59] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 14:39:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 14:39:59] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 14:39:59] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 14:39:59] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 15:12:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:12:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:12:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:12:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:12:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:12:59] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 15:12:59] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 15:12:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:12:59] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 15:12:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:12:59] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 15:12:59] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 15:12:59] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 15:23:08] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:23:08] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:23:08] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:23:08] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:23:08] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:23:08] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 15:23:08] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 15:23:08] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:23:08] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 15:23:08] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:23:08] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 15:23:08] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 15:23:08] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 15:50:49] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:50:49] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:50:49] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:50:49] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:50:49] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:50:49] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 15:50:49] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 15:50:49] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:50:49] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 15:50:49] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:50:49] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 15:50:49] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 15:50:49] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 15:59:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:59:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:59:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:59:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 15:59:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:59:51] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 15:59:51] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 15:59:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:59:51] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 15:59:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 15:59:51] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 15:59:51] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 15:59:51] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 16:03:03] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:03:03] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:03:03] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:03:03] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:03:03] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:03:03] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 16:03:03] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 16:03:03] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:03:03] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 16:03:03] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:03:03] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 16:03:03] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 16:03:03] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 16:06:16] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:06:16] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:06:16] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:06:16] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:06:16] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:06:16] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 16:06:16] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 16:06:16] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:06:16] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 16:06:16] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:06:16] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 16:06:16] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 16:06:16] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 16:09:32] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:09:32] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:09:32] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:09:32] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:09:32] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:09:32] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 16:09:32] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 16:09:32] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:09:32] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 16:09:32] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:09:32] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 16:09:32] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 16:09:32] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 16:13:34] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:13:34] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:13:34] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:13:34] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:13:34] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:13:34] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 16:13:34] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 16:13:34] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:13:34] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 16:13:34] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:13:34] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 16:13:34] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 16:13:34] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 16:38:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:38:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:38:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:38:54] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:38:54] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:38:54] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 16:38:54] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 16:38:54] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:38:54] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 16:38:54] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:38:54] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 16:38:54] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 16:38:54] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 16:52:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:52:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:52:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:52:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:52:18] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:52:18] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 16:52:18] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 16:52:18] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:52:18] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 16:52:18] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:52:18] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 16:52:18] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 16:52:18] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 16:56:00] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:56:00] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:56:00] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:56:00] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 16:56:00] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:56:00] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 16:56:00] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 16:56:00] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:56:00] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 16:56:00] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 16:56:00] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 16:56:00] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 16:56:00] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 17:01:56] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:01:56] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:01:56] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:01:56] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:01:56] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:01:56] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 17:01:56] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 17:01:56] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:01:56] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 17:01:56] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:01:56] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 17:01:56] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 17:01:56] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 17:12:12] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:12:12] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:12:12] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:12:12] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:12:12] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:12:12] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 17:12:12] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 17:12:12] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:12:12] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 17:12:12] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:12:12] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 17:12:12] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 17:12:12] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 17:25:38] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:25:38] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:25:38] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:25:38] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:25:38] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:25:38] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 17:25:38] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 17:25:38] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:25:38] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 17:25:38] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:25:38] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 17:25:38] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 17:25:38] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 17:29:29] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:29:29] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:29:29] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:29:29] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:29:29] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:29:29] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 17:29:29] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 17:29:29] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:29:29] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 17:29:29] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:29:29] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 17:29:29] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 17:29:29] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 17:38:08] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:38:08] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:38:08] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:38:08] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 17:38:08] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:38:08] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 17:38:08] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 17:38:08] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:38:08] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 17:38:08] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 17:38:08] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 17:38:08] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 17:38:08] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 18:16:03] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:16:03] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:16:03] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:16:03] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:16:03] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 18:16:03] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 18:16:03] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 18:16:03] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 18:16:03] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 18:16:03] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 18:16:03] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 18:16:03] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 18:16:03] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 18:20:21] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:20:21] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:20:21] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:20:21] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:20:21] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 18:20:21] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 18:20:21] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 18:20:21] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 18:20:21] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 18:20:21] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 18:20:21] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 18:20:21] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 18:20:21] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 18:24:35] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:24:35] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:24:35] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:24:35] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 18:24:35] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 18:24:35] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 18:24:35] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 18:24:35] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 18:24:35] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 18:24:35] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 18:24:35] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 18:24:35] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 18:24:35] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 19:45:02] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 19:45:02] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 19:45:02] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 19:45:02] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 19:45:02] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 19:45:02] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 19:45:02] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 19:45:02] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 19:45:02] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 19:45:02] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 19:45:02] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 19:45:02] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 19:45:02] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 19:55:28] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 19:55:28] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 19:55:28] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 19:55:28] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 19:55:28] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 19:55:28] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 19:55:28] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 19:55:28] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 19:55:28] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 19:55:28] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 19:55:28] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 19:55:28] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 19:55:28] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 20:04:41] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:04:41] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:04:41] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:04:41] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:04:41] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:04:41] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 20:04:41] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 20:04:41] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:04:41] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 20:04:41] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:04:41] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 20:04:41] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 20:04:41] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 20:14:40] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:14:40] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:14:40] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:14:40] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:14:40] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:14:40] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 20:14:40] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 20:14:40] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:14:40] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 20:14:40] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:14:40] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 20:14:40] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 20:14:40] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 20:23:35] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:23:35] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:23:35] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:23:35] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:23:35] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:23:35] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 20:23:35] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 20:23:35] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:23:35] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 20:23:35] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:23:35] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 20:23:35] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 20:23:35] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 20:44:19] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:44:19] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:44:19] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:44:19] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:44:19] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:44:19] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 20:44:19] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 20:44:19] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:44:19] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 20:44:19] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:44:19] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 20:44:19] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 20:44:19] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 20:51:40] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:51:40] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:51:40] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:51:40] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:51:40] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:51:40] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 20:51:40] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 20:51:40] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:51:40] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 20:51:40] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:51:40] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 20:51:40] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 20:51:40] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 20:55:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:55:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:55:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:55:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 20:55:27] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:55:27] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 20:55:27] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 20:55:27] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:55:27] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 20:55:27] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 20:55:27] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 20:55:27] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 20:55:27] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 21:01:26] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:01:26] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:01:26] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:01:26] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:01:26] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:01:26] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 21:01:26] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 21:01:26] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:01:26] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 21:01:26] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:01:26] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 21:01:26] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 21:01:26] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 21:10:35] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:10:35] quant.risk INFO: 行业集中度: RU 橡胶 (其他已2只, 上限2)
+[2026-03-02 21:10:35] quant.risk INFO: 行业集中度: BU 沥青 (其他已2只, 上限2)
+[2026-03-02 21:10:35] quant.risk INFO: 期货趋势选股: 3 → 1 只
+[2026-03-02 21:10:35] quant.risk INFO: 组合分配: 期货趋势选股 → 11% 资金
+[2026-03-02 21:10:35] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:29:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:29:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:29:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:29:59] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:29:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:29:59] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 21:29:59] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 21:29:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:29:59] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 21:29:59] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:29:59] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 21:29:59] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 21:29:59] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 21:48:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:48:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:48:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:48:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:48:27] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:48:27] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 21:48:27] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 21:48:27] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:48:27] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 21:48:27] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:48:27] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 21:48:27] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 21:48:27] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 21:55:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:55:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:55:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:55:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 21:55:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:55:37] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 21:55:37] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 21:55:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:55:37] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 21:55:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 21:55:37] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 21:55:37] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 21:55:37] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 22:39:50] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:39:50] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:39:50] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:39:50] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:39:50] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 22:39:50] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 22:39:50] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 22:39:50] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 22:39:50] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 22:39:50] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 22:39:50] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 22:39:50] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 22:39:50] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 22:48:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:48:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:48:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:48:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:48:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 22:48:51] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 22:48:51] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 22:48:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 22:48:51] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 22:48:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 22:48:51] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 22:48:51] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 22:48:51] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 22:56:33] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:56:33] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:56:33] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:56:33] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 22:56:33] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 22:56:33] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 22:56:33] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 22:56:33] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 22:56:33] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 22:56:33] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 22:56:33] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 22:56:33] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 22:56:33] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 23:22:39] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:22:39] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:22:39] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:22:39] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:22:39] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:22:39] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 23:22:39] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 23:22:39] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:22:39] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 23:22:39] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:22:39] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 23:22:39] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 23:22:39] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 23:29:02] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:29:02] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:29:02] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:29:02] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:29:02] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:29:02] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 23:29:02] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 23:29:02] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:29:02] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 23:29:02] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:29:02] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 23:29:02] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 23:29:02] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 23:42:00] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:42:00] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:42:00] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:42:00] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:42:00] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:42:00] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 23:42:00] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 23:42:00] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:42:00] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 23:42:00] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:42:00] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 23:42:00] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 23:42:00] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-02 23:48:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:48:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:48:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:48:27] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-02 23:48:27] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:48:27] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-02 23:48:27] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-02 23:48:27] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:48:27] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-02 23:48:27] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-02 23:48:27] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-02 23:48:27] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-02 23:48:27] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 01:00:31] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 01:00:31] quant.risk INFO: 行业集中度: ATOM Cosmos (其他已2只, 上限2)
+[2026-03-03 01:00:31] quant.risk INFO: 行业集中度: BNB BNB (其他已2只, 上限2)
+[2026-03-03 01:00:31] quant.risk INFO: 行业集中度: MATIC Polygon (其他已2只, 上限2)
+[2026-03-03 01:00:31] quant.risk INFO: 币圈趋势选股: 3 → 0 只
+[2026-03-03 01:00:33] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 01:00:33] quant.risk INFO: 行业集中度: ATOM Cosmos (其他已2只, 上限2)
+[2026-03-03 01:00:33] quant.risk INFO: 行业集中度: BNB BNB (其他已2只, 上限2)
+[2026-03-03 01:00:33] quant.risk INFO: 行业集中度: MATIC Polygon (其他已2只, 上限2)
+[2026-03-03 01:00:33] quant.risk INFO: 币圈趋势选股: 3 → 0 只
+[2026-03-03 05:30:28] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 05:30:28] quant.risk INFO: 行业集中度: AVGO 博通 (其他已2只, 上限2)
+[2026-03-03 05:30:28] quant.risk INFO: 行业集中度: JPM 摩根大通 (其他已2只, 上限2)
+[2026-03-03 05:30:28] quant.risk INFO: 美股收盘分析: 3 → 1 只
+[2026-03-03 05:30:28] quant.risk INFO: 组合分配: 美股收盘分析 → 9% 资金
+[2026-03-03 05:30:28] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 05:30:28] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 05:30:28] quant.risk INFO: 行业集中度: AVGO 博通 (其他已2只, 上限2)
+[2026-03-03 05:30:28] quant.risk INFO: 行业集中度: JPM 摩根大通 (其他已2只, 上限2)
+[2026-03-03 05:30:28] quant.risk INFO: 美股收盘分析: 3 → 1 只
+[2026-03-03 05:30:28] quant.risk INFO: 组合分配: 美股收盘分析 → 9% 资金
+[2026-03-03 05:30:28] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:33:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:33:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:33:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:33:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:33:07] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 08:33:07] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 08:33:07] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 08:33:07] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 08:33:07] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-03 08:33:07] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 08:33:07] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 08:33:07] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 08:33:07] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 08:38:31] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:38:31] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:38:31] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:38:31] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:38:31] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 08:38:31] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 08:38:31] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 08:38:31] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 08:38:31] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-03 08:38:31] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 08:38:31] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 08:38:31] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 08:38:31] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 08:56:26] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:56:26] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:56:26] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:56:26] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 08:56:26] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 08:56:26] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 08:56:26] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 08:56:26] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 08:56:26] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-03 08:56:26] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 08:56:26] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 08:56:26] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 08:56:26] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 09:05:41] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 09:05:41] quant.risk INFO: 持仓余额 2, 截断推荐
+[2026-03-03 09:05:41] quant.risk INFO: 期货趋势选股: 3 → 2 只
+[2026-03-03 09:05:41] quant.risk INFO: 组合分配: 期货趋势选股 → 9% 资金
+[2026-03-03 09:05:41] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 09:05:43] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 09:05:43] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-03 09:05:46] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 09:05:46] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-03 09:32:46] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 09:32:46] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-03 09:32:46] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 09:32:46] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-03 09:33:22] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 09:33:22] quant.risk WARNING: 已达持仓上限 6, 全部过滤
+[2026-03-03 09:34:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 09:34:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 09:34:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 09:34:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 09:34:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 09:34:37] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 09:34:37] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 09:34:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 09:34:37] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 09:34:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 09:34:37] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 09:34:37] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 09:34:37] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 12:32:48] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:32:48] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:32:48] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:32:48] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:32:48] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 12:32:48] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 12:32:48] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 12:32:48] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 12:32:48] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 12:32:48] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 12:32:48] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 12:32:48] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 12:32:48] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 12:37:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:37:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:37:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:37:37] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:37:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 12:37:37] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 12:37:37] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 12:37:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 12:37:37] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 12:37:37] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 12:37:37] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 12:37:37] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 12:37:37] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 12:42:17] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:42:17] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:42:17] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:42:17] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 12:42:17] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 12:42:17] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 12:42:17] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 12:42:17] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 12:42:17] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 12:42:17] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 12:42:17] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 12:42:17] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 12:42:17] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 13:02:21] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 13:02:21] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 13:02:21] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 13:02:21] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 13:02:21] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 13:02:21] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 13:02:21] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 13:02:21] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 13:02:21] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 13:02:21] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 13:02:21] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 13:02:21] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 13:02:21] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 14:58:01] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 14:58:01] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 14:58:01] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 14:58:01] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 14:58:01] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 14:58:01] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 14:58:01] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 14:58:01] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 14:58:01] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 14:58:01] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 14:58:01] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 14:58:01] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 14:58:01] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 16:32:57] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:32:57] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:32:57] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:32:57] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:32:57] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 16:32:57] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 16:32:57] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 16:32:57] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 16:32:57] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 16:32:57] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 16:32:57] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 16:32:57] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 16:32:57] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 16:37:47] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:37:47] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:37:47] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:37:47] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:37:47] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 16:37:47] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 16:37:47] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 16:37:47] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 16:37:47] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 16:37:47] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 16:37:47] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 16:37:47] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 16:37:47] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 16:57:31] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:57:31] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:57:31] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:57:31] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 16:57:31] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 16:57:31] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 16:57:31] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 16:57:31] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 16:57:31] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 16:57:31] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 16:57:31] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 16:57:31] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 16:57:31] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 17:24:15] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:24:15] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:24:15] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:24:15] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:24:15] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:24:15] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 17:24:15] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 17:24:15] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:24:15] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 17:24:15] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:24:15] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 17:24:15] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 17:24:15] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 17:28:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:28:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:28:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:28:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:28:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:28:51] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 17:28:51] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 17:28:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:28:51] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 17:28:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:28:51] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 17:28:51] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 17:28:51] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 17:33:06] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:33:06] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:33:06] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:33:06] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:33:06] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:33:06] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 17:33:06] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 17:33:06] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:33:06] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 17:33:06] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:33:06] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 17:33:06] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 17:33:06] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 17:59:48] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:59:48] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:59:48] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:59:48] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 17:59:48] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:59:48] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 17:59:48] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 17:59:48] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:59:48] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 17:59:48] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 17:59:48] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 17:59:48] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 17:59:48] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:27:43] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:27:43] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:27:43] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:27:43] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:27:43] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:27:43] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 18:27:43] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 18:27:43] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:27:43] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 18:27:43] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:27:43] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 18:27:43] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 18:27:43] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:33:11] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:33:11] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:33:11] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:33:11] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:33:11] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:33:11] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 18:33:11] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 18:33:11] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:33:11] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 18:33:11] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:33:11] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 18:33:11] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 18:33:11] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:38:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:38:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:38:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:38:22] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:38:22] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:38:22] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 18:38:22] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 18:38:22] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:38:22] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 18:38:22] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:38:22] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 18:38:22] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 18:38:22] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:45:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:45:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:45:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:45:18] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:45:18] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:45:18] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 18:45:18] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 18:45:18] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:45:18] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 18:45:18] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:45:18] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 18:45:18] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 18:45:18] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:50:45] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:50:45] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:50:45] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:50:45] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 18:50:45] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:50:45] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 18:50:45] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 18:50:45] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:50:45] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 18:50:45] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 18:50:45] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 18:50:45] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 18:50:45] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:37:38] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:37:38] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:37:38] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:37:38] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:37:38] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 19:37:38] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 19:37:38] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 19:37:38] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 19:37:38] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 19:37:38] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 19:37:38] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 19:37:38] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 19:37:38] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:42:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:42:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:42:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:42:51] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:42:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 19:42:51] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 19:42:51] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 19:42:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 19:42:51] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 19:42:51] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 19:42:51] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 19:42:51] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 19:42:51] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:48:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:48:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:48:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:48:07] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 19:48:07] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 19:48:07] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 19:48:07] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 19:48:07] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 19:48:07] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 19:48:07] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 19:48:07] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 19:48:07] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 19:48:07] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:10:48] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 21:10:48] quant.risk WARNING: 已达持仓上限 6 (非A股类持仓6), 全部过滤
+[2026-03-03 21:10:48] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 21:10:48] quant.risk WARNING: 已达持仓上限 6 (非A股类持仓6), 全部过滤
+[2026-03-03 21:22:34] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:22:34] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:22:34] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:22:34] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:22:34] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 21:22:34] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 21:22:34] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 21:22:34] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 21:22:34] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 21:22:34] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 21:22:34] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 21:22:34] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 21:22:34] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:32:17] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:32:17] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:32:17] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:32:17] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:32:17] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 21:32:17] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 21:32:17] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 21:32:17] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 21:32:17] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 21:32:17] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 21:32:17] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 21:32:17] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 21:32:17] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:44:56] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:44:56] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:44:56] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:44:56] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 21:44:56] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 21:44:56] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 21:44:56] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 21:44:56] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 21:44:56] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 21:44:56] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 21:44:56] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 21:44:56] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 21:44:56] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 22:01:10] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 22:01:10] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 22:01:10] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 22:01:10] quant.risk INFO: 动态仓位: 大盘=neutral, score=0.50, scale=0.8
+[2026-03-03 22:01:10] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 22:01:10] quant.risk INFO: 黑名单过滤: 移除 1 只
+[2026-03-03 22:01:10] quant.risk INFO: 测试策略: 3 → 2 只
+[2026-03-03 22:01:10] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 22:01:10] quant.risk WARNING: 已达持仓上限 6 (A股类持仓9), 全部过滤
+[2026-03-03 22:01:10] quant.risk INFO: regime覆盖max_positions=6 (regime=neutral)
+[2026-03-03 22:01:10] quant.risk INFO: 行业集中度: 601398 工商银行 (金融已2只, 上限2)
+[2026-03-03 22:01:10] quant.risk INFO: 测试策略: 1 → 0 只
+[2026-03-03 22:01:10] quant.risk ERROR: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)

@@ -1,0 +1,30 @@
+[
+  {
+    "pattern": "JSONDecodeError",
+    "action": "repair_json",
+    "description": "JSON文件损坏",
+    "count": 0,
+    "last_seen": ""
+  },
+  {
+    "pattern": "TimeoutError|ReadTimeout",
+    "action": "clear_cache",
+    "description": "API超时",
+    "count": 0,
+    "last_seen": ""
+  },
+  {
+    "pattern": "ConnectionError|MaxRetryError|ConnectionRefusedError",
+    "action": "log_connection",
+    "description": "连接拒绝",
+    "count": 0,
+    "last_seen": ""
+  },
+  {
+    "pattern": "No space left|OSError.*No space",
+    "action": "clean_logs",
+    "description": "磁盘空间不足",
+    "count": 0,
+    "last_seen": ""
+  }
+]

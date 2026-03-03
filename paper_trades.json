@@ -1,0 +1,24 @@
+[
+  {
+    "action": "open",
+    "code": "RU",
+    "name": "橡胶",
+    "strategy": "期货趋势选股",
+    "price": 17262.24,
+    "time": "2026-03-03T09:05:41.586705",
+    "reason": "做多 | ADX=34 | 突破20日高 | 保证金17245",
+    "score": 0.9464,
+    "mode": "paper"
+  },
+  {
+    "action": "open",
+    "code": "BU",
+    "name": "沥青",
+    "strategy": "期货趋势选股",
+    "price": 3558.56,
+    "time": "2026-03-03T09:05:41.587546",
+    "reason": "做多 | ADX=42 | 突破20日高 | 保证金3555",
+    "score": 0.9249,
+    "mode": "paper"
+  }
+]

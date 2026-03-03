@@ -1,0 +1,54 @@
+[
+  {
+    "code": "RU",
+    "name": "橡胶",
+    "strategy": "期货趋势选股",
+    "entry_price": 17262.24,
+    "entry_date": "2026-03-03",
+    "entry_time": "09:05:41",
+    "score": 0.9464,
+    "reason": "做多 | ADX=34 | 突破20日高 | 保证金17245",
+    "status": "holding",
+    "mode": "paper",
+    "atr": 323.21,
+    "stop_price": 16777.43,
+    "highest_price": 17262.24,
+    "lowest_price": 17262.24,
+    "partial_exited": false,
+    "remaining_ratio": 1.0,
+    "position_size": 15000.0,
+    "entry_commission": 3.75,
+    "factor_scores": {
+      "s_trend": 0.8739,
+      "s_momentum": 1.0,
+      "s_volume": 0.5227,
+      "s_risk": 1.0
+    }
+  },
+  {
+    "code": "BU",
+    "name": "沥青",
+    "strategy": "期货趋势选股",
+    "entry_price": 3558.56,
+    "entry_date": "2026-03-03",
+    "entry_time": "09:05:41",
+    "score": 0.9249,
+    "reason": "做多 | ADX=42 | 突破20日高 | 保证金3555",
+    "status": "holding",
+    "mode": "paper",
+    "atr": 77.64,
+    "stop_price": 3442.1,
+    "highest_price": 3558.56,
+    "lowest_price": 3558.56,
+    "partial_exited": false,
+    "remaining_ratio": 1.0,
+    "position_size": 15000.0,
+    "entry_commission": 3.75,
+    "factor_scores": {
+      "s_trend": 0.9335,
+      "s_momentum": 1.0,
+      "s_volume": 0.3203,
+      "s_risk": 1.0
+    }
+  }
+]

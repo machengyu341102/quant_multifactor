@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.quant.watchdog</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/zchtech002/machengyu/quant_multifactor/watchdog.py</string>
+        <string>check</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/zchtech002/machengyu/quant_multifactor</string>
+
+    <!-- 每600秒(10分钟)检查一次 -->
+    <key>StartInterval</key>
+    <integer>600</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/zchtech002/machengyu/quant_multifactor/logs/watchdog_launchd.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/zchtech002/machengyu/quant_multifactor/logs/watchdog_launchd_err.log</string>
+
+    <!-- 开机/登录后自动启动 -->
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>

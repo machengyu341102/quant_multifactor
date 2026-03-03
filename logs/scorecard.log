@@ -1,0 +1,28 @@
+[2026-03-02 09:20:34] quant.scorecard INFO: 评分日期: 2026-02-27 (次日表现)
+[2026-03-02 09:20:34] quant.scorecard INFO: 2026-02-27 无推荐记录, 跳过
+[2026-03-02 10:57:50] quant.scorecard INFO: 评分日期: 2026-02-27 (次日表现)
+[2026-03-02 10:57:50] quant.scorecard INFO: 2026-02-27 无推荐记录, 跳过
+[2026-03-03 09:20:01] quant.scorecard INFO: 评分日期: 2026-03-02 (次日表现)
+[2026-03-03 09:20:01] quant.scorecard WARNING: 获取 IM 次日K线失败: invalid literal for int() with base 10: 'i'
+[2026-03-03 09:20:01] quant.scorecard WARNING: IM 中证1000 次日数据获取失败, 跳过
+[2026-03-03 09:20:01] quant.scorecard WARNING: 获取 CF 次日K线失败: invalid literal for int() with base 10: 'i'
+[2026-03-03 09:20:01] quant.scorecard WARNING: CF 棉花 次日数据获取失败, 跳过
+[2026-03-03 09:20:01] quant.scorecard WARNING: 获取 FU 次日K线失败: invalid literal for int() with base 10: 'i'
+[2026-03-03 09:20:01] quant.scorecard WARNING: FU 燃油 次日数据获取失败, 跳过
+[2026-03-03 09:20:01] quant.scorecard INFO: 2026-03-02 无新增评分记录
+[2026-03-03 09:20:02] quant.scorecard INFO: 评分日期: 2026-03-02 (次日表现)
+[2026-03-03 09:20:02] quant.scorecard WARNING: 获取 IM 次日K线失败: invalid literal for int() with base 10: 'i'
+[2026-03-03 09:20:02] quant.scorecard WARNING: IM 中证1000 次日数据获取失败, 跳过
+[2026-03-03 09:20:02] quant.scorecard WARNING: 获取 CF 次日K线失败: invalid literal for int() with base 10: 'i'
+[2026-03-03 09:20:02] quant.scorecard WARNING: CF 棉花 次日数据获取失败, 跳过
+[2026-03-03 09:20:02] quant.scorecard WARNING: 获取 FU 次日K线失败: invalid literal for int() with base 10: 'i'
+[2026-03-03 09:20:02] quant.scorecard WARNING: FU 燃油 次日数据获取失败, 跳过
+[2026-03-03 09:20:02] quant.scorecard INFO: 2026-03-02 无新增评分记录
+[2026-03-03 09:20:06] quant.scorecard INFO: 评分日期: 2026-03-02 (次日表现)
+[2026-03-03 09:20:07] quant.scorecard WARNING: 获取 IM 次日K线失败: invalid literal for int() with base 10: 'i'
+[2026-03-03 09:20:07] quant.scorecard WARNING: IM 中证1000 次日数据获取失败, 跳过
+[2026-03-03 09:20:07] quant.scorecard WARNING: 获取 CF 次日K线失败: invalid literal for int() with base 10: 'i'
+[2026-03-03 09:20:07] quant.scorecard WARNING: CF 棉花 次日数据获取失败, 跳过
+[2026-03-03 09:20:07] quant.scorecard WARNING: 获取 FU 次日K线失败: invalid literal for int() with base 10: 'i'
+[2026-03-03 09:20:07] quant.scorecard WARNING: FU 燃油 次日数据获取失败, 跳过
+[2026-03-03 09:20:07] quant.scorecard INFO: 2026-03-02 无新增评分记录

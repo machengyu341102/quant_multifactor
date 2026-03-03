@@ -1,0 +1,197 @@
+[2026-03-02 19:49:36] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 19:49:48] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 19:49:48] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 19:49:48] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 19:53:04] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 19:53:05] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 19:53:05] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 19:53:05] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 20:02:44] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 20:02:45] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 20:02:45] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 20:02:45] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 20:12:02] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 20:12:02] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 20:12:02] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 20:12:02] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 20:21:20] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 20:21:20] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 20:21:20] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 20:21:20] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 20:42:22] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 20:42:23] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 20:42:23] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 20:42:23] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 20:49:42] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 20:49:42] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 20:49:42] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 20:49:43] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 20:53:30] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 20:53:31] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 20:53:31] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 20:53:31] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 20:59:30] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 20:59:31] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 20:59:31] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 20:59:31] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 21:28:02] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 21:28:02] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 21:28:02] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 21:28:02] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 21:46:31] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 21:46:32] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 21:46:32] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 21:46:32] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 21:53:41] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 21:53:42] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 21:53:42] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 21:53:42] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 22:37:52] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 22:37:53] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 22:37:53] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 22:37:53] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 22:46:52] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 22:46:53] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 22:46:53] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 22:46:53] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 22:54:36] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 22:54:37] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 22:54:37] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 22:54:37] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 23:20:46] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 23:20:47] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 23:20:47] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 23:20:47] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 23:27:11] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 23:27:12] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 23:27:12] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 23:27:12] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 23:40:09] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 23:40:09] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 23:40:09] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 23:40:09] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-02 23:46:36] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-02 23:46:37] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-02 23:46:37] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-02 23:46:37] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-03 08:31:14] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 08:31:14] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 08:31:14] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 08:31:14] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-03 08:54:25] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 08:54:26] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 08:54:26] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 08:54:26] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-03 12:31:52] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 12:31:53] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 12:31:53] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 12:31:53] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-03 12:36:42] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 12:36:43] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 12:36:43] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 12:36:43] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-03 12:41:22] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 12:41:22] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 12:41:22] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 12:41:22] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-03 13:01:25] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 13:01:26] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 13:01:26] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 13:01:26] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-03 13:10:28] quant.ml_factor INFO: [ML] 训练数据: 540 条 (1 个策略)
+[2026-03-03 13:10:29] quant.ml_factor INFO: [ML] 训练完成: 540 条, 19 特征, {'mse': 3.9859, 'rmse': 1.9965, 'r2': 0.7346}
+[2026-03-03 13:13:42] quant.ml_factor INFO: [ML] 训练数据: 540 条 (1 个策略)
+[2026-03-03 13:13:57] quant.ml_factor INFO: [ML] 训练数据: 540 条 (1 个策略)
+[2026-03-03 13:13:58] quant.ml_factor INFO: [ML] 训练完成: 540 条, 19 特征, {'mse': 3.9859, 'rmse': 1.9965, 'r2': 0.7346}
+[2026-03-03 13:14:01] quant.ml_factor INFO: [ML] 训练数据: 540 条 (1 个策略)
+[2026-03-03 14:57:05] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 14:57:06] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 14:57:06] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 14:57:06] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'mse': 0.1159, 'rmse': 0.3404, 'r2': 0.8938}
+[2026-03-03 16:16:09] quant.ml_factor INFO: [ML] 训练数据: 540 条 (1 个策略)
+[2026-03-03 16:16:10] quant.ml_factor INFO: [ML] 训练完成: 540 条, 19 特征, {'mse': 11.723, 'rmse': 3.4239, 'r2': 0.2194}
+[2026-03-03 16:16:14] quant.ml_factor INFO: [ML] 训练数据: 540 条 (1 个策略)
+[2026-03-03 16:16:44] quant.ml_factor INFO: [ML] 训练数据: 540 条 (1 个策略)
+[2026-03-03 16:16:45] quant.ml_factor INFO: [ML] 训练完成: 540 条, 15 特征, {'accuracy': 0.7463}
+[2026-03-03 16:16:45] quant.ml_factor INFO: [ML] 训练数据: 540 条 (1 个策略)
+[2026-03-03 16:21:06] quant.ml_factor INFO: [ML] 训练数据: 1540 条 (1 个策略)
+[2026-03-03 16:21:06] quant.ml_factor INFO: [ML] 训练完成: 1540 条, 15 特征, {'accuracy': 0.689}
+[2026-03-03 16:21:15] quant.ml_factor INFO: [ML] 训练数据: 1540 条 (1 个策略)
+[2026-03-03 16:31:41] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 16:31:41] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 16:31:41] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 16:31:41] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 16:36:52] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 16:36:52] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 16:36:52] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 16:36:52] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 16:57:17] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 16:57:18] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 16:57:18] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 16:57:18] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 17:10:08] quant.ml_factor INFO: [ML] 训练数据: 1540 条 (1 个策略)
+[2026-03-03 17:10:09] quant.ml_factor INFO: [ML] 训练完成: 1540 条, 15 特征, {'accuracy': 0.689}
+[2026-03-03 17:23:47] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 17:23:48] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 17:23:48] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 17:23:48] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 17:28:24] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 17:28:24] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 17:28:24] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 17:28:24] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 17:32:38] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 17:32:39] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 17:32:39] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 17:32:39] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 17:59:08] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 17:59:09] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 17:59:09] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 17:59:09] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 18:27:07] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 18:27:08] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 18:27:08] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 18:27:08] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 18:32:35] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 18:32:36] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 18:32:36] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 18:32:36] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 18:37:49] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 18:37:49] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 18:37:49] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 18:37:49] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 18:44:39] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 18:44:39] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 18:44:39] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 18:44:39] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 18:50:10] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 18:50:11] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 18:50:11] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 18:50:11] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 19:37:10] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 19:37:11] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 19:37:11] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 19:37:11] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 19:42:26] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 19:42:26] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 19:42:26] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 19:42:26] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 19:47:42] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 19:47:43] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 19:47:43] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 19:47:43] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 21:22:00] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 21:22:01] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 21:22:01] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 21:22:01] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 21:31:40] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 21:31:41] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 21:31:41] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 21:31:41] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 21:44:32] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 21:44:33] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 21:44:33] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 21:44:33] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}
+[2026-03-03 22:00:02] quant.ml_factor INFO: [ML] 训练数据: 2 条 (1 个策略)
+[2026-03-03 22:00:03] quant.ml_factor WARNING: [ML] 训练数据不足: 0 条 (需要 50)
+[2026-03-03 22:00:03] quant.ml_factor INFO: [ML] 训练数据: 100 条 (1 个策略)
+[2026-03-03 22:00:03] quant.ml_factor INFO: [ML] 训练完成: 100 条, 8 特征, {'accuracy': 0.95}

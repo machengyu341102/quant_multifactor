@@ -1,0 +1,44 @@
+[
+  {
+    "code": "FU",
+    "name": "燃油",
+    "action": "open",
+    "direction": "long",
+    "price": 3383.0,
+    "lots": 1,
+    "margin": 3186.0,
+    "stop_price": 3194.72,
+    "time": "2026-03-02T21:10:35.717479",
+    "reason": "做多 | ADX=47 | 突破20日高 | 保证金3186",
+    "mode": "simnow",
+    "order_id": "PYSDK_insert_66fc854f4c14ecfeb5a46a6ddac79e7b"
+  },
+  {
+    "code": "RU",
+    "name": "橡胶",
+    "action": "open",
+    "direction": "long",
+    "price": 17275.0,
+    "lots": 1,
+    "margin": 17245.0,
+    "stop_price": 16628.58,
+    "time": "2026-03-03T09:05:41.589115",
+    "reason": "做多 | ADX=34 | 突破20日高 | 保证金17245",
+    "mode": "simnow",
+    "order_id": "PYSDK_insert_a72b123d4d1365ca2bf4ed2751ec65e6"
+  },
+  {
+    "code": "BU",
+    "name": "沥青",
+    "action": "open",
+    "direction": "long",
+    "price": 3543.0,
+    "lots": 1,
+    "margin": 3555.0,
+    "stop_price": 3387.72,
+    "time": "2026-03-03T09:05:41.589115",
+    "reason": "做多 | ADX=42 | 突破20日高 | 保证金3555",
+    "mode": "simnow",
+    "order_id": "PYSDK_insert_f7054fec832f767c8168ebb083831e4c"
+  }
+]

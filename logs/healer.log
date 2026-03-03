@@ -1,0 +1,935 @@
+[2026-03-01 16:00:57] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-0/test_repair_from_bak0/test.json
+[2026-03-01 16:00:57] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-0/test_repair_initialize_empty0/positions.json → list
+[2026-03-01 16:01:03] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-01 16:01:03] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-01 16:01:03] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-01 16:03:20] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-1/test_repair_from_bak0/test.json
+[2026-03-01 16:03:20] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-1/test_repair_initialize_empty0/positions.json → list
+[2026-03-01 16:03:26] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-01 16:03:26] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-01 16:03:26] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-01 19:26:59] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-3/test_repair_from_bak0/test.json
+[2026-03-01 19:26:59] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-3/test_repair_initialize_empty0/positions.json → list
+[2026-03-01 19:27:03] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-01 19:27:03] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-01 19:27:03] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-01 20:10:28] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-6/test_repair_from_bak0/test.json
+[2026-03-01 20:10:28] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-6/test_repair_initialize_empty0/positions.json → list
+[2026-03-01 20:10:33] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-01 20:10:33] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-01 20:10:33] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-01 20:43:03] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-10/test_repair_from_bak0/test.json
+[2026-03-01 20:43:03] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-10/test_repair_initialize_empty0/positions.json → list
+[2026-03-01 20:43:07] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-01 20:43:07] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-01 20:43:07] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-01 21:02:18] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-11/test_repair_from_bak0/test.json
+[2026-03-01 21:02:18] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-11/test_repair_initialize_empty0/positions.json → list
+[2026-03-01 21:02:22] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-01 21:02:22] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-01 21:02:22] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-01 21:20:08] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-12/test_repair_from_bak0/test.json
+[2026-03-01 21:20:08] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-12/test_repair_initialize_empty0/positions.json → list
+[2026-03-01 21:20:13] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-01 21:20:13] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-01 21:20:13] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-01 22:06:16] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-14/test_repair_from_bak0/test.json
+[2026-03-01 22:06:16] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-14/test_repair_initialize_empty0/positions.json → list
+[2026-03-01 22:06:20] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-01 22:06:20] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-01 22:06:20] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-01 22:11:54] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-15/test_repair_from_bak0/test.json
+[2026-03-01 22:11:54] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-15/test_repair_initialize_empty0/positions.json → list
+[2026-03-01 22:11:59] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-01 22:11:59] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-01 22:11:59] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 10:19:14] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-16/test_repair_from_bak0/test.json
+[2026-03-02 10:19:14] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-16/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 10:19:22] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 10:19:22] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 10:19:22] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 10:20:52] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-17/test_repair_from_bak0/test.json
+[2026-03-02 10:20:52] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-17/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 10:21:01] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 10:21:01] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 10:21:01] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 10:46:24] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-18/test_repair_from_bak0/test.json
+[2026-03-02 10:46:24] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-18/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 10:46:28] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 10:46:28] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 10:46:28] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 10:48:49] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-19/test_repair_from_bak0/test.json
+[2026-03-02 10:48:49] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-19/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 10:48:54] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 10:48:54] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 10:48:54] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 11:32:48] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-21/test_repair_from_bak0/test.json
+[2026-03-02 11:32:48] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-21/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 11:32:54] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 11:32:54] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 11:32:54] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 12:41:00] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-25/test_repair_from_bak0/test.json
+[2026-03-02 12:41:00] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-25/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 12:41:05] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 12:41:05] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 12:41:05] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 13:25:13] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-30/test_repair_from_bak0/test.json
+[2026-03-02 13:25:13] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-30/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 13:25:18] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 13:25:18] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 13:25:18] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 13:28:35] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-31/test_repair_from_bak0/test.json
+[2026-03-02 13:28:35] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-31/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 13:28:41] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 13:28:41] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 13:28:41] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 13:31:48] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-32/test_repair_from_bak0/test.json
+[2026-03-02 13:31:48] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-32/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 13:31:53] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 13:31:53] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 13:31:53] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 13:35:13] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-33/test_repair_from_bak0/test.json
+[2026-03-02 13:35:13] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-33/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 13:35:20] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 13:35:20] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 13:35:20] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 13:38:31] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-34/test_repair_from_bak0/test.json
+[2026-03-02 13:38:31] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-34/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 13:38:36] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 13:38:36] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 13:38:36] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 13:41:42] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-35/test_repair_from_bak0/test.json
+[2026-03-02 13:41:42] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-35/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 13:41:47] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 13:41:47] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 13:41:47] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 14:22:26] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-36/test_repair_from_bak0/test.json
+[2026-03-02 14:22:26] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-36/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 14:22:32] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 14:22:32] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 14:22:32] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 14:25:40] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-37/test_repair_from_bak0/test.json
+[2026-03-02 14:25:40] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-37/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 14:25:46] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 14:25:46] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 14:25:46] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 14:29:08] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-38/test_repair_from_bak0/test.json
+[2026-03-02 14:29:08] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-38/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 14:29:14] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 14:29:14] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 14:29:14] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 14:32:31] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-39/test_repair_from_bak0/test.json
+[2026-03-02 14:32:31] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-39/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 14:32:37] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 14:32:37] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 14:32:37] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 14:35:45] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-40/test_repair_from_bak0/test.json
+[2026-03-02 14:35:45] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-40/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 14:35:50] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 14:35:50] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 14:35:50] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 14:39:54] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-43/test_repair_from_bak0/test.json
+[2026-03-02 14:39:54] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-43/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 14:39:59] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 14:39:59] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 14:39:59] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 15:12:54] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-44/test_repair_from_bak0/test.json
+[2026-03-02 15:12:54] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-44/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 15:12:59] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 15:12:59] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 15:12:59] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 15:23:03] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-46/test_repair_from_bak0/test.json
+[2026-03-02 15:23:03] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-46/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 15:23:08] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 15:23:08] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 15:23:08] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 15:50:44] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-48/test_repair_from_bak0/test.json
+[2026-03-02 15:50:44] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-48/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 15:50:49] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 15:50:49] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 15:50:49] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 15:59:46] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-49/test_repair_from_bak0/test.json
+[2026-03-02 15:59:46] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-49/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 15:59:51] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 15:59:51] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 15:59:51] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 16:02:58] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-50/test_repair_from_bak0/test.json
+[2026-03-02 16:02:58] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-50/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 16:03:03] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 16:03:03] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 16:03:03] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 16:06:11] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-51/test_repair_from_bak0/test.json
+[2026-03-02 16:06:11] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-51/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 16:06:15] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 16:06:15] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 16:06:15] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 16:09:27] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-52/test_repair_from_bak0/test.json
+[2026-03-02 16:09:27] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-52/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 16:09:32] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 16:09:32] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 16:09:32] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 16:13:29] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-54/test_repair_from_bak0/test.json
+[2026-03-02 16:13:29] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-54/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 16:13:34] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 16:13:34] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 16:13:34] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 16:38:49] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-55/test_repair_from_bak0/test.json
+[2026-03-02 16:38:49] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-55/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 16:38:54] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 16:38:54] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 16:38:54] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 16:52:13] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-56/test_repair_from_bak0/test.json
+[2026-03-02 16:52:13] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-56/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 16:52:18] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 16:52:18] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 16:52:18] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 16:55:55] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-57/test_repair_from_bak0/test.json
+[2026-03-02 16:55:55] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-57/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 16:56:00] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 16:56:00] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 16:56:00] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 17:01:51] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-58/test_repair_from_bak0/test.json
+[2026-03-02 17:01:51] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-58/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 17:01:56] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 17:01:56] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 17:01:56] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 17:12:07] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-59/test_repair_from_bak0/test.json
+[2026-03-02 17:12:07] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-59/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 17:12:12] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 17:12:12] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 17:12:12] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 17:25:33] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-60/test_repair_from_bak0/test.json
+[2026-03-02 17:25:33] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-60/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 17:25:38] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 17:25:38] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 17:25:38] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 17:29:23] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-61/test_repair_from_bak0/test.json
+[2026-03-02 17:29:23] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-61/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 17:29:28] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 17:29:28] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 17:29:29] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 17:38:03] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-65/test_repair_from_bak0/test.json
+[2026-03-02 17:38:03] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-65/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 17:38:08] quant.healer INFO: 冒烟测试: FAILED (9/10)
+[2026-03-02 17:38:08] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 17:38:08] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 18:15:57] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-66/test_repair_from_bak0/test.json
+[2026-03-02 18:15:57] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-66/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 18:16:03] quant.healer INFO: 冒烟测试: FAILED (15/16)
+[2026-03-02 18:16:03] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 18:16:03] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 18:20:15] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-67/test_repair_from_bak0/test.json
+[2026-03-02 18:20:15] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-67/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 18:20:21] quant.healer INFO: 冒烟测试: FAILED (15/16)
+[2026-03-02 18:20:21] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 18:20:21] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 18:24:29] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-68/test_repair_from_bak0/test.json
+[2026-03-02 18:24:29] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-68/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 18:24:34] quant.healer INFO: 冒烟测试: FAILED (15/16)
+[2026-03-02 18:24:34] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 18:24:34] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 19:44:51] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-71/test_repair_from_bak0/test.json
+[2026-03-02 19:44:51] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-71/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 19:45:02] quant.healer INFO: 冒烟测试: FAILED (16/18)
+[2026-03-02 19:45:02] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 19:45:02] quant.healer WARNING:   FAIL: Binance可用 — HTTPSConnectionPool(host='api.binance.com', port=443): Max retries exceeded with url: /api/v3/ping (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')))
+[2026-03-02 19:45:02] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 19:55:22] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-73/test_repair_from_bak0/test.json
+[2026-03-02 19:55:22] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-73/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 19:55:28] quant.healer INFO: 冒烟测试: FAILED (18/19)
+[2026-03-02 19:55:28] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 19:55:28] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 20:04:35] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-75/test_repair_from_bak0/test.json
+[2026-03-02 20:04:35] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-75/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 20:04:41] quant.healer INFO: 冒烟测试: FAILED (19/20)
+[2026-03-02 20:04:41] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 20:04:41] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 20:14:34] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-77/test_repair_from_bak0/test.json
+[2026-03-02 20:14:34] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-77/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 20:14:40] quant.healer INFO: 冒烟测试: FAILED (20/21)
+[2026-03-02 20:14:40] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 20:14:40] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 20:23:29] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-78/test_repair_from_bak0/test.json
+[2026-03-02 20:23:29] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-78/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 20:23:35] quant.healer INFO: 冒烟测试: FAILED (20/21)
+[2026-03-02 20:23:35] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 20:23:35] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 20:44:14] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-79/test_repair_from_bak0/test.json
+[2026-03-02 20:44:14] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-79/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 20:44:19] quant.healer INFO: 冒烟测试: FAILED (20/21)
+[2026-03-02 20:44:19] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 20:44:19] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 20:51:34] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-80/test_repair_from_bak0/test.json
+[2026-03-02 20:51:34] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-80/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 20:51:40] quant.healer INFO: 冒烟测试: FAILED (20/21)
+[2026-03-02 20:51:40] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 20:51:40] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 20:55:22] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-81/test_repair_from_bak0/test.json
+[2026-03-02 20:55:22] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-81/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 20:55:27] quant.healer INFO: 冒烟测试: FAILED (20/21)
+[2026-03-02 20:55:27] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 20:55:27] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 21:01:20] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-82/test_repair_from_bak0/test.json
+[2026-03-02 21:01:20] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-82/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 21:01:26] quant.healer INFO: 冒烟测试: FAILED (20/21)
+[2026-03-02 21:01:26] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 21:01:26] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 21:29:53] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-85/test_repair_from_bak0/test.json
+[2026-03-02 21:29:53] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-85/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 21:29:59] quant.healer INFO: 冒烟测试: FAILED (20/21)
+[2026-03-02 21:29:59] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 21:29:59] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 21:48:21] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-87/test_repair_from_bak0/test.json
+[2026-03-02 21:48:21] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-87/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 21:48:27] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-02 21:48:27] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 21:48:27] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 21:55:31] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-88/test_repair_from_bak0/test.json
+[2026-03-02 21:55:31] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-88/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 21:55:37] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-02 21:55:37] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 21:55:37] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 22:39:44] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-89/test_repair_from_bak0/test.json
+[2026-03-02 22:39:44] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-89/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 22:39:50] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-02 22:39:50] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 22:39:50] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 22:48:45] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-90/test_repair_from_bak0/test.json
+[2026-03-02 22:48:45] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-90/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 22:48:51] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-02 22:48:51] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 22:48:51] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 22:56:27] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-91/test_repair_from_bak0/test.json
+[2026-03-02 22:56:27] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-91/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 22:56:33] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-02 22:56:33] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 22:56:33] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 23:22:33] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-92/test_repair_from_bak0/test.json
+[2026-03-02 23:22:33] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-92/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 23:22:39] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-02 23:22:39] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 23:22:39] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 23:28:56] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-93/test_repair_from_bak0/test.json
+[2026-03-02 23:28:56] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-93/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 23:29:02] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-02 23:29:02] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 23:29:02] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 23:41:54] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-94/test_repair_from_bak0/test.json
+[2026-03-02 23:41:54] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-94/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 23:42:00] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-02 23:42:00] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 23:42:00] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-02 23:48:21] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-95/test_repair_from_bak0/test.json
+[2026-03-02 23:48:21] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-95/test_repair_initialize_empty0/positions.json → list
+[2026-03-02 23:48:27] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-02 23:48:27] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-02 23:48:27] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 08:33:01] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-98/test_repair_from_bak0/test.json
+[2026-03-03 08:33:01] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-98/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 08:33:07] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 08:33:07] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 08:33:07] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 08:56:20] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-100/test_repair_from_bak0/test.json
+[2026-03-03 08:56:20] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-100/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 08:56:26] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 08:56:26] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 08:56:26] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 09:10:20] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 09:10:20] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 09:10:20] quant.healer INFO: ==================================================
+[2026-03-03 09:10:20] quant.healer INFO: 自动修复开始
+[2026-03-03 09:10:20] quant.healer INFO: ==================================================
+[2026-03-03 09:10:20] quant.healer INFO: 扫描到 1580 条近 24 小时 ERROR 日志
+[2026-03-03 09:10:20] quant.healer INFO: 自动修复完成: 0 项修复, 11 项无法自动处理
+[2026-03-03 09:10:20] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 09:10:20] quant.healer WARNING:   [2026-03-02 10:19:22] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 09:10:20] quant.healer WARNING:   [2026-03-02 10:18:48] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 09:10:20] quant.healer WARNING:   [2026-03-02 10:51:35] quant.watchdog: 系统异常! 策略 [期货趋势选股] 今日未运行 (预期 09:05)
+[2026-03-03 09:10:20] quant.healer WARNING:   [2026-03-02 11:15:16] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 09:10:20] quant.healer WARNING:   [2026-03-02 18:11:43] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 09:10:21] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 09:10:21] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 09:10:21] quant.healer INFO: ==================================================
+[2026-03-03 09:10:21] quant.healer INFO: 自动修复开始
+[2026-03-03 09:10:21] quant.healer INFO: ==================================================
+[2026-03-03 09:10:22] quant.healer INFO: 扫描到 1580 条近 24 小时 ERROR 日志
+[2026-03-03 09:10:22] quant.healer INFO: 自动修复完成: 0 项修复, 11 项无法自动处理
+[2026-03-03 09:10:22] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 09:10:22] quant.healer WARNING:   [2026-03-02 10:19:22] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 09:10:22] quant.healer WARNING:   [2026-03-02 10:18:48] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 09:10:22] quant.healer WARNING:   [2026-03-02 10:51:35] quant.watchdog: 系统异常! 策略 [期货趋势选股] 今日未运行 (预期 09:05)
+[2026-03-03 09:10:22] quant.healer WARNING:   [2026-03-02 11:15:16] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 09:10:22] quant.healer WARNING:   [2026-03-02 18:11:43] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 09:10:24] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 09:10:24] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 09:10:24] quant.healer INFO: ==================================================
+[2026-03-03 09:10:24] quant.healer INFO: 自动修复开始
+[2026-03-03 09:10:24] quant.healer INFO: ==================================================
+[2026-03-03 09:10:24] quant.healer INFO: 扫描到 1580 条近 24 小时 ERROR 日志
+[2026-03-03 09:10:24] quant.healer INFO: 自动修复完成: 0 项修复, 11 项无法自动处理
+[2026-03-03 09:10:24] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 09:10:24] quant.healer WARNING:   [2026-03-02 10:19:22] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 09:10:24] quant.healer WARNING:   [2026-03-02 10:18:48] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 09:10:24] quant.healer WARNING:   [2026-03-02 10:51:35] quant.watchdog: 系统异常! 策略 [期货趋势选股] 今日未运行 (预期 09:05)
+[2026-03-03 09:10:24] quant.healer WARNING:   [2026-03-02 11:15:16] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 09:10:24] quant.healer WARNING:   [2026-03-02 18:11:43] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 12:32:42] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-101/test_repair_from_bak0/test.json
+[2026-03-03 12:32:42] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-101/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 12:32:48] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 12:32:48] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 12:32:48] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 12:37:32] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-102/test_repair_from_bak0/test.json
+[2026-03-03 12:37:32] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-102/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 12:37:37] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 12:37:37] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 12:37:37] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 12:42:12] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-103/test_repair_from_bak0/test.json
+[2026-03-03 12:42:12] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-103/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 12:42:17] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 12:42:17] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 12:42:17] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 13:02:15] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-104/test_repair_from_bak0/test.json
+[2026-03-03 13:02:15] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-104/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 13:02:20] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 13:02:20] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 13:02:20] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 14:57:55] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-105/test_repair_from_bak0/test.json
+[2026-03-03 14:57:55] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-105/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 14:58:01] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 14:58:01] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 14:58:01] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 16:32:52] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-107/test_repair_from_bak0/test.json
+[2026-03-03 16:32:52] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-107/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 16:32:57] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 16:32:57] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 16:32:57] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 16:37:41] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-108/test_repair_from_bak0/test.json
+[2026-03-03 16:37:41] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-108/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 16:37:46] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 16:37:46] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 16:37:46] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 16:57:25] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-109/test_repair_from_bak0/test.json
+[2026-03-03 16:57:25] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-109/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 16:57:30] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 16:57:30] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 16:57:30] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 17:24:09] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-110/test_repair_from_bak0/test.json
+[2026-03-03 17:24:09] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-110/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 17:24:15] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 17:24:15] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 17:24:15] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 17:28:45] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-111/test_repair_from_bak0/test.json
+[2026-03-03 17:28:45] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-111/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 17:28:51] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 17:28:51] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 17:28:51] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 17:33:00] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-112/test_repair_from_bak0/test.json
+[2026-03-03 17:33:00] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-112/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 17:33:05] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 17:33:05] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 17:33:05] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 17:58:16] quant.healer INFO: ==================================================
+[2026-03-03 17:58:16] quant.healer INFO: 自动修复开始
+[2026-03-03 17:58:16] quant.healer INFO: ==================================================
+[2026-03-03 17:58:16] quant.healer INFO: 扫描到 976 条近 24 小时 ERROR 日志
+[2026-03-03 17:58:16] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 17:58:16] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 17:58:16] quant.healer WARNING:   [2026-03-02 18:16:03] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 17:58:16] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 17:58:16] quant.healer WARNING:   [2026-03-02 18:11:43] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 17:58:16] quant.healer WARNING:   [2026-03-02 18:12:31] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 17:58:16] quant.healer WARNING:   [2026-03-02 18:13:01] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 17:58:27] quant.healer INFO: ==================================================
+[2026-03-03 17:58:27] quant.healer INFO: 自动修复开始
+[2026-03-03 17:58:27] quant.healer INFO: ==================================================
+[2026-03-03 17:58:27] quant.healer INFO: 扫描到 976 条近 24 小时 ERROR 日志
+[2026-03-03 17:58:27] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 17:58:27] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 17:58:27] quant.healer WARNING:   [2026-03-02 18:16:03] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 17:58:27] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 17:58:27] quant.healer WARNING:   [2026-03-02 18:11:43] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 17:58:27] quant.healer WARNING:   [2026-03-02 18:12:31] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 17:58:27] quant.healer WARNING:   [2026-03-02 18:13:01] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 17:58:40] quant.healer INFO: ==================================================
+[2026-03-03 17:58:40] quant.healer INFO: 自动修复开始
+[2026-03-03 17:58:40] quant.healer INFO: ==================================================
+[2026-03-03 17:58:40] quant.healer INFO: 扫描到 976 条近 24 小时 ERROR 日志
+[2026-03-03 17:58:40] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 17:58:40] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 17:58:40] quant.healer WARNING:   [2026-03-02 18:16:03] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 17:58:40] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 17:58:40] quant.healer WARNING:   [2026-03-02 18:11:43] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 17:58:40] quant.healer WARNING:   [2026-03-02 18:12:31] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 17:58:40] quant.healer WARNING:   [2026-03-02 18:13:01] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 17:59:42] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-113/test_repair_from_bak0/test.json
+[2026-03-03 17:59:42] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-113/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 17:59:48] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 17:59:48] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 17:59:48] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 18:04:13] quant.healer INFO: ==================================================
+[2026-03-03 18:04:13] quant.healer INFO: 自动修复开始
+[2026-03-03 18:04:13] quant.healer INFO: ==================================================
+[2026-03-03 18:04:13] quant.healer INFO: 扫描到 990 条近 24 小时 ERROR 日志
+[2026-03-03 18:04:13] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:04:13] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:04:13] quant.healer WARNING:   [2026-03-02 18:16:03] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:04:13] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:04:13] quant.healer WARNING:   [2026-03-02 18:11:43] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:04:13] quant.healer WARNING:   [2026-03-02 18:12:31] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:04:13] quant.healer WARNING:   [2026-03-02 18:13:01] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:26:15] quant.healer INFO: ==================================================
+[2026-03-03 18:26:15] quant.healer INFO: 自动修复开始
+[2026-03-03 18:26:15] quant.healer INFO: ==================================================
+[2026-03-03 18:26:15] quant.healer INFO: 扫描到 914 条近 24 小时 ERROR 日志
+[2026-03-03 18:26:15] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:26:15] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:26:15] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:26:15] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:26:15] quant.healer WARNING:   [2026-03-02 18:31:48] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:26:15] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:26:15] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:26:28] quant.healer INFO: ==================================================
+[2026-03-03 18:26:28] quant.healer INFO: 自动修复开始
+[2026-03-03 18:26:28] quant.healer INFO: ==================================================
+[2026-03-03 18:26:28] quant.healer INFO: 扫描到 914 条近 24 小时 ERROR 日志
+[2026-03-03 18:26:28] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:26:28] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:26:28] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:26:28] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:26:28] quant.healer WARNING:   [2026-03-02 18:31:48] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:26:28] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:26:28] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:26:39] quant.healer INFO: ==================================================
+[2026-03-03 18:26:39] quant.healer INFO: 自动修复开始
+[2026-03-03 18:26:39] quant.healer INFO: ==================================================
+[2026-03-03 18:26:39] quant.healer INFO: 扫描到 914 条近 24 小时 ERROR 日志
+[2026-03-03 18:26:39] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:26:39] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:26:39] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:26:39] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:26:39] quant.healer WARNING:   [2026-03-02 18:31:48] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:26:39] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:26:39] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:27:37] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-115/test_repair_from_bak0/test.json
+[2026-03-03 18:27:37] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-115/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 18:27:43] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 18:27:43] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 18:27:43] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 18:31:43] quant.healer INFO: ==================================================
+[2026-03-03 18:31:43] quant.healer INFO: 自动修复开始
+[2026-03-03 18:31:43] quant.healer INFO: ==================================================
+[2026-03-03 18:31:43] quant.healer INFO: 扫描到 928 条近 24 小时 ERROR 日志
+[2026-03-03 18:31:43] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:31:43] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:31:43] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:31:43] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:31:43] quant.healer WARNING:   [2026-03-02 18:31:48] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:31:43] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:31:43] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:31:55] quant.healer INFO: ==================================================
+[2026-03-03 18:31:55] quant.healer INFO: 自动修复开始
+[2026-03-03 18:31:55] quant.healer INFO: ==================================================
+[2026-03-03 18:31:55] quant.healer INFO: 扫描到 926 条近 24 小时 ERROR 日志
+[2026-03-03 18:31:55] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:31:55] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:31:55] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:31:55] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:31:55] quant.healer WARNING:   [2026-03-02 18:41:49] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:31:55] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:31:55] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:32:07] quant.healer INFO: ==================================================
+[2026-03-03 18:32:07] quant.healer INFO: 自动修复开始
+[2026-03-03 18:32:07] quant.healer INFO: ==================================================
+[2026-03-03 18:32:07] quant.healer INFO: 扫描到 926 条近 24 小时 ERROR 日志
+[2026-03-03 18:32:07] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:32:07] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:32:07] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:32:07] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:32:07] quant.healer WARNING:   [2026-03-02 18:41:49] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:32:07] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:32:07] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:33:05] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-116/test_repair_from_bak0/test.json
+[2026-03-03 18:33:05] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-116/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 18:33:10] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 18:33:10] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 18:33:10] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 18:36:58] quant.healer INFO: ==================================================
+[2026-03-03 18:36:58] quant.healer INFO: 自动修复开始
+[2026-03-03 18:36:58] quant.healer INFO: ==================================================
+[2026-03-03 18:36:58] quant.healer INFO: 扫描到 940 条近 24 小时 ERROR 日志
+[2026-03-03 18:36:58] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:36:58] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:36:58] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:36:58] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:36:58] quant.healer WARNING:   [2026-03-02 18:41:49] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:36:58] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:36:58] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:37:10] quant.healer INFO: ==================================================
+[2026-03-03 18:37:10] quant.healer INFO: 自动修复开始
+[2026-03-03 18:37:10] quant.healer INFO: ==================================================
+[2026-03-03 18:37:10] quant.healer INFO: 扫描到 940 条近 24 小时 ERROR 日志
+[2026-03-03 18:37:10] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:37:10] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:37:10] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:37:10] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:37:10] quant.healer WARNING:   [2026-03-02 18:41:49] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:37:10] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:37:10] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:37:21] quant.healer INFO: ==================================================
+[2026-03-03 18:37:21] quant.healer INFO: 自动修复开始
+[2026-03-03 18:37:21] quant.healer INFO: ==================================================
+[2026-03-03 18:37:21] quant.healer INFO: 扫描到 940 条近 24 小时 ERROR 日志
+[2026-03-03 18:37:21] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:37:21] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:37:21] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:37:21] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:37:21] quant.healer WARNING:   [2026-03-02 18:41:49] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:37:21] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:37:21] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:38:16] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-117/test_repair_from_bak0/test.json
+[2026-03-03 18:38:16] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-117/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 18:38:22] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 18:38:22] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 18:38:22] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 18:43:46] quant.healer INFO: ==================================================
+[2026-03-03 18:43:46] quant.healer INFO: 自动修复开始
+[2026-03-03 18:43:46] quant.healer INFO: ==================================================
+[2026-03-03 18:43:46] quant.healer INFO: 扫描到 952 条近 24 小时 ERROR 日志
+[2026-03-03 18:43:46] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:43:46] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:43:46] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:43:46] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:43:46] quant.healer WARNING:   [2026-03-02 18:51:51] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:43:46] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:43:46] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:43:58] quant.healer INFO: ==================================================
+[2026-03-03 18:43:58] quant.healer INFO: 自动修复开始
+[2026-03-03 18:43:58] quant.healer INFO: ==================================================
+[2026-03-03 18:43:58] quant.healer INFO: 扫描到 952 条近 24 小时 ERROR 日志
+[2026-03-03 18:43:58] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:43:58] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:43:58] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:43:58] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:43:58] quant.healer WARNING:   [2026-03-02 18:51:51] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:43:58] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:43:58] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:44:11] quant.healer INFO: ==================================================
+[2026-03-03 18:44:11] quant.healer INFO: 自动修复开始
+[2026-03-03 18:44:11] quant.healer INFO: ==================================================
+[2026-03-03 18:44:11] quant.healer INFO: 扫描到 952 条近 24 小时 ERROR 日志
+[2026-03-03 18:44:11] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:44:11] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:44:11] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:44:11] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:44:11] quant.healer WARNING:   [2026-03-02 18:51:51] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:44:11] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:44:11] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:45:12] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-119/test_repair_from_bak0/test.json
+[2026-03-03 18:45:12] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-119/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 18:45:18] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 18:45:18] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 18:45:18] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 18:49:19] quant.healer INFO: ==================================================
+[2026-03-03 18:49:19] quant.healer INFO: 自动修复开始
+[2026-03-03 18:49:19] quant.healer INFO: ==================================================
+[2026-03-03 18:49:19] quant.healer INFO: 扫描到 966 条近 24 小时 ERROR 日志
+[2026-03-03 18:49:19] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:49:19] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:49:19] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:49:19] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:49:19] quant.healer WARNING:   [2026-03-02 18:51:51] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:49:19] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:49:19] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:49:30] quant.healer INFO: ==================================================
+[2026-03-03 18:49:30] quant.healer INFO: 自动修复开始
+[2026-03-03 18:49:30] quant.healer INFO: ==================================================
+[2026-03-03 18:49:30] quant.healer INFO: 扫描到 966 条近 24 小时 ERROR 日志
+[2026-03-03 18:49:30] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:49:30] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:49:30] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:49:30] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:49:30] quant.healer WARNING:   [2026-03-02 18:51:51] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:49:30] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:49:30] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:49:42] quant.healer INFO: ==================================================
+[2026-03-03 18:49:42] quant.healer INFO: 自动修复开始
+[2026-03-03 18:49:42] quant.healer INFO: ==================================================
+[2026-03-03 18:49:42] quant.healer INFO: 扫描到 966 条近 24 小时 ERROR 日志
+[2026-03-03 18:49:42] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 18:49:42] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 18:49:42] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 18:49:42] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 18:49:42] quant.healer WARNING:   [2026-03-02 18:51:51] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 18:49:42] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 18:49:42] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 18:50:39] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-120/test_repair_from_bak0/test.json
+[2026-03-03 18:50:39] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-120/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 18:50:44] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 18:50:44] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 18:50:45] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 19:36:20] quant.healer INFO: ==================================================
+[2026-03-03 19:36:20] quant.healer INFO: 自动修复开始
+[2026-03-03 19:36:20] quant.healer INFO: ==================================================
+[2026-03-03 19:36:20] quant.healer INFO: 扫描到 970 条近 24 小时 ERROR 日志
+[2026-03-03 19:36:20] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 19:36:20] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 19:36:20] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 19:36:20] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:36:20] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 19:36:20] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 19:36:20] quant.healer WARNING:   [2026-03-02 19:41:59] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 19:36:31] quant.healer INFO: ==================================================
+[2026-03-03 19:36:31] quant.healer INFO: 自动修复开始
+[2026-03-03 19:36:31] quant.healer INFO: ==================================================
+[2026-03-03 19:36:31] quant.healer INFO: 扫描到 970 条近 24 小时 ERROR 日志
+[2026-03-03 19:36:31] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 19:36:31] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 19:36:31] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 19:36:31] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:36:31] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 19:36:31] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 19:36:31] quant.healer WARNING:   [2026-03-02 19:41:59] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 19:36:42] quant.healer INFO: ==================================================
+[2026-03-03 19:36:42] quant.healer INFO: 自动修复开始
+[2026-03-03 19:36:42] quant.healer INFO: ==================================================
+[2026-03-03 19:36:42] quant.healer INFO: 扫描到 970 条近 24 小时 ERROR 日志
+[2026-03-03 19:36:42] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 19:36:42] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 19:36:42] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 19:36:42] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:36:42] quant.healer WARNING:   [2026-03-02 19:40:21] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 19:36:42] quant.healer WARNING:   [2026-03-02 19:41:21] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 19:36:42] quant.healer WARNING:   [2026-03-02 19:41:59] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 19:37:32] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-124/test_repair_from_bak0/test.json
+[2026-03-03 19:37:32] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-124/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 19:37:37] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 19:37:37] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:37:37] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 19:41:36] quant.healer INFO: ==================================================
+[2026-03-03 19:41:36] quant.healer INFO: 自动修复开始
+[2026-03-03 19:41:36] quant.healer INFO: ==================================================
+[2026-03-03 19:41:36] quant.healer INFO: 扫描到 974 条近 24 小时 ERROR 日志
+[2026-03-03 19:41:36] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 19:41:36] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 19:41:36] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 19:41:36] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:41:36] quant.healer WARNING:   [2026-03-02 19:41:39] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 19:41:36] quant.healer WARNING:   [2026-03-02 19:41:59] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 19:41:36] quant.healer WARNING:   [2026-03-02 19:52:15] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 19:41:47] quant.healer INFO: ==================================================
+[2026-03-03 19:41:47] quant.healer INFO: 自动修复开始
+[2026-03-03 19:41:47] quant.healer INFO: ==================================================
+[2026-03-03 19:41:47] quant.healer INFO: 扫描到 970 条近 24 小时 ERROR 日志
+[2026-03-03 19:41:47] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 19:41:47] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 19:41:47] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 19:41:47] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:41:47] quant.healer WARNING:   [2026-03-02 19:41:48] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 19:41:47] quant.healer WARNING:   [2026-03-02 19:41:59] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 19:41:47] quant.healer WARNING:   [2026-03-02 19:52:15] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 19:41:58] quant.healer INFO: ==================================================
+[2026-03-03 19:41:58] quant.healer INFO: 自动修复开始
+[2026-03-03 19:41:58] quant.healer INFO: ==================================================
+[2026-03-03 19:41:58] quant.healer INFO: 扫描到 966 条近 24 小时 ERROR 日志
+[2026-03-03 19:41:58] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 19:41:58] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 19:41:58] quant.healer WARNING:   [2026-03-02 19:45:02] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 19:41:58] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:41:58] quant.healer WARNING:   [2026-03-02 19:41:59] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 19:41:58] quant.healer WARNING:   [2026-03-02 19:41:59] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 19:41:58] quant.healer WARNING:   [2026-03-02 19:52:15] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 19:42:45] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-125/test_repair_from_bak0/test.json
+[2026-03-03 19:42:45] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-125/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 19:42:50] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 19:42:50] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:42:50] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 19:46:51] quant.healer INFO: ==================================================
+[2026-03-03 19:46:51] quant.healer INFO: 自动修复开始
+[2026-03-03 19:46:51] quant.healer INFO: ==================================================
+[2026-03-03 19:46:51] quant.healer INFO: 扫描到 972 条近 24 小时 ERROR 日志
+[2026-03-03 19:46:51] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 19:46:51] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 19:46:51] quant.healer WARNING:   [2026-03-02 19:55:28] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 19:46:51] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:46:51] quant.healer WARNING:   [2026-03-02 19:51:49] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 19:46:51] quant.healer WARNING:   [2026-03-02 19:52:00] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 19:46:51] quant.healer WARNING:   [2026-03-02 19:52:15] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 19:47:03] quant.healer INFO: ==================================================
+[2026-03-03 19:47:03] quant.healer INFO: 自动修复开始
+[2026-03-03 19:47:03] quant.healer INFO: ==================================================
+[2026-03-03 19:47:03] quant.healer INFO: 扫描到 972 条近 24 小时 ERROR 日志
+[2026-03-03 19:47:03] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 19:47:03] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 19:47:03] quant.healer WARNING:   [2026-03-02 19:55:28] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 19:47:03] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:47:03] quant.healer WARNING:   [2026-03-02 19:51:49] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 19:47:03] quant.healer WARNING:   [2026-03-02 19:52:00] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 19:47:03] quant.healer WARNING:   [2026-03-02 19:52:15] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 19:47:15] quant.healer INFO: ==================================================
+[2026-03-03 19:47:15] quant.healer INFO: 自动修复开始
+[2026-03-03 19:47:15] quant.healer INFO: ==================================================
+[2026-03-03 19:47:15] quant.healer INFO: 扫描到 972 条近 24 小时 ERROR 日志
+[2026-03-03 19:47:15] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 19:47:15] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 19:47:15] quant.healer WARNING:   [2026-03-02 19:55:28] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 19:47:15] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 19:47:15] quant.healer WARNING:   [2026-03-02 19:51:49] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 19:47:15] quant.healer WARNING:   [2026-03-02 19:52:00] quant.watchdog: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-03 19:47:15] quant.healer WARNING:   [2026-03-02 19:52:15] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 19:48:01] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-126/test_repair_from_bak0/test.json
+[2026-03-03 19:48:01] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-126/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 19:48:06] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 19:48:06] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 19:48:06] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 21:21:09] quant.healer INFO: ==================================================
+[2026-03-03 21:21:09] quant.healer INFO: 自动修复开始
+[2026-03-03 21:21:09] quant.healer INFO: ==================================================
+[2026-03-03 21:21:09] quant.healer INFO: 扫描到 768 条近 24 小时 ERROR 日志
+[2026-03-03 21:21:09] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:21:09] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:21:09] quant.healer WARNING:   [2026-03-02 21:29:59] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:21:09] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:21:09] quant.healer WARNING:   [2026-03-02 21:23:27] quant.agent_brain: [夜班] test_timeout 硬超时 61s, 任务被强杀 (第1次)
+[2026-03-03 21:21:09] quant.healer WARNING:   [2026-03-02 21:23:38] quant.watchdog: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 21:21:09] quant.healer WARNING:   [2026-03-02 21:23:52] quant.watchdog: 策略 [测试策略] 运行失败: boom
+[2026-03-03 21:21:20] quant.healer INFO: ==================================================
+[2026-03-03 21:21:20] quant.healer INFO: 自动修复开始
+[2026-03-03 21:21:20] quant.healer INFO: ==================================================
+[2026-03-03 21:21:20] quant.healer INFO: 扫描到 768 条近 24 小时 ERROR 日志
+[2026-03-03 21:21:20] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:21:20] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:21:20] quant.healer WARNING:   [2026-03-02 21:29:59] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:21:20] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:21:20] quant.healer WARNING:   [2026-03-02 21:23:27] quant.agent_brain: [夜班] test_timeout 硬超时 61s, 任务被强杀 (第1次)
+[2026-03-03 21:21:20] quant.healer WARNING:   [2026-03-02 21:23:38] quant.watchdog: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 21:21:20] quant.healer WARNING:   [2026-03-02 21:23:52] quant.watchdog: 策略 [测试策略] 运行失败: boom
+[2026-03-03 21:21:32] quant.healer INFO: ==================================================
+[2026-03-03 21:21:32] quant.healer INFO: 自动修复开始
+[2026-03-03 21:21:32] quant.healer INFO: ==================================================
+[2026-03-03 21:21:32] quant.healer INFO: 扫描到 768 条近 24 小时 ERROR 日志
+[2026-03-03 21:21:32] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:21:32] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:21:32] quant.healer WARNING:   [2026-03-02 21:29:59] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:21:32] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:21:32] quant.healer WARNING:   [2026-03-02 21:23:27] quant.agent_brain: [夜班] test_timeout 硬超时 61s, 任务被强杀 (第1次)
+[2026-03-03 21:21:32] quant.healer WARNING:   [2026-03-02 21:23:38] quant.watchdog: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 21:21:32] quant.healer WARNING:   [2026-03-02 21:23:52] quant.watchdog: 策略 [测试策略] 运行失败: boom
+[2026-03-03 21:22:28] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-128/test_repair_from_bak0/test.json
+[2026-03-03 21:22:28] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-128/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 21:22:34] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 21:22:34] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 21:22:34] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 21:30:49] quant.healer INFO: ==================================================
+[2026-03-03 21:30:49] quant.healer INFO: 自动修复开始
+[2026-03-03 21:30:49] quant.healer INFO: ==================================================
+[2026-03-03 21:30:49] quant.healer INFO: 扫描到 734 条近 24 小时 ERROR 日志
+[2026-03-03 21:30:49] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:30:49] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:30:49] quant.healer WARNING:   [2026-03-02 21:48:27] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:30:49] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:30:49] quant.healer WARNING:   [2026-03-02 21:32:49] quant.agent_brain: [夜班] test_timeout 硬超时 61s, 任务被强杀 (第1次)
+[2026-03-03 21:30:49] quant.healer WARNING:   [2026-03-02 21:33:00] quant.watchdog: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 21:30:49] quant.healer WARNING:   [2026-03-02 21:45:13] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 21:31:01] quant.healer INFO: ==================================================
+[2026-03-03 21:31:01] quant.healer INFO: 自动修复开始
+[2026-03-03 21:31:01] quant.healer INFO: ==================================================
+[2026-03-03 21:31:01] quant.healer INFO: 扫描到 734 条近 24 小时 ERROR 日志
+[2026-03-03 21:31:01] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:31:01] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:31:01] quant.healer WARNING:   [2026-03-02 21:48:27] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:31:01] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:31:01] quant.healer WARNING:   [2026-03-02 21:32:49] quant.agent_brain: [夜班] test_timeout 硬超时 61s, 任务被强杀 (第1次)
+[2026-03-03 21:31:01] quant.healer WARNING:   [2026-03-02 21:33:00] quant.watchdog: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 21:31:01] quant.healer WARNING:   [2026-03-02 21:45:13] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 21:31:12] quant.healer INFO: ==================================================
+[2026-03-03 21:31:12] quant.healer INFO: 自动修复开始
+[2026-03-03 21:31:12] quant.healer INFO: ==================================================
+[2026-03-03 21:31:12] quant.healer INFO: 扫描到 734 条近 24 小时 ERROR 日志
+[2026-03-03 21:31:12] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:31:12] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:31:12] quant.healer WARNING:   [2026-03-02 21:48:27] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:31:12] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:31:12] quant.healer WARNING:   [2026-03-02 21:32:49] quant.agent_brain: [夜班] test_timeout 硬超时 61s, 任务被强杀 (第1次)
+[2026-03-03 21:31:12] quant.healer WARNING:   [2026-03-02 21:33:00] quant.watchdog: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 21:31:12] quant.healer WARNING:   [2026-03-02 21:45:13] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 21:32:11] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-129/test_repair_from_bak0/test.json
+[2026-03-03 21:32:11] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-129/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 21:32:17] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 21:32:17] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 21:32:17] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 21:43:42] quant.healer INFO: ==================================================
+[2026-03-03 21:43:42] quant.healer INFO: 自动修复开始
+[2026-03-03 21:43:42] quant.healer INFO: ==================================================
+[2026-03-03 21:43:42] quant.healer INFO: 扫描到 744 条近 24 小时 ERROR 日志
+[2026-03-03 21:43:42] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:43:42] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:43:42] quant.healer WARNING:   [2026-03-02 21:48:27] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:43:42] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:43:42] quant.healer WARNING:   [2026-03-02 21:45:13] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 21:43:42] quant.healer WARNING:   [2026-03-02 21:45:45] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 21:43:42] quant.healer WARNING:   [2026-03-02 21:48:46] quant.watchdog: 策略 [测试策略] 运行失败: boom
+[2026-03-03 21:43:53] quant.healer INFO: ==================================================
+[2026-03-03 21:43:53] quant.healer INFO: 自动修复开始
+[2026-03-03 21:43:53] quant.healer INFO: ==================================================
+[2026-03-03 21:43:53] quant.healer INFO: 扫描到 744 条近 24 小时 ERROR 日志
+[2026-03-03 21:43:53] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:43:53] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:43:53] quant.healer WARNING:   [2026-03-02 21:48:27] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:43:53] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:43:53] quant.healer WARNING:   [2026-03-02 21:45:13] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 21:43:53] quant.healer WARNING:   [2026-03-02 21:45:45] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 21:43:53] quant.healer WARNING:   [2026-03-02 21:48:46] quant.watchdog: 策略 [测试策略] 运行失败: boom
+[2026-03-03 21:44:04] quant.healer INFO: ==================================================
+[2026-03-03 21:44:04] quant.healer INFO: 自动修复开始
+[2026-03-03 21:44:04] quant.healer INFO: ==================================================
+[2026-03-03 21:44:04] quant.healer INFO: 扫描到 744 条近 24 小时 ERROR 日志
+[2026-03-03 21:44:04] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:44:04] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:44:04] quant.healer WARNING:   [2026-03-02 21:48:27] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:44:04] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:44:04] quant.healer WARNING:   [2026-03-02 21:45:13] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 21:44:04] quant.healer WARNING:   [2026-03-02 21:45:45] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 21:44:04] quant.healer WARNING:   [2026-03-02 21:48:46] quant.watchdog: 策略 [测试策略] 运行失败: boom
+[2026-03-03 21:44:50] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-130/test_repair_from_bak0/test.json
+[2026-03-03 21:44:50] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-130/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 21:44:55] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 21:44:55] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 21:44:55] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB
+[2026-03-03 21:59:11] quant.healer INFO: ==================================================
+[2026-03-03 21:59:11] quant.healer INFO: 自动修复开始
+[2026-03-03 21:59:11] quant.healer INFO: ==================================================
+[2026-03-03 21:59:11] quant.healer INFO: 扫描到 686 条近 24 小时 ERROR 日志
+[2026-03-03 21:59:11] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:59:11] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:59:11] quant.healer WARNING:   [2026-03-02 22:39:50] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:59:11] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:59:11] quant.healer WARNING:   [2026-03-02 22:36:42] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 21:59:11] quant.healer WARNING:   [2026-03-02 22:37:08] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 21:59:11] quant.healer WARNING:   [2026-03-02 22:40:09] quant.watchdog: 策略 [测试策略] 运行失败: boom
+[2026-03-03 21:59:22] quant.healer INFO: ==================================================
+[2026-03-03 21:59:22] quant.healer INFO: 自动修复开始
+[2026-03-03 21:59:22] quant.healer INFO: ==================================================
+[2026-03-03 21:59:23] quant.healer INFO: 扫描到 686 条近 24 小时 ERROR 日志
+[2026-03-03 21:59:23] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:59:23] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:59:23] quant.healer WARNING:   [2026-03-02 22:39:50] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:59:23] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:59:23] quant.healer WARNING:   [2026-03-02 22:36:42] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 21:59:23] quant.healer WARNING:   [2026-03-02 22:37:08] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 21:59:23] quant.healer WARNING:   [2026-03-02 22:40:09] quant.watchdog: 策略 [测试策略] 运行失败: boom
+[2026-03-03 21:59:34] quant.healer INFO: ==================================================
+[2026-03-03 21:59:34] quant.healer INFO: 自动修复开始
+[2026-03-03 21:59:34] quant.healer INFO: ==================================================
+[2026-03-03 21:59:34] quant.healer INFO: 扫描到 686 条近 24 小时 ERROR 日志
+[2026-03-03 21:59:34] quant.healer INFO: 自动修复完成: 0 项修复, 12 项无法自动处理
+[2026-03-03 21:59:34] quant.healer WARNING: 以下错误需人工处理:
+[2026-03-03 21:59:34] quant.healer WARNING:   [2026-03-02 22:39:50] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0%
+[2026-03-03 21:59:34] quant.healer WARNING:   [2026-03-03 12:32:48] quant.risk: 熔断! 今日平均亏损 -6.5% <= -5.0% (退出 2 只)
+[2026-03-03 21:59:34] quant.healer WARNING:   [2026-03-02 22:36:42] quant.position: 东方财富备用源也失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without respons
+[2026-03-03 21:59:34] quant.healer WARNING:   [2026-03-02 22:37:08] quant.experiment_lab: 基线回测失败: backtest failed
+[2026-03-03 21:59:34] quant.healer WARNING:   [2026-03-02 22:40:09] quant.watchdog: 策略 [测试策略] 运行失败: boom
+[2026-03-03 22:01:04] quant.healer INFO: 从 .bak 恢复 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-131/test_repair_from_bak0/test.json
+[2026-03-03 22:01:04] quant.healer INFO: 初始化空 JSON: /private/var/folders/ch/ql9fb7h52s76b2qs4c7_lxw40000gn/T/pytest-of-zchtech002/pytest-131/test_repair_initialize_empty0/positions.json → list
+[2026-03-03 22:01:10] quant.healer INFO: 冒烟测试: FAILED (21/22)
+[2026-03-03 22:01:10] quant.healer WARNING:   FAIL: akshare可用 — ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+[2026-03-03 22:01:10] quant.healer INFO: 清理旧日志: 1 个文件, 释放 0.0 MB

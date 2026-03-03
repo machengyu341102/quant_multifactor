@@ -1,0 +1,107 @@
+{
+  "version": 14,
+  "history": [
+    {
+      "date": "2026-03-03",
+      "version": 1,
+      "n_factors": 17,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 2,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 3,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 4,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 5,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 6,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 7,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 8,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 9,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 10,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 11,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 12,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 13,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    },
+    {
+      "date": "2026-03-03",
+      "version": 14,
+      "n_factors": 0,
+      "n_signals": 0,
+      "weight_adjusted": false
+    }
+  ],
+  "last_run": "2026-03-03T22:00:00.488970",
+  "factor_analysis": [],
+  "signal_analysis": [],
+  "last_report_summary": "# 自学习引擎报告\n日期: 2026-03-03  回望: 30天\n\n## 大盘信号预测力\n暂无数据\n\n## 选股因子重要性\n## 策略-行情适配\n暂无数据\n\n## 本日权重调整\n无调整 (数据不足或无需调整)\n\n## 数据积累进度\n- 交易日志: 0 条\n- 记分卡: 0 条\n- 可关联记录: 0 条 (近30天)\n- 信号分析门槛: 15 (当前未达)\n- 因子分析门槛: 10 (当前未达)\n"
+}

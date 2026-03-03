@@ -1,0 +1,866 @@
+[2026-03-01 15:40:11] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录; 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 15:50:12] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 16:00:14] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 16:10:15] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 16:20:17] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 16:30:18] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 16:40:20] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 16:50:21] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 17:00:23] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 17:10:24] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 17:20:26] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 17:30:27] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 17:40:29] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 17:50:30] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 18:00:32] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 18:10:33] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 18:20:35] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 18:30:37] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 18:40:38] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 18:50:40] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 19:00:41] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 19:10:43] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 19:20:44] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 19:30:46] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 19:40:47] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 19:50:49] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 20:00:51] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 20:10:52] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 20:20:54] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 20:30:55] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 20:40:57] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 20:50:58] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 21:00:59] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 21:11:01] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 21:21:03] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 21:31:04] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 21:41:06] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 21:51:07] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 22:01:09] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 22:11:10] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 22:21:12] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 22:31:14] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 22:41:15] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 22:51:17] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 23:01:19] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 23:11:20] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 23:21:22] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 23:31:23] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 23:41:25] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-01 23:51:27] quant.watchdog ERROR: 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+[2026-03-02 00:01:28] quant.watchdog INFO: 系统健康
+[2026-03-02 00:11:28] quant.watchdog INFO: 系统健康
+[2026-03-02 00:21:28] quant.watchdog INFO: 系统健康
+[2026-03-02 00:31:28] quant.watchdog INFO: 系统健康
+[2026-03-02 00:41:29] quant.watchdog INFO: 系统健康
+[2026-03-02 00:51:29] quant.watchdog INFO: 系统健康
+[2026-03-02 01:01:29] quant.watchdog INFO: 系统健康
+[2026-03-02 01:11:29] quant.watchdog INFO: 系统健康
+[2026-03-02 01:21:29] quant.watchdog INFO: 系统健康
+[2026-03-02 01:31:29] quant.watchdog INFO: 系统健康
+[2026-03-02 01:41:29] quant.watchdog INFO: 系统健康
+[2026-03-02 01:51:30] quant.watchdog INFO: 系统健康
+[2026-03-02 02:01:30] quant.watchdog INFO: 系统健康
+[2026-03-02 02:11:30] quant.watchdog INFO: 系统健康
+[2026-03-02 02:21:30] quant.watchdog INFO: 系统健康
+[2026-03-02 02:31:30] quant.watchdog INFO: 系统健康
+[2026-03-02 02:41:30] quant.watchdog INFO: 系统健康
+[2026-03-02 02:51:30] quant.watchdog INFO: 系统健康
+[2026-03-02 03:01:30] quant.watchdog INFO: 系统健康
+[2026-03-02 03:11:31] quant.watchdog INFO: 系统健康
+[2026-03-02 03:21:31] quant.watchdog INFO: 系统健康
+[2026-03-02 03:31:31] quant.watchdog INFO: 系统健康
+[2026-03-02 03:41:31] quant.watchdog INFO: 系统健康
+[2026-03-02 03:51:31] quant.watchdog INFO: 系统健康
+[2026-03-02 04:01:31] quant.watchdog INFO: 系统健康
+[2026-03-02 04:11:31] quant.watchdog INFO: 系统健康
+[2026-03-02 04:21:31] quant.watchdog INFO: 系统健康
+[2026-03-02 04:31:31] quant.watchdog INFO: 系统健康
+[2026-03-02 04:41:32] quant.watchdog INFO: 系统健康
+[2026-03-02 04:51:32] quant.watchdog INFO: 系统健康
+[2026-03-02 05:01:32] quant.watchdog INFO: 系统健康
+[2026-03-02 05:11:32] quant.watchdog INFO: 系统健康
+[2026-03-02 05:21:32] quant.watchdog INFO: 系统健康
+[2026-03-02 05:31:32] quant.watchdog INFO: 系统健康
+[2026-03-02 05:41:32] quant.watchdog INFO: 系统健康
+[2026-03-02 05:51:32] quant.watchdog INFO: 系统健康
+[2026-03-02 06:01:32] quant.watchdog INFO: 系统健康
+[2026-03-02 06:11:32] quant.watchdog INFO: 系统健康
+[2026-03-02 06:21:33] quant.watchdog INFO: 系统健康
+[2026-03-02 06:31:33] quant.watchdog INFO: 系统健康
+[2026-03-02 06:41:33] quant.watchdog INFO: 系统健康
+[2026-03-02 06:51:33] quant.watchdog INFO: 系统健康
+[2026-03-02 07:01:33] quant.watchdog INFO: 系统健康
+[2026-03-02 07:11:33] quant.watchdog INFO: 系统健康
+[2026-03-02 07:21:33] quant.watchdog INFO: 系统健康
+[2026-03-02 07:31:33] quant.watchdog INFO: 系统健康
+[2026-03-02 07:41:33] quant.watchdog INFO: 系统健康
+[2026-03-02 07:51:34] quant.watchdog INFO: 系统健康
+[2026-03-02 08:01:34] quant.watchdog INFO: 系统健康
+[2026-03-02 08:11:34] quant.watchdog INFO: 系统健康
+[2026-03-02 08:21:34] quant.watchdog INFO: 系统健康
+[2026-03-02 08:31:34] quant.watchdog INFO: 系统健康
+[2026-03-02 08:41:34] quant.watchdog INFO: 系统健康
+[2026-03-02 08:51:34] quant.watchdog INFO: 系统健康
+[2026-03-02 09:01:34] quant.watchdog INFO: 系统健康
+[2026-03-02 09:11:34] quant.watchdog INFO: 系统健康
+[2026-03-02 09:21:34] quant.watchdog INFO: 系统健康
+[2026-03-02 09:27:51] quant.watchdog INFO: 策略 [集合竞价选股] 运行成功 (166.0s)
+[2026-03-02 09:31:35] quant.watchdog INFO: 系统健康
+[2026-03-02 09:41:35] quant.watchdog INFO: 系统健康
+[2026-03-02 09:51:35] quant.watchdog INFO: 系统健康
+[2026-03-02 10:01:26] quant.watchdog INFO: 策略 [放量突破选股] 运行成功 (62.7s)
+[2026-03-02 10:01:35] quant.watchdog INFO: 系统健康
+[2026-03-02 10:11:35] quant.watchdog INFO: 系统健康
+[2026-03-02 10:21:35] quant.watchdog INFO: 系统健康
+[2026-03-02 10:31:35] quant.watchdog INFO: 系统健康
+[2026-03-02 10:41:35] quant.watchdog INFO: 系统健康
+[2026-03-02 10:51:35] quant.watchdog ERROR: 系统异常! 策略 [期货趋势选股] 今日未运行 (预期 09:05)
+[2026-03-02 11:01:37] quant.watchdog ERROR: 系统异常! 策略 [期货趋势选股] 今日未运行 (预期 09:05)
+[2026-03-02 11:03:53] quant.watchdog INFO: 策略 [期货趋势选股] 运行成功 (38.0s)
+[2026-03-02 11:07:05] quant.watchdog INFO: 策略 [期货趋势选股] 运行成功 (38.0s)
+[2026-03-02 11:08:06] quant.watchdog INFO: 策略 [期货趋势选股] 运行成功 (38.4s)
+[2026-03-02 11:11:38] quant.watchdog INFO: 系统健康
+[2026-03-02 11:13:51] quant.watchdog INFO: 策略 [放量突破选股] 运行成功 (638.6s)
+[2026-03-02 11:21:39] quant.watchdog INFO: 系统健康
+[2026-03-02 11:29:28] quant.watchdog INFO: 策略 [集合竞价选股] 运行成功 (1564.3s)
+[2026-03-02 11:31:39] quant.watchdog INFO: 系统健康
+[2026-03-02 11:41:39] quant.watchdog INFO: 系统健康
+[2026-03-02 11:51:39] quant.watchdog INFO: 系统健康
+[2026-03-02 12:01:39] quant.watchdog INFO: 系统健康
+[2026-03-02 12:11:39] quant.watchdog INFO: 系统健康
+[2026-03-02 12:21:39] quant.watchdog INFO: 系统健康
+[2026-03-02 12:31:39] quant.watchdog INFO: 系统健康
+[2026-03-02 12:41:39] quant.watchdog INFO: 系统健康
+[2026-03-02 12:51:40] quant.watchdog INFO: 系统健康
+[2026-03-02 13:01:40] quant.watchdog INFO: 系统健康
+[2026-03-02 13:11:40] quant.watchdog INFO: 系统健康
+[2026-03-02 13:21:40] quant.watchdog INFO: 系统健康
+[2026-03-02 13:31:40] quant.watchdog INFO: 系统健康
+[2026-03-02 13:41:40] quant.watchdog INFO: 系统健康
+[2026-03-02 13:51:40] quant.watchdog INFO: 系统健康
+[2026-03-02 14:01:18] quant.watchdog INFO: 策略 [板块轮动选股] 运行成功 (45.8s)
+[2026-03-02 14:01:19] quant.watchdog INFO: 策略 [板块轮动选股] 运行成功 (46.3s)
+[2026-03-02 14:01:40] quant.watchdog INFO: 系统健康
+[2026-03-02 14:11:40] quant.watchdog INFO: 系统健康
+[2026-03-02 14:21:40] quant.watchdog INFO: 系统健康
+[2026-03-02 14:31:28] quant.watchdog INFO: 策略 [尾盘短线选股] 运行成功 (68.3s)
+[2026-03-02 14:31:29] quant.watchdog INFO: 策略 [尾盘短线选股] 运行成功 (70.6s)
+[2026-03-02 14:31:40] quant.watchdog INFO: 系统健康
+[2026-03-02 14:41:41] quant.watchdog INFO: 系统健康
+[2026-03-02 14:51:41] quant.watchdog INFO: 系统健康
+[2026-03-02 15:01:41] quant.watchdog INFO: 系统健康
+[2026-03-02 15:11:41] quant.watchdog INFO: 系统健康
+[2026-03-02 15:21:41] quant.watchdog INFO: 系统健康
+[2026-03-02 15:31:41] quant.watchdog INFO: 系统健康
+[2026-03-02 15:41:41] quant.watchdog INFO: 系统健康
+[2026-03-02 15:51:41] quant.watchdog INFO: 系统健康
+[2026-03-02 16:01:41] quant.watchdog INFO: 系统健康
+[2026-03-02 16:11:41] quant.watchdog INFO: 系统健康
+[2026-03-02 16:21:42] quant.watchdog INFO: 系统健康
+[2026-03-02 16:31:42] quant.watchdog INFO: 系统健康
+[2026-03-02 16:41:42] quant.watchdog INFO: 系统健康
+[2026-03-02 16:51:42] quant.watchdog INFO: 系统健康
+[2026-03-02 17:01:42] quant.watchdog INFO: 系统健康
+[2026-03-02 17:11:42] quant.watchdog INFO: 系统健康
+[2026-03-02 17:21:42] quant.watchdog INFO: 系统健康
+[2026-03-02 17:31:42] quant.watchdog INFO: 系统健康
+[2026-03-02 17:41:42] quant.watchdog INFO: 系统健康
+[2026-03-02 17:51:43] quant.watchdog INFO: 系统健康
+[2026-03-02 18:01:43] quant.watchdog INFO: 系统健康
+[2026-03-02 18:11:43] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 18:21:46] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 18:31:48] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 18:41:49] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 18:51:51] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 19:01:52] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 19:11:54] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 19:21:56] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 19:31:57] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 19:41:59] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 19:52:00] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 20:02:02] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 20:12:04] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 20:22:06] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 20:32:07] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 20:42:09] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 20:52:11] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 21:01:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 19s 前)
+[2026-03-02 21:02:12] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 21:10:35] quant.watchdog INFO: 策略 [期货趋势选股] 运行成功 (32.1s)
+[2026-03-02 21:12:14] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 21:17:31] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 21:21:07] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 21:21:07] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 21:21:07] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 21:21:07] quant.watchdog DEBUG: [guard] 调度器正常 (PID=75769, 心跳 0s 前)
+[2026-03-02 21:21:07] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 21:21:07] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 21:21:07] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 21:22:31] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 21:23:38] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 21:23:38] quant.watchdog INFO: 系统健康
+[2026-03-02 21:23:52] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 21:23:52] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 21:23:52] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 21:23:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=75850, 心跳 0s 前)
+[2026-03-02 21:23:52] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 21:23:52] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 21:23:52] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 21:26:34] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 21:26:34] quant.watchdog INFO: 系统健康
+[2026-03-02 21:27:31] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 21:30:19] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 21:30:19] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 21:30:19] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 21:30:19] quant.watchdog DEBUG: [guard] 调度器正常 (PID=75945, 心跳 0s 前)
+[2026-03-02 21:30:19] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 21:30:19] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 21:30:19] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 21:32:31] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 21:33:00] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 21:33:00] quant.watchdog INFO: 系统健康
+[2026-03-02 21:37:31] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 21:42:31] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 22s 前)
+[2026-03-02 21:47:32] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 21:48:46] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 21:48:46] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 21:48:46] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 21:48:46] quant.watchdog DEBUG: [guard] 调度器正常 (PID=76589, 心跳 0s 前)
+[2026-03-02 21:48:46] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 21:48:46] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 21:48:46] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 21:51:28] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 21:51:28] quant.watchdog INFO: 系统健康
+[2026-03-02 21:52:32] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 21:55:56] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 21:55:56] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 21:55:56] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 21:55:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=76825, 心跳 0s 前)
+[2026-03-02 21:55:56] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 21:55:56] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 21:55:56] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 21:57:32] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 21:58:38] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 21:58:38] quant.watchdog INFO: 系统健康
+[2026-03-02 22:02:32] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 22:07:32] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 22:12:32] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 22:17:32] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 22:22:32] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 22:27:32] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63445, 心跳 23s 前)
+[2026-03-02 22:32:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=81819, 心跳 22s 前)
+[2026-03-02 22:37:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=81819, 心跳 22s 前)
+[2026-03-02 22:40:09] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 22:40:09] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 22:40:09] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 22:40:09] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84477, 心跳 0s 前)
+[2026-03-02 22:40:09] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 22:40:09] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 22:40:09] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 22:42:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=81819, 心跳 22s 前)
+[2026-03-02 22:42:51] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 22:42:51] quant.watchdog INFO: 系统健康
+[2026-03-02 22:47:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=81819, 心跳 22s 前)
+[2026-03-02 22:49:10] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 22:49:10] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 22:49:10] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 22:49:10] quant.watchdog DEBUG: [guard] 调度器正常 (PID=88228, 心跳 0s 前)
+[2026-03-02 22:49:10] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 22:49:10] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 22:49:10] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 22:51:52] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 22:51:52] quant.watchdog INFO: 系统健康
+[2026-03-02 22:52:25] quant.watchdog ERROR: 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
+[2026-03-02 22:52:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=81819, 心跳 22s 前)
+[2026-03-02 22:56:53] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 22:56:53] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 22:56:53] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 22:56:53] quant.watchdog DEBUG: [guard] 调度器正常 (PID=91423, 心跳 0s 前)
+[2026-03-02 22:56:53] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 22:56:53] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 22:56:53] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 22:57:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=81819, 心跳 22s 前)
+[2026-03-02 22:59:34] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 22:59:34] quant.watchdog INFO: 系统健康
+[2026-03-02 23:02:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=81819, 心跳 21s 前)
+[2026-03-02 23:07:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=81819, 心跳 21s 前)
+[2026-03-02 23:07:49] quant.watchdog INFO: 终止调度器进程 PID=81819...
+[2026-03-02 23:07:54] quant.watchdog INFO: 进程已终止
+[2026-03-02 23:07:54] quant.watchdog INFO: 启动新调度器进程...
+[2026-03-02 23:07:54] quant.watchdog INFO: 新调度器已启动, PID=97496
+[2026-03-02 23:12:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=97496, 心跳 8s 前)
+[2026-03-02 23:17:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=97496, 心跳 8s 前)
+[2026-03-02 23:22:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=97496, 心跳 7s 前)
+[2026-03-02 23:22:58] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 23:22:58] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 23:22:58] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 23:22:58] quant.watchdog DEBUG: [guard] 调度器正常 (PID=1322, 心跳 0s 前)
+[2026-03-02 23:22:58] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 23:22:58] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 23:22:58] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 23:25:40] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 23:25:40] quant.watchdog INFO: 系统健康
+[2026-03-02 23:27:33] quant.watchdog DEBUG: [guard] 调度器正常 (PID=97496, 心跳 7s 前)
+[2026-03-02 23:29:21] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 23:29:21] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 23:29:21] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 23:29:21] quant.watchdog DEBUG: [guard] 调度器正常 (PID=2301, 心跳 0s 前)
+[2026-03-02 23:29:21] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 23:29:21] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 23:29:21] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 23:32:03] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 23:32:03] quant.watchdog INFO: 系统健康
+[2026-03-02 23:32:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=97496, 心跳 8s 前)
+[2026-03-02 23:37:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=3773, 心跳 26s 前)
+[2026-03-02 23:42:19] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 23:42:19] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 23:42:19] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 23:42:19] quant.watchdog DEBUG: [guard] 调度器正常 (PID=4377, 心跳 0s 前)
+[2026-03-02 23:42:19] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 23:42:19] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 23:42:19] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 23:42:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=3773, 心跳 26s 前)
+[2026-03-02 23:45:01] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 23:45:01] quant.watchdog INFO: 系统健康
+[2026-03-02 23:47:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=3773, 心跳 26s 前)
+[2026-03-02 23:48:46] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-02 23:48:46] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-02 23:48:46] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-02 23:48:46] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5203, 心跳 0s 前)
+[2026-03-02 23:48:46] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-02 23:48:46] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-02 23:48:46] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-02 23:51:28] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-02 23:51:28] quant.watchdog INFO: 系统健康
+[2026-03-02 23:52:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=3773, 心跳 26s 前)
+[2026-03-02 23:57:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=3773, 心跳 26s 前)
+[2026-03-03 00:02:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 19s 前)
+[2026-03-03 00:03:04] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 00:03:04] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 00:03:04] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 00:03:04] quant.watchdog DEBUG: [guard] 调度器正常 (PID=8398, 心跳 0s 前)
+[2026-03-03 00:03:04] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 00:03:04] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 00:03:04] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 00:05:45] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 00:05:45] quant.watchdog INFO: 系统健康
+[2026-03-03 00:07:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 19s 前)
+[2026-03-03 00:12:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 19s 前)
+[2026-03-03 00:17:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 19s 前)
+[2026-03-03 00:22:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 19s 前)
+[2026-03-03 00:27:34] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 19s 前)
+[2026-03-03 00:32:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 20s 前)
+[2026-03-03 00:37:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 20s 前)
+[2026-03-03 00:42:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 19s 前)
+[2026-03-03 00:47:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 19s 前)
+[2026-03-03 00:52:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 19s 前)
+[2026-03-03 00:57:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 19s 前)
+[2026-03-03 01:00:31] quant.watchdog INFO: 策略 [币圈趋势选股] 运行成功 (11.5s)
+[2026-03-03 01:00:33] quant.watchdog INFO: 策略 [币圈趋势选股] 运行成功 (11.7s)
+[2026-03-03 01:02:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 01:07:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 01:12:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 01:17:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 01:22:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 01:27:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 01:32:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 01:37:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 01:42:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 01:47:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 01:52:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 01:57:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 02:02:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 02:07:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 02:12:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 02:17:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 02:22:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 02:27:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 02:32:37] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 02:37:37] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 02:42:37] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 02:47:37] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 02:52:37] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 02:57:37] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 03:02:37] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 03:07:37] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 03:12:37] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 03:17:37] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 03:22:38] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 03:27:38] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 03:32:38] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 03:37:38] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 03:42:38] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 03:47:38] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 03:52:38] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 03:57:38] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 04:02:38] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 04:07:38] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 04:12:38] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 04:17:39] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 04:22:39] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 04:27:39] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 04:32:39] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 04:37:39] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 04:42:39] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 04:47:39] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 04:52:39] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 04:57:39] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 05:02:39] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 05:07:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 05:12:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 05:17:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 05:22:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 05:27:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 05:30:28] quant.watchdog INFO: 策略 [美股收盘分析] 运行成功 (19.0s)
+[2026-03-03 05:30:28] quant.watchdog INFO: 策略 [美股收盘分析] 运行成功 (21.3s)
+[2026-03-03 05:32:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7751, 心跳 11s 前)
+[2026-03-03 05:37:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7751, 心跳 11s 前)
+[2026-03-03 05:42:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 11s 前)
+[2026-03-03 05:47:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 11s 前)
+[2026-03-03 05:52:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7751, 心跳 11s 前)
+[2026-03-03 05:57:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 10s 前)
+[2026-03-03 06:02:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 06:07:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 06:12:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 06:17:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 06:22:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 06:27:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 06:32:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 06:37:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 06:42:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 06:47:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 06:52:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 06:57:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 6s 前)
+[2026-03-03 07:02:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 07:07:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 07:12:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 07:17:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 07:22:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 07:27:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 7s 前)
+[2026-03-03 07:32:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 07:37:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 07:42:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 07:47:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 07:52:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 07:57:42] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 1s 前)
+[2026-03-03 08:02:43] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 08:07:43] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 08:12:43] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 08:17:43] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 08:22:43] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 08:27:43] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7770, 心跳 2s 前)
+[2026-03-03 08:32:43] quant.watchdog DEBUG: [guard] 调度器正常 (PID=16019, 心跳 3s 前)
+[2026-03-03 08:33:26] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 08:33:26] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 08:33:26] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 08:33:26] quant.watchdog DEBUG: [guard] 调度器正常 (PID=16119, 心跳 0s 前)
+[2026-03-03 08:33:26] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 08:33:26] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 08:33:26] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 08:36:08] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 08:36:08] quant.watchdog INFO: 系统健康
+[2026-03-03 08:37:43] quant.watchdog DEBUG: [guard] 调度器正常 (PID=16019, 心跳 3s 前)
+[2026-03-03 08:42:43] quant.watchdog DEBUG: [guard] 调度器正常 (PID=16019, 心跳 3s 前)
+[2026-03-03 08:47:43] quant.watchdog DEBUG: [guard] 调度器正常 (PID=16019, 心跳 3s 前)
+[2026-03-03 08:52:43] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=16019), 自动重启
+[2026-03-03 08:52:43] quant.watchdog INFO: [guard] 新调度器已启动, PID=18097
+[2026-03-03 08:56:45] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 08:56:45] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 08:56:45] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 08:56:45] quant.watchdog DEBUG: [guard] 调度器正常 (PID=18213, 心跳 0s 前)
+[2026-03-03 08:56:45] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 08:56:45] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 08:56:45] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 08:57:45] quant.watchdog DEBUG: [guard] 调度器正常 (PID=18088, 心跳 1s 前)
+[2026-03-03 08:59:27] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 08:59:27] quant.watchdog INFO: 系统健康
+[2026-03-03 09:02:45] quant.watchdog DEBUG: [guard] 调度器正常 (PID=18088, 心跳 1s 前)
+[2026-03-03 09:05:41] quant.watchdog INFO: 策略 [期货趋势选股] 运行成功 (21.1s)
+[2026-03-03 09:05:43] quant.watchdog INFO: 策略 [期货趋势选股] 运行成功 (20.6s)
+[2026-03-03 09:05:46] quant.watchdog INFO: 策略 [期货趋势选股] 运行成功 (23.0s)
+[2026-03-03 09:07:45] quant.watchdog DEBUG: [guard] 调度器正常 (PID=18088, 心跳 1s 前)
+[2026-03-03 09:12:45] quant.watchdog DEBUG: [guard] 调度器正常 (PID=18097, 心跳 20s 前)
+[2026-03-03 09:17:45] quant.watchdog DEBUG: [guard] 调度器正常 (PID=18097, 心跳 9s 前)
+[2026-03-03 09:22:04] quant.watchdog INFO: 策略 [事件驱动选股] 运行成功 (2.4s)
+[2026-03-03 09:22:04] quant.watchdog INFO: 策略 [事件驱动选股] 运行成功 (1.6s)
+[2026-03-03 09:22:09] quant.watchdog INFO: 策略 [事件驱动选股] 运行成功 (1.7s)
+[2026-03-03 09:22:45] quant.watchdog DEBUG: [guard] 调度器正常 (PID=18097, 心跳 6s 前)
+[2026-03-03 09:27:45] quant.watchdog DEBUG: [guard] 调度器正常 (PID=18097, 心跳 186s 前)
+[2026-03-03 09:32:46] quant.watchdog DEBUG: [guard] 调度器正常 (PID=18097, 心跳 487s 前)
+[2026-03-03 09:32:46] quant.watchdog INFO: 策略 [集合竞价选股] 运行成功 (462.2s)
+[2026-03-03 09:32:46] quant.watchdog INFO: 策略 [集合竞价选股] 运行成功 (462.5s)
+[2026-03-03 09:33:22] quant.watchdog INFO: 策略 [集合竞价选股] 运行成功 (492.6s)
+[2026-03-03 09:37:46] quant.watchdog DEBUG: [guard] 调度器正常 (PID=25088, 心跳 27s 前)
+[2026-03-03 09:42:46] quant.watchdog DEBUG: [guard] 调度器正常 (PID=25088, 心跳 27s 前)
+[2026-03-03 09:47:46] quant.watchdog DEBUG: [guard] 调度器正常 (PID=25088, 心跳 27s 前)
+[2026-03-03 09:52:46] quant.watchdog DEBUG: [guard] 调度器正常 (PID=25088, 心跳 177s 前)
+[2026-03-03 09:57:46] quant.watchdog DEBUG: [guard] 调度器正常 (PID=25088, 心跳 477s 前)
+[2026-03-03 10:02:46] quant.watchdog ERROR: [guard] 进程存活但心跳超时 13 分钟, 疑似卡死, 强制重启
+[2026-03-03 10:02:47] quant.watchdog INFO: [guard] 新调度器已启动, PID=27060
+[2026-03-03 10:07:48] quant.watchdog DEBUG: [guard] 调度器正常 (PID=27060, 心跳 29s 前)
+[2026-03-03 10:12:21] quant.watchdog INFO: 策略 [低吸回调选股] 运行成功 (1317.5s)
+[2026-03-03 10:12:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=25077, 心跳 28s 前)
+[2026-03-03 10:16:55] quant.watchdog INFO: 策略 [放量突破选股] 运行成功 (244.5s)
+[2026-03-03 10:17:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=27060, 心跳 179s 前)
+[2026-03-03 10:22:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=27060, 心跳 479s 前)
+[2026-03-03 10:27:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=28487, 心跳 23s 前)
+[2026-03-03 10:32:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=28487, 心跳 14s 前)
+[2026-03-03 10:37:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=28487, 心跳 14s 前)
+[2026-03-03 10:42:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=28487, 心跳 14s 前)
+[2026-03-03 10:47:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=28487, 心跳 14s 前)
+[2026-03-03 10:52:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 16s 前)
+[2026-03-03 10:57:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 16s 前)
+[2026-03-03 11:02:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 4s 前)
+[2026-03-03 11:07:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 3s 前)
+[2026-03-03 11:12:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 3s 前)
+[2026-03-03 11:17:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 25s 前)
+[2026-03-03 11:22:49] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 25s 前)
+[2026-03-03 11:27:50] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 11:32:50] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 11:37:50] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 11:42:50] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 11:47:50] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 11:52:50] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 11:57:50] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 12:02:50] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 12:07:50] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 12:12:51] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 12:17:51] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 27s 前)
+[2026-03-03 12:22:51] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 12:27:51] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 12:32:51] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 12:33:07] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 12:33:07] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 12:33:07] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 12:33:07] quant.watchdog DEBUG: [guard] 调度器正常 (PID=38521, 心跳 0s 前)
+[2026-03-03 12:33:07] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 12:33:07] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 12:33:07] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 12:35:48] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 12:35:48] quant.watchdog INFO: 系统健康
+[2026-03-03 12:37:51] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 12:37:57] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 12:37:57] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 12:37:57] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 12:37:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=38895, 心跳 0s 前)
+[2026-03-03 12:37:57] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 12:37:57] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 12:37:57] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 12:40:38] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 12:40:38] quant.watchdog INFO: 系统健康
+[2026-03-03 12:42:37] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 12:42:37] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 12:42:37] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 12:42:37] quant.watchdog DEBUG: [guard] 调度器正常 (PID=39227, 心跳 0s 前)
+[2026-03-03 12:42:37] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 12:42:37] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 12:42:37] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 12:42:51] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 12:45:18] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 12:45:18] quant.watchdog INFO: 系统健康
+[2026-03-03 12:47:51] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 12:52:51] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 12:57:51] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 13:02:40] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 13:02:40] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 13:02:40] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 13:02:40] quant.watchdog DEBUG: [guard] 调度器正常 (PID=40718, 心跳 0s 前)
+[2026-03-03 13:02:40] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 13:02:40] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 13:02:40] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 13:02:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 27s 前)
+[2026-03-03 13:05:21] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 13:05:21] quant.watchdog INFO: 系统健康
+[2026-03-03 13:07:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 27s 前)
+[2026-03-03 13:12:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 27s 前)
+[2026-03-03 13:17:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 27s 前)
+[2026-03-03 13:22:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 27s 前)
+[2026-03-03 13:27:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 27s 前)
+[2026-03-03 13:32:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 19s 前)
+[2026-03-03 13:37:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 19s 前)
+[2026-03-03 13:42:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 19s 前)
+[2026-03-03 13:47:52] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 19s 前)
+[2026-03-03 13:52:53] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 20s 前)
+[2026-03-03 13:57:53] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 20s 前)
+[2026-03-03 14:00:56] quant.watchdog INFO: 策略 [板块轮动选股] 运行成功 (47.8s)
+[2026-03-03 14:02:53] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 15s 前)
+[2026-03-03 14:07:53] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 15s 前)
+[2026-03-03 14:12:53] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 15s 前)
+[2026-03-03 14:17:53] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 15s 前)
+[2026-03-03 14:22:53] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 15s 前)
+[2026-03-03 14:27:53] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 15s 前)
+[2026-03-03 14:31:22] quant.watchdog INFO: 策略 [尾盘短线选股] 运行成功 (73.4s)
+[2026-03-03 14:32:53] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 1s 前)
+[2026-03-03 14:37:54] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 2s 前)
+[2026-03-03 14:42:54] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 2s 前)
+[2026-03-03 14:47:54] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 2s 前)
+[2026-03-03 14:52:54] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 14:57:54] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 14:58:21] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 14:58:21] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 14:58:21] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 14:58:21] quant.watchdog DEBUG: [guard] 调度器正常 (PID=51902, 心跳 0s 前)
+[2026-03-03 14:58:21] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 14:58:21] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 14:58:21] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 15:01:02] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 15:01:02] quant.watchdog INFO: 系统健康
+[2026-03-03 15:02:54] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 15:07:54] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 15:12:54] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 15:17:54] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 15:22:54] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 15:27:55] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 27s 前)
+[2026-03-03 15:32:55] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 15:37:55] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 15:42:55] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 15:47:55] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 15:52:55] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 15:57:55] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 16:02:55] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 26s 前)
+[2026-03-03 16:07:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 20s 前)
+[2026-03-03 16:12:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 20s 前)
+[2026-03-03 16:17:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 11s 前)
+[2026-03-03 16:22:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 11s 前)
+[2026-03-03 16:27:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=30198, 心跳 10s 前)
+[2026-03-03 16:32:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 19s 前)
+[2026-03-03 16:33:17] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 16:33:17] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 16:33:17] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 16:33:17] quant.watchdog DEBUG: [guard] 调度器正常 (PID=85205, 心跳 0s 前)
+[2026-03-03 16:33:17] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 16:33:17] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 16:33:17] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 16:35:58] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 16:35:58] quant.watchdog INFO: 系统健康
+[2026-03-03 16:37:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 19s 前)
+[2026-03-03 16:38:06] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 16:38:06] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 16:38:06] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 16:38:06] quant.watchdog DEBUG: [guard] 调度器正常 (PID=87370, 心跳 0s 前)
+[2026-03-03 16:38:06] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 16:38:06] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 16:38:06] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 16:40:48] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 16:40:48] quant.watchdog INFO: 系统健康
+[2026-03-03 16:42:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 19s 前)
+[2026-03-03 16:47:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 19s 前)
+[2026-03-03 16:52:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 19s 前)
+[2026-03-03 16:57:50] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 16:57:50] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 16:57:50] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 16:57:50] quant.watchdog DEBUG: [guard] 调度器正常 (PID=95893, 心跳 0s 前)
+[2026-03-03 16:57:50] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 16:57:50] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 16:57:50] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 16:57:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 19s 前)
+[2026-03-03 17:00:32] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 17:00:32] quant.watchdog INFO: 系统健康
+[2026-03-03 17:02:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 20s 前)
+[2026-03-03 17:07:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 20s 前)
+[2026-03-03 17:12:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 20s 前)
+[2026-03-03 17:17:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 20s 前)
+[2026-03-03 17:22:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 20s 前)
+[2026-03-03 17:24:35] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 17:24:35] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 17:24:35] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 17:24:35] quant.watchdog DEBUG: [guard] 调度器正常 (PID=1404, 心跳 0s 前)
+[2026-03-03 17:24:35] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 17:24:35] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 17:24:35] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 17:27:16] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 17:27:16] quant.watchdog INFO: 系统健康
+[2026-03-03 17:27:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 20s 前)
+[2026-03-03 17:29:11] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 17:29:11] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 17:29:11] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 17:29:11] quant.watchdog DEBUG: [guard] 调度器正常 (PID=1817, 心跳 0s 前)
+[2026-03-03 17:29:11] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 17:29:11] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 17:29:11] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 17:31:52] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 17:31:52] quant.watchdog INFO: 系统健康
+[2026-03-03 17:32:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=84842, 心跳 20s 前)
+[2026-03-03 17:33:26] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 17:33:26] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 17:33:26] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 17:33:26] quant.watchdog DEBUG: [guard] 调度器正常 (PID=2793, 心跳 0s 前)
+[2026-03-03 17:33:26] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 17:33:26] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 17:33:26] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 17:36:07] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 17:36:07] quant.watchdog INFO: 系统健康
+[2026-03-03 17:37:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=3743, 心跳 6s 前)
+[2026-03-03 17:42:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=3743, 心跳 6s 前)
+[2026-03-03 17:47:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=3743, 心跳 6s 前)
+[2026-03-03 17:52:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=3743, 心跳 6s 前)
+[2026-03-03 17:57:57] quant.watchdog DEBUG: [guard] 调度器正常 (PID=3743, 心跳 6s 前)
+[2026-03-03 18:00:08] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 18:00:08] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 18:00:08] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 18:00:08] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5528, 心跳 0s 前)
+[2026-03-03 18:00:08] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 18:00:08] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 18:00:08] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 18:02:49] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 18:02:49] quant.watchdog INFO: 系统健康
+[2026-03-03 18:02:58] quant.watchdog DEBUG: [guard] 调度器正常 (PID=3743, 心跳 7s 前)
+[2026-03-03 18:07:58] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 24s 前)
+[2026-03-03 18:12:58] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 24s 前)
+[2026-03-03 18:17:58] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 24s 前)
+[2026-03-03 18:22:58] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 24s 前)
+[2026-03-03 18:27:58] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 24s 前)
+[2026-03-03 18:28:17] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 18:28:17] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 18:28:17] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 18:28:17] quant.watchdog DEBUG: [guard] 调度器正常 (PID=7597, 心跳 0s 前)
+[2026-03-03 18:28:17] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 18:28:17] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 18:28:17] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 18:30:58] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 18:30:58] quant.watchdog INFO: 系统健康
+[2026-03-03 18:32:58] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 24s 前)
+[2026-03-03 18:33:45] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 18:33:45] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 18:33:45] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 18:33:45] quant.watchdog DEBUG: [guard] 调度器正常 (PID=8018, 心跳 0s 前)
+[2026-03-03 18:33:45] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 18:33:45] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 18:33:45] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 18:36:26] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 18:36:26] quant.watchdog INFO: 系统健康
+[2026-03-03 18:37:58] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 24s 前)
+[2026-03-03 18:38:56] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 18:38:56] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 18:38:56] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 18:38:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=8395, 心跳 0s 前)
+[2026-03-03 18:38:56] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 18:38:56] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 18:38:56] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 18:41:38] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 18:41:38] quant.watchdog INFO: 系统健康
+[2026-03-03 18:42:58] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 24s 前)
+[2026-03-03 18:46:10] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 18:46:10] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 18:46:10] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 18:46:10] quant.watchdog DEBUG: [guard] 调度器正常 (PID=8902, 心跳 0s 前)
+[2026-03-03 18:46:10] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 18:46:10] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 18:46:10] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 18:47:58] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 24s 前)
+[2026-03-03 18:48:51] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 18:48:51] quant.watchdog INFO: 系统健康
+[2026-03-03 18:51:35] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 18:51:35] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 18:51:36] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 18:51:36] quant.watchdog DEBUG: [guard] 调度器正常 (PID=9312, 心跳 0s 前)
+[2026-03-03 18:51:36] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 18:51:36] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 18:51:36] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 18:52:59] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 25s 前)
+[2026-03-03 18:54:17] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 18:54:17] quant.watchdog INFO: 系统健康
+[2026-03-03 18:57:59] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 25s 前)
+[2026-03-03 19:02:59] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 25s 前)
+[2026-03-03 19:07:59] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 24s 前)
+[2026-03-03 19:12:59] quant.watchdog DEBUG: [guard] 调度器正常 (PID=5919, 心跳 24s 前)
+[2026-03-03 19:17:59] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 16s 前)
+[2026-03-03 19:22:59] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 16s 前)
+[2026-03-03 19:27:59] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 16s 前)
+[2026-03-03 19:32:59] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 16s 前)
+[2026-03-03 19:37:59] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 16s 前)
+[2026-03-03 19:38:28] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 19:38:28] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 19:38:28] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 19:38:28] quant.watchdog DEBUG: [guard] 调度器正常 (PID=15919, 心跳 0s 前)
+[2026-03-03 19:38:28] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 19:38:28] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 19:38:28] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 19:41:09] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 19:41:09] quant.watchdog INFO: 系统健康
+[2026-03-03 19:42:59] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 16s 前)
+[2026-03-03 19:43:41] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 19:43:41] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 19:43:41] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 19:43:41] quant.watchdog DEBUG: [guard] 调度器正常 (PID=18071, 心跳 0s 前)
+[2026-03-03 19:43:41] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 19:43:41] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 19:43:41] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 19:46:22] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 19:46:22] quant.watchdog INFO: 系统健康
+[2026-03-03 19:48:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 17s 前)
+[2026-03-03 19:48:56] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 19:48:56] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 19:48:56] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 19:48:56] quant.watchdog DEBUG: [guard] 调度器正常 (PID=20740, 心跳 0s 前)
+[2026-03-03 19:48:56] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 19:48:56] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 19:48:56] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 19:51:38] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 19:51:38] quant.watchdog INFO: 系统健康
+[2026-03-03 19:53:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 17s 前)
+[2026-03-03 19:58:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 17s 前)
+[2026-03-03 20:03:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 17s 前)
+[2026-03-03 20:08:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 17s 前)
+[2026-03-03 20:13:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 16s 前)
+[2026-03-03 20:18:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 16s 前)
+[2026-03-03 20:23:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=11268, 心跳 16s 前)
+[2026-03-03 20:28:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 6s 前)
+[2026-03-03 20:33:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 5s 前)
+[2026-03-03 20:38:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 5s 前)
+[2026-03-03 20:43:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 5s 前)
+[2026-03-03 20:48:00] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 5s 前)
+[2026-03-03 20:53:01] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 6s 前)
+[2026-03-03 20:58:01] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 6s 前)
+[2026-03-03 21:03:01] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 6s 前)
+[2026-03-03 21:08:01] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 6s 前)
+[2026-03-03 21:10:48] quant.watchdog INFO: 策略 [期货趋势选股] 运行成功 (17.7s)
+[2026-03-03 21:10:48] quant.watchdog INFO: 策略 [期货趋势选股] 运行成功 (19.5s)
+[2026-03-03 21:13:01] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 6s 前)
+[2026-03-03 21:18:01] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 6s 前)
+[2026-03-03 21:23:01] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 6s 前)
+[2026-03-03 21:23:24] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 21:23:24] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 21:23:24] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 21:23:24] quant.watchdog DEBUG: [guard] 调度器正常 (PID=49729, 心跳 0s 前)
+[2026-03-03 21:23:24] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 21:23:24] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 21:23:24] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 21:26:06] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 21:26:06] quant.watchdog INFO: 系统健康
+[2026-03-03 21:28:01] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 6s 前)
+[2026-03-03 21:33:01] quant.watchdog DEBUG: [guard] 调度器正常 (PID=29564, 心跳 6s 前)
+[2026-03-03 21:33:07] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 21:33:07] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 21:33:07] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 21:33:07] quant.watchdog DEBUG: [guard] 调度器正常 (PID=62008, 心跳 0s 前)
+[2026-03-03 21:33:07] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 21:33:07] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 21:33:07] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 21:35:49] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 21:35:49] quant.watchdog INFO: 系统健康
+[2026-03-03 21:38:01] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63312, 心跳 12s 前)
+[2026-03-03 21:43:02] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63312, 心跳 13s 前)
+[2026-03-03 21:45:46] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 21:45:46] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 21:45:46] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 21:45:46] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63851, 心跳 0s 前)
+[2026-03-03 21:45:46] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 21:45:46] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 21:45:46] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 21:48:02] quant.watchdog DEBUG: [guard] 调度器正常 (PID=63312, 心跳 13s 前)
+[2026-03-03 21:48:27] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 21:48:27] quant.watchdog INFO: 系统健康
+[2026-03-03 21:53:02] quant.watchdog DEBUG: [guard] 调度器正常 (PID=64259, 心跳 15s 前)
+[2026-03-03 21:58:02] quant.watchdog DEBUG: [guard] 调度器正常 (PID=64259, 心跳 15s 前)
+[2026-03-03 22:02:01] quant.watchdog INFO: 策略 [测试策略] 运行成功 (12.5s)
+[2026-03-03 22:02:01] quant.watchdog ERROR: 策略 [测试策略] 运行失败: boom
+[2026-03-03 22:02:01] quant.watchdog ERROR: 策略 [x] 运行失败: e
+[2026-03-03 22:02:01] quant.watchdog DEBUG: [guard] 调度器正常 (PID=65058, 心跳 0s 前)
+[2026-03-03 22:02:01] quant.watchdog WARNING: [guard] 调度器进程已死 (PID=99999999), 自动重启
+[2026-03-03 22:02:01] quant.watchdog ERROR: [guard] 进程存活但心跳超时 15 分钟, 疑似卡死, 强制重启
+[2026-03-03 22:02:01] quant.watchdog WARNING: [guard] 无 PID 记录, 首次启动调度器, 自动重启
+[2026-03-03 22:03:02] quant.watchdog DEBUG: [guard] 调度器正常 (PID=64259, 心跳 15s 前)
+[2026-03-03 22:04:42] quant.watchdog ERROR: 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录
+[2026-03-03 22:04:42] quant.watchdog INFO: 系统健康

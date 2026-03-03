@@ -1,0 +1,390 @@
+[2026-03-02 21:43:12] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-02 21:43:12] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 21:43:12] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 21:43:12] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 21:43:12] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 21:43:12] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 21:43:12] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-02 21:43:12] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-02 21:43:12] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 21:43:12] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-02 21:48:27] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-02 21:48:27] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 21:48:27] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 21:48:27] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 21:48:27] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 21:48:27] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 21:48:27] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-02 21:48:27] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-02 21:48:27] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 21:48:27] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-02 21:51:45] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 21:55:37] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-02 21:55:37] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 21:55:37] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 21:55:37] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 21:55:37] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 21:55:37] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 21:55:37] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-02 21:55:37] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-02 21:55:37] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 21:55:37] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-02 22:39:50] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-02 22:39:50] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 22:39:50] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 22:39:50] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 22:39:50] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 22:39:50] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 22:39:50] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-02 22:39:50] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-02 22:39:50] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 22:39:50] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-02 22:48:51] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-02 22:48:51] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 22:48:51] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 22:48:51] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 22:48:51] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 22:48:51] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 22:48:51] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-02 22:48:51] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-02 22:48:51] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 22:48:51] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-02 22:56:33] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-02 22:56:33] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 22:56:33] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 22:56:33] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 22:56:33] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 22:56:33] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 22:56:33] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-02 22:56:33] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-02 22:56:33] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 22:56:33] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-02 23:22:39] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-02 23:22:39] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 23:22:39] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 23:22:39] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 23:22:39] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 23:22:39] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 23:22:39] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-02 23:22:39] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-02 23:22:39] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 23:22:39] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-02 23:29:02] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-02 23:29:02] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 23:29:02] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 23:29:02] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 23:29:02] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 23:29:02] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 23:29:02] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-02 23:29:02] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-02 23:29:02] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 23:29:02] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-02 23:42:00] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-02 23:42:00] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 23:42:00] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 23:42:00] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 23:42:00] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 23:42:00] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 23:42:00] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-02 23:42:00] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-02 23:42:00] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 23:42:00] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-02 23:48:27] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-02 23:48:27] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 23:48:27] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 23:48:27] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-02 23:48:27] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 23:48:27] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-02 23:48:27] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-02 23:48:27] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-02 23:48:27] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-02 23:48:27] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 08:33:07] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 08:33:07] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 08:33:07] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 08:33:07] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 08:33:07] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 08:33:07] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 08:33:07] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 08:33:07] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 08:33:07] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 08:33:07] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 08:56:26] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 08:56:26] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 08:56:26] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 08:56:26] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 08:56:26] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 08:56:26] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 08:56:26] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 08:56:26] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 08:56:26] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 08:56:26] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 12:32:48] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 12:32:48] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 12:32:48] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 12:32:48] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 12:32:48] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 12:32:48] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 12:32:48] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 12:32:48] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 12:32:48] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 12:32:48] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 12:37:37] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 12:37:37] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 12:37:37] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 12:37:37] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 12:37:37] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 12:37:37] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 12:37:37] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 12:37:37] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 12:37:37] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 12:37:37] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 12:42:17] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 12:42:17] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 12:42:17] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 12:42:17] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 12:42:17] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 12:42:17] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 12:42:17] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 12:42:17] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 12:42:17] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 12:42:17] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 13:02:21] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 13:02:21] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 13:02:21] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 13:02:21] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 13:02:21] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 13:02:21] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 13:02:21] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 13:02:21] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 13:02:21] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 13:02:21] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 14:58:01] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 14:58:01] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 14:58:01] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 14:58:01] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 14:58:01] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 14:58:01] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 14:58:01] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 14:58:01] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 14:58:01] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 14:58:01] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 16:05:29] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 3 条
+[2026-03-03 16:05:36] quant.signal_tracker DEBUG: 获取 FU 2026-03-03 收盘价失败: 'str' object is not callable
+[2026-03-03 16:05:36] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 1, 完成 0
+[2026-03-03 16:05:36] quant.signal_tracker INFO: 信号追踪日任务: 入库3条, 验证0条
+[2026-03-03 16:32:57] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 16:32:57] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 16:32:57] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 16:32:57] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 16:32:57] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 16:32:57] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 16:32:57] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 16:32:57] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 16:32:57] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 16:32:57] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 16:37:47] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 16:37:47] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 16:37:47] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 16:37:47] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 16:37:47] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 16:37:47] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 16:37:47] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 16:37:47] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 16:37:47] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 16:37:47] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 16:57:31] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 16:57:31] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 16:57:31] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 16:57:31] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 16:57:31] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 16:57:31] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 16:57:31] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 16:57:31] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 16:57:31] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 16:57:31] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 17:24:15] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 17:24:15] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 17:24:15] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 17:24:15] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 17:24:15] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 17:24:15] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 17:24:15] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 17:24:15] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 17:24:15] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 17:24:15] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 17:28:51] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 17:28:51] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 17:28:51] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 17:28:51] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 17:28:51] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 17:28:51] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 17:28:51] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 17:28:51] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 17:28:51] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 17:28:51] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 17:33:06] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 17:33:06] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 17:33:06] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 17:33:06] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 17:33:06] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 17:33:06] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 17:33:06] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 17:33:06] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 17:33:06] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 17:33:06] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 17:40:48] quant.signal_tracker DEBUG: 获取 FU 2026-03-03 收盘价失败: 'str' object is not callable
+[2026-03-03 17:40:48] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 1, 完成 0
+[2026-03-03 17:40:48] quant.signal_tracker INFO: 信号追踪日任务: 入库0条, 验证0条
+[2026-03-03 17:44:38] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 20 条
+[2026-03-03 17:44:44] quant.signal_tracker DEBUG: 获取 FU 2026-03-03 收盘价失败: 'str' object is not callable
+[2026-03-03 17:44:44] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 1, 完成 0
+[2026-03-03 17:44:44] quant.signal_tracker INFO: 信号追踪日任务: 入库20条, 验证0条
+[2026-03-03 17:59:48] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 17:59:48] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 17:59:48] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 17:59:48] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 17:59:48] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 17:59:48] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 17:59:48] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 17:59:48] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 17:59:48] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 17:59:48] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 18:27:43] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 18:27:43] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 18:27:43] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 18:27:43] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 18:27:43] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 18:27:43] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 18:27:43] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 18:27:43] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 18:27:43] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 18:27:43] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 18:33:11] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 18:33:11] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 18:33:11] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 18:33:11] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 18:33:11] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 18:33:11] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 18:33:11] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 18:33:11] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 18:33:11] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 18:33:11] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 18:38:22] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 18:38:22] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 18:38:23] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 18:38:23] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 18:38:23] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 18:38:23] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 18:38:23] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 18:38:23] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 18:38:23] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 18:38:23] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 18:45:18] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 18:45:18] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 18:45:18] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 18:45:18] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 18:45:18] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 18:45:18] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 18:45:18] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 18:45:18] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 18:45:18] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 18:45:18] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 18:50:45] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 18:50:45] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 18:50:45] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 18:50:45] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 18:50:45] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 18:50:45] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 18:50:45] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 18:50:45] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 18:50:45] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 18:50:45] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 19:37:38] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 19:37:38] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 19:37:38] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 19:37:38] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 19:37:38] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 19:37:38] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 19:37:38] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 19:37:38] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 19:37:38] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 19:37:38] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 19:42:51] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 19:42:51] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 19:42:51] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 19:42:51] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 19:42:51] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 19:42:51] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 19:42:51] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 19:42:51] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 19:42:51] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 19:42:51] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 19:48:07] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 19:48:07] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 19:48:07] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 19:48:07] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 19:48:07] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 19:48:07] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 19:48:07] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 19:48:07] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 19:48:07] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 19:48:07] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 21:19:24] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 20 条
+[2026-03-03 21:19:25] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 1, 完成 0
+[2026-03-03 21:19:25] quant.signal_tracker INFO: 信号追踪日任务: 入库20条, 验证0条
+[2026-03-03 21:20:21] quant.signal_tracker INFO: scorecard 同步: 新增 1 条 (总 24298)
+[2026-03-03 21:20:21] quant.signal_tracker INFO: 信号验证: 新增 1 条, 跳过 0, 完成 0
+[2026-03-03 21:20:43] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 21:20:43] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 21:20:43] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 21:20:43] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 21:20:43] quant.signal_tracker INFO: scorecard 同步: 新增 1 条 (总 24299)
+[2026-03-03 21:20:43] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 21:20:44] quant.signal_tracker INFO: scorecard 同步: 新增 1 条 (总 24300)
+[2026-03-03 21:20:44] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 21:20:44] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 21:20:44] quant.signal_tracker INFO: scorecard 同步: 新增 1 条 (总 24301)
+[2026-03-03 21:20:44] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 21:20:44] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 21:20:44] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 21:22:34] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 21:22:34] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 21:22:34] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 21:22:34] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 21:22:34] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 21:22:34] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 21:22:34] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 21:22:34] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 21:22:34] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 21:22:34] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 21:32:17] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 21:32:17] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 21:32:17] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 21:32:17] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 21:32:17] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 21:32:17] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 21:32:17] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 21:32:17] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 21:32:17] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 21:32:17] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 21:44:56] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 21:44:56] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 21:44:56] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 21:44:56] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 21:44:56] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 21:44:56] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 21:44:56] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 21:44:56] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 21:44:56] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 21:44:56] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
+[2026-03-03 22:01:10] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 2 条
+[2026-03-03 22:01:10] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 22:01:10] quant.signal_tracker INFO: 信号入库: 2026-03-02, 新增 1 条
+[2026-03-03 22:01:10] quant.signal_tracker INFO: 信号入库: 2026-03-01, 新增 1 条
+[2026-03-03 22:01:10] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 22:01:10] quant.signal_tracker INFO: 信号验证: 新增 3 条, 跳过 0, 完成 1
+[2026-03-03 22:01:10] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 3, 完成 0
+[2026-03-03 22:01:10] quant.signal_tracker INFO: 信号验证: 新增 0 条, 跳过 0, 完成 0
+[2026-03-03 22:01:10] quant.signal_tracker INFO: 信号入库: 2026-03-03, 新增 1 条
+[2026-03-03 22:01:10] quant.signal_tracker INFO: 信号追踪日任务: 入库1条, 验证0条
