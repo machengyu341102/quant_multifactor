@@ -13,10 +13,10 @@
 | **OP-03** | `Data` | **基本面快照持久化** | 在 `api_guard` 中增加 `fundamental_snapshot` 的专用持久化键值，确保当日所有策略仅拉取一次 A 股全量基本面（ak.stock_yjbb_em）。 | 💎 已核准 | Gemini |
 | **OP-04** | `Agent` | **智能体决策冲突日志** | 在 `agent_brain.py` 的冲突仲裁逻辑中，增加明细持久化记录，保存”被否决”的策略动作及其原始证据，用于夜班分析。 | 💎 已核准 | Gemini |
 | **OP-05** | `Safety` | **核心文件严格模式适配** | 将 `scheduler.py` 中涉及 `positions.json` 和 `scorecard.json` 的读取点全面切换为 `safe_load_strict`，增加异常熔断保护。 | 💎 已核准 | Gemini |
-| **OP-06** | `Architecture` | **模块化策略加载器 (解耦)** | 重构 `scheduler.py` 核心，实现策略动态注册。允许通过 `strategies.json` 动态增减策略，无需修改调度器主逻辑。 | ✅ 已完成 | Gemini |
-| **OP-07** | `Performance` | **核心数据向 SQLite 迁移** | 引入 SQLite (WAL 模式)，将高频变动的 `scorecard.json` 和 `conflict_audit.json` 迁移至数据库。保留 JSON 仅用于配置。 | ✅ 已完成 | Gemini |
-| **OP-08** | `Risk` | **凯利准则与组合优化** | 在 `portfolio_risk.py` 中引入凯利准则动态调整单笔仓位，并根据策略相关性矩阵进行组合层面的风险平价 (Risk Parity) 优化。 | ✅ 已完成 | Gemini |
-| **OP-09** | `Observability` | **智能体轻量仪表盘** | 基于 FastAPI 实现一个极简的 Web Dashboard，实时可视化展示大盘评分、Agent 决策链路、活跃策略热力图及系统实时回撤情况。 | ✅ 已完成 | Gemini |
+| **OP-06** | `Architecture` | **模块化策略加载器 (解耦)** | 重构 `scheduler.py` 核心，实现策略动态注册。允许通过 `strategies.json` 动态增减策略，无需修改调度器主逻辑。 | 💎 已核准 | Gemini |
+| **OP-07** | `Performance` | **核心数据向 SQLite 迁移** | 引入 SQLite (WAL 模式)，将高频变动的 `scorecard.json` 和 `conflict_audit.json` 迁移至数据库。保留 JSON 仅用于配置。 | 💎 已核准 | Gemini |
+| **OP-08** | `Risk` | **凯利准则与组合优化** | 在 `portfolio_risk.py` 中引入凯利准则动态调整单笔仓位，并根据策略相关性矩阵进行组合层面的风险平价 (Risk Parity) 优化。 | 💎 已核准 | Gemini |
+| **OP-09** | `Observability` | **智能体轻量仪表盘** | 基于 FastAPI 实现一个极简的 Web Dashboard，实时可视化展示大盘评分、Agent 决策链路、活跃策略热力图及系统实时回撤情况。 | 💎 已核准 | Gemini |
 
 ---
 *最后更新: 2026-03-03 (Gemini 最终审计完成)*
@@ -142,6 +142,15 @@
 - 启动: `python3 dashboard.py [--port 8501]`
 
 **全量 637 tests passed, 0 failed.**
+
+## 9. 扩展任务 (Claude Code 自主设计)
+
+| 任务 ID | 模块 | 优化项描述 | 状态 |
+| :--- | :--- | :--- | :--- |
+| **EX-01** | `Dashboard` | **WebSocket 实时推送** — 替代60s轮询, 策略执行/信号/持仓变动实时推送到前端 | ✅ 已完成 |
+| **EX-02** | `Performance` | **trade_journal → SQLite** — 高频读写的 trade_journal.json 迁移到 SQLite, 加速 ML 训练数据查询 | ✅ 已完成 |
+| **EX-03** | `ML` | **因子重要性排名 API** — ML 模型 feature_importance 通过 Dashboard 可视化, 辅助因子生命周期决策 | ✅ 已完成 |
+| **EX-04** | `Dashboard` | **纸盘模拟交易面板** — Dashboard 增加纸盘持仓/交易记录/权益曲线/7天统计 | ✅ 已完成 |
 
 ---
 *最后更新: 2026-03-04*

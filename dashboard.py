@@ -20,7 +20,10 @@ import json
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from fastapi import FastAPI
+import asyncio
+import threading
+
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from datetime import date, timedelta
 
@@ -32,6 +35,93 @@ logger = get_logger("dashboard")
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = FastAPI(title="量化多因子仪表盘", version="1.0")
+
+
+# ================================================================
+#  WebSocket 实时推送 (EX-01)
+# ================================================================
+
+class ConnectionManager:
+    """管理 WebSocket 连接, 支持广播"""
+
+    def __init__(self):
+        self._connections: list[WebSocket] = []
+        self._lock = threading.Lock()
+
+    async def connect(self, ws: WebSocket):
+        await ws.accept()
+        with self._lock:
+            self._connections.append(ws)
+        logger.info("WebSocket 连接: %d 个客户端", len(self._connections))
+
+    def disconnect(self, ws: WebSocket):
+        with self._lock:
+            if ws in self._connections:
+                self._connections.remove(ws)
+        logger.info("WebSocket 断开: %d 个客户端", len(self._connections))
+
+    async def broadcast(self, data: dict):
+        """广播 JSON 消息给所有连接"""
+        if not self._connections:
+            return
+        msg = json.dumps(data, ensure_ascii=False, default=str)
+        with self._lock:
+            stale = []
+            for ws in self._connections:
+                try:
+                    await ws.send_text(msg)
+                except Exception:
+                    stale.append(ws)
+            for ws in stale:
+                self._connections.remove(ws)
+
+    @property
+    def count(self):
+        return len(self._connections)
+
+
+ws_manager = ConnectionManager()
+
+
+def push_event(event_type: str, payload: dict):
+    """从外部模块推送事件到 Dashboard (线程安全)
+
+    用法:
+        from dashboard import push_event
+        push_event("strategy_complete", {"name": "放量突破", "status": "ok"})
+        push_event("signal_new", {"code": "000001", "score": 85})
+        push_event("position_change", {"action": "buy", "code": "600036"})
+    """
+    if ws_manager.count == 0:
+        return
+    data = {"type": event_type, "payload": payload, "ts": date.today().isoformat()}
+    try:
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            asyncio.ensure_future(ws_manager.broadcast(data))
+        else:
+            loop.run_until_complete(ws_manager.broadcast(data))
+    except RuntimeError:
+        # 没有事件循环 (从非 async 线程调用)
+        try:
+            loop = asyncio.new_event_loop()
+            loop.run_until_complete(ws_manager.broadcast(data))
+            loop.close()
+        except Exception:
+            pass
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(ws: WebSocket):
+    await ws_manager.connect(ws)
+    try:
+        while True:
+            # 保持连接, 接收客户端心跳
+            data = await ws.receive_text()
+            if data == "ping":
+                await ws.send_text(json.dumps({"type": "pong"}))
+    except WebSocketDisconnect:
+        ws_manager.disconnect(ws)
 
 
 # ================================================================
@@ -176,6 +266,40 @@ def api_equity():
         return {"error": str(e)}
 
 
+@app.get("/api/paper")
+def api_paper():
+    """纸盘模拟交易 (EX-04)"""
+    try:
+        from paper_trader import get_holdings_summary, calc_statistics
+        holdings = get_holdings_summary()
+        stats = calc_statistics(days=7)
+        trades = safe_load(os.path.join(_DIR, "paper_trades.json"), default=[])
+        return {
+            "holdings": holdings,
+            "stats": stats,
+            "recent_trades": trades[-20:],
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.get("/api/factors")
+def api_factors():
+    """ML 因子重要性排名 (EX-03)"""
+    try:
+        results = safe_load(os.path.join(_DIR, "ml_model_results.json"), default={})
+        importance = results.get("feature_importance", {})
+        # 按重要性排序
+        sorted_factors = sorted(importance.items(), key=lambda x: -x[1])
+        return {
+            "factors": [{"name": k, "importance": round(v, 4)} for k, v in sorted_factors],
+            "model_date": results.get("train_date", ""),
+            "model_score": results.get("test_score", 0),
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+
 @app.get("/api/heatmap")
 def api_heatmap():
     """策略热力图: 近7天每个策略每天的平均收益"""
@@ -303,7 +427,7 @@ async function fetchJSON(url) {
 
 async function loadAll() {
   $('update-time').textContent = new Date().toLocaleTimeString();
-  const [overview, regime, drawdown, signals, heatmap, agents, equity, conflicts] =
+  const [overview, regime, drawdown, signals, heatmap, agents, equity, conflicts, paper, factors] =
     await Promise.all([
       fetchJSON('/api/overview'),
       fetchJSON('/api/regime'),
@@ -313,6 +437,8 @@ async function loadAll() {
       fetchJSON('/api/agents'),
       fetchJSON('/api/equity'),
       fetchJSON('/api/conflicts'),
+      fetchJSON('/api/paper'),
+      fetchJSON('/api/factors'),
     ]);
 
   let html = '';
@@ -467,11 +593,81 @@ async function loadAll() {
     html += `<div class="card"><h2>Kelly 准则</h2>${kHtml}</div>`;
   }
 
+  // 纸盘模拟交易 (EX-04)
+  const ps = paper.stats || {};
+  const ph = paper.holdings || {};
+  if (!paper.error) {
+    let pHtml = `<div class="metric"><span class="label">持仓数</span>
+      <span class="value">${(ph.positions||[]).length}</span></div>
+    <div class="metric"><span class="label">可用资金</span>
+      <span class="value">${(ph.available_capital||0).toLocaleString()}</span></div>
+    <div class="metric"><span class="label">7天胜率</span>
+      <span class="value">${((ps.win_rate||0)*100).toFixed(0)}%</span></div>
+    <div class="metric"><span class="label">7天盈亏</span>
+      <span class="value" style="color:${(ps.total_pnl||0)>=0?'#3fb950':'#f85149'}">${(ps.total_pnl||0).toFixed(2)}%</span></div>`;
+    const ptrades = (paper.recent_trades||[]).slice(-5).reverse();
+    if (ptrades.length) {
+      pHtml += '<table style="margin-top:8px"><tr><th>日期</th><th>代码</th><th>方向</th><th>盈亏</th></tr>';
+      for (const t of ptrades) {
+        const pnl = t.pnl_pct || 0;
+        pHtml += `<tr><td style="font-size:11px">${(t.date||'').slice(5)}</td>
+          <td>${t.code||''}</td><td>${t.action||''}</td>
+          <td style="color:${pnl>=0?'#3fb950':'#f85149'}">${pnl.toFixed(2)}%</td></tr>`;
+      }
+      pHtml += '</table>';
+    }
+    html += `<div class="card"><h2>纸盘模拟</h2>${pHtml}</div>`;
+  }
+
+  // 因子重要性 (EX-03)
+  const flist = (factors.factors||[]).slice(0, 12);
+  if (flist.length > 0) {
+    const maxImp = flist[0].importance || 0.01;
+    let fHtml = '';
+    for (const f of flist) {
+      const pct = (f.importance / maxImp * 100).toFixed(0);
+      fHtml += `<div style="display:flex;align-items:center;margin:3px 0;font-size:12px">
+        <span style="width:120px;color:#8b949e">${f.name}</span>
+        <div style="flex:1;height:14px;background:#21262d;border-radius:3px;overflow:hidden">
+          <div style="width:${pct}%;height:100%;background:#58a6ff;border-radius:3px"></div>
+        </div>
+        <span style="width:50px;text-align:right;color:#c9d1d9">${f.importance.toFixed(3)}</span>
+      </div>`;
+    }
+    html += `<div class="card"><h2>因子重要性 (${factors.model_date||''})</h2>${fHtml}</div>`;
+  }
+
   $('dashboard').innerHTML = html;
 }
 
 loadAll();
 setInterval(loadAll, 60000);
+
+// WebSocket 实时推送
+let ws, wsRetry = 0;
+function connectWS() {
+  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  ws = new WebSocket(`${proto}//${location.host}/ws`);
+  ws.onopen = () => { wsRetry = 0; console.log('WS connected'); };
+  ws.onmessage = (e) => {
+    const msg = JSON.parse(e.data);
+    if (msg.type === 'pong') return;
+    // 收到实时事件, 局部刷新
+    console.log('WS event:', msg.type, msg.payload);
+    if (['strategy_complete','signal_new','position_change','regime_update'].includes(msg.type)) {
+      loadAll();  // 简单策略: 收到事件就全量刷新
+    }
+  };
+  ws.onclose = () => {
+    wsRetry++;
+    const delay = Math.min(wsRetry * 2000, 30000);
+    console.log(`WS closed, retry in ${delay}ms`);
+    setTimeout(connectWS, delay);
+  };
+  // 心跳
+  setInterval(() => { if (ws.readyState === 1) ws.send('ping'); }, 25000);
+}
+connectWS();
 </script>
 </body>
 </html>"""

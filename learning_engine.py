@@ -41,6 +41,7 @@ logger = get_logger("learning")
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 _JOURNAL_PATH = os.path.join(_DIR, "trade_journal.json")
+_JOURNAL_DEFAULT = _JOURNAL_PATH
 _SCORECARD_PATH = os.path.join(_DIR, "scorecard.json")
 _SCORECARD_DEFAULT = _SCORECARD_PATH
 _TUNABLE_PATH = os.path.join(_DIR, "tunable_params.json")
@@ -101,13 +102,24 @@ def record_trade_context(strategy: str, items: list[dict],
         "picks": picks,
     }
 
-    # 去重: 同日同策略不重复写入
+    # 写入 SQLite (UNIQUE 自动去重), 降级到 JSON
+    try:
+        if _JOURNAL_PATH != _JOURNAL_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import save_trade_journal_entry
+        if save_trade_journal_entry(entry):
+            logger.info("trade_journal 记录 (SQLite): %s %s (%d picks)", today_str, strategy, len(picks))
+        else:
+            logger.info("trade_journal 已存在 %s %s, 跳过", today_str, strategy)
+        return
+    except ImportError:
+        pass
+
     journal = safe_load(_JOURNAL_PATH, default=[])
     for existing in journal:
         if existing.get("date") == today_str and existing.get("strategy") == strategy:
             logger.info("trade_journal 已存在 %s %s, 跳过", today_str, strategy)
             return
-
     journal.append(entry)
     safe_save(_JOURNAL_PATH, journal)
     logger.info("trade_journal 记录: %s %s (%d picks)", today_str, strategy, len(picks))
@@ -125,7 +137,13 @@ def _join_journal_scorecard(lookback_days: int = 30) -> list[dict]:
     """
     cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
 
-    journal = safe_load(_JOURNAL_PATH, default=[])
+    try:
+        if _JOURNAL_PATH != _JOURNAL_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_trade_journal
+        journal = load_trade_journal(days=lookback_days)
+    except Exception:
+        journal = safe_load(_JOURNAL_PATH, default=[])
     try:
         if _SCORECARD_PATH != _SCORECARD_DEFAULT:
             raise ImportError("test mode")
@@ -761,7 +779,13 @@ def generate_learning_report() -> str:
 
     # --- 数据积累进度 ---
     lines.append("## 数据积累进度")
-    journal = safe_load(_JOURNAL_PATH, default=[])
+    try:
+        if _JOURNAL_PATH != _JOURNAL_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_trade_journal
+        journal = load_trade_journal(days=lookback)
+    except Exception:
+        journal = safe_load(_JOURNAL_PATH, default=[])
     try:
         if _SCORECARD_PATH != _SCORECARD_DEFAULT:
             raise ImportError("test mode")

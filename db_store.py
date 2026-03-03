@@ -1,13 +1,14 @@
 """
 SQLite 数据存储层
 ================
-WAL 模式, 替代高频变动的 JSON 文件 (scorecard/conflict_audit)。
+WAL 模式, 替代高频变动的 JSON 文件 (scorecard/conflict_audit/trade_journal)。
 保留 JSON 仅用于配置文件。
 
 用法:
     from db_store import (
         load_scorecard, save_scorecard_records,
         load_conflict_audit, save_conflict_audit_record,
+        load_trade_journal, save_trade_journal_entry,
     )
 """
 
@@ -29,6 +30,7 @@ _DB_PATH = os.path.join(
 
 # 线程局部连接 (SQLite 不允许跨线程共享连接)
 _local = threading.local()
+_init_done = set()  # 已初始化的线程ID
 
 
 def _get_conn() -> sqlite3.Connection:
@@ -45,6 +47,9 @@ def _get_conn() -> sqlite3.Connection:
 
 def init_db():
     """初始化数据库表 (幂等)"""
+    tid = threading.get_ident()
+    if tid in _init_done:
+        return
     conn = _get_conn()
 
     conn.executescript("""
@@ -79,6 +84,20 @@ def init_db():
         CREATE INDEX IF NOT EXISTS idx_sc_strategy ON scorecard(strategy);
         CREATE INDEX IF NOT EXISTS idx_sc_date_strategy ON scorecard(rec_date, strategy);
 
+        CREATE TABLE IF NOT EXISTS trade_journal (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            trade_date TEXT NOT NULL,
+            strategy TEXT NOT NULL,
+            regime_score REAL,
+            regime_label TEXT,
+            picks TEXT,
+            created_at TEXT DEFAULT (datetime('now', 'localtime')),
+            UNIQUE (trade_date, strategy)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_tj_date ON trade_journal(trade_date);
+        CREATE INDEX IF NOT EXISTS idx_tj_strategy ON trade_journal(strategy);
+
         CREATE TABLE IF NOT EXISTS conflict_audit (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             time TEXT NOT NULL,
@@ -92,6 +111,7 @@ def init_db():
         );
     """)
     conn.commit()
+    _init_done.add(tid)
     logger.info("数据库初始化完成: %s", _DB_PATH)
 
 
@@ -277,6 +297,114 @@ def save_conflict_audit_record(record: dict):
 
 
 # ================================================================
+#  Trade Journal CRUD (EX-02)
+# ================================================================
+
+def load_trade_journal(days: int | None = None, strategy: str | None = None) -> list[dict]:
+    """读取交易日志"""
+    init_db()
+    conn = _get_conn()
+    conditions = []
+    params = []
+
+    if days is not None:
+        conditions.append("trade_date >= date('now', 'localtime', ?)")
+        params.append(f"-{days} days")
+    if strategy:
+        conditions.append("strategy = ?")
+        params.append(strategy)
+
+    where = f"WHERE {' AND '.join(conditions)}" if conditions else ""
+    sql = f"SELECT * FROM trade_journal {where} ORDER BY trade_date, id"
+
+    rows = conn.execute(sql, params).fetchall()
+    result = []
+    for r in rows:
+        picks = r["picks"]
+        if isinstance(picks, str):
+            try:
+                picks = json.loads(picks)
+            except (json.JSONDecodeError, TypeError):
+                picks = []
+        result.append({
+            "date": r["trade_date"],
+            "strategy": r["strategy"],
+            "regime": {
+                "score": r["regime_score"] or 0,
+                "regime": r["regime_label"] or "neutral",
+            },
+            "picks": picks or [],
+        })
+    return result
+
+
+def save_trade_journal_entry(entry: dict) -> bool:
+    """写入一条交易日志 (INSERT OR IGNORE 去重)"""
+    init_db()
+    conn = _get_conn()
+
+    regime = entry.get("regime", {})
+    picks = entry.get("picks", [])
+    if isinstance(picks, list):
+        picks = json.dumps(picks, ensure_ascii=False)
+
+    try:
+        conn.execute("""
+            INSERT OR IGNORE INTO trade_journal
+            (trade_date, strategy, regime_score, regime_label, picks)
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            entry.get("date", ""),
+            entry.get("strategy", ""),
+            regime.get("score", 0),
+            regime.get("regime", "neutral"),
+            picks,
+        ))
+        conn.commit()
+        return True
+    except sqlite3.IntegrityError:
+        return False
+
+
+def save_trade_journal_batch(entries: list[dict]) -> int:
+    """批量写入交易日志"""
+    count = 0
+    for entry in entries:
+        if save_trade_journal_entry(entry):
+            count += 1
+    return count
+
+
+def migrate_trade_journal_from_json(json_path: str | None = None) -> int:
+    """将 trade_journal.json 导入 SQLite"""
+    if json_path is None:
+        json_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), "trade_journal.json"
+        )
+    if not os.path.exists(json_path):
+        logger.info("trade_journal.json 不存在, 跳过迁移")
+        return 0
+
+    from json_store import safe_load
+    records = safe_load(json_path, default=[])
+    if not records:
+        return 0
+
+    init_db()
+    conn = _get_conn()
+    existing = conn.execute("SELECT COUNT(*) FROM trade_journal").fetchone()[0]
+    if existing >= len(records):
+        logger.info("trade_journal SQLite 已有 %d 条 (JSON %d), 跳过", existing, len(records))
+        return 0
+
+    logger.info("迁移 trade_journal.json → SQLite (%d 条)", len(records))
+    count = save_trade_journal_batch(records)
+    total = conn.execute("SELECT COUNT(*) FROM trade_journal").fetchone()[0]
+    logger.info("trade_journal 迁移完成: 新增 %d, 总计 %d", count, total)
+    return count
+
+
+# ================================================================
 #  JSON → SQLite 迁移
 # ================================================================
 
@@ -338,8 +466,9 @@ def run_migration():
     init_db()
     sc = migrate_scorecard_from_json()
     ca = migrate_conflict_audit_from_json()
-    print(f"[迁移完成] scorecard: {sc} 条, conflict_audit: {ca} 条")
-    return {"scorecard": sc, "conflict_audit": ca}
+    tj = migrate_trade_journal_from_json()
+    print(f"[迁移完成] scorecard: {sc}, conflict_audit: {ca}, trade_journal: {tj}")
+    return {"scorecard": sc, "conflict_audit": ca, "trade_journal": tj}
 
 
 # ================================================================
@@ -355,7 +484,8 @@ if __name__ == "__main__":
         conn = _get_conn()
         sc = conn.execute("SELECT COUNT(*) FROM scorecard").fetchone()[0]
         ca = conn.execute("SELECT COUNT(*) FROM conflict_audit").fetchone()[0]
-        print(f"scorecard: {sc} 条, conflict_audit: {ca} 条")
+        tj = conn.execute("SELECT COUNT(*) FROM trade_journal").fetchone()[0]
+        print(f"scorecard: {sc}, conflict_audit: {ca}, trade_journal: {tj}")
     else:
         print("用法:")
         print("  python3 db_store.py migrate  # JSON → SQLite 迁移")
