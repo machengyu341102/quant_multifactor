@@ -8,13 +8,18 @@
 
 | 任务 ID | 模块 | 优化项描述 | 设计方案 (Gemini) | 状态 | 审核人 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **OP-01** | `Infrastructure` | **全局 API 调用归一化** | 移除所有策略文件（如 `intraday_strategy.py`, `trend_sector_strategy.py`）中的私有 `_retry` 函数，统一注入并使用 `api_guard.guarded_call`。要求：确保限流和断路器逻辑全局生效。 | ✅ 已完成 | Gemini |
-| **OP-02** | `Strategy` | **均值回归策略并行化** | 将 `mean_reversion_strategy.py` 中的 `_fetch_daily_klines` 扫描逻辑由串行改为 20 线程并行，并接入持久化缓存（key: `mr_daily_klines`）。 | ✅ 已完成 | Gemini |
-| **OP-03** | `Data` | **基本面快照持久化** | 在 `api_guard` 中增加 `fundamental_snapshot` 的专用持久化键值，确保当日所有策略仅拉取一次 A 股全量基本面（ak.stock_yjbb_em）。 | ✅ 已完成 | Gemini |
-| **OP-04** | `Agent` | **智能体决策冲突日志** | 在 `agent_brain.py` 的冲突仲裁逻辑中，增加明细持久化记录，保存”被否决”的策略动作及其原始证据，用于夜班分析。 | ✅ 已完成 | Gemini |
-| **OP-05** | `Safety` | **核心文件严格模式适配** | 将 `scheduler.py` 中涉及 `positions.json` 和 `scorecard.json` 的读取点全面切换为 `safe_load_strict`，增加异常熔断保护。 | ✅ 已完成 | Gemini |
+| **OP-01** | `Infrastructure` | **全局 API 调用归一化** | 移除所有策略文件（如 `intraday_strategy.py`, `trend_sector_strategy.py`）中的私有 `_retry` 函数，统一注入并使用 `api_guard.guarded_call`。要求：确保限流和断路器逻辑全局生效。 | 💎 已核准 | Gemini |
+| **OP-02** | `Strategy` | **均值回归策略并行化** | 将 `mean_reversion_strategy.py` 中的 `_fetch_daily_klines` 扫描逻辑由串行改为 20 线程并行，并接入持久化缓存（key: `mr_daily_klines`）。 | 💎 已核准 | Gemini |
+| **OP-03** | `Data` | **基本面快照持久化** | 在 `api_guard` 中增加 `fundamental_snapshot` 的专用持久化键值，确保当日所有策略仅拉取一次 A 股全量基本面（ak.stock_yjbb_em）。 | 💎 已核准 | Gemini |
+| **OP-04** | `Agent` | **智能体决策冲突日志** | 在 `agent_brain.py` 的冲突仲裁逻辑中，增加明细持久化记录，保存”被否决”的策略动作及其原始证据，用于夜班分析。 | 💎 已核准 | Gemini |
+| **OP-05** | `Safety` | **核心文件严格模式适配** | 将 `scheduler.py` 中涉及 `positions.json` 和 `scorecard.json` 的读取点全面切换为 `safe_load_strict`，增加异常熔断保护。 | 💎 已核准 | Gemini |
+| **OP-06** | `Architecture` | **模块化策略加载器 (解耦)** | 重构 `scheduler.py` 核心，实现策略动态注册。允许通过 `strategies.json` 动态增减策略，无需修改调度器主逻辑。 | ✅ 已完成 | Gemini |
+| **OP-07** | `Performance` | **核心数据向 SQLite 迁移** | 引入 SQLite (WAL 模式)，将高频变动的 `scorecard.json` 和 `conflict_audit.json` 迁移至数据库。保留 JSON 仅用于配置。 | ⏳ 待开始 | Gemini |
+| **OP-08** | `Risk` | **凯利准则与组合优化** | 在 `portfolio_risk.py` 中引入凯利准则动态调整单笔仓位，并根据策略相关性矩阵进行组合层面的风险平价 (Risk Parity) 优化。 | ⏳ 待开始 | Gemini |
+| **OP-09** | `Observability` | **智能体轻量仪表盘** | 基于 FastAPI 实现一个极简的 Web Dashboard，实时可视化展示大盘评分、Agent 决策链路、活跃策略热力图及系统实时回撤情况。 | ⏳ 待开始 | Gemini |
 
-## 3. 协同工作流 (Workflow)
+---
+*最后更新: 2026-03-03 (Gemini 最终审计完成)*
 
 1.  **指令下达：** Gemini CLI 在 `COLLABORATION.md` 中更新具体任务的设计细节。
 2.  **执行任务：** Claude Code 读取任务，将状态改为 `🔄 进行中`，开始修改代码。
@@ -47,6 +52,22 @@
 - `scorecard.py` 所有读取 `_SCORECARD_PATH` / `_POS_PATH` → `safe_load_strict`
 - `scheduler.py` 调用点增加 `except ValueError` 熔断分支，区分"文件损坏"和"普通异常"
 - 测试 mock 同步更新
+
+**全量 637 tests passed, 0 failed.**
+
+## 5. OP-06 完成说明 (Claude Code)
+
+**OP-06 模块化策略加载器:**
+- 新增 `strategies.json` — 12个策略声明文件 (8 A股 + 2期货 + 1币圈 + 1美股)
+- 新增 `strategy_loader.py` — 动态加载器 (make_astock_job/make_direct_push_job/register_strategies/run_all_strategies/get_cli_strategy)
+- `scheduler.py` 重构:
+  - `setup_schedule()` 移除 12 个硬编码策略注册, 改用 `strategy_loader.register_strategies()`
+  - `run_all_test()` 改用 `strategy_loader.run_all_strategies()`
+  - CLI dispatch 改用 `strategy_loader.get_cli_strategy()` 动态查找 (支持 cli_aliases)
+  - 移除 12 个 `job_xxx()` 函数体 (~300行), 由 strategy_loader 动态生成闭包
+- 保留不变: `cross_market` / `morning_prep` (有自定义事件总线逻辑)
+- 新增策略只需编辑 `strategies.json`, 无需修改 scheduler.py
+- 支持: enabled/disabled 开关, 自定义 gate 组合, batch_slot, pre_hook, push_format, cli_aliases
 
 **全量 637 tests passed, 0 failed.**
 

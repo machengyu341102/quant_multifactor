@@ -1,0 +1,198 @@
+[
+  {
+    "id": "news_event",
+    "name": "事件驱动选股",
+    "module": "news_event_strategy",
+    "function": "get_news_event_recommendations",
+    "schedule": "09:22",
+    "type": "astock",
+    "batch_slot": "morning",
+    "enabled": true,
+    "gates": {
+      "trading_day": true,
+      "agent_check": true,
+      "regime_check": true,
+      "circuit_breaker": false
+    }
+  },
+  {
+    "id": "auction",
+    "name": "集合竞价选股",
+    "module": "intraday_strategy",
+    "function": "get_auction_recommendations",
+    "schedule": "09:25",
+    "type": "astock",
+    "batch_slot": "morning",
+    "enabled": true,
+    "pre_hook": "clear_ths_watchlist",
+    "gates": {
+      "trading_day": true,
+      "agent_check": true,
+      "regime_check": true,
+      "circuit_breaker": false
+    }
+  },
+  {
+    "id": "dip_buy",
+    "name": "低吸回调选股",
+    "module": "mean_reversion_strategy",
+    "function": "get_dip_buy_recommendations",
+    "schedule": "09:50",
+    "type": "astock",
+    "batch_slot": "midday",
+    "enabled": true,
+    "gates": {
+      "trading_day": true,
+      "agent_check": true,
+      "regime_check": true,
+      "circuit_breaker": true
+    }
+  },
+  {
+    "id": "breakout",
+    "name": "放量突破选股",
+    "module": "volume_breakout_strategy",
+    "function": "get_breakout_recommendations",
+    "schedule": "10:00",
+    "type": "astock",
+    "batch_slot": "midday",
+    "enabled": true,
+    "gates": {
+      "trading_day": true,
+      "agent_check": true,
+      "regime_check": true,
+      "circuit_breaker": true
+    }
+  },
+  {
+    "id": "trend",
+    "name": "趋势跟踪选股",
+    "module": "trend_sector_strategy",
+    "function": "get_trend_follow_recommendations",
+    "schedule": "10:05",
+    "type": "astock",
+    "batch_slot": "midday",
+    "enabled": true,
+    "gates": {
+      "trading_day": true,
+      "agent_check": true,
+      "regime_check": true,
+      "circuit_breaker": true
+    }
+  },
+  {
+    "id": "consolidation",
+    "name": "缩量整理选股",
+    "module": "mean_reversion_strategy",
+    "function": "get_consolidation_recommendations",
+    "schedule": "10:15",
+    "type": "astock",
+    "batch_slot": "midday",
+    "enabled": true,
+    "gates": {
+      "trading_day": true,
+      "agent_check": true,
+      "regime_check": true,
+      "circuit_breaker": true
+    }
+  },
+  {
+    "id": "sector",
+    "name": "板块轮动选股",
+    "module": "trend_sector_strategy",
+    "function": "get_sector_rotation_recommendations",
+    "schedule": "14:00",
+    "type": "astock",
+    "batch_slot": "afternoon",
+    "enabled": true,
+    "gates": {
+      "trading_day": true,
+      "agent_check": true,
+      "regime_check": true,
+      "circuit_breaker": true
+    }
+  },
+  {
+    "id": "afternoon",
+    "name": "尾盘短线选股",
+    "module": "intraday_strategy",
+    "function": "get_afternoon_recommendations",
+    "schedule": "14:30",
+    "type": "astock",
+    "batch_slot": "afternoon",
+    "enabled": true,
+    "gates": {
+      "trading_day": true,
+      "agent_check": true,
+      "regime_check": true,
+      "circuit_breaker": true
+    }
+  },
+  {
+    "id": "futures_day",
+    "cli_aliases": ["futures"],
+    "name": "期货趋势选股",
+    "module": "futures_strategy",
+    "function": "get_futures_recommendations",
+    "schedule": "09:05",
+    "type": "direct_push",
+    "enabled": true,
+    "execute_trades": true,
+    "push_title": "期货趋势日盘推荐",
+    "push_header": "期货趋势日盘扫描:",
+    "push_format": {"price_symbol": "¥", "price_fmt": ".1f", "show_direction": false},
+    "gates": {
+      "trading_day": "futures",
+      "agent_check": true
+    }
+  },
+  {
+    "id": "futures_night",
+    "name": "期货趋势选股",
+    "module": "futures_strategy",
+    "function": "get_futures_recommendations",
+    "schedule": "21:10",
+    "type": "direct_push",
+    "enabled": true,
+    "execute_trades": true,
+    "push_title": "期货趋势夜盘推荐",
+    "push_header": "期货趋势夜盘扫描:",
+    "push_format": {"price_symbol": "¥", "price_fmt": ".1f", "show_direction": false},
+    "gates": {
+      "trading_day": "futures",
+      "agent_check": true
+    }
+  },
+  {
+    "id": "crypto",
+    "name": "币圈趋势选股",
+    "module": "crypto_strategy",
+    "function": "get_crypto_recommendations",
+    "schedule": "01:00",
+    "type": "direct_push",
+    "enabled": true,
+    "push_title": "币圈趋势推荐",
+    "push_header": "币圈趋势扫描:",
+    "push_format": {"price_symbol": "$", "price_fmt": ".2f", "show_direction": true},
+    "gates": {
+      "trading_day": "none",
+      "agent_check": true
+    }
+  },
+  {
+    "id": "us_stock",
+    "name": "美股收盘分析",
+    "module": "us_stock_strategy",
+    "function": "get_us_stock_recommendations",
+    "schedule": "05:30",
+    "type": "direct_push",
+    "enabled": true,
+    "push_title": "美股收盘推荐",
+    "push_header": "美股收盘分析:",
+    "push_format": {"price_symbol": "$", "price_fmt": ".2f", "show_direction": true},
+    "gates": {
+      "trading_day": "none",
+      "agent_check": true
+    }
+  }
+]

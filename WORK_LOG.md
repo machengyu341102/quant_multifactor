@@ -48,9 +48,16 @@
 - [x] **指令4: agent_brain增量observe** — scorecard增量处理(仅新数据触发重算)+_save_memory仅变化时写入
 - [x] 637 tests passed, scheduler 重启: PID 64259
 
+- [x] **OP-01~05 Gemini协同优化全部完成** (COLLABORATION.md 5项全部 💎已核准, 637 tests passed)
+  - OP-01: 全局API归一化 (3个_retry函数 + _sina_batch_quote裸fallback → guarded_call)
+  - OP-02: 均值回归持久化缓存 (mr_daily_klines, TTL=300s, 支持增量拉取)
+  - OP-03: 基本面快照持久化 (fundamental_snapshot, TTL=6h, 7策略共享)
+  - OP-04: 冲突仲裁审计日志 (conflict_audit.json, 保留500条)
+  - OP-05: 核心文件严格模式 (safe_load_strict + ValueError熔断)
+- [x] backtest_overnight 串行→10线程并行 (消除串行sleep瓶颈)
+- [x] 待办清理: _sina_batch_quote兼容性已自然解决 / overnight并行已完成
+
 ### 待办队列
-- [ ] 放量突破 _sina_batch_quote 返回 dict→DataFrame 兼容 (paper_trader._fetch_prices)
-- [ ] overnight_strategy 隔夜策略也接入并行优化
 - [ ] 系统运行满一周后: 信号追踪报告分析 + 参数首次调优
 
 ## 2026-03-02 晚

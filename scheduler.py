@@ -326,224 +326,10 @@ def _check_market_regime():
         return True, "unknown", {"regime": "unknown", "score": 0.5, "signals": {}, "error": str(e)}
 
 
-def job_news_event():
-    """事件驱动策略定时任务 (09:22, 开盘前新闻扫描)"""
-    if not is_trading_day():
-        print(f"  [{SCHEDULE_NEWS_EVENT}] 非交易日, 跳过事件驱动")
-        return
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("事件驱动选股"):
-            print(f"  [{SCHEDULE_NEWS_EVENT}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    should_run, regime, regime_result = _check_market_regime()
-    if not should_run:
-        print(f"  [{SCHEDULE_NEWS_EVENT}] 大盘熊市({regime}), 跳过事件驱动")
-        return
-    from news_event_strategy import get_news_event_recommendations
-    items = run_with_retry(get_news_event_recommendations, "事件驱动选股", skip_wechat=True)
-    if items:
-        _batch_buffer["morning"].append(("事件驱动选股", items))
-    _record_learning(items, "事件驱动选股", regime_result)
-
-
-def job_auction():
-    """集合竞价策略定时任务 (当日第一个策略, 先清空昨日自选股)"""
-    if not is_trading_day():
-        print(f"  [{SCHEDULE_AUCTION}] 非交易日, 跳过集合竞价")
-        return
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("集合竞价选股"):
-            print(f"  [{SCHEDULE_AUCTION}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    should_run, regime, regime_result = _check_market_regime()
-    if not should_run:
-        print(f"  [{SCHEDULE_AUCTION}] 大盘熊市({regime}), 跳过集合竞价")
-        return
-    clear_ths_watchlist()
-    from intraday_strategy import get_auction_recommendations
-    items = run_with_retry(get_auction_recommendations, "集合竞价选股", skip_wechat=True)
-    _batch_buffer["morning"].append(("集合竞价选股", items or []))
-    _record_learning(items, "集合竞价选股", regime_result)
-
-
-def job_breakout():
-    """放量突破策略定时任务"""
-    if not is_trading_day():
-        print(f"  [{SCHEDULE_BREAKOUT}] 非交易日, 跳过放量突破")
-        return
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("放量突破选股"):
-            print(f"  [{SCHEDULE_BREAKOUT}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    should_run, regime, regime_result = _check_market_regime()
-    if not should_run:
-        print(f"  [{SCHEDULE_BREAKOUT}] 大盘熊市({regime}), 跳过放量突破")
-        return
-    try:
-        from risk_manager import check_daily_circuit_breaker
-        if check_daily_circuit_breaker():
-            print(f"  [{SCHEDULE_BREAKOUT}] 熔断已触发, 跳过")
-            return
-    except Exception:
-        pass
-    from volume_breakout_strategy import get_breakout_recommendations
-    items = run_with_retry(get_breakout_recommendations, "放量突破选股", skip_wechat=True)
-    _batch_buffer["midday"].append(("放量突破选股", items or []))
-    _record_learning(items, "放量突破选股", regime_result)
-
-
-def job_afternoon():
-    """尾盘短线策略定时任务"""
-    if not is_trading_day():
-        print(f"  [{SCHEDULE_AFTERNOON}] 非交易日, 跳过尾盘短线")
-        return
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("尾盘短线选股"):
-            print(f"  [{SCHEDULE_AFTERNOON}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    should_run, regime, regime_result = _check_market_regime()
-    if not should_run:
-        print(f"  [{SCHEDULE_AFTERNOON}] 大盘熊市({regime}), 跳过尾盘短线")
-        return
-    try:
-        from risk_manager import check_daily_circuit_breaker
-        if check_daily_circuit_breaker():
-            print(f"  [{SCHEDULE_AFTERNOON}] 熔断已触发, 跳过")
-            return
-    except Exception:
-        pass
-    from intraday_strategy import get_afternoon_recommendations
-    items = run_with_retry(get_afternoon_recommendations, "尾盘短线选股", skip_wechat=True)
-    _batch_buffer["afternoon"].append(("尾盘短线选股", items or []))
-    _record_learning(items, "尾盘短线选股", regime_result)
-
-
 # ================================================================
-#  4 个新策略任务
+#  A 股策略: 由 strategy_loader 从 strategies.json 动态加载
+#  (8 个策略已移至 strategies.json, 通过 register_strategies 注册)
 # ================================================================
-
-def job_dip_buy():
-    """低吸回调策略定时任务 (09:50)"""
-    if not is_trading_day():
-        return
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("低吸回调选股"):
-            print(f"  [{SCHEDULE_DIP_BUY}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    should_run, regime, regime_result = _check_market_regime()
-    if not should_run:
-        print(f"  [{SCHEDULE_DIP_BUY}] 大盘熊市({regime}), 跳过低吸回调")
-        return
-    try:
-        from risk_manager import check_daily_circuit_breaker
-        if check_daily_circuit_breaker():
-            print(f"  [{SCHEDULE_DIP_BUY}] 熔断已触发, 跳过")
-            return
-    except Exception:
-        pass
-    from mean_reversion_strategy import get_dip_buy_recommendations
-    items = run_with_retry(get_dip_buy_recommendations, "低吸回调选股", skip_wechat=True)
-    _batch_buffer["midday"].append(("低吸回调选股", items or []))
-    _record_learning(items, "低吸回调选股", regime_result)
-
-
-def job_consolidation():
-    """缩量整理突破策略定时任务 (10:15)"""
-    if not is_trading_day():
-        return
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("缩量整理选股"):
-            print(f"  [{SCHEDULE_CONSOLIDATION}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    should_run, regime, regime_result = _check_market_regime()
-    if not should_run:
-        print(f"  [{SCHEDULE_CONSOLIDATION}] 大盘熊市({regime}), 跳过缩量整理")
-        return
-    try:
-        from risk_manager import check_daily_circuit_breaker
-        if check_daily_circuit_breaker():
-            print(f"  [{SCHEDULE_CONSOLIDATION}] 熔断已触发, 跳过")
-            return
-    except Exception:
-        pass
-    from mean_reversion_strategy import get_consolidation_recommendations
-    items = run_with_retry(get_consolidation_recommendations, "缩量整理选股", skip_wechat=True)
-    _batch_buffer["midday"].append(("缩量整理选股", items or []))
-    _record_learning(items, "缩量整理选股", regime_result)
-
-
-def job_trend_follow():
-    """趋势跟踪策略定时任务 (10:00)"""
-    if not is_trading_day():
-        return
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("趋势跟踪选股"):
-            print(f"  [{SCHEDULE_TREND_FOLLOW}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    should_run, regime, regime_result = _check_market_regime()
-    if not should_run:
-        print(f"  [{SCHEDULE_TREND_FOLLOW}] 大盘熊市({regime}), 跳过趋势跟踪")
-        return
-    try:
-        from risk_manager import check_daily_circuit_breaker
-        if check_daily_circuit_breaker():
-            print(f"  [{SCHEDULE_TREND_FOLLOW}] 熔断已触发, 跳过")
-            return
-    except Exception:
-        pass
-    from trend_sector_strategy import get_trend_follow_recommendations
-    items = run_with_retry(get_trend_follow_recommendations, "趋势跟踪选股", skip_wechat=True)
-    _batch_buffer["midday"].append(("趋势跟踪选股", items or []))
-    _record_learning(items, "趋势跟踪选股", regime_result)
-
-
-def job_sector_rotation():
-    """板块轮动策略定时任务 (14:00)"""
-    if not is_trading_day():
-        return
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("板块轮动选股"):
-            print(f"  [{SCHEDULE_SECTOR_ROTATION}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    should_run, regime, regime_result = _check_market_regime()
-    if not should_run:
-        print(f"  [{SCHEDULE_SECTOR_ROTATION}] 大盘熊市({regime}), 跳过板块轮动")
-        return
-    try:
-        from risk_manager import check_daily_circuit_breaker
-        if check_daily_circuit_breaker():
-            print(f"  [{SCHEDULE_SECTOR_ROTATION}] 熔断已触发, 跳过")
-            return
-    except Exception:
-        pass
-    from trend_sector_strategy import get_sector_rotation_recommendations
-    items = run_with_retry(get_sector_rotation_recommendations, "板块轮动选股", skip_wechat=True)
-    _batch_buffer["afternoon"].append(("板块轮动选股", items or []))
-    _record_learning(items, "板块轮动选股", regime_result)
 
 
 # ================================================================
@@ -608,114 +394,10 @@ def job_futures_monitor():
         print(f"[期货监控异常] {e}")
 
 
-def job_futures_day():
-    """09:05 日盘期货扫描"""
-    if not _is_futures_trading_day():
-        print(f"  [{SCHEDULE_FUTURES_DAY}] 周末, 跳过期货日盘扫描")
-        return
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("期货趋势选股"):
-            print(f"  [{SCHEDULE_FUTURES_DAY}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    from futures_strategy import get_futures_recommendations
-    from notifier import notify_wechat_raw
-    items = run_with_retry(get_futures_recommendations, "期货趋势选股", skip_wechat=True)
-    if items:
-        # 交易执行 (模拟/实盘)
-        _execute_futures_trades(items)
-        # 期货推荐直接推送微信, 不走批量 buffer
-        lines = ["期货趋势日盘扫描:"]
-        for it in items:
-            lines.append(f"  {it['code']} {it['name']} ¥{it['price']:.1f} "
-                         f"评分{it['score']:.3f} {it['reason']}")
-        try:
-            notify_wechat_raw(f"[{SCHEDULE_FUTURES_DAY}] 期货日盘推荐", "\n".join(lines))
-        except Exception:
-            pass
-    _record_learning(items, "期货趋势选股", None)
-
-
-def job_futures_night():
-    """21:10 夜盘期货扫描"""
-    if not _is_futures_trading_day():
-        print(f"  [{SCHEDULE_FUTURES_NIGHT}] 周末, 跳过期货夜盘扫描")
-        return
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("期货趋势选股"):
-            print(f"  [{SCHEDULE_FUTURES_NIGHT}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    from futures_strategy import get_futures_recommendations
-    from notifier import notify_wechat_raw
-    items = run_with_retry(get_futures_recommendations, "期货趋势选股", skip_wechat=True)
-    if items:
-        # 交易执行 (模拟/实盘)
-        _execute_futures_trades(items)
-        lines = ["期货趋势夜盘扫描:"]
-        for it in items:
-            lines.append(f"  {it['code']} {it['name']} ¥{it['price']:.1f} "
-                         f"评分{it['score']:.3f} {it['reason']}")
-        try:
-            notify_wechat_raw(f"[{SCHEDULE_FUTURES_NIGHT}] 期货夜盘推荐", "\n".join(lines))
-        except Exception:
-            pass
-    _record_learning(items, "期货趋势选股", None)
-
-
-def job_crypto():
-    """01:00 币圈趋势扫描 (夜班期间)"""
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("币圈趋势选股"):
-            print(f"  [{SCHEDULE_CRYPTO}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    from crypto_strategy import get_crypto_recommendations
-    from notifier import notify_wechat_raw
-    items = run_with_retry(get_crypto_recommendations, "币圈趋势选股", skip_wechat=True)
-    if items:
-        # 直推微信, 不走批量 buffer
-        lines = ["币圈趋势扫描:"]
-        for it in items:
-            d = "▲" if it.get("direction") == "long" else "▼"
-            lines.append(f"  {d} {it['code']} {it['name']} ${it['price']:.2f} "
-                         f"评分{it['score']:.3f} {it['reason']}")
-        try:
-            notify_wechat_raw(f"[{SCHEDULE_CRYPTO}] 币圈趋势推荐", "\n".join(lines))
-        except Exception:
-            pass
-    _record_learning(items, "币圈趋势选股", None)
-
-
-def job_us_stock():
-    """05:30 美股收盘分析 (夜班期间, 美股收盘后)"""
-    try:
-        from agent_brain import should_strategy_run
-        if not should_strategy_run("美股收盘分析"):
-            print(f"  [{SCHEDULE_US_STOCK}] [Agent] 策略已暂停, 跳过")
-            return
-    except Exception:
-        pass
-    from us_stock_strategy import get_us_stock_recommendations
-    from notifier import notify_wechat_raw
-    items = run_with_retry(get_us_stock_recommendations, "美股收盘分析", skip_wechat=True)
-    if items:
-        lines = ["美股收盘分析:"]
-        for it in items:
-            d = "▲" if it.get("direction") == "long" else "▼"
-            lines.append(f"  {d} {it['code']} {it['name']} ${it['price']:.2f} "
-                         f"评分{it['score']:.3f} {it['reason']}")
-        try:
-            notify_wechat_raw(f"[{SCHEDULE_US_STOCK}] 美股收盘推荐", "\n".join(lines))
-        except Exception:
-            pass
-    _record_learning(items, "美股收盘分析", None)
+# ================================================================
+#  期货/币圈/美股策略: 由 strategy_loader 从 strategies.json 动态加载
+#  (4 个直推策略已移至 strategies.json, 通过 register_strategies 注册)
+# ================================================================
 
 
 def job_cross_market():
@@ -1125,16 +807,18 @@ def job_night_shift():
     """22:30 夜班: LLM 深度复盘/因子体检/明日预判/认知沉淀"""
     if not is_trading_day():
         return
-    run_with_retry("夜班分析", _run_night_shift, max_retries=1)
+    run_with_retry(_run_night_shift, "夜班分析")
 
 
-def _run_night_shift():
+def _run_night_shift(**kwargs):
+    """夜班深度分析 (接受 **kwargs 兼容 run_with_retry 的 top_n 参数)"""
     from agent_brain import run_night_shift
     report = run_night_shift()
     if report:
         print(f"[夜班] 分析完成, 报告 {len(report)} 字")
     else:
         print("[夜班] LLM 不可用或无分析结果")
+    return []  # run_with_retry 期望返回 list
 
 
 # ================================================================
@@ -1392,15 +1076,11 @@ def setup_schedule():
     # 初始化多智能体
     _init_multi_agent()
 
-    # 8 个策略
-    schedule.every().day.at(SCHEDULE_NEWS_EVENT).do(job_news_event)
-    schedule.every().day.at(SCHEDULE_AUCTION).do(job_auction)
-    schedule.every().day.at(SCHEDULE_DIP_BUY).do(job_dip_buy)
-    schedule.every().day.at(SCHEDULE_BREAKOUT).do(job_breakout)
-    schedule.every().day.at(SCHEDULE_TREND_FOLLOW).do(job_trend_follow)
-    schedule.every().day.at(SCHEDULE_CONSOLIDATION).do(job_consolidation)
-    schedule.every().day.at(SCHEDULE_SECTOR_ROTATION).do(job_sector_rotation)
-    schedule.every().day.at(SCHEDULE_AFTERNOON).do(job_afternoon)
+    # 动态加载策略 (从 strategies.json)
+    import strategy_loader
+    sched_mod = sys.modules[__name__]
+    n_strategies = strategy_loader.register_strategies(sched_mod, schedule)
+    print(f"  策略加载器: {n_strategies} 个策略已从 strategies.json 动态注册")
 
     # 3 个批量推送
     schedule.every().day.at("09:35").do(job_batch_morning)
@@ -1444,20 +1124,10 @@ def setup_schedule():
     schedule.every().day.at("17:00").do(job_factor_lifecycle)
     schedule.every().day.at("22:30").do(job_night_shift)
 
-    # 期货策略
-    schedule.every().day.at(SCHEDULE_FUTURES_DAY).do(job_futures_day)
-    schedule.every().day.at(SCHEDULE_FUTURES_NIGHT).do(job_futures_night)
-
-    # 币圈策略 (夜班期间)
-    schedule.every().day.at(SCHEDULE_CRYPTO).do(job_crypto)
-
-    # 美股收盘分析 (夜班期间)
-    schedule.every().day.at(SCHEDULE_US_STOCK).do(job_us_stock)
-
-    # 跨市场信号推演 (夜班期间)
+    # 跨市场信号推演 (夜班期间) — 有事件总线自定义逻辑, 保持硬编码
     schedule.every().day.at(SCHEDULE_CROSS_MARKET).do(job_cross_market)
 
-    # 开盘前作战计划
+    # 开盘前作战计划 — 有自定义逻辑, 保持硬编码
     schedule.every().day.at(SCHEDULE_MORNING_PREP).do(job_morning_prep)
 
     # 期货持仓监控 (日盘: 09:30~15:00, 夜盘: 21:30~23:00)
@@ -1467,38 +1137,23 @@ def setup_schedule():
     # API 统计重置
     schedule.every().day.at("00:05").do(job_reset_api_stats)
 
+    # 打印已注册任务 (策略部分从 JSON 动态读取)
     print(f"已注册定时任务:")
+    for cfg in strategy_loader.load_strategies():
+        if cfg.get("enabled", True):
+            print(f"  {cfg['schedule']}  → {cfg['name']} (动态)")
     print(f"  09:10  → 冒烟测试 (开盘前)")
     print(f"  09:15  → Agent 早报 [微信1/5]")
-    print(f"  09:20  → 昨日推荐评分 + 黑名单更新 + Agent状态刷新")
-    print(f"  {SCHEDULE_NEWS_EVENT}  → 事件驱动选股 (新闻扫描)")
-    print(f"  {SCHEDULE_AUCTION}  → 集合竞价选股")
+    print(f"  09:20  → 昨日推荐评分 + 黑名单更新")
     print(f"  09:35  → 批量推送: 早盘汇总 [微信2/5]")
-    print(f"  {SCHEDULE_DIP_BUY}  → 低吸回调选股")
-    print(f"  {SCHEDULE_BREAKOUT}  → 放量突破+趋势跟踪选股")
-    print(f"  {SCHEDULE_CONSOLIDATION}  → 缩量整理选股")
     print(f"  10:30  → 批量推送: 盘中汇总 [微信3/5]")
-    print(f"  {SCHEDULE_SECTOR_ROTATION}  → 板块轮动选股")
-    print(f"  {SCHEDULE_AFTERNOON}  → 尾盘短线选股")
     print(f"  14:50  → 批量推送: 午后汇总 [微信4/5]")
     print(f"  {', '.join(SCHEDULE_MONITOR)}  → 持仓监控(止损止盈, 仅终端)")
-    print(f"  16:00  → 每日策略优化")
-    print(f"  16:05  → 信号追踪 (入库+T+1/T+3/T+5验证)")
-    print(f"  16:15  → Agent OODA 循环 + 晚报推送 [微信5/5]")
-    print(f"  16:30  → 自学习引擎")
-    print(f"  16:45  → 主动实验 (低健康度策略)")
-    print(f"  16:50  → 优化验证 (采纳后效果检查)")
-    print(f"  17:00  → 因子生命周期 (衰减淘汰)")
+    print(f"  16:00~17:10  → 优化/信号/VaR/学习/ML训练")
     print(f"  22:30  → 夜班深度分析 (LLM复盘/预判/认知沉淀)")
-    print(f"  周五 15:30  → 每周记分卡周报")
-    print(f"  周六 10:00  → 周末深度优化搜索")
-    print(f"  {SCHEDULE_FUTURES_DAY}  → 期货日盘扫描 (全品种)")
-    print(f"  {SCHEDULE_FUTURES_NIGHT}  → 期货夜盘扫描 (夜盘品种)")
-    print(f"  09:30~22:30  → 期货持仓监控(止损止盈, 7次/日)")
-    print(f"  {SCHEDULE_CRYPTO}  → 币圈趋势扫描 (夜班)")
-    print(f"  {SCHEDULE_US_STOCK}  → 美股收盘分析 (夜班)")
     print(f"  {SCHEDULE_CROSS_MARKET}  → 跨市场信号推演 (夜班)")
     print(f"  {SCHEDULE_MORNING_PREP}  → 开盘前作战计划")
+    print(f"  09:30~22:30  → 期货持仓监控(止损止盈, 7次/日)")
     print(f"  00:05  → API统计重置")
 
 
@@ -1619,34 +1274,10 @@ def run_daemon():
 
 
 def run_all_test():
-    """测试模式: 立即运行全部八个策略"""
-    print("=" * 60)
-    print("  [测试模式] 立即运行全部策略")
-    print(f"  时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("=" * 60)
-
-    from news_event_strategy import get_news_event_recommendations
-    from intraday_strategy import get_auction_recommendations, get_afternoon_recommendations
-    from volume_breakout_strategy import get_breakout_recommendations
-    from mean_reversion_strategy import get_dip_buy_recommendations, get_consolidation_recommendations
-    from trend_sector_strategy import get_trend_follow_recommendations, get_sector_rotation_recommendations
-    from futures_strategy import get_futures_recommendations
-    from crypto_strategy import get_crypto_recommendations
-    from us_stock_strategy import get_us_stock_recommendations
-
-    run_with_retry(get_news_event_recommendations, "事件驱动选股")
-    run_with_retry(get_auction_recommendations, "集合竞价选股")
-    run_with_retry(get_breakout_recommendations, "放量突破选股")
-    run_with_retry(get_dip_buy_recommendations, "低吸回调选股")
-    run_with_retry(get_consolidation_recommendations, "缩量整理选股")
-    run_with_retry(get_trend_follow_recommendations, "趋势跟踪选股")
-    run_with_retry(get_afternoon_recommendations, "尾盘短线选股")
-    run_with_retry(get_sector_rotation_recommendations, "板块轮动选股")
-    run_with_retry(get_futures_recommendations, "期货趋势选股")
-    run_with_retry(get_crypto_recommendations, "币圈趋势选股")
-    run_with_retry(get_us_stock_recommendations, "美股收盘分析")
-
-    print("\n全部策略运行完毕")
+    """测试模式: 立即运行全部策略 (从 strategies.json 动态加载)"""
+    import strategy_loader
+    sched_mod = sys.modules[__name__]
+    strategy_loader.run_all_strategies(sched_mod)
 
 
 # ================================================================
@@ -1656,41 +1287,17 @@ def run_all_test():
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "daemon"
 
+    # 策略 CLI: 优先从 strategies.json 动态查找
+    import strategy_loader
+
     if mode == "test":
         run_all_test()
-    elif mode == "news_event":
-        from news_event_strategy import get_news_event_recommendations
-        run_with_retry(get_news_event_recommendations, "事件驱动选股")
-    elif mode == "auction":
-        from intraday_strategy import get_auction_recommendations
-        run_with_retry(get_auction_recommendations, "集合竞价选股")
-    elif mode == "breakout":
-        from volume_breakout_strategy import get_breakout_recommendations
-        run_with_retry(get_breakout_recommendations, "放量突破选股")
-    elif mode == "afternoon":
-        from intraday_strategy import get_afternoon_recommendations
-        run_with_retry(get_afternoon_recommendations, "尾盘短线选股")
-    elif mode == "dip_buy":
-        from mean_reversion_strategy import get_dip_buy_recommendations
-        run_with_retry(get_dip_buy_recommendations, "低吸回调选股")
-    elif mode == "consolidation":
-        from mean_reversion_strategy import get_consolidation_recommendations
-        run_with_retry(get_consolidation_recommendations, "缩量整理选股")
-    elif mode == "trend":
-        from trend_sector_strategy import get_trend_follow_recommendations
-        run_with_retry(get_trend_follow_recommendations, "趋势跟踪选股")
-    elif mode == "sector":
-        from trend_sector_strategy import get_sector_rotation_recommendations
-        run_with_retry(get_sector_rotation_recommendations, "板块轮动选股")
-    elif mode == "futures":
-        from futures_strategy import get_futures_recommendations
-        run_with_retry(get_futures_recommendations, "期货趋势选股")
-    elif mode == "crypto":
-        from crypto_strategy import get_crypto_recommendations
-        run_with_retry(get_crypto_recommendations, "币圈趋势选股")
-    elif mode == "us_stock":
-        from us_stock_strategy import get_us_stock_recommendations
-        run_with_retry(get_us_stock_recommendations, "美股收盘分析")
+    elif strategy_loader.get_cli_strategy(mode):
+        # 动态加载策略 (news_event/auction/breakout/afternoon/dip_buy/
+        # consolidation/trend/sector/futures/crypto/us_stock 等)
+        mod_name, func_name, strat_name = strategy_loader.get_cli_strategy(mode)
+        func = strategy_loader._import_func(mod_name, func_name)
+        run_with_retry(func, strat_name)
     elif mode == "cross_market":
         from cross_market_strategy import run_cross_market_analysis
         run_cross_market_analysis()

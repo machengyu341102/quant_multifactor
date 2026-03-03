@@ -740,33 +740,45 @@ def score_and_select(df, fund_df=None, top_n=10):
 #  回测
 # ================================================================
 
+def _backtest_one(code, name_map, start_date, end_date, lookback):
+    """单只股票回测 (供并行调用)"""
+    try:
+        df = _retry(
+            ak.stock_zh_a_hist_tx,
+            symbol=_tx_sym(code), start_date=start_date, end_date=end_date, adjust="qfq"
+        )
+        if len(df) < lookback + 1:
+            return None
+        closes = df["close"].values[-lookback - 1:]
+        daily_rets = (closes[1:] - closes[:-1]) / closes[:-1]
+        return {
+            "code": code,
+            "name": name_map.get(code, ""),
+            "avg_daily_ret": np.mean(daily_rets),
+            "win_rate": np.mean(daily_rets > 0),
+            "max_single_loss": np.min(daily_rets),
+            "cumulative": np.prod(1 + daily_rets) - 1,
+        }
+    except Exception:
+        return None
+
+
 def backtest_overnight(selected_codes, name_map, lookback=10):
     print(f"\n[回测] 过去 {lookback} 个交易日隔夜持有模拟...")
     end_date = datetime.now().strftime("%Y%m%d")
     start_date = (datetime.now() - timedelta(days=lookback * 3)).strftime("%Y%m%d")
 
+    from concurrent.futures import ThreadPoolExecutor, as_completed
     all_overnight = []
-    for code in selected_codes:
-        try:
-            time.sleep(REQUEST_DELAY)
-            df = _retry(
-                ak.stock_zh_a_hist_tx,
-                symbol=_tx_sym(code), start_date=start_date, end_date=end_date, adjust="qfq"
-            )
-            if len(df) < lookback + 1:
-                continue
-            closes = df["close"].values[-lookback - 1:]
-            daily_rets = (closes[1:] - closes[:-1]) / closes[:-1]
-            all_overnight.append({
-                "code": code,
-                "name": name_map.get(code, ""),
-                "avg_daily_ret": np.mean(daily_rets),
-                "win_rate": np.mean(daily_rets > 0),
-                "max_single_loss": np.min(daily_rets),
-                "cumulative": np.prod(1 + daily_rets) - 1,
-            })
-        except Exception:
-            continue
+    with ThreadPoolExecutor(max_workers=10) as pool:
+        futures = {
+            pool.submit(_backtest_one, code, name_map, start_date, end_date, lookback): code
+            for code in selected_codes
+        }
+        for fut in as_completed(futures):
+            result = fut.result()
+            if result is not None:
+                all_overnight.append(result)
 
     if not all_overnight:
         print("  无有效回测数据")
