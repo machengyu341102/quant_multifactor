@@ -17,6 +17,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from overnight_strategy import _retry, _sina_market, REQUEST_DELAY
+from resource_manager import get_pool
 
 
 # ================================================================
@@ -460,8 +461,6 @@ def enhance_candidates(df, name_map):
             price_map[row["code"]] = float(price)
 
     # ---- 三个子模块并行执行 ----
-    from concurrent.futures import ThreadPoolExecutor
-
     def _do_fund_flow():
         try:
             return scan_fund_flow_batch(codes)
@@ -483,13 +482,13 @@ def enhance_candidates(df, name_map):
             print(f"    筹码分析失败, 跳过: {e}")
             return pd.DataFrame()
 
-    with ThreadPoolExecutor(max_workers=3) as pool:
-        fut_flow = pool.submit(_do_fund_flow)
-        fut_lhb = pool.submit(_do_lhb)
-        fut_chip = pool.submit(_do_chip)
-        flow_df = fut_flow.result()
-        lhb_df = fut_lhb.result()
-        chip_df = fut_chip.result()
+    pool = get_pool("enhance_factors", max_workers=3)
+    fut_flow = pool.submit(_do_fund_flow)
+    fut_lhb = pool.submit(_do_lhb)
+    fut_chip = pool.submit(_do_chip)
+    flow_df = fut_flow.result()
+    lhb_df = fut_lhb.result()
+    chip_df = fut_chip.result()
 
     # ---- 合并资金流向 ----
     if not flow_df.empty:

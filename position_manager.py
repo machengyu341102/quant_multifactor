@@ -1,11 +1,12 @@
 """
 持仓管理器
 ==========
-- 持仓记录 (JSON 文件存储, 文件锁保护)
+- 持仓记录 (SQLite 事务保护, 原子写入)
 - 止损止盈监控
 - 卖出信号生成
 
-状态机: holding → exited (止损/止盈/T+1强制), 单向不可逆
+状态机: holding → exited (止损/止盈/T+N强制), 单向不可逆
+v3.0: JSON → SQLite 迁移, 消除断电数据丢失风险
 """
 
 from __future__ import annotations
@@ -17,27 +18,54 @@ from config import (
     STOP_LOSS_PCT, TAKE_PROFIT_PCT, FORCE_EXIT_TIME, POSITION_FILE,
     SMART_TRADE_ENABLED,
 )
-from json_store import safe_load, safe_load_strict, safe_save
 from log_config import get_logger
 
 logger = get_logger("position")
 
-# 持仓文件路径 (与本文件同目录)
+# 旧 JSON 路径 (仅用于兼容/迁移检测)
 _POS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), POSITION_FILE)
 
 
 # ================================================================
-#  持仓读写 (文件锁保护)
+#  持仓读写 (SQLite 原子事务)
 # ================================================================
 
+def _ensure_migrated():
+    """首次调用时自动迁移 positions.json → SQLite"""
+    if not hasattr(_ensure_migrated, "_done"):
+        _ensure_migrated._done = True
+        if os.path.exists(_POS_PATH):
+            try:
+                from db_store import migrate_positions_json
+                count = migrate_positions_json()
+                if count > 0:
+                    # 迁移成功后重命名旧文件
+                    backup = _POS_PATH + ".migrated"
+                    if not os.path.exists(backup):
+                        os.rename(_POS_PATH, backup)
+                        logger.info("positions.json → positions.json.migrated")
+            except Exception as e:
+                logger.warning("自动迁移异常 (继续使用SQLite): %s", e)
+
+
 def load_positions() -> list[dict]:
-    """从 JSON 文件加载持仓 (严格模式: 文件损坏则抛异常, 不静默返回空)"""
-    return safe_load_strict(_POS_PATH)
+    """从 SQLite 加载持仓"""
+    _ensure_migrated()
+    from db_store import load_positions_db
+    return load_positions_db()
 
 
 def save_positions(positions: list[dict]):
-    """保存持仓到 JSON 文件"""
-    safe_save(_POS_PATH, positions)
+    """兼容接口: 批量更新所有持仓的可变字段到 SQLite"""
+    from db_store import update_positions_batch
+    # 只更新有意义变更的字段
+    updates = []
+    for p in positions:
+        if not p.get("code") or not p.get("entry_date"):
+            continue
+        updates.append(p)
+    if updates:
+        update_positions_batch(updates)
 
 
 # ================================================================
@@ -52,25 +80,17 @@ def record_entry(strategy_name: str, items: list[dict]):
     if not items:
         return
 
-    positions = load_positions()
+    _ensure_migrated()
+    from db_store import save_position_entry
+
     now = datetime.now()
     today_str = now.strftime("%Y-%m-%d")
     time_str = now.strftime("%H:%M")
-
-    # 获取今日已持仓的代码 (避免重复录入同一天同策略的推荐)
-    existing = {
-        (p["code"], p["entry_date"], p["strategy"])
-        for p in positions
-        if p.get("status") == "holding"
-    }
 
     new_count = 0
     for it in items:
         code = it.get("code", "")
         if not code or code == "ERROR":
-            continue
-        key = (code, today_str, strategy_name)
-        if key in existing:
             continue
 
         entry_price = float(it.get("price", 0))
@@ -84,21 +104,19 @@ def record_entry(strategy_name: str, items: list[dict]):
             "score": float(it.get("score", 0)),
             "reason": it.get("reason", ""),
             "status": "holding",
+            "holding_days": int(it.get("holding_days", 1)),
         }
-        # 多日持仓支持 (趋势跟踪等策略)
-        pos["holding_days"] = int(it.get("holding_days", 1))
         # 智能交易: 追踪止盈 + 分批卖出 + 自适应止损字段
         if SMART_TRADE_ENABLED:
             pos["highest_price"] = entry_price
             pos["atr"] = float(it.get("atr", 0))
             pos["partial_exited"] = False
             pos["remaining_ratio"] = 1.0
-        positions.append(pos)
-        existing.add(key)
-        new_count += 1
+
+        if save_position_entry(pos):
+            new_count += 1
 
     if new_count > 0:
-        save_positions(positions)
         logger.info("新增 %d 条持仓记录 (%s)", new_count, strategy_name)
 
 
@@ -201,6 +219,7 @@ def check_exit_signals() -> list[dict]:
     today_str = now.strftime("%Y-%m-%d")
 
     exits = []
+    updates = []
     for p in holding:
         code = p["code"]
         current_price = price_map.get(code)
@@ -287,7 +306,6 @@ def check_exit_signals() -> list[dict]:
         if exit_reason:
             # 分批止盈时不设 exited 状态, 只有全部退出才改状态
             if exit_reason == "分批止盈":
-                # 部分卖出: 记录但保持 holding
                 p["exit_price"] = current_price
                 p["exit_date"] = today_str
                 p["exit_time"] = now_time
@@ -301,13 +319,20 @@ def check_exit_signals() -> list[dict]:
                 p["exit_reason"] = exit_reason
                 p["pnl_pct"] = round(pnl_pct, 2)
             exits.append(p)
+            updates.append(p)
+        elif p.get("highest_price") != price_map.get(code):
+            # 即使没退出, 也更新最高价
+            updates.append(p)
 
-    if exits:
-        save_positions(positions)
-        reasons = [f"{e['code']}({e['exit_reason']})" for e in exits]
-        logger.info("触发退出: %s", ", ".join(reasons))
-    else:
-        logger.debug("未触发退出信号")
+    if updates:
+        # 原子批量更新
+        from db_store import update_positions_batch
+        update_positions_batch(updates)
+        if exits:
+            reasons = [f"{e['code']}({e.get('exit_reason', e.get('last_exit_reason', '?'))})" for e in exits]
+            logger.info("触发退出: %s", ", ".join(reasons))
+        else:
+            logger.debug("未触发退出信号")
 
     return exits
 
@@ -359,20 +384,8 @@ def get_portfolio_summary() -> dict:
 
 def clean_old_positions(days=30):
     """清理 N 天前已退出的仓位记录"""
-    positions = load_positions()
-    cutoff = (date.today() - timedelta(days=days)).isoformat()
-
-    before = len(positions)
-    positions = [
-        p for p in positions
-        if p.get("status") == "holding"
-        or p.get("exit_date", "9999-12-31") >= cutoff
-    ]
-    after = len(positions)
-
-    if before != after:
-        save_positions(positions)
-        logger.info("清理 %d 条过期记录 (%d天前已退出)", before - after, days)
+    from db_store import delete_old_positions
+    delete_old_positions(days)
 
 
 # ================================================================
@@ -386,9 +399,9 @@ if __name__ == "__main__":
         exits = check_exit_signals()
         if exits:
             for e in exits:
-                print(f"  {e['code']} {e['name']} {e['exit_reason']} "
-                      f"买入¥{e['entry_price']:.2f} → 退出¥{e['exit_price']:.2f} "
-                      f"{e['pnl_pct']:+.2f}%")
+                print(f"  {e['code']} {e['name']} {e.get('exit_reason', '?')} "
+                      f"买入¥{e['entry_price']:.2f} → 退出¥{e.get('exit_price', 0):.2f} "
+                      f"{e.get('pnl_pct', 0):+.2f}%")
     elif len(sys.argv) > 1 and sys.argv[1] == "summary":
         summary = get_portfolio_summary()
         print(f"持仓: {summary['count']} 只")
@@ -398,8 +411,13 @@ if __name__ == "__main__":
                   f"{d['pnl_pct']:+.2f}%")
     elif len(sys.argv) > 1 and sys.argv[1] == "clean":
         clean_old_positions()
+    elif len(sys.argv) > 1 and sys.argv[1] == "migrate":
+        from db_store import migrate_positions_json
+        count = migrate_positions_json()
+        print(f"迁移完成: {count} 条")
     else:
         print("用法:")
         print("  python3 position_manager.py check    # 检查退出信号")
         print("  python3 position_manager.py summary  # 持仓汇总")
         print("  python3 position_manager.py clean    # 清理历史记录")
+        print("  python3 position_manager.py migrate  # JSON → SQLite 迁移")

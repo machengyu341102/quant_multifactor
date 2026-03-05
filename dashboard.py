@@ -612,8 +612,11 @@ def api_agents():
 def api_source_health():
     """API 源健康状态"""
     try:
-        from api_guard import get_source_health
-        return {"sources": get_source_health()}
+        from api_guard import get_source_health, get_safe_mode_status
+        return {
+            "sources": get_source_health(),
+            "safe_mode": get_safe_mode_status(),
+        }
     except Exception as e:
         return {"error": str(e)}
 

@@ -194,6 +194,21 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
         skip_wechat: True 时只走终端/macOS/同花顺通知, 不发微信 (由批量推送统一处理)
     """
     t0 = time.time()
+
+    # Safe Mode 检查: 降级模式下跳过策略扫描
+    try:
+        from api_guard import is_safe_mode
+        if is_safe_mode():
+            print(f"[Safe Mode] 跳过策略 {strategy_name} (系统处于降级模式)")
+            try:
+                from watchdog import update_strategy_status
+                update_strategy_status(strategy_name, "skipped_safe_mode")
+            except Exception:
+                pass
+            return
+    except Exception:
+        pass
+
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             print(f"\n{'#' * 60}")

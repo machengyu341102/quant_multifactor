@@ -96,6 +96,31 @@
 ### 待办队列
 - [ ] 系统运行满一周后: 信号追踪报告分析 + 参数首次调优
 
+## 2026-03-05 v3.0 优化
+
+### 已完成
+- [x] 代码冻结: v2.0-freeze 标签, v3.0-optimize 分支
+- [x] **OP-17: positions.json → SQLite 原子迁移**
+  - db_store: positions 表 + CRUD (save_position_entry/update_positions_batch/delete_old_positions)
+  - position_manager: 全面切换 SQLite, 自动迁移 (13/13 记录, 去重)
+  - _ensure_migrated() 首次调用自动迁移, 旧文件重命名 .migrated
+- [x] **OP-18: 全局线程池管理 ResourceManager**
+  - resource_manager.py: 单例 ResourceManager + get_pool() + submit_parallel()
+  - 全局上限 50 workers, atexit 自动清理, 命名池复用
+  - 6 个文件 11 处 ThreadPoolExecutor 替换 (intraday/overnight/breakout/enhanced/mr/trend)
+- [x] **OP-19: 离线保护 Safe Mode**
+  - api_guard.py: SafeMode 类 (阈值检测/心跳探测/自动恢复/微信通知)
+  - CircuitBreaker 新增 open_count()/get_all_states(), record_failure→check_and_enter, record_success→check_and_exit
+  - guarded_call + smart_source: Safe Mode 拦截 (允许缓存降级)
+  - scheduler: run_with_retry Safe Mode 前置检查, 跳过策略扫描
+  - dashboard: /api/source_health 增加 safe_mode 状态
+  - config: safe_mode_threshold=3, heartbeat_sec=60
+- [x] **OP-20: strategies.json JSON Schema 校验**
+  - config_validator.py: 8 项校验 (必填字段/id唯一/type合法/schedule格式/batch_slot/gates键/pre_hook/module文件)
+  - strategy_loader: 首次加载时自动校验, 警告日志
+  - CLI: `python3 config_validator.py`
+- [x] 637 tests passed, 0 failed
+
 ## 2026-03-02 晚
 
 ### 已完成
@@ -112,4 +137,4 @@
 
 ---
 
-*最后更新: 2026-03-03 21:50*
+*最后更新: 2026-03-05 v3.0*

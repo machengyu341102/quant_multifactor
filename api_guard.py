@@ -183,6 +183,11 @@ class CircuitBreaker:
             c = self._get(source)
             c["failures"] = 0
             c["state"] = CircuitState.CLOSED
+        # Safe Mode 退出检查 (锁外调用, 避免死锁)
+        try:
+            _safe_mode.check_and_exit()
+        except NameError:
+            pass  # _safe_mode 尚未初始化
 
     def record_failure(self, source: str):
         with self._lock:
@@ -193,17 +198,200 @@ class CircuitBreaker:
                 c["state"] = CircuitState.OPEN
             elif c["failures"] >= self.failure_threshold:
                 c["state"] = CircuitState.OPEN
+        # Safe Mode 进入检查 (锁外调用, 避免死锁)
+        try:
+            _safe_mode.check_and_enter()
+        except NameError:
+            pass  # _safe_mode 尚未初始化
 
     def get_state(self, source: str) -> str:
         with self._lock:
             c = self._get(source)
             return c["state"].value
 
+    def open_count(self) -> tuple[int, int]:
+        """返回 (OPEN态源数, 已注册源总数)"""
+        with self._lock:
+            if not self._circuits:
+                return 0, 0
+            total = len(self._circuits)
+            open_n = sum(1 for c in self._circuits.values()
+                         if c["state"] == CircuitState.OPEN)
+            return open_n, total
+
+    def get_all_states(self) -> dict:
+        """返回所有源的断路器状态"""
+        with self._lock:
+            return {src: c["state"].value for src, c in self._circuits.items()}
+
 
 _global_breaker = CircuitBreaker(
     failure_threshold=API_GUARD_PARAMS.get("circuit_failure_threshold", 5),
     cooldown_sec=API_GUARD_PARAMS.get("circuit_cooldown_sec", 120),
 )
+
+
+# ================================================================
+#  Safe Mode (降级驾驶模式)
+# ================================================================
+
+class SafeMode:
+    """离线保护 — 所有 API 源熔断时自动进入降级模式
+
+    行为:
+      1. 暂停所有策略扫描 (scheduler 检查 is_active())
+      2. 封锁交易执行 (guarded_call / smart_source 拒绝新请求)
+      3. 低功耗心跳探测 (每 heartbeat_sec 秒尝试一个源)
+      4. 网络恢复后自动退出
+
+    触发条件: 已注册源中 ≥ safe_mode_threshold 个处于 OPEN 状态
+    """
+
+    def __init__(self, threshold: int = 3, heartbeat_sec: float = 60):
+        self._active = False
+        self._enter_time: float = 0
+        self._exit_time: float = 0
+        self._threshold = threshold
+        self._heartbeat_sec = heartbeat_sec
+        self._lock = threading.Lock()
+        self._heartbeat_thread = None  # type: threading.Thread | None
+        self._stop_event = threading.Event()
+        import logging
+        self._logger = logging.getLogger("api_guard.safe_mode")
+
+    @property
+    def active(self) -> bool:
+        return self._active
+
+    def is_active(self) -> bool:
+        """是否处于安全模式"""
+        return self._active
+
+    def check_and_enter(self):
+        """检查是否应进入安全模式 (在 record_failure 后调用)"""
+        if self._active:
+            return
+        open_n, total = _global_breaker.open_count()
+        if total >= 2 and open_n >= min(self._threshold, total):
+            self._enter(open_n, total)
+
+    def check_and_exit(self):
+        """检查是否应退出安全模式 (在 record_success 后调用)"""
+        if not self._active:
+            return
+        open_n, total = _global_breaker.open_count()
+        if open_n < min(self._threshold, total):
+            self._exit(open_n, total)
+
+    def _enter(self, open_n: int, total: int):
+        with self._lock:
+            if self._active:
+                return
+            self._active = True
+            self._enter_time = time.time()
+
+        self._logger.warning(
+            "⚠️ 进入 Safe Mode: %d/%d 源熔断, 暂停扫描+封锁交易", open_n, total)
+
+        # 通知
+        self._notify(
+            f"🛡️ Safe Mode 已激活\n"
+            f"原因: {open_n}/{total} API源熔断\n"
+            f"断路器状态: {_global_breaker.get_all_states()}\n"
+            f"自动心跳探测中, 网络恢复后自动退出"
+        )
+
+        # 启动心跳探测线程
+        self._stop_event.clear()
+        self._heartbeat_thread = threading.Thread(
+            target=self._heartbeat_loop, daemon=True,
+            name="safe-mode-heartbeat",
+        )
+        self._heartbeat_thread.start()
+
+    def _exit(self, open_n: int, total: int):
+        with self._lock:
+            if not self._active:
+                return
+            self._active = False
+            self._exit_time = time.time()
+            duration = self._exit_time - self._enter_time
+
+        self._stop_event.set()
+
+        self._logger.info(
+            "✅ 退出 Safe Mode: %d/%d 源熔断 (低于阈值%d), 持续 %.0f 秒",
+            open_n, total, self._threshold, duration)
+
+        self._notify(
+            f"✅ Safe Mode 已解除\n"
+            f"持续时间: {duration:.0f}秒\n"
+            f"断路器状态: {_global_breaker.get_all_states()}"
+        )
+
+    def _heartbeat_loop(self):
+        """低功耗心跳: 定期探测一个源, 恢复则退出 Safe Mode"""
+        import requests
+
+        probes = [
+            ("sina_http", "https://hq.sinajs.cn/list=sh000001"),
+            ("em_spot", "https://push2.eastmoney.com/api/qt/ulist.np/get?fields=f12&secids=1.000001"),
+        ]
+
+        while not self._stop_event.is_set():
+            self._stop_event.wait(self._heartbeat_sec)
+            if self._stop_event.is_set():
+                break
+
+            for source_key, url in probes:
+                try:
+                    r = requests.get(url, timeout=10)
+                    if r.status_code == 200 and len(r.text) > 10:
+                        _global_breaker.record_success(source_key)
+                        self._logger.info("心跳探测成功: %s", source_key)
+                        self.check_and_exit()
+                        if not self._active:
+                            return
+                except Exception:
+                    pass  # 继续等待
+
+    def _notify(self, msg: str):
+        """发送微信通知"""
+        try:
+            from notifier import send_wechat
+            send_wechat("Safe Mode", msg)
+        except Exception:
+            pass
+
+    def status(self) -> dict:
+        """获取 Safe Mode 状态 (供 dashboard / CLI)"""
+        open_n, total = _global_breaker.open_count()
+        return {
+            "active": self._active,
+            "threshold": self._threshold,
+            "open_sources": open_n,
+            "total_sources": total,
+            "enter_time": self._enter_time,
+            "duration_sec": round(time.time() - self._enter_time, 0) if self._active else 0,
+            "heartbeat_sec": self._heartbeat_sec,
+            "breaker_states": _global_breaker.get_all_states(),
+        }
+
+
+_safe_mode = SafeMode(
+    threshold=API_GUARD_PARAMS.get("safe_mode_threshold", 3),
+    heartbeat_sec=API_GUARD_PARAMS.get("safe_mode_heartbeat_sec", 60),
+)
+
+
+def is_safe_mode() -> bool:
+    """系统是否处于安全模式 (供外部模块检查)"""
+    return _safe_mode.is_active()
+
+
+def get_safe_mode_status() -> dict:
+    """获取安全模式详情 (供 dashboard / CLI)"""
+    return _safe_mode.status()
 
 
 # ================================================================
@@ -481,6 +669,16 @@ def smart_source(sources: list, cache_key: str = "", cache_ttl: int = 0):
     Raises:
         最后一个源的异常 (全部失败)
     """
+    # 0. Safe Mode 拦截
+    if _safe_mode.is_active():
+        if cache_key and cache_ttl > 0:
+            cached = _global_cache.get(cache_key)
+            if cached is not None:
+                with _stats_lock:
+                    _stats["cache_hits"] += 1
+                return cached
+        raise RuntimeError("Safe Mode 已激活: 所有API调用被拦截")
+
     # 1. 查缓存
     if cache_key and cache_ttl > 0:
         cached = _global_cache.get(cache_key)
@@ -600,6 +798,17 @@ def guarded_call(func, *args, source="akshare", retries=3, cache_key="", cache_t
     """
     if not API_GUARD_PARAMS.get("enabled", True):
         return func(*args, **func_kwargs)
+
+    # 0. Safe Mode 拦截 (允许缓存命中, 拦截实际调用)
+    if _safe_mode.is_active():
+        # 先查缓存, 有缓存就返回 (降级模式仍可用缓存数据)
+        if cache_key and cache_ttl > 0:
+            cached = _global_cache.get(cache_key)
+            if cached is not None:
+                with _stats_lock:
+                    _stats["cache_hits"] += 1
+                return cached
+        raise RuntimeError(f"Safe Mode 已激活: API调用被拦截 (source={source})")
 
     # 1. 查缓存
     if cache_key and cache_ttl > 0:

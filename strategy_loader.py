@@ -33,10 +33,21 @@ _strategies_cache: list[dict] | None = None
 
 
 def load_strategies() -> list[dict]:
-    """加载策略配置 (带缓存)"""
+    """加载策略配置 (带缓存 + Schema 校验)"""
     global _strategies_cache
     if _strategies_cache is not None:
         return _strategies_cache
+
+    # Schema 校验 (首次加载时)
+    try:
+        from config_validator import validate_strategies
+        errors = validate_strategies(_STRATEGIES_PATH)
+        if errors:
+            for e in errors:
+                logger.warning("配置校验: %s", e)
+    except Exception as e:
+        logger.debug("配置校验模块加载失败: %s", e)
+
     _strategies_cache = safe_load(_STRATEGIES_PATH, default=[])
     return _strategies_cache
 

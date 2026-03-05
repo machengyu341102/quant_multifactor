@@ -324,8 +324,18 @@ class TestNotifyBatch:
 class TestHoldingDays:
     """持仓天数测试"""
 
+    def _setup_test_db(self, tmp_path, monkeypatch):
+        """将 db_store 指向临时数据库"""
+        test_db = str(tmp_path / "test_pos.db")
+        monkeypatch.setattr("db_store._DB_PATH", test_db)
+        import db_store
+        db_store._init_done.clear()
+        if hasattr(db_store._local, "conn"):
+            db_store._local.conn = None
+
     def test_holding_days_recorded(self, tmp_path, monkeypatch):
         """record_entry 应写入 holding_days"""
+        self._setup_test_db(tmp_path, monkeypatch)
         monkeypatch.setattr("position_manager._POS_PATH",
                             str(tmp_path / "positions.json"))
 
@@ -346,6 +356,7 @@ class TestHoldingDays:
 
     def test_default_holding_days(self, tmp_path, monkeypatch):
         """不传 holding_days 默认为 1 (T+1 兼容)"""
+        self._setup_test_db(tmp_path, monkeypatch)
         monkeypatch.setattr("position_manager._POS_PATH",
                             str(tmp_path / "positions.json"))
 

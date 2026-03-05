@@ -109,6 +109,36 @@ def init_db():
             findings TEXT NOT NULL,
             created_at TEXT DEFAULT (datetime('now', 'localtime'))
         );
+
+        CREATE TABLE IF NOT EXISTS positions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            code TEXT NOT NULL,
+            name TEXT NOT NULL DEFAULT '',
+            strategy TEXT NOT NULL DEFAULT '',
+            entry_price REAL NOT NULL DEFAULT 0,
+            entry_date TEXT NOT NULL,
+            entry_time TEXT DEFAULT '',
+            score REAL DEFAULT 0,
+            reason TEXT DEFAULT '',
+            status TEXT NOT NULL DEFAULT 'holding',
+            holding_days INTEGER DEFAULT 1,
+            highest_price REAL DEFAULT 0,
+            atr REAL DEFAULT 0,
+            partial_exited INTEGER DEFAULT 0,
+            remaining_ratio REAL DEFAULT 1.0,
+            exit_price REAL,
+            exit_date TEXT,
+            exit_time TEXT,
+            exit_reason TEXT,
+            pnl_pct REAL,
+            last_exit_reason TEXT,
+            extra TEXT,
+            created_at TEXT DEFAULT (datetime('now', 'localtime')),
+            UNIQUE (code, entry_date, strategy)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_pos_status ON positions(status);
+        CREATE INDEX IF NOT EXISTS idx_pos_date ON positions(entry_date);
     """)
     conn.commit()
     _init_done.add(tid)
@@ -477,6 +507,188 @@ def run_migration():
 
 # ================================================================
 #  入口
+# ================================================================
+#  Positions CRUD (原子事务)
+# ================================================================
+
+_POS_COLUMNS = (
+    "code", "name", "strategy", "entry_price", "entry_date", "entry_time",
+    "score", "reason", "status", "holding_days", "highest_price", "atr",
+    "partial_exited", "remaining_ratio", "exit_price", "exit_date",
+    "exit_time", "exit_reason", "pnl_pct", "last_exit_reason", "extra",
+)
+
+
+def _pos_to_row(p: dict) -> dict:
+    """dict → DB row (boolean → int, extra fields → JSON)"""
+    row = {}
+    known = set(_POS_COLUMNS)
+    for k in _POS_COLUMNS:
+        v = p.get(k)
+        if k == "partial_exited":
+            row[k] = 1 if v else 0
+        else:
+            row[k] = v
+    # 未知字段塞入 extra JSON
+    extras = {k: v for k, v in p.items() if k not in known and k != "id"}
+    row["extra"] = json.dumps(extras, ensure_ascii=False) if extras else None
+    return row
+
+
+def _row_to_pos(row: sqlite3.Row) -> dict:
+    """DB row → position dict (int → boolean, extra JSON → flat)"""
+    d = {}
+    for key in row.keys():
+        if key in ("id", "created_at"):
+            continue
+        val = row[key]
+        if val is None:
+            continue
+        if key == "partial_exited":
+            d[key] = bool(val)
+        elif key == "extra":
+            try:
+                extras = json.loads(val) if val else {}
+                d.update(extras)
+            except (json.JSONDecodeError, TypeError):
+                pass
+        else:
+            d[key] = val
+    return d
+
+
+def load_positions_db() -> list[dict]:
+    """从 SQLite 加载全部持仓"""
+    init_db()
+    conn = _get_conn()
+    rows = conn.execute("SELECT * FROM positions ORDER BY id").fetchall()
+    return [_row_to_pos(r) for r in rows]
+
+
+def save_position_entry(p: dict) -> bool:
+    """原子写入一条持仓记录 (INSERT OR IGNORE, 返回是否新增)"""
+    init_db()
+    conn = _get_conn()
+    row = _pos_to_row(p)
+    try:
+        conn.execute(
+            """INSERT OR IGNORE INTO positions
+               (code, name, strategy, entry_price, entry_date, entry_time,
+                score, reason, status, holding_days, highest_price, atr,
+                partial_exited, remaining_ratio, extra)
+               VALUES (:code, :name, :strategy, :entry_price, :entry_date,
+                       :entry_time, :score, :reason, :status, :holding_days,
+                       :highest_price, :atr, :partial_exited,
+                       :remaining_ratio, :extra)""",
+            row,
+        )
+        conn.commit()
+        return conn.total_changes > 0
+    except Exception as e:
+        conn.rollback()
+        logger.error("save_position_entry 失败: %s", e)
+        return False
+
+
+def update_positions_batch(updates: list[dict]):
+    """原子批量更新持仓 (exit/partial exit/highest_price 等)
+
+    每个 update dict 必须包含 code + entry_date + strategy 作为主键,
+    其余字段为要更新的值。
+    """
+    if not updates:
+        return
+    init_db()
+    conn = _get_conn()
+    try:
+        for u in updates:
+            code = u["code"]
+            entry_date = u["entry_date"]
+            strategy = u["strategy"]
+            # 构建 SET 子句
+            fields = {k: v for k, v in u.items()
+                      if k not in ("code", "entry_date", "strategy", "id")
+                      and k in _POS_COLUMNS}
+            if "partial_exited" in fields:
+                fields["partial_exited"] = 1 if fields["partial_exited"] else 0
+            if not fields:
+                continue
+            set_clause = ", ".join(f"{k} = :{k}" for k in fields)
+            fields["_code"] = code
+            fields["_entry_date"] = entry_date
+            fields["_strategy"] = strategy
+            conn.execute(
+                f"UPDATE positions SET {set_clause} "
+                "WHERE code = :_code AND entry_date = :_entry_date "
+                "AND strategy = :_strategy",
+                fields,
+            )
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        logger.error("update_positions_batch 失败: %s", e)
+        raise
+
+
+def delete_old_positions(days: int = 30) -> int:
+    """原子删除 N 天前已退出的记录"""
+    init_db()
+    conn = _get_conn()
+    from datetime import date as _date, timedelta as _td
+    cutoff = (_date.today() - _td(days=days)).isoformat()
+    try:
+        cursor = conn.execute(
+            "DELETE FROM positions WHERE status = 'exited' AND exit_date < ?",
+            (cutoff,),
+        )
+        conn.commit()
+        deleted = cursor.rowcount
+        if deleted:
+            logger.info("清理 %d 条过期持仓 (%d天前已退出)", deleted, days)
+        return deleted
+    except Exception as e:
+        conn.rollback()
+        logger.error("delete_old_positions 失败: %s", e)
+        return 0
+
+
+def migrate_positions_json():
+    """一次性将 positions.json 迁移到 SQLite"""
+    from json_store import safe_load
+    json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "positions.json")
+    positions = safe_load(json_path, default=[])
+    if not positions:
+        logger.info("positions.json 为空或不存在, 跳过迁移")
+        return 0
+
+    init_db()
+    conn = _get_conn()
+    count = 0
+    for p in positions:
+        row = _pos_to_row(p)
+        try:
+            conn.execute(
+                """INSERT OR IGNORE INTO positions
+                   (code, name, strategy, entry_price, entry_date, entry_time,
+                    score, reason, status, holding_days, highest_price, atr,
+                    partial_exited, remaining_ratio, exit_price, exit_date,
+                    exit_time, exit_reason, pnl_pct, last_exit_reason, extra)
+                   VALUES (:code, :name, :strategy, :entry_price, :entry_date,
+                           :entry_time, :score, :reason, :status, :holding_days,
+                           :highest_price, :atr, :partial_exited,
+                           :remaining_ratio, :exit_price, :exit_date,
+                           :exit_time, :exit_reason, :pnl_pct,
+                           :last_exit_reason, :extra)""",
+                row,
+            )
+            count += 1
+        except Exception as e:
+            logger.warning("迁移跳过 %s: %s", p.get("code"), e)
+    conn.commit()
+    logger.info("positions.json → SQLite: %d/%d 条迁移成功", count, len(positions))
+    return count
+
+
 # ================================================================
 
 if __name__ == "__main__":

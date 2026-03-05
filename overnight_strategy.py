@@ -234,7 +234,8 @@ def _scan_one_signal(code, start_date, end_date):
 
 def scan_signals(stock_list, days=120):
     """全量扫描技术信号 (20线程并行)"""
-    from concurrent.futures import ThreadPoolExecutor, as_completed
+    from concurrent.futures import as_completed
+    from resource_manager import get_pool
     total = len(stock_list)
     print(f"[3/5] 全量扫描技术信号 ({total} 只, 20线程并行)...")
     end_date = datetime.now().strftime("%Y%m%d")
@@ -243,20 +244,20 @@ def scan_signals(stock_list, days=120):
     fail_count = 0
     done_count = 0
 
-    with ThreadPoolExecutor(max_workers=20) as pool:
-        futures = {pool.submit(_scan_one_signal, code, start_date, end_date): code
-                   for code in stock_list}
-        for fut in as_completed(futures):
-            done_count += 1
-            r = fut.result()
-            if r is None:
-                continue
-            elif r == "FAIL":
-                fail_count += 1
-            else:
-                results.append(r)
-            if done_count % 50 == 0:
-                print(f"  进度: {done_count}/{total}  有效: {len(results)}  失败: {fail_count}")
+    pool = get_pool("overnight_scan_signals", max_workers=20)
+    futures = {pool.submit(_scan_one_signal, code, start_date, end_date): code
+               for code in stock_list}
+    for fut in as_completed(futures):
+        done_count += 1
+        r = fut.result()
+        if r is None:
+            continue
+        elif r == "FAIL":
+            fail_count += 1
+        else:
+            results.append(r)
+        if done_count % 50 == 0:
+            print(f"  进度: {done_count}/{total}  有效: {len(results)}  失败: {fail_count}")
 
     print(f"  扫描完成: {len(results)} 只有效, {fail_count} 只失败")
     return pd.DataFrame(results)
@@ -288,21 +289,22 @@ def _scan_one_fund_flow(code):
 
 def scan_fund_flow(stock_list):
     """获取个股资金流向 (20线程并行)"""
-    from concurrent.futures import ThreadPoolExecutor, as_completed
+    from concurrent.futures import as_completed
+    from resource_manager import get_pool
     total = len(stock_list)
     print(f"[4/5] 扫描候选股资金流向 ({total} 只, 20线程并行)...")
     records = []
     done_count = 0
 
-    with ThreadPoolExecutor(max_workers=20) as pool:
-        futures = {pool.submit(_scan_one_fund_flow, code): code for code in stock_list}
-        for fut in as_completed(futures):
-            done_count += 1
-            r = fut.result()
-            if r is not None:
-                records.append(r)
-            if done_count % 10 == 0:
-                print(f"  资金流进度: {done_count}/{total}, 有效: {len(records)}")
+    pool = get_pool("overnight_fund_flow", max_workers=20)
+    futures = {pool.submit(_scan_one_fund_flow, code): code for code in stock_list}
+    for fut in as_completed(futures):
+        done_count += 1
+        r = fut.result()
+        if r is not None:
+            records.append(r)
+        if done_count % 10 == 0:
+            print(f"  资金流进度: {done_count}/{total}, 有效: {len(records)}")
 
     print(f"  获取到 {len(records)} 只股票的资金流向")
     return pd.DataFrame(records)
@@ -525,25 +527,26 @@ def news_risk_screen(codes, name_map):
     新闻/政策风险排雷 (20线程并行)
     返回: (safe_codes, risk_info, news_scores)
     """
-    from concurrent.futures import ThreadPoolExecutor, as_completed
+    from concurrent.futures import as_completed
+    from resource_manager import get_pool
     print(f"\n[v5] 新闻风险排雷 ({len(codes)} 只候选, 20线程并行)...")
     risk_info = {}
     news_scores = {}
 
-    with ThreadPoolExecutor(max_workers=20) as pool:
-        futures = {pool.submit(_screen_one_news, code, name_map): code for code in codes}
-        for fut in as_completed(futures):
-            r = fut.result()
-            code = r["code"]
-            risk_info[code] = r
-            news_scores[code] = (r["positive_score"] + r["risk_score"]) / 10.0
+    pool = get_pool("overnight_news_screen", max_workers=20)
+    futures = {pool.submit(_screen_one_news, code, name_map): code for code in codes}
+    for fut in as_completed(futures):
+        r = fut.result()
+        code = r["code"]
+        risk_info[code] = r
+        news_scores[code] = (r["positive_score"] + r["risk_score"]) / 10.0
 
-            name = name_map.get(code, "")
-            if r["risk_keywords"]:
-                print(f"  {code} {name}: 风险={r['risk_score']} [{', '.join(r['risk_keywords'])}]"
-                      + (f" | 正面=[{', '.join(r['positive_keywords'])}]" if r["positive_keywords"] else ""))
-            elif r["positive_keywords"]:
-                print(f"  {code} {name}: 正面=[{', '.join(r['positive_keywords'])}]")
+        name = name_map.get(code, "")
+        if r["risk_keywords"]:
+            print(f"  {code} {name}: 风险={r['risk_score']} [{', '.join(r['risk_keywords'])}]"
+                  + (f" | 正面=[{', '.join(r['positive_keywords'])}]" if r["positive_keywords"] else ""))
+        elif r["positive_keywords"]:
+            print(f"  {code} {name}: 正面=[{', '.join(r['positive_keywords'])}]")
 
     # 剔除高风险
     safe_codes = []
@@ -768,17 +771,18 @@ def backtest_overnight(selected_codes, name_map, lookback=10):
     end_date = datetime.now().strftime("%Y%m%d")
     start_date = (datetime.now() - timedelta(days=lookback * 3)).strftime("%Y%m%d")
 
-    from concurrent.futures import ThreadPoolExecutor, as_completed
+    from concurrent.futures import as_completed
+    from resource_manager import get_pool
     all_overnight = []
-    with ThreadPoolExecutor(max_workers=10) as pool:
-        futures = {
-            pool.submit(_backtest_one, code, name_map, start_date, end_date, lookback): code
-            for code in selected_codes
-        }
-        for fut in as_completed(futures):
-            result = fut.result()
-            if result is not None:
-                all_overnight.append(result)
+    pool = get_pool("overnight_backtest", max_workers=10)
+    futures = {
+        pool.submit(_backtest_one, code, name_map, start_date, end_date, lookback): code
+        for code in selected_codes
+    }
+    for fut in as_completed(futures):
+        result = fut.result()
+        if result is not None:
+            all_overnight.append(result)
 
     if not all_overnight:
         print("  无有效回测数据")

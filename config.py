@@ -615,6 +615,9 @@ API_GUARD_PARAMS = {
     "circuit_cooldown_sec": 30,             # 熔断冷却时间 (60→30s, 快速恢复)
     "pool_cache_ttl_sec": 3600,             # 中证1000成分股缓存 1小时
     "daily_kline_cache_ttl_sec": 300,       # 日K缓存 5分钟
+    # Safe Mode (降级驾驶模式)
+    "safe_mode_threshold": 3,               # ≥N个源熔断 → 进入Safe Mode
+    "safe_mode_heartbeat_sec": 60,          # 心跳探测间隔 (秒)
     # Tushare Pro 配置 (注册后填入)
     "tushare_token": "26f714bafd61fc50e93eed1260549b918b1f367c7915a2fa329bc51e",
     "tushare_enabled": True,

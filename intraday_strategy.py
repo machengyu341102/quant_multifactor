@@ -257,8 +257,9 @@ def _fetch_one_kline(code, name_map, start_date, end_date):
 
 
 def calc_daily_technicals(codes, name_map, days=120):
-    """批量拉日K数据计算技术指标 (5线程并行, 带缓存)"""
-    from concurrent.futures import ThreadPoolExecutor, as_completed
+    """批量拉日K数据计算技术指标 (共享线程池, 带缓存)"""
+    from concurrent.futures import as_completed
+    from resource_manager import get_pool
 
     global _kline_cache_ts
     # 超过 10 分钟清空缓存
@@ -273,7 +274,8 @@ def calc_daily_technicals(codes, name_map, days=120):
     total = len(codes)
     done_count = 0
 
-    with ThreadPoolExecutor(max_workers=20) as pool:
+    pool = get_pool("kline_fetch", max_workers=20)
+    if True:
         futures = {
             pool.submit(_fetch_one_kline, code, name_map, start_date, end_date): code
             for code in codes
@@ -703,7 +705,8 @@ def get_intraday_pattern(codes, name_map):
     - 午后趋势: 13:00后价格逐步抬升
     - 盘中支撑: 日内最低价出现在上午
     """
-    from concurrent.futures import ThreadPoolExecutor, as_completed
+    from concurrent.futures import as_completed
+    from resource_manager import get_pool
 
     total = len(codes)
     print(f"    日内形态分析 ({total} 只, 20线程并行)...")
@@ -711,11 +714,12 @@ def get_intraday_pattern(codes, name_map):
     fail_count = 0
     done = 0
 
-    with ThreadPoolExecutor(max_workers=20) as pool:
-        futures = {
-            pool.submit(_fetch_one_intraday, code, name_map): code
-            for code in codes
-        }
+    pool = get_pool("intraday_pattern", max_workers=20)
+    futures = {
+        pool.submit(_fetch_one_intraday, code, name_map): code
+        for code in codes
+    }
+    if True:
         for fut in as_completed(futures):
             done += 1
             r = fut.result()

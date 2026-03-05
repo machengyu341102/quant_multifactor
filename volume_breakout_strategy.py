@@ -137,7 +137,8 @@ def calc_breakout_technicals(codes, name_map, days=120):
     - 均线多头排列 + MA5金叉MA10
     - 20日新高突破度
     """
-    from concurrent.futures import ThreadPoolExecutor, as_completed
+    from concurrent.futures import as_completed
+    from resource_manager import get_pool
 
     end_date = datetime.now().strftime("%Y%m%d")
     start_date = (datetime.now() - timedelta(days=days)).strftime("%Y%m%d")
@@ -146,23 +147,23 @@ def calc_breakout_technicals(codes, name_map, days=120):
     total = len(codes)
     done_count = 0
 
-    with ThreadPoolExecutor(max_workers=10) as pool:
-        futures = {
-            pool.submit(_fetch_one_breakout, code, name_map, start_date, end_date): code
-            for code in codes
-        }
-        for fut in as_completed(futures):
-            done_count += 1
-            r = fut.result()
-            if r is None:
-                continue
-            elif r == "FAIL":
-                fail_count += 1
-            else:
-                results.append(r)
-            if done_count % 20 == 0:
-                print(f"    技术面进度: {done_count}/{total}  有效: {len(results)}  "
-                      f"失败: {fail_count}")
+    pool = get_pool("breakout_scan", max_workers=10)
+    futures = {
+        pool.submit(_fetch_one_breakout, code, name_map, start_date, end_date): code
+        for code in codes
+    }
+    for fut in as_completed(futures):
+        done_count += 1
+        r = fut.result()
+        if r is None:
+            continue
+        elif r == "FAIL":
+            fail_count += 1
+        else:
+            results.append(r)
+        if done_count % 20 == 0:
+            print(f"    技术面进度: {done_count}/{total}  有效: {len(results)}  "
+                  f"失败: {fail_count}")
 
     print(f"    技术面完成: {len(results)} 只有效, {fail_count} 只失败")
     return pd.DataFrame(results)

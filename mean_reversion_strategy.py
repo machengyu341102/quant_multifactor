@@ -18,7 +18,8 @@ import akshare as ak
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import as_completed
+from resource_manager import get_pool
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -175,20 +176,20 @@ def _fetch_daily_klines(codes, name_map, days=120):
     total = len(codes)
     done = 0
 
-    with ThreadPoolExecutor(max_workers=20) as pool:
-        futures = {
-            pool.submit(_fetch_one_mr_kline, code, name_map, start_date, end_date): code
-            for code in codes
-        }
-        for fut in as_completed(futures):
-            done += 1
-            r = fut.result()
-            if r is not None:
-                results.append(r)
-            else:
-                fail_count += 1
-            if done % 20 == 0:
-                print(f"    日K进度: {done}/{total} (成功{len(results)} 失败{fail_count})")
+    pool = get_pool("mean_reversion_scan", max_workers=20)
+    futures = {
+        pool.submit(_fetch_one_mr_kline, code, name_map, start_date, end_date): code
+        for code in codes
+    }
+    for fut in as_completed(futures):
+        done += 1
+        r = fut.result()
+        if r is not None:
+            results.append(r)
+        else:
+            fail_count += 1
+        if done % 20 == 0:
+            print(f"    日K进度: {done}/{total} (成功{len(results)} 失败{fail_count})")
 
     print(f"  日K技术指标完成: {len(results)}/{total} 只 (失败{fail_count})")
 
