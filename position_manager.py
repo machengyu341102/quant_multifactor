@@ -126,21 +126,18 @@ def _get_current_prices(codes: list[str]) -> dict:
     if not stock_codes:
         return {}
 
-    # 主数据源: 新浪
-    try:
-        from intraday_strategy import _sina_batch_quote
-        df = _sina_batch_quote(stock_codes)
-        if not df.empty:
-            result = dict(zip(df["code"], df["price"]))
-            if result:
-                return result
-    except Exception as e:
-        logger.warning("新浪报价失败: %s, 切换备用源", e)
+    # 使用 smart_source 自动切换数据源 (新浪→东财→腾讯)
+    from api_guard import smart_source, SOURCE_SINA_HTTP, SOURCE_EM_SPOT, SOURCE_TENCENT_KLINE
 
-    # 备用数据源: 东方财富
-    try:
+    def _sina(codes=stock_codes):
+        from intraday_strategy import _sina_batch_quote
+        df = _sina_batch_quote(codes)
+        if not df.empty:
+            return dict(zip(df["code"], df["price"]))
+        return {}
+
+    def _em(codes=stock_codes):
         import akshare as ak
-        logger.info("使用东方财富备用数据源...")
         df = ak.stock_zh_a_spot_em()
         code_col = "代码" if "代码" in df.columns else df.columns[1]
         price_col = "最新价" if "最新价" in df.columns else df.columns[2]
@@ -148,43 +145,33 @@ def _get_current_prices(codes: list[str]) -> dict:
         df[price_col] = df[price_col].apply(
             lambda x: float(x) if str(x).replace(".", "").replace("-", "").isdigit() else 0
         )
-        code_set = set(stock_codes)
-        filtered = df[df[code_col].isin(code_set)]
-        result = dict(zip(filtered[code_col], filtered[price_col]))
-        if result:
-            logger.info("东方财富备用源获取成功: %d/%d", len(result), len(stock_codes))
-            return result
-    except Exception as e:
-        logger.error("东方财富备用源也失败: %s, 尝试腾讯源", e)
+        filtered = df[df[code_col].isin(set(codes))]
+        return dict(zip(filtered[code_col], filtered[price_col]))
 
-    # 兜底数据源: 腾讯逐只查询最近收盘价
-    try:
+    def _tx(codes=stock_codes):
         import akshare as ak
         from overnight_strategy import _tx_sym
-        logger.info("使用腾讯逐只查询兜底...")
         result = {}
-        for code in stock_codes[:20]:  # 限制20只防止太慢
+        for code in codes[:20]:
             try:
                 df = ak.stock_zh_a_hist_tx(
                     symbol=_tx_sym(code), start_date="20260101",
                     end_date="20261231", adjust="qfq"
                 )
                 if df is not None and not df.empty:
-                    close_col = next(
-                        (c for c in ["close", "收盘", "收盘价"] if c in df.columns),
-                        None
-                    )
+                    close_col = next((c for c in ["close", "收盘", "收盘价"] if c in df.columns), None)
                     if close_col:
                         result[code] = float(df[close_col].iloc[-1])
             except Exception:
                 pass
-        if result:
-            logger.info("腾讯兜底源获取成功: %d/%d", len(result), len(stock_codes))
-            return result
-    except Exception as e:
-        logger.error("腾讯兜底源也失败: %s", e)
+        return result
 
-    return {}
+    result = smart_source([
+        (SOURCE_SINA_HTTP, _sina),
+        (SOURCE_EM_SPOT, _em),
+        (SOURCE_TENCENT_KLINE, _tx),
+    ])
+    return result if result else {}
 
 
 def check_exit_signals() -> list[dict]:

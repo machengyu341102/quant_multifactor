@@ -1,0 +1,129 @@
+{
+  "date": "2026-03-04",
+  "start": "22:30:16",
+  "tasks": {
+    "绩效考核": {
+      "status": "ok",
+      "duration_sec": 0.0,
+      "attempt": 1,
+      "data": {
+        "date": "2026-03-04",
+        "agents": {
+          "brain": {
+            "display_name": "智能体大脑",
+            "score": 85.0,
+            "grade": "A",
+            "health": 1.0,
+            "details": [
+              "健康度100% (+20)",
+              "今日OODA已执行 (+15)"
+            ]
+          },
+          "risk_inspector": {
+            "display_name": "风控督察",
+            "score": 80.0,
+            "grade": "A",
+            "health": 1.0,
+            "details": [
+              "健康度100% (+20)",
+              "今日已执行风控检查 (+10)"
+            ]
+          },
+          "market_radar": {
+            "display_name": "行情雷达",
+            "score": 80.0,
+            "grade": "A",
+            "health": 1.0,
+            "details": [
+              "健康度100% (+20)",
+              "今日已检测行情 (+10)"
+            ]
+          },
+          "factor_researcher": {
+            "display_name": "选股研究员",
+            "score": 76.7,
+            "grade": "A",
+            "health": 1.0,
+            "details": [
+              "健康度100% (+20)",
+              "策略均胜率67% (+6.7)"
+            ]
+          },
+          "execution_judge": {
+            "display_name": "执行裁判",
+            "score": 80.0,
+            "grade": "A",
+            "health": 1.0,
+            "details": [
+              "健康度100% (+20)",
+              "策略成功率100% (+10)"
+            ]
+          },
+          "healer": {
+            "display_name": "系统自愈",
+            "score": 70.0,
+            "grade": "B",
+            "health": 0.9998019295937146,
+            "details": [
+              "健康度100% (+20)"
+            ]
+          },
+          "crypto_scanner": {
+            "display_name": "币圈扫描",
+            "score": 70.0,
+            "grade": "B",
+            "health": 1.0,
+            "details": [
+              "健康度100% (+20)"
+            ]
+          },
+          "us_stock_analyzer": {
+            "display_name": "美股分析",
+            "score": 70.0,
+            "grade": "B",
+            "health": 1.0,
+            "details": [
+              "健康度100% (+20)"
+            ]
+          },
+          "cross_market": {
+            "display_name": "跨市场推演",
+            "score": 70.0,
+            "grade": "B",
+            "health": 1.0,
+            "details": [
+              "健康度100% (+20)"
+            ]
+          },
+          "stock_analyst": {
+            "display_name": "个股诊断",
+            "score": 70.0,
+            "grade": "B",
+            "health": 1.0,
+            "details": [
+              "健康度100% (+20)"
+            ]
+          }
+        },
+        "summary": "团队均分 75 | A:5 B:5",
+        "avg_score": 75.2
+      },
+      "output": "{'date': '2026-03-04', 'agents': {'brain': {'display_name': '智能体大脑', 'score': 85.0, 'grade': 'A', 'health': 1.0, 'details': ['健康度100% (+20)', '今日OODA已执行 (+15)']}, 'risk_inspector': {'display_name': '风控督察', 'score': 80.0, 'grade': 'A', 'health': 1.0, 'details': ['健康度100% (+20)', '今日已执行风控检查 (+10)']}, 'market_radar': {'display_name': '行情雷达', 'score': 80.0, 'grade': 'A', 'health': 1.0, 'details': ['健康度100% (+20)', '今日已检测行情 (+10)']}, 'factor_researcher': {'display_name': '选股研究员', 'score': 76.7, 'grad"
+    },
+    "LLM深度复盘": {
+      "status": "ok",
+      "duration_sec": 93.0,
+      "attempt": 1,
+      "data": {},
+      "output": ""
+    },
+    "批量回测验证": {
+      "status": "running",
+      "start": "22:31:49",
+      "attempt": 1
+    }
+  },
+  "status": "done",
+  "_heartbeat": "",
+  "_current_task": ""
+}

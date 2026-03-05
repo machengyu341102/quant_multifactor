@@ -327,7 +327,8 @@ class TestAlert:
         # 需要 mock 掉 notifier
         import types
         mock_notifier = types.ModuleType("notifier")
-        mock_notifier.notify_wechat_raw = lambda t, m: alerts.append(t)
+        mock_notifier.notify_alert = lambda level, t, m: alerts.append(t)
+        mock_notifier.LEVEL_CRITICAL = "critical"
         monkeypatch.setitem(sys.modules, "notifier", mock_notifier)
 
         watchdog.alert_if_unhealthy()
@@ -343,7 +344,8 @@ class TestAlert:
         alerts = []
         import types
         mock_notifier = types.ModuleType("notifier")
-        mock_notifier.notify_wechat_raw = lambda t, m: alerts.append(t)
+        mock_notifier.notify_alert = lambda level, t, m: alerts.append(t)
+        mock_notifier.LEVEL_CRITICAL = "critical"
         monkeypatch.setitem(sys.modules, "notifier", mock_notifier)
 
         watchdog.alert_if_unhealthy()

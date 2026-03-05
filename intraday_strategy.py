@@ -461,8 +461,8 @@ def run_auction(top_n=5):
     print(f"  RSI 30-60: {before} → {len(tech_df)}")
 
     before = len(tech_df)
-    tech_df = tech_df[tech_df["volatility"] < 0.45].copy()
-    print(f"  波动率 < 45%: {before} → {len(tech_df)}")
+    tech_df = tech_df[tech_df["volatility"] < 0.55].copy()
+    print(f"  波动率 < 55%: {before} → {len(tech_df)}")
 
     before = len(tech_df)
     tech_df = tech_df[tech_df["pullback_20d"] > -0.25].copy()
@@ -832,8 +832,8 @@ def run_afternoon(top_n=5):
     print(f"  RSI 40-65: {before} → {len(tech_df)}")
 
     before = len(tech_df)
-    tech_df = tech_df[tech_df["volatility"] < 0.45].copy()
-    print(f"  波动率 < 45%: {before} → {len(tech_df)}")
+    tech_df = tech_df[tech_df["volatility"] < 0.55].copy()
+    print(f"  波动率 < 55%: {before} → {len(tech_df)}")
 
     before = len(tech_df)
     tech_df = tech_df[tech_df["ret_3d"] < 0.08].copy()

@@ -1,0 +1,399 @@
+[2026-03-03 23:00:00] quant.batch_backtest INFO: [批量回测] 开始: 11 策略, lookback=180天, grid=10
+[2026-03-03 23:00:00] quant.batch_backtest INFO: [回测] breakout: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-03 23:00:00] quant.batch_backtest INFO: [回测] breakout: 生成 11 组参数 (含baseline)
+[2026-03-03 23:00:00] quant.batch_backtest INFO: [回测] breakout [1/11] baseline
+[2026-03-03 23:04:26] quant.batch_backtest INFO: [回测] breakout [2/11] variant_1
+[2026-03-03 23:08:51] quant.batch_backtest INFO: [回测] breakout [3/11] variant_2
+[2026-03-03 23:13:21] quant.batch_backtest INFO: [回测] breakout [4/11] variant_3
+[2026-03-03 23:17:52] quant.batch_backtest INFO: [回测] breakout [5/11] variant_4
+[2026-03-03 23:22:19] quant.batch_backtest INFO: [回测] breakout [6/11] variant_5
+[2026-03-03 23:26:46] quant.batch_backtest INFO: [回测] breakout [7/11] variant_6
+[2026-03-03 23:31:17] quant.batch_backtest INFO: [回测] breakout [8/11] variant_7
+[2026-03-03 23:35:50] quant.batch_backtest INFO: [回测] breakout [9/11] variant_8
+[2026-03-03 23:40:24] quant.batch_backtest INFO: [回测] breakout [10/11] variant_9
+[2026-03-03 23:45:14] quant.batch_backtest INFO: [回测] breakout [11/11] variant_10
+[2026-03-03 23:49:42] quant.batch_backtest INFO: [回测] breakout 完成: 2982s, baseline胜率66.1% best胜率66.1%
+[2026-03-03 23:49:42] quant.batch_backtest INFO: [回测] auction: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-03 23:49:42] quant.batch_backtest INFO: [回测] auction: 生成 11 组参数 (含baseline)
+[2026-03-03 23:49:42] quant.batch_backtest INFO: [回测] auction [1/11] baseline
+[2026-03-03 23:54:19] quant.batch_backtest INFO: [回测] auction [2/11] variant_1
+[2026-03-03 23:58:44] quant.batch_backtest INFO: [回测] auction [3/11] variant_2
+[2026-03-04 00:03:16] quant.batch_backtest INFO: [回测] auction [4/11] variant_3
+[2026-03-04 00:07:50] quant.batch_backtest INFO: [回测] auction [5/11] variant_4
+[2026-03-04 00:12:20] quant.batch_backtest INFO: [回测] auction [6/11] variant_5
+[2026-03-04 00:16:42] quant.batch_backtest INFO: [回测] auction [7/11] variant_6
+[2026-03-04 00:21:13] quant.batch_backtest INFO: [回测] auction [8/11] variant_7
+[2026-03-04 00:25:42] quant.batch_backtest INFO: [回测] auction [9/11] variant_8
+[2026-03-04 00:30:05] quant.batch_backtest INFO: [回测] auction [10/11] variant_9
+[2026-03-04 00:34:28] quant.batch_backtest INFO: [回测] auction [11/11] variant_10
+[2026-03-04 00:39:00] quant.batch_backtest INFO: [回测] auction 完成: 2958s, baseline胜率67.5% best胜率67.7%
+[2026-03-04 00:39:00] quant.batch_backtest INFO: [回测] afternoon: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 00:39:00] quant.batch_backtest INFO: [回测] afternoon: 生成 11 组参数 (含baseline)
+[2026-03-04 00:39:00] quant.batch_backtest INFO: [回测] afternoon [1/11] baseline
+[2026-03-04 00:43:32] quant.batch_backtest INFO: [回测] afternoon [2/11] variant_1
+[2026-03-04 00:48:04] quant.batch_backtest INFO: [回测] afternoon [3/11] variant_2
+[2026-03-04 00:52:37] quant.batch_backtest INFO: [回测] afternoon [4/11] variant_3
+[2026-03-04 00:57:11] quant.batch_backtest INFO: [回测] afternoon [5/11] variant_4
+[2026-03-04 01:01:45] quant.batch_backtest INFO: [回测] afternoon [6/11] variant_5
+[2026-03-04 01:06:35] quant.batch_backtest INFO: [回测] afternoon [7/11] variant_6
+[2026-03-04 01:11:07] quant.batch_backtest INFO: [回测] afternoon [8/11] variant_7
+[2026-03-04 01:15:41] quant.batch_backtest INFO: [回测] afternoon [9/11] variant_8
+[2026-03-04 01:20:15] quant.batch_backtest INFO: [回测] afternoon [10/11] variant_9
+[2026-03-04 01:24:50] quant.batch_backtest INFO: [回测] afternoon [11/11] variant_10
+[2026-03-04 01:29:23] quant.batch_backtest INFO: [回测] afternoon 完成: 3022s, baseline胜率67.7% best胜率68.1%
+[2026-03-04 01:29:23] quant.batch_backtest INFO: [回测] dip_buy: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 01:29:23] quant.batch_backtest INFO: [回测] dip_buy: 生成 11 组参数 (含baseline)
+[2026-03-04 01:29:23] quant.batch_backtest INFO: [回测] dip_buy [1/11] baseline
+[2026-03-04 01:33:56] quant.batch_backtest INFO: [回测] dip_buy [2/11] variant_1
+[2026-03-04 01:38:29] quant.batch_backtest INFO: [回测] dip_buy [3/11] variant_2
+[2026-03-04 01:43:01] quant.batch_backtest INFO: [回测] dip_buy [4/11] variant_3
+[2026-03-04 01:47:34] quant.batch_backtest INFO: [回测] dip_buy [5/11] variant_4
+[2026-03-04 01:52:08] quant.batch_backtest INFO: [回测] dip_buy [6/11] variant_5
+[2026-03-04 01:56:42] quant.batch_backtest INFO: [回测] dip_buy [7/11] variant_6
+[2026-03-04 02:01:17] quant.batch_backtest INFO: [回测] dip_buy [8/11] variant_7
+[2026-03-04 02:05:50] quant.batch_backtest INFO: [回测] dip_buy [9/11] variant_8
+[2026-03-04 02:10:23] quant.batch_backtest INFO: [回测] dip_buy [10/11] variant_9
+[2026-03-04 02:14:55] quant.batch_backtest INFO: [回测] dip_buy [11/11] variant_10
+[2026-03-04 02:19:28] quant.batch_backtest INFO: [回测] dip_buy 完成: 3006s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 02:19:28] quant.batch_backtest INFO: [回测] consolidation: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 02:19:28] quant.batch_backtest INFO: [回测] consolidation: 生成 11 组参数 (含baseline)
+[2026-03-04 02:19:28] quant.batch_backtest INFO: [回测] consolidation [1/11] baseline
+[2026-03-04 02:24:02] quant.batch_backtest INFO: [回测] consolidation [2/11] variant_1
+[2026-03-04 02:28:37] quant.batch_backtest INFO: [回测] consolidation [3/11] variant_2
+[2026-03-04 02:33:11] quant.batch_backtest INFO: [回测] consolidation [4/11] variant_3
+[2026-03-04 02:37:45] quant.batch_backtest INFO: [回测] consolidation [5/11] variant_4
+[2026-03-04 02:42:17] quant.batch_backtest INFO: [回测] consolidation [6/11] variant_5
+[2026-03-04 02:46:52] quant.batch_backtest INFO: [回测] consolidation [7/11] variant_6
+[2026-03-04 02:51:25] quant.batch_backtest INFO: [回测] consolidation [8/11] variant_7
+[2026-03-04 02:55:57] quant.batch_backtest INFO: [回测] consolidation [9/11] variant_8
+[2026-03-04 03:00:30] quant.batch_backtest INFO: [回测] consolidation [10/11] variant_9
+[2026-03-04 03:05:05] quant.batch_backtest INFO: [回测] consolidation [11/11] variant_10
+[2026-03-04 03:09:38] quant.batch_backtest INFO: [回测] consolidation 完成: 3009s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 03:09:38] quant.batch_backtest INFO: [回测] trend_follow: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 03:09:38] quant.batch_backtest INFO: [回测] trend_follow: 生成 11 组参数 (含baseline)
+[2026-03-04 03:09:38] quant.batch_backtest INFO: [回测] trend_follow [1/11] baseline
+[2026-03-04 03:14:10] quant.batch_backtest INFO: [回测] trend_follow [2/11] variant_1
+[2026-03-04 03:18:42] quant.batch_backtest INFO: [回测] trend_follow [3/11] variant_2
+[2026-03-04 03:23:14] quant.batch_backtest INFO: [回测] trend_follow [4/11] variant_3
+[2026-03-04 03:27:49] quant.batch_backtest INFO: [回测] trend_follow [5/11] variant_4
+[2026-03-04 03:32:22] quant.batch_backtest INFO: [回测] trend_follow [6/11] variant_5
+[2026-03-04 03:36:48] quant.batch_backtest INFO: [回测] trend_follow [7/11] variant_6
+[2026-03-04 03:41:14] quant.batch_backtest INFO: [回测] trend_follow [8/11] variant_7
+[2026-03-04 03:45:44] quant.batch_backtest INFO: [回测] trend_follow [9/11] variant_8
+[2026-03-04 03:50:15] quant.batch_backtest INFO: [回测] trend_follow [10/11] variant_9
+[2026-03-04 03:54:48] quant.batch_backtest INFO: [回测] trend_follow [11/11] variant_10
+[2026-03-04 03:59:22] quant.batch_backtest INFO: [回测] trend_follow 完成: 2985s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 03:59:22] quant.batch_backtest INFO: [回测] sector_rotation: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 03:59:22] quant.batch_backtest INFO: [回测] sector_rotation: 生成 11 组参数 (含baseline)
+[2026-03-04 03:59:22] quant.batch_backtest INFO: [回测] sector_rotation [1/11] baseline
+[2026-03-04 04:03:56] quant.batch_backtest INFO: [回测] sector_rotation [2/11] variant_1
+[2026-03-04 04:08:31] quant.batch_backtest INFO: [回测] sector_rotation [3/11] variant_2
+[2026-03-04 04:13:06] quant.batch_backtest INFO: [回测] sector_rotation [4/11] variant_3
+[2026-03-04 04:17:39] quant.batch_backtest INFO: [回测] sector_rotation [5/11] variant_4
+[2026-03-04 04:22:12] quant.batch_backtest INFO: [回测] sector_rotation [6/11] variant_5
+[2026-03-04 04:26:46] quant.batch_backtest INFO: [回测] sector_rotation [7/11] variant_6
+[2026-03-04 04:31:19] quant.batch_backtest INFO: [回测] sector_rotation [8/11] variant_7
+[2026-03-04 04:35:53] quant.batch_backtest INFO: [回测] sector_rotation [9/11] variant_8
+[2026-03-04 04:40:26] quant.batch_backtest INFO: [回测] sector_rotation [10/11] variant_9
+[2026-03-04 04:45:12] quant.batch_backtest INFO: [回测] sector_rotation [11/11] variant_10
+[2026-03-04 04:49:43] quant.batch_backtest INFO: [回测] sector_rotation 完成: 3021s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 04:49:43] quant.batch_backtest INFO: [回测] news_event: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 04:49:43] quant.batch_backtest INFO: [回测] news_event: 生成 11 组参数 (含baseline)
+[2026-03-04 04:49:43] quant.batch_backtest INFO: [回测] news_event [1/11] baseline
+[2026-03-04 04:54:14] quant.batch_backtest INFO: [回测] news_event [2/11] variant_1
+[2026-03-04 04:58:47] quant.batch_backtest INFO: [回测] news_event [3/11] variant_2
+[2026-03-04 05:03:19] quant.batch_backtest INFO: [回测] news_event [4/11] variant_3
+[2026-03-04 05:07:51] quant.batch_backtest INFO: [回测] news_event [5/11] variant_4
+[2026-03-04 05:12:23] quant.batch_backtest INFO: [回测] news_event [6/11] variant_5
+[2026-03-04 05:16:58] quant.batch_backtest INFO: [回测] news_event [7/11] variant_6
+[2026-03-04 05:21:34] quant.batch_backtest INFO: [回测] news_event [8/11] variant_7
+[2026-03-04 05:26:10] quant.batch_backtest INFO: [回测] news_event [9/11] variant_8
+[2026-03-04 05:30:44] quant.batch_backtest INFO: [回测] news_event [10/11] variant_9
+[2026-03-04 05:35:19] quant.batch_backtest INFO: [回测] news_event [11/11] variant_10
+[2026-03-04 05:39:56] quant.batch_backtest INFO: [回测] news_event 完成: 3012s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 05:39:56] quant.batch_backtest INFO: [回测] futures_trend: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 05:39:56] quant.batch_backtest INFO: [回测] futures_trend: 生成 11 组参数 (含baseline)
+[2026-03-04 05:39:56] quant.batch_backtest INFO: [回测] futures_trend [1/11] baseline
+[2026-03-04 05:44:32] quant.batch_backtest INFO: [回测] futures_trend [2/11] variant_1
+[2026-03-04 05:49:15] quant.batch_backtest INFO: [回测] futures_trend [3/11] variant_2
+[2026-03-04 05:53:50] quant.batch_backtest INFO: [回测] futures_trend [4/11] variant_3
+[2026-03-04 05:58:23] quant.batch_backtest INFO: [回测] futures_trend [5/11] variant_4
+[2026-03-04 06:02:55] quant.batch_backtest INFO: [回测] futures_trend [6/11] variant_5
+[2026-03-04 06:07:28] quant.batch_backtest INFO: [回测] futures_trend [7/11] variant_6
+[2026-03-04 06:12:01] quant.batch_backtest INFO: [回测] futures_trend [8/11] variant_7
+[2026-03-04 06:16:36] quant.batch_backtest INFO: [回测] futures_trend [9/11] variant_8
+[2026-03-04 06:21:12] quant.batch_backtest INFO: [回测] futures_trend [10/11] variant_9
+[2026-03-04 06:25:46] quant.batch_backtest INFO: [回测] futures_trend [11/11] variant_10
+[2026-03-04 06:30:22] quant.batch_backtest INFO: [回测] futures_trend 完成: 3027s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 06:30:22] quant.batch_backtest INFO: [回测] crypto_trend: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 06:30:22] quant.batch_backtest WARNING: [回测] crypto_trend: 无可调参数, 跳过
+[2026-03-04 06:30:22] quant.batch_backtest INFO: [回测] us_stock: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 06:30:22] quant.batch_backtest WARNING: [回测] us_stock: 无可调参数, 跳过
+[2026-03-04 06:30:22] quant.batch_backtest INFO: [批量回测] 全部完成: 450.4分钟, 0 个建议
+[2026-03-04 06:30:34] quant.batch_backtest INFO: [批量回测] 开始: 11 策略, lookback=180天, grid=10
+[2026-03-04 06:30:34] quant.batch_backtest INFO: [回测] breakout: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 06:30:34] quant.batch_backtest INFO: [回测] breakout: 生成 11 组参数 (含baseline)
+[2026-03-04 06:30:34] quant.batch_backtest INFO: [回测] breakout [1/11] baseline
+[2026-03-04 06:35:04] quant.batch_backtest INFO: [回测] breakout [2/11] variant_1
+[2026-03-04 06:39:38] quant.batch_backtest INFO: [回测] breakout [3/11] variant_2
+[2026-03-04 06:44:09] quant.batch_backtest INFO: [回测] breakout [4/11] variant_3
+[2026-03-04 06:48:42] quant.batch_backtest INFO: [回测] breakout [5/11] variant_4
+[2026-03-04 06:53:13] quant.batch_backtest INFO: [回测] breakout [6/11] variant_5
+[2026-03-04 06:57:44] quant.batch_backtest INFO: [回测] breakout [7/11] variant_6
+[2026-03-04 07:02:16] quant.batch_backtest INFO: [回测] breakout [8/11] variant_7
+[2026-03-04 07:06:47] quant.batch_backtest INFO: [回测] breakout [9/11] variant_8
+[2026-03-04 07:11:16] quant.batch_backtest INFO: [回测] breakout [10/11] variant_9
+[2026-03-04 07:15:48] quant.batch_backtest INFO: [回测] breakout [11/11] variant_10
+[2026-03-04 07:20:17] quant.batch_backtest INFO: [回测] breakout 完成: 2984s, baseline胜率66.4% best胜率66.4%
+[2026-03-04 07:20:17] quant.batch_backtest INFO: [回测] auction: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 07:20:17] quant.batch_backtest INFO: [回测] auction: 生成 11 组参数 (含baseline)
+[2026-03-04 07:20:17] quant.batch_backtest INFO: [回测] auction [1/11] baseline
+[2026-03-04 07:24:51] quant.batch_backtest INFO: [回测] auction [2/11] variant_1
+[2026-03-04 07:29:23] quant.batch_backtest INFO: [回测] auction [3/11] variant_2
+[2026-03-04 07:34:29] quant.batch_backtest INFO: [回测] auction [4/11] variant_3
+[2026-03-04 07:40:45] quant.batch_backtest INFO: [回测] auction [5/11] variant_4
+[2026-03-04 07:45:51] quant.batch_backtest INFO: [回测] auction [6/11] variant_5
+[2026-03-04 07:50:32] quant.batch_backtest INFO: [回测] auction [7/11] variant_6
+[2026-03-04 07:55:59] quant.batch_backtest INFO: [回测] auction [8/11] variant_7
+[2026-03-04 08:00:25] quant.batch_backtest INFO: [回测] auction [9/11] variant_8
+[2026-03-04 08:04:49] quant.batch_backtest INFO: [回测] auction [10/11] variant_9
+[2026-03-04 08:10:09] quant.batch_backtest INFO: [回测] auction [11/11] variant_10
+[2026-03-04 08:15:14] quant.batch_backtest INFO: [回测] auction 完成: 3297s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 08:15:14] quant.batch_backtest INFO: [回测] afternoon: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 08:15:14] quant.batch_backtest INFO: [回测] afternoon: 生成 11 组参数 (含baseline)
+[2026-03-04 08:15:14] quant.batch_backtest INFO: [回测] afternoon [1/11] baseline
+[2026-03-04 08:19:46] quant.batch_backtest INFO: [回测] afternoon [2/11] variant_1
+[2026-03-04 08:24:19] quant.batch_backtest INFO: [回测] afternoon [3/11] variant_2
+[2026-03-04 08:28:52] quant.batch_backtest INFO: [回测] afternoon [4/11] variant_3
+[2026-03-04 08:33:27] quant.batch_backtest INFO: [回测] afternoon [5/11] variant_4
+[2026-03-04 08:38:00] quant.batch_backtest INFO: [回测] afternoon [6/11] variant_5
+[2026-03-04 08:42:34] quant.batch_backtest INFO: [回测] afternoon [7/11] variant_6
+[2026-03-04 08:47:08] quant.batch_backtest INFO: [回测] afternoon [8/11] variant_7
+[2026-03-04 08:51:41] quant.batch_backtest INFO: [回测] afternoon [9/11] variant_8
+[2026-03-04 08:56:13] quant.batch_backtest INFO: [回测] afternoon [10/11] variant_9
+[2026-03-04 09:00:44] quant.batch_backtest INFO: [回测] afternoon [11/11] variant_10
+[2026-03-04 09:05:18] quant.batch_backtest INFO: [回测] afternoon 完成: 3004s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 09:05:18] quant.batch_backtest INFO: [回测] dip_buy: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 09:05:18] quant.batch_backtest INFO: [回测] dip_buy: 生成 11 组参数 (含baseline)
+[2026-03-04 09:05:18] quant.batch_backtest INFO: [回测] dip_buy [1/11] baseline
+[2026-03-04 09:09:50] quant.batch_backtest INFO: [回测] dip_buy [2/11] variant_1
+[2026-03-04 09:14:26] quant.batch_backtest INFO: [回测] dip_buy [3/11] variant_2
+[2026-03-04 09:18:56] quant.batch_backtest INFO: [回测] dip_buy [4/11] variant_3
+[2026-03-04 09:23:32] quant.batch_backtest INFO: [回测] dip_buy [5/11] variant_4
+[2026-03-04 09:28:05] quant.batch_backtest INFO: [回测] dip_buy [6/11] variant_5
+[2026-03-04 09:32:48] quant.batch_backtest INFO: [回测] dip_buy [7/11] variant_6
+[2026-03-04 09:37:23] quant.batch_backtest INFO: [回测] dip_buy [8/11] variant_7
+[2026-03-04 09:42:29] quant.batch_backtest INFO: [回测] dip_buy [9/11] variant_8
+[2026-03-04 09:47:03] quant.batch_backtest INFO: [回测] dip_buy [10/11] variant_9
+[2026-03-04 09:51:40] quant.batch_backtest INFO: [回测] dip_buy [11/11] variant_10
+[2026-03-04 09:56:34] quant.batch_backtest INFO: [回测] dip_buy 完成: 3077s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 09:56:34] quant.batch_backtest INFO: [回测] consolidation: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 09:56:34] quant.batch_backtest INFO: [回测] consolidation: 生成 11 组参数 (含baseline)
+[2026-03-04 09:56:34] quant.batch_backtest INFO: [回测] consolidation [1/11] baseline
+[2026-03-04 10:00:59] quant.batch_backtest INFO: [回测] consolidation [2/11] variant_1
+[2026-03-04 10:05:24] quant.batch_backtest INFO: [回测] consolidation [3/11] variant_2
+[2026-03-04 10:09:58] quant.batch_backtest INFO: [回测] consolidation [4/11] variant_3
+[2026-03-04 10:14:28] quant.batch_backtest INFO: [回测] consolidation [5/11] variant_4
+[2026-03-04 10:18:59] quant.batch_backtest INFO: [回测] consolidation [6/11] variant_5
+[2026-03-04 10:23:25] quant.batch_backtest INFO: [回测] consolidation [7/11] variant_6
+[2026-03-04 10:27:55] quant.batch_backtest INFO: [回测] consolidation [8/11] variant_7
+[2026-03-04 10:32:22] quant.batch_backtest INFO: [回测] consolidation [9/11] variant_8
+[2026-03-04 10:36:48] quant.batch_backtest INFO: [回测] consolidation [10/11] variant_9
+[2026-03-04 10:41:23] quant.batch_backtest INFO: [回测] consolidation [11/11] variant_10
+[2026-03-04 10:45:47] quant.batch_backtest INFO: [回测] consolidation 完成: 2953s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 10:45:47] quant.batch_backtest INFO: [回测] trend_follow: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 10:45:47] quant.batch_backtest INFO: [回测] trend_follow: 生成 11 组参数 (含baseline)
+[2026-03-04 10:45:47] quant.batch_backtest INFO: [回测] trend_follow [1/11] baseline
+[2026-03-04 10:50:15] quant.batch_backtest INFO: [回测] trend_follow [2/11] variant_1
+[2026-03-04 10:54:41] quant.batch_backtest INFO: [回测] trend_follow [3/11] variant_2
+[2026-03-04 10:59:07] quant.batch_backtest INFO: [回测] trend_follow [4/11] variant_3
+[2026-03-04 11:03:42] quant.batch_backtest INFO: [回测] trend_follow [5/11] variant_4
+[2026-03-04 11:08:06] quant.batch_backtest INFO: [回测] trend_follow [6/11] variant_5
+[2026-03-04 11:12:32] quant.batch_backtest INFO: [回测] trend_follow [7/11] variant_6
+[2026-03-04 11:17:05] quant.batch_backtest INFO: [回测] trend_follow [8/11] variant_7
+[2026-03-04 11:21:30] quant.batch_backtest INFO: [回测] trend_follow [9/11] variant_8
+[2026-03-04 11:25:56] quant.batch_backtest INFO: [回测] trend_follow [10/11] variant_9
+[2026-03-04 11:30:28] quant.batch_backtest INFO: [回测] trend_follow [11/11] variant_10
+[2026-03-04 11:35:01] quant.batch_backtest INFO: [回测] trend_follow 完成: 2954s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 11:35:01] quant.batch_backtest INFO: [回测] sector_rotation: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 11:35:01] quant.batch_backtest INFO: [回测] sector_rotation: 生成 11 组参数 (含baseline)
+[2026-03-04 11:35:01] quant.batch_backtest INFO: [回测] sector_rotation [1/11] baseline
+[2026-03-04 11:39:34] quant.batch_backtest INFO: [回测] sector_rotation [2/11] variant_1
+[2026-03-04 11:44:08] quant.batch_backtest INFO: [回测] sector_rotation [3/11] variant_2
+[2026-03-04 11:48:42] quant.batch_backtest INFO: [回测] sector_rotation [4/11] variant_3
+[2026-03-04 11:53:17] quant.batch_backtest INFO: [回测] sector_rotation [5/11] variant_4
+[2026-03-04 11:58:27] quant.batch_backtest INFO: [回测] sector_rotation [6/11] variant_5
+[2026-03-04 12:03:36] quant.batch_backtest INFO: [回测] sector_rotation [7/11] variant_6
+[2026-03-04 12:08:13] quant.batch_backtest INFO: [回测] sector_rotation [8/11] variant_7
+[2026-03-04 12:12:49] quant.batch_backtest INFO: [回测] sector_rotation [9/11] variant_8
+[2026-03-04 12:17:22] quant.batch_backtest INFO: [回测] sector_rotation [10/11] variant_9
+[2026-03-04 12:21:57] quant.batch_backtest INFO: [回测] sector_rotation [11/11] variant_10
+[2026-03-04 12:26:39] quant.batch_backtest INFO: [回测] sector_rotation 完成: 3099s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 12:26:39] quant.batch_backtest INFO: [回测] news_event: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 12:26:39] quant.batch_backtest INFO: [回测] news_event: 生成 11 组参数 (含baseline)
+[2026-03-04 12:26:39] quant.batch_backtest INFO: [回测] news_event [1/11] baseline
+[2026-03-04 12:31:21] quant.batch_backtest INFO: [回测] news_event [2/11] variant_1
+[2026-03-04 12:36:02] quant.batch_backtest INFO: [回测] news_event [3/11] variant_2
+[2026-03-04 12:40:40] quant.batch_backtest INFO: [回测] news_event [4/11] variant_3
+[2026-03-04 12:45:21] quant.batch_backtest INFO: [回测] news_event [5/11] variant_4
+[2026-03-04 12:50:00] quant.batch_backtest INFO: [回测] news_event [6/11] variant_5
+[2026-03-04 12:54:40] quant.batch_backtest INFO: [回测] news_event [7/11] variant_6
+[2026-03-04 12:59:20] quant.batch_backtest INFO: [回测] news_event [8/11] variant_7
+[2026-03-04 13:03:57] quant.batch_backtest INFO: [回测] news_event [9/11] variant_8
+[2026-03-04 13:08:41] quant.batch_backtest INFO: [回测] news_event [10/11] variant_9
+[2026-03-04 13:13:15] quant.batch_backtest INFO: [回测] news_event [11/11] variant_10
+[2026-03-04 13:17:41] quant.batch_backtest INFO: [回测] news_event 完成: 3061s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 13:17:41] quant.batch_backtest INFO: [回测] futures_trend: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 13:17:41] quant.batch_backtest INFO: [回测] futures_trend: 生成 11 组参数 (含baseline)
+[2026-03-04 13:17:41] quant.batch_backtest INFO: [回测] futures_trend [1/11] baseline
+[2026-03-04 13:22:06] quant.batch_backtest INFO: [回测] futures_trend [2/11] variant_1
+[2026-03-04 13:26:31] quant.batch_backtest INFO: [回测] futures_trend [3/11] variant_2
+[2026-03-04 13:30:55] quant.batch_backtest INFO: [回测] futures_trend [4/11] variant_3
+[2026-03-04 13:35:16] quant.batch_backtest INFO: [回测] futures_trend [5/11] variant_4
+[2026-03-04 13:39:37] quant.batch_backtest INFO: [回测] futures_trend [6/11] variant_5
+[2026-03-04 13:44:08] quant.batch_backtest INFO: [回测] futures_trend [7/11] variant_6
+[2026-03-04 13:48:32] quant.batch_backtest INFO: [回测] futures_trend [8/11] variant_7
+[2026-03-04 13:52:58] quant.batch_backtest INFO: [回测] futures_trend [9/11] variant_8
+[2026-03-04 13:57:21] quant.batch_backtest INFO: [回测] futures_trend [10/11] variant_9
+[2026-03-04 14:01:42] quant.batch_backtest INFO: [回测] futures_trend [11/11] variant_10
+[2026-03-04 14:06:07] quant.batch_backtest INFO: [回测] futures_trend 完成: 2906s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 14:06:07] quant.batch_backtest INFO: [回测] crypto_trend: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 14:06:07] quant.batch_backtest WARNING: [回测] crypto_trend: 无可调参数, 跳过
+[2026-03-04 14:06:07] quant.batch_backtest INFO: [回测] us_stock: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 14:06:07] quant.batch_backtest WARNING: [回测] us_stock: 无可调参数, 跳过
+[2026-03-04 14:06:07] quant.batch_backtest INFO: [批量回测] 全部完成: 455.6分钟, 0 个建议
+[2026-03-04 14:06:38] quant.batch_backtest INFO: [批量回测] 开始: 11 策略, lookback=180天, grid=10
+[2026-03-04 14:06:38] quant.batch_backtest INFO: [回测] breakout: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 14:06:38] quant.batch_backtest INFO: [回测] breakout: 生成 11 组参数 (含baseline)
+[2026-03-04 14:06:38] quant.batch_backtest INFO: [回测] breakout [1/11] baseline
+[2026-03-04 14:11:04] quant.batch_backtest INFO: [回测] breakout [2/11] variant_1
+[2026-03-04 14:15:43] quant.batch_backtest INFO: [回测] breakout [3/11] variant_2
+[2026-03-04 14:20:22] quant.batch_backtest INFO: [回测] breakout [4/11] variant_3
+[2026-03-04 14:24:52] quant.batch_backtest INFO: [回测] breakout [5/11] variant_4
+[2026-03-04 14:29:25] quant.batch_backtest INFO: [回测] breakout [6/11] variant_5
+[2026-03-04 14:34:08] quant.batch_backtest INFO: [回测] breakout [7/11] variant_6
+[2026-03-04 14:38:44] quant.batch_backtest INFO: [回测] breakout [8/11] variant_7
+[2026-03-04 14:43:17] quant.batch_backtest INFO: [回测] breakout [9/11] variant_8
+[2026-03-04 14:47:50] quant.batch_backtest INFO: [回测] breakout [10/11] variant_9
+[2026-03-04 14:52:34] quant.batch_backtest INFO: [回测] breakout [11/11] variant_10
+[2026-03-04 14:57:11] quant.batch_backtest INFO: [回测] breakout 完成: 3032s, baseline胜率66.4% best胜率66.4%
+[2026-03-04 14:57:11] quant.batch_backtest INFO: [回测] auction: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 14:57:11] quant.batch_backtest INFO: [回测] auction: 生成 11 组参数 (含baseline)
+[2026-03-04 14:57:11] quant.batch_backtest INFO: [回测] auction [1/11] baseline
+[2026-03-04 15:01:49] quant.batch_backtest INFO: [回测] auction [2/11] variant_1
+[2026-03-04 15:06:26] quant.batch_backtest INFO: [回测] auction [3/11] variant_2
+[2026-03-04 15:11:03] quant.batch_backtest INFO: [回测] auction [4/11] variant_3
+[2026-03-04 15:15:38] quant.batch_backtest INFO: [回测] auction [5/11] variant_4
+[2026-03-04 15:20:17] quant.batch_backtest INFO: [回测] auction [6/11] variant_5
+[2026-03-04 15:24:56] quant.batch_backtest INFO: [回测] auction [7/11] variant_6
+[2026-03-04 15:29:39] quant.batch_backtest INFO: [回测] auction [8/11] variant_7
+[2026-03-04 15:34:24] quant.batch_backtest INFO: [回测] auction [9/11] variant_8
+[2026-03-04 15:38:50] quant.batch_backtest INFO: [回测] auction [10/11] variant_9
+[2026-03-04 15:43:27] quant.batch_backtest INFO: [回测] auction [11/11] variant_10
+[2026-03-04 15:48:06] quant.batch_backtest INFO: [回测] auction 完成: 3055s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 15:48:06] quant.batch_backtest INFO: [回测] afternoon: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 15:48:06] quant.batch_backtest INFO: [回测] afternoon: 生成 11 组参数 (含baseline)
+[2026-03-04 15:48:06] quant.batch_backtest INFO: [回测] afternoon [1/11] baseline
+[2026-03-04 15:52:43] quant.batch_backtest INFO: [回测] afternoon [2/11] variant_1
+[2026-03-04 15:57:19] quant.batch_backtest INFO: [回测] afternoon [3/11] variant_2
+[2026-03-04 16:02:09] quant.batch_backtest INFO: [回测] afternoon [4/11] variant_3
+[2026-03-04 16:06:50] quant.batch_backtest INFO: [回测] afternoon [5/11] variant_4
+[2026-03-04 16:11:27] quant.batch_backtest INFO: [回测] afternoon [6/11] variant_5
+[2026-03-04 16:16:10] quant.batch_backtest INFO: [回测] afternoon [7/11] variant_6
+[2026-03-04 16:20:57] quant.batch_backtest INFO: [回测] afternoon [8/11] variant_7
+[2026-03-04 16:25:36] quant.batch_backtest INFO: [回测] afternoon [9/11] variant_8
+[2026-03-04 16:30:36] quant.batch_backtest INFO: [回测] afternoon [10/11] variant_9
+[2026-03-04 16:35:13] quant.batch_backtest INFO: [回测] afternoon [11/11] variant_10
+[2026-03-04 16:39:51] quant.batch_backtest INFO: [回测] afternoon 完成: 3105s, baseline胜率67.7% best胜率67.7%
+[2026-03-04 16:39:51] quant.batch_backtest INFO: [回测] dip_buy: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 16:39:51] quant.batch_backtest INFO: [回测] dip_buy: 生成 11 组参数 (含baseline)
+[2026-03-04 16:39:51] quant.batch_backtest INFO: [回测] dip_buy [1/11] baseline
+[2026-03-04 16:44:29] quant.batch_backtest INFO: [回测] dip_buy [2/11] variant_1
+[2026-03-04 16:49:05] quant.batch_backtest INFO: [回测] dip_buy [3/11] variant_2
+[2026-03-04 16:53:41] quant.batch_backtest INFO: [回测] dip_buy [4/11] variant_3
+[2026-03-04 16:58:19] quant.batch_backtest INFO: [回测] dip_buy [5/11] variant_4
+[2026-03-04 17:02:53] quant.batch_backtest INFO: [回测] dip_buy [6/11] variant_5
+[2026-03-04 17:07:29] quant.batch_backtest INFO: [回测] dip_buy [7/11] variant_6
+[2026-03-04 17:12:10] quant.batch_backtest INFO: [回测] dip_buy [8/11] variant_7
+[2026-03-04 17:16:50] quant.batch_backtest INFO: [回测] dip_buy [9/11] variant_8
+[2026-03-04 17:21:29] quant.batch_backtest INFO: [回测] dip_buy [10/11] variant_9
+[2026-03-04 17:26:09] quant.batch_backtest INFO: [回测] dip_buy [11/11] variant_10
+[2026-03-04 17:30:47] quant.batch_backtest INFO: [回测] dip_buy 完成: 3056s, baseline胜率67.4% best胜率67.5%
+[2026-03-04 17:30:47] quant.batch_backtest INFO: [回测] consolidation: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 17:30:47] quant.batch_backtest INFO: [回测] consolidation: 生成 11 组参数 (含baseline)
+[2026-03-04 17:30:47] quant.batch_backtest INFO: [回测] consolidation [1/11] baseline
+[2026-03-04 17:35:20] quant.batch_backtest INFO: [回测] consolidation [2/11] variant_1
+[2026-03-04 17:39:57] quant.batch_backtest INFO: [回测] consolidation [3/11] variant_2
+[2026-03-04 17:44:37] quant.batch_backtest INFO: [回测] consolidation [4/11] variant_3
+[2026-03-04 17:49:23] quant.batch_backtest INFO: [回测] consolidation [5/11] variant_4
+[2026-03-04 17:54:00] quant.batch_backtest INFO: [回测] consolidation [6/11] variant_5
+[2026-03-04 17:58:38] quant.batch_backtest INFO: [回测] consolidation [7/11] variant_6
+[2026-03-04 18:03:19] quant.batch_backtest INFO: [回测] consolidation [8/11] variant_7
+[2026-03-04 18:07:57] quant.batch_backtest INFO: [回测] consolidation [9/11] variant_8
+[2026-03-04 18:12:31] quant.batch_backtest INFO: [回测] consolidation [10/11] variant_9
+[2026-03-04 18:17:08] quant.batch_backtest INFO: [回测] consolidation [11/11] variant_10
+[2026-03-04 18:22:51] quant.batch_backtest INFO: [回测] consolidation 完成: 3124s, baseline胜率67.5% best胜率67.5%
+[2026-03-04 18:22:51] quant.batch_backtest INFO: [回测] trend_follow: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 18:22:51] quant.batch_backtest INFO: [回测] trend_follow: 生成 11 组参数 (含baseline)
+[2026-03-04 18:22:51] quant.batch_backtest INFO: [回测] trend_follow [1/11] baseline
+[2026-03-04 18:27:51] quant.batch_backtest INFO: [回测] trend_follow [2/11] variant_1
+[2026-03-04 18:32:39] quant.batch_backtest INFO: [回测] trend_follow [3/11] variant_2
+[2026-03-04 18:37:31] quant.batch_backtest INFO: [回测] trend_follow [4/11] variant_3
+[2026-03-04 18:42:31] quant.batch_backtest INFO: [回测] trend_follow [5/11] variant_4
+[2026-03-04 18:47:37] quant.batch_backtest INFO: [回测] trend_follow [6/11] variant_5
+[2026-03-04 18:52:34] quant.batch_backtest INFO: [回测] trend_follow [7/11] variant_6
+[2026-03-04 18:57:31] quant.batch_backtest INFO: [回测] trend_follow [8/11] variant_7
+[2026-03-04 19:02:27] quant.batch_backtest INFO: [回测] trend_follow [9/11] variant_8
+[2026-03-04 19:07:20] quant.batch_backtest INFO: [回测] trend_follow [10/11] variant_9
+[2026-03-04 19:12:14] quant.batch_backtest INFO: [回测] trend_follow [11/11] variant_10
+[2026-03-04 19:17:14] quant.batch_backtest INFO: [回测] trend_follow 完成: 3263s, baseline胜率67.5% best胜率67.5%
+[2026-03-04 19:17:14] quant.batch_backtest INFO: [回测] sector_rotation: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 19:17:14] quant.batch_backtest INFO: [回测] sector_rotation: 生成 11 组参数 (含baseline)
+[2026-03-04 19:17:14] quant.batch_backtest INFO: [回测] sector_rotation [1/11] baseline
+[2026-03-04 19:22:11] quant.batch_backtest INFO: [回测] sector_rotation [2/11] variant_1
+[2026-03-04 19:28:23] quant.batch_backtest INFO: [回测] sector_rotation [3/11] variant_2
+[2026-03-04 19:33:49] quant.batch_backtest INFO: [回测] sector_rotation [4/11] variant_3
+[2026-03-04 19:39:16] quant.batch_backtest INFO: [回测] sector_rotation [5/11] variant_4
+[2026-03-04 19:44:13] quant.batch_backtest INFO: [回测] sector_rotation [6/11] variant_5
+[2026-03-04 19:49:29] quant.batch_backtest INFO: [回测] sector_rotation [7/11] variant_6
+[2026-03-04 19:53:56] quant.batch_backtest INFO: [回测] sector_rotation [8/11] variant_7
+[2026-03-04 19:58:22] quant.batch_backtest INFO: [回测] sector_rotation [9/11] variant_8
+[2026-03-04 20:02:48] quant.batch_backtest INFO: [回测] sector_rotation [10/11] variant_9
+[2026-03-04 20:07:39] quant.batch_backtest INFO: [回测] sector_rotation [11/11] variant_10
+[2026-03-04 20:12:10] quant.batch_backtest INFO: [回测] sector_rotation 完成: 3296s, baseline胜率67.5% best胜率67.5%
+[2026-03-04 20:12:10] quant.batch_backtest INFO: [回测] news_event: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 20:12:10] quant.batch_backtest INFO: [回测] news_event: 生成 11 组参数 (含baseline)
+[2026-03-04 20:12:10] quant.batch_backtest INFO: [回测] news_event [1/11] baseline
+[2026-03-04 20:16:39] quant.batch_backtest INFO: [回测] news_event [2/11] variant_1
+[2026-03-04 20:21:04] quant.batch_backtest INFO: [回测] news_event [3/11] variant_2
+[2026-03-04 20:25:31] quant.batch_backtest INFO: [回测] news_event [4/11] variant_3
+[2026-03-04 20:30:06] quant.batch_backtest INFO: [回测] news_event [5/11] variant_4
+[2026-03-04 20:34:36] quant.batch_backtest INFO: [回测] news_event [6/11] variant_5
+[2026-03-04 20:39:18] quant.batch_backtest INFO: [回测] news_event [7/11] variant_6
+[2026-03-04 20:43:58] quant.batch_backtest INFO: [回测] news_event [8/11] variant_7
+[2026-03-04 20:48:39] quant.batch_backtest INFO: [回测] news_event [9/11] variant_8
+[2026-03-04 20:54:19] quant.batch_backtest INFO: [回测] news_event [10/11] variant_9
+[2026-03-04 20:59:17] quant.batch_backtest INFO: [回测] news_event [11/11] variant_10
+[2026-03-04 21:04:58] quant.batch_backtest INFO: [回测] news_event 完成: 3167s, baseline胜率67.5% best胜率67.5%
+[2026-03-04 21:04:58] quant.batch_backtest INFO: [回测] futures_trend: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 21:04:58] quant.batch_backtest INFO: [回测] futures_trend: 生成 11 组参数 (含baseline)
+[2026-03-04 21:04:58] quant.batch_backtest INFO: [回测] futures_trend [1/11] baseline
+[2026-03-04 21:09:57] quant.batch_backtest INFO: [回测] futures_trend [2/11] variant_1
+[2026-03-04 21:14:56] quant.batch_backtest INFO: [回测] futures_trend [3/11] variant_2
+[2026-03-04 21:19:58] quant.batch_backtest INFO: [回测] futures_trend [4/11] variant_3
+[2026-03-04 22:30:28] quant.batch_backtest INFO: [批量回测] 开始: 11 策略, lookback=180天, grid=10
+[2026-03-04 22:30:28] quant.batch_backtest INFO: [回测] breakout: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 22:30:28] quant.batch_backtest INFO: [回测] breakout: 生成 11 组参数 (含baseline)
+[2026-03-04 22:30:28] quant.batch_backtest INFO: [回测] breakout [1/11] baseline
+[2026-03-04 22:31:49] quant.batch_backtest INFO: [批量回测] 开始: 11 策略, lookback=180天, grid=10
+[2026-03-04 22:31:49] quant.batch_backtest INFO: [回测] breakout: 开始网格搜索 (grid=10, lookback=180天)
+[2026-03-04 22:31:49] quant.batch_backtest INFO: [回测] breakout: 生成 11 组参数 (含baseline)
+[2026-03-04 22:31:49] quant.batch_backtest INFO: [回测] breakout [1/11] baseline
+[2026-03-04 22:35:25] quant.batch_backtest INFO: [回测] breakout [2/11] variant_1
+[2026-03-04 22:36:43] quant.batch_backtest INFO: [回测] breakout [2/11] variant_1
+[2026-03-04 22:40:12] quant.batch_backtest INFO: [回测] breakout [3/11] variant_2
+[2026-03-04 22:41:15] quant.batch_backtest INFO: [回测] breakout [3/11] variant_2
+[2026-03-04 22:44:51] quant.batch_backtest INFO: [回测] breakout [4/11] variant_3
+[2026-03-04 22:45:47] quant.batch_backtest INFO: [回测] breakout [4/11] variant_3
+[2026-03-04 22:49:35] quant.batch_backtest INFO: [回测] breakout [5/11] variant_4
+[2026-03-04 22:50:26] quant.batch_backtest INFO: [回测] breakout [5/11] variant_4

@@ -251,7 +251,7 @@ def update_blacklist():
     # 按股票分组, 按日期排序, 计算连续亏损
     code_records = defaultdict(list)
     for r in records:
-        code_records[r["code"]].append(r)
+        code_records[r.get("code", "")].append(r)
 
     blacklist = safe_load(_BLACKLIST_PATH)
     bl_codes = {b["code"] for b in blacklist if b.get("until", "9999-12-31") >= today_str}

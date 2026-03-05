@@ -16,7 +16,12 @@
 | **OP-06** | `Architecture` | **模块化策略加载器 (解耦)** | 重构 `scheduler.py` 核心，实现策略动态注册。允许通过 `strategies.json` 动态增减策略，无需修改调度器主逻辑。 | 💎 已核准 | Gemini |
 | **OP-07** | `Performance` | **核心数据向 SQLite 迁移** | 引入 SQLite (WAL 模式)，将高频变动的 `scorecard.json` 和 `conflict_audit.json` 迁移至数据库。保留 JSON 仅用于配置。 | 💎 已核准 | Gemini |
 | **OP-08** | `Risk` | **凯利准则与组合优化** | 在 `portfolio_risk.py` 中引入凯利准则动态调整单笔仓位，并根据策略相关性矩阵进行组合层面的风险平价 (Risk Parity) 优化。 | 💎 已核准 | Gemini |
-| **OP-09** | `Observability` | **智能体轻量仪表盘** | 基于 FastAPI 实现一个极简的 Web Dashboard，实时可视化展示大盘评分、Agent 决策链路、活跃策略热力图及系统实时回撤情况。 | 💎 已核准 | Gemini |
+| **0P-09** | `Observability` | **智能体轻量仪表盘** | 基于 FastAPI 实现一个极简的 Web Dashboard，实时可视化展示大盘评分、Agent 决策链路、活跃策略热力图及系统实时回撤情况。 | 💎 已核准 | Gemini |
+| **OP-10** | `BugFix` | **SQLite 查询防御性重构** | 修复 `NoneType has no attribute 'items'` 崩溃。在 `db_store.py` 和 `agent_brain.py` 的所有数据库查询点增加严格的空值校验和默认字典。 | 💎 已核准 | Gemini |
+| **OP-11** | `Resilience` | **动态 API 源负载均衡** | 在 `api_guard.py` 中引入源优先级与自动切换机制。当默认源（新浪/东财）连接失败时，自动降级至备用源（腾讯/网易），提升系统在极端行情下的稳健性。 | 💎 已核准 | Gemini |
+| **OP-12** | `APP-Backend` | **SaaS 化 API 底座改造** | 【暂缓】将 `dashboard.py` 升级为具备 JWT 鉴权和 WebSocket 推送的标准服务。 | ⏸ 暂停 | Gemini |
+| **OP-13** | `Notification` | **企业微信应用消息集成** | 企业微信应用消息双向通信: 系统→用户推送(Markdown/文本) + 用户→系统命令(查询/操作/AI对话)。替换ServerChan为主通道。 | 💎 已核准 | Gemini |
+
 
 ---
 *最后更新: 2026-03-03 (Gemini 最终审计完成)*
@@ -152,5 +157,93 @@
 | **EX-03** | `ML` | **因子重要性排名 API** — ML 模型 feature_importance 通过 Dashboard 可视化, 辅助因子生命周期决策 | ✅ 已完成 |
 | **EX-04** | `Dashboard` | **纸盘模拟交易面板** — Dashboard 增加纸盘持仓/交易记录/权益曲线/7天统计 | ✅ 已完成 |
 
+| **EX-05** | `Reliability` | **信号闭环修复** — signal_tracker读SQLite, scorecard评分改T-2+15:35, K线/行情双源不走断路器 | ✅ 已完成 |
+| **EX-06** | `Agent` | **盘中自动诊断** — stock_analyst 10:00/13:00 自动诊断持仓+推荐, 异常推送微信 | ✅ 已完成 |
+| **EX-07** | `Agent` | **stock_analyzer 实时化** — 注入盘中实时价到K线, 技术指标反映最新状态; K线/行情双源备选 | ✅ 已完成 |
+
 ---
 *最后更新: 2026-03-04*
+
+## 10. EX-05~07 完成说明 (Claude Code)
+
+**EX-05 信号闭环修复 (4个断点):**
+- `signal_tracker.ingest_from_journal()` — 改为先读 SQLite `load_trade_journal(days=7)`, monkeypatch检测回退JSON
+- `scorecard.score_yesterday()` — 改为评 T-2 推荐(用 T-1 完整OHLC), 确保数据可用
+- `scheduler.py` scorecard 调度 — 09:20 → 15:35 (收盘后数据完整)
+- `signal_tracker._fetch_stock_close()` — 腾讯+东财双源直接调用, 不走共享断路器
+- 验证结果: 3条信号成功验证 (FU +9.01%, XLF -0.18%, 正丹股份 +0.05%), scorecard新增3条实盘数据
+
+**EX-06 盘中自动诊断:**
+- `scheduler.py` 新增 `job_stock_diagnosis()` — 10:00/13:00 自动运行
+- 诊断范围: 当前持仓 + 今日推荐 + 昨日推荐 (从positions.json + trade_journal SQLite)
+- 告警条件: 评分≤0.40 / 信号看空 / 动量≤0.30 / 量价≤0.30
+- 触发告警自动推送微信 (含代码/现价/评分/止损位/原因)
+- 首次运行: 28只诊断, 1只告警(吉林化纤0.39)已推送
+
+**EX-07 stock_analyzer 实时化:**
+- `_fetch_klines()` — 腾讯优先+东财备选, 不走共享断路器
+- `_fetch_realtime()` — 东财优先+新浪备选
+- `analyze_stock()` — 实时价注入closes/klines末尾再算指标 (RSI/MACD/布林/ATR全反映盘中最新)
+- 修复前/后对比: RSI 79.5→58.2, 位置 0.25→0.50, 量价 0.60→0.40(暴露背离)
+
+**全量 637 tests passed, 0 failed.**
+
+## 11. OP-10 完成说明 (Claude Code)
+
+**OP-10 SQLite 查询防御性重构 (10个崩溃点):**
+- `agent_brain.py:486` — `check_portfolio_risk()` 返回None时 `.get()` 崩溃 → 加 `if result` 守卫
+- `agent_brain.py:504` — `info["total"]` KeyError → 改为 `info.get("total", 0)`
+- `scorecard.py:181-184` — `r["rec_date"]` 等直接下标 → 改为 `.get()` 安全访问
+- `scorecard.py:510` — `best['code']`/`worst['code']` → 改为 `.get('code', '')`
+- `risk_manager.py:254` — `r["code"]` → `.get("code", "")`
+- `signal_tracker.py:234` — `sig['date']|sig['strategy']|sig['code']` → `.get()` 全覆盖
+- `signal_tracker.py:437` — `s["date"]` → `s.get("date", "")`
+- `auto_optimizer.py:124,477` — `safe_load()` 无default → 加 `default=[]` + `(records or [])`
+- `db_store.py:222,396,402,454,486-488` — `fetchone()[0]` → `(fetchone() or (0,))[0]` 防御
+
+**全量 637 tests passed, 0 failed.**
+
+## 12. OP-11 完成说明 (Claude Code)
+
+**OP-11 动态 API 源负载均衡:**
+- `api_guard.py` 新增:
+  - 11个标准源标识常量 (SOURCE_TENCENT_KLINE, SOURCE_EM_KLINE, SOURCE_EM_SPOT, SOURCE_EM_MISC, SOURCE_SINA_HTTP, SOURCE_SINA_FUTURES, SOURCE_SINA_CALENDAR, SOURCE_AKSHARE_POOL, SOURCE_BINANCE, SOURCE_YFINANCE, SOURCE_TUSHARE)
+  - `SourceHealth` 类 — 每源独立健康追踪 (调用数/成功率/平均延迟/EMA)
+  - `smart_source(sources)` — 优先级自动切换, 跳过已熔断源, 自动降级备用源
+  - `get_source_health()` — 导出全部源健康数据 (供 Dashboard/CLI)
+  - `guarded_call` 增加源健康记录 (`_source_health.record_call()`)
+- **拆分共享断路器**: 旧 `"akshare"` 单一键 → 按逻辑端点独立断路器
+  - 腾讯K线/东财K线/东财快照/东财杂项/新浪HTTP/新浪期货/CSI成分股 各自独立
+  - 东财挂了不再阻断腾讯K线 (核心bug修复)
+- **已接入模块**:
+  - `stock_analyzer.py` — `_fetch_klines()` 和 `_fetch_realtime()` 改用 `smart_source`
+  - `signal_tracker.py` — `_fetch_stock_close()`, `_fetch_crypto_close()`, `_fetch_us_close()`, `_fetch_futures_close()` 全部接入
+  - `scorecard.py` — `_fetch_next_day_ohlc()` 改用双源 `smart_source`
+  - `cached_pool()` — 源键改为 `SOURCE_AKSHARE_POOL`
+- **可观测性**: Dashboard `/api/source_health` + CLI `scheduler.py sources`
+
+**全量 637 tests passed, 0 failed.**
+
+## 13. OP-13 完成说明 (Claude Code)
+
+**OP-13 企业微信应用消息集成 (双向通信):**
+- **推送通道** (`notifier.py`):
+  - 三级降级: 企业微信应用消息 → 群机器人Webhook → ServerChan
+  - `_get_access_token()` — 自动缓存+刷新 (7200s TTL)
+  - `_wecom_app_send()` — Markdown/文本推送, token过期自动重试
+  - `_wecom_app_send_to()` — 指定用户定向推送
+  - `_send_push()` — 统一入口, 所有17个调用点无需改动
+- **回调验证** (`wecom_crypto.py` + `dashboard.py`):
+  - AES-CBC 加解密 + SHA1 签名验证
+  - GET `/wecom_callback` — 回调URL验证 (解密echostr返回明文)
+  - cloudflared 隧道穿透到本地 dashboard
+- **微信对话** (`dashboard.py`):
+  - POST `/wecom_callback` — 接收用户消息, 解密后处理
+  - 模糊匹配命令: 状态/持仓/今日/收益/风险/健康
+  - 操作命令: 跑策略/早报/晚报/诊断{code}/优化 (异步执行+推送结果)
+  - 未匹配 → AI对话 (需ANTHROPIC_API_KEY) → 友好提示
+- **配置** (`config.py`):
+  - WECOM_CORP_ID / WECOM_AGENT_ID / WECOM_SECRET
+  - 可信IP已配置, 应用可见范围已设为仅管理员
+
+**全量 637 tests passed, 0 failed.**

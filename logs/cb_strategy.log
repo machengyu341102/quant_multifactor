@@ -1,0 +1,27 @@
+[2026-03-04 22:55:01] quant.cb_strategy INFO: [可转债] 开始扫描...
+[2026-03-04 22:55:03] quant.cb_strategy INFO: [可转债] 获取 387 只转债行情
+[2026-03-04 22:55:03] quant.cb_strategy ERROR: [可转债] 缺少必要列: price, 实际列: ['code', 'name', 'trade', 'pricechange', 'changepercent', 'buy', 'sell', 'settlement', 'open', 'high', 'low', 'volume', 'amount', 'code', 'ticktime']
+[2026-03-04 22:55:25] quant.cb_strategy INFO: [可转债] 开始扫描...
+[2026-03-04 22:55:26] quant.cb_strategy INFO: [可转债] 获取 387 只转债行情
+[2026-03-04 22:55:38] quant.cb_strategy INFO: [可转债] 过滤后剩余 231 只
+[2026-03-04 22:55:38] quant.cb_strategy INFO: [可转债] 推荐 10 只: 百川转2, 宏柏转债, 天壕转债, 锡振转债, 声迅转债, 东时转债, 耐普转02, 双良转债, 金05转债, 锦浪转02
+[2026-03-05 10:45:38] quant.cb_strategy INFO: [可转债] 开始扫描...
+[2026-03-05 10:45:38] quant.cb_strategy ERROR: [可转债] 获取行情失败: API断路器已熔断: akshare (状态=open)
+[2026-03-05 10:45:38] quant.cb_strategy INFO: [可转债] 开始扫描...
+[2026-03-05 10:45:38] quant.cb_strategy ERROR: [可转债] 获取行情失败: API断路器已熔断: akshare (状态=open)
+[2026-03-05 11:13:43] quant.cb_strategy INFO: [可转债] 开始扫描...
+[2026-03-05 11:13:44] quant.cb_strategy INFO: [可转债] 获取 387 只转债行情
+[2026-03-05 11:13:48] quant.cb_strategy INFO: [可转债] 过滤后剩余 73 只
+[2026-03-05 11:13:48] quant.cb_strategy INFO: [可转债] 推荐 3 只: 泰坦转债, 永吉转债, 恒逸转债
+[2026-03-05 11:13:48] quant.cb_strategy INFO: [可转债] 开始扫描...
+[2026-03-05 11:13:49] quant.cb_strategy INFO: [可转债] 获取 387 只转债行情
+[2026-03-05 11:14:03] quant.cb_strategy INFO: [可转债] 过滤后剩余 121 只
+[2026-03-05 11:14:03] quant.cb_strategy INFO: [可转债] 推荐 3 只: 泰坦转债, 永吉转债, 恒逸转债
+[2026-03-05 11:58:58] quant.cb_strategy INFO: [可转债] 开始扫描...
+[2026-03-05 11:58:58] quant.cb_strategy INFO: [可转债] 获取 387 只转债行情
+[2026-03-05 11:59:10] quant.cb_strategy INFO: [可转债] 过滤后剩余 125 只
+[2026-03-05 11:59:10] quant.cb_strategy INFO: [可转债] 推荐 3 只: 泰坦转债, 恒逸转债, 天壕转债
+[2026-03-05 11:59:10] quant.cb_strategy INFO: [可转债] 开始扫描...
+[2026-03-05 11:59:11] quant.cb_strategy INFO: [可转债] 获取 387 只转债行情
+[2026-03-05 11:59:24] quant.cb_strategy INFO: [可转债] 过滤后剩余 125 只
+[2026-03-05 11:59:24] quant.cb_strategy INFO: [可转债] 推荐 3 只: 泰坦转债, 恒逸转债, 天壕转债

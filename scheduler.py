@@ -65,6 +65,28 @@ from log_config import get_logger
 logger = get_logger("scheduler")
 
 # ================================================================
+#  Dashboard 实时推送 (HTTP → WebSocket)
+# ================================================================
+
+_DASHBOARD_URL = "http://127.0.0.1:8501/api/push_event"
+
+
+def _push_dashboard_event(event_type: str, payload: dict):
+    """向 Dashboard 推送事件 (非阻塞, 失败静默)"""
+    import urllib.request
+    import json as _json
+    try:
+        req = urllib.request.Request(
+            _DASHBOARD_URL,
+            data=_json.dumps({"type": event_type, "payload": payload}).encode(),
+            headers={"Content-Type": "application/json"},
+        )
+        urllib.request.urlopen(req, timeout=2)
+    except Exception:
+        pass
+
+
+# ================================================================
 #  批量推送缓冲区
 # ================================================================
 _batch_buffer = {
@@ -78,13 +100,10 @@ SCHEDULE_MONITOR = ["10:30", "11:15", "13:30", "14:50"]
 
 
 def _notify_zero_result(time_slot: str, strategies: str):
-    """推送零产出通知 — 没结果也必须回响"""
+    """零产出 → 简短心跳, 不发长篇空表格"""
     try:
-        from notifier import notify_wechat_raw
-        notify_wechat_raw(
-            f"[{time_slot}] 本轮无推荐",
-            f"涉及策略: {strategies}\n所有策略均未筛出符合条件的标的, 系统运行正常。",
-        )
+        from notifier import notify_alert, LEVEL_INFO
+        notify_alert(LEVEL_INFO, f"{time_slot} 心跳", f"策略正常运行, 本轮无推荐")
     except Exception as e:
         logger.warning("零产出通知失败: %s", e)
 
@@ -185,6 +204,13 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
             items = strategy_func(top_n=TOP_N)
             elapsed = time.time() - t0
 
+            # 先记录原始推荐到 trade_journal (风控过滤前, 确保不遗漏)
+            try:
+                from learning_engine import record_trade_context
+                record_trade_context(strategy_name, items or [])
+            except Exception:
+                pass
+
             # 风控过滤
             try:
                 from risk_manager import filter_recommendations
@@ -230,6 +256,19 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
             except Exception:
                 pass
 
+            # 推送 Dashboard 实时事件
+            try:
+                _push_dashboard_event("strategy_complete", {
+                    "strategy": strategy_name,
+                    "count": len(items) if items else 0,
+                    "elapsed": round(elapsed, 1),
+                    "picks": [{"code": it.get("code"), "name": it.get("name"),
+                               "score": round(it.get("score", 0), 3)}
+                              for it in (items or [])[:5]],
+                })
+            except Exception:
+                pass
+
             return items
 
         except Exception as e:
@@ -244,6 +283,14 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
                 try:
                     from watchdog import update_strategy_status
                     update_strategy_status(strategy_name, "failed", error_msg=str(e))
+                except Exception:
+                    pass
+                # 推送 Dashboard 失败事件
+                try:
+                    _push_dashboard_event("strategy_failed", {
+                        "strategy": strategy_name,
+                        "error": str(e)[:200],
+                    })
                 except Exception:
                     pass
                 # 发射失败事件到事件总线
@@ -864,9 +911,9 @@ def job_var_risk():
         if rating == "high":
             try:
                 from var_risk import generate_var_report
-                from notifier import notify_wechat_raw
+                from notifier import notify_alert, LEVEL_CRITICAL
                 report = generate_var_report(result)
-                notify_wechat_raw("高风险告警", report)
+                notify_alert(LEVEL_CRITICAL, "高风险告警", report)
             except Exception:
                 pass
     except Exception as e:
@@ -924,6 +971,121 @@ def job_factor_lifecycle():
             print(f"[因子生命周期] {r.get('strategy')}: {r.get('factor')} → {r.get('action')}")
     except Exception as e:
         print(f"[因子生命周期异常] {e}")
+
+
+def job_stock_diagnosis():
+    """10:00/13:00 盘中自动诊断: 持仓+今日推荐, 异常推送微信"""
+    if not is_trading_day():
+        return
+    try:
+        from position_manager import load_positions
+        from stock_analyzer import analyze_stock
+        from db_store import load_trade_journal
+        from notifier import notify_wechat_raw
+        from datetime import date as _date
+
+        today_str = _date.today().isoformat()
+
+        # 收集需要诊断的代码: 持仓 + 今日推荐
+        codes_to_check = {}  # code -> source
+
+        # 1) 持仓
+        try:
+            positions = load_positions()
+            holding = [p for p in positions if not p.get("exit_date")]
+            for p in holding:
+                codes_to_check[p["code"]] = f"持仓({p.get('strategy', '')})"
+        except Exception:
+            pass
+
+        # 2) 今日推荐 (从 trade_journal)
+        try:
+            journal = load_trade_journal(days=0)
+            for entry in journal:
+                if entry.get("date") == today_str:
+                    for pick in entry.get("picks", []):
+                        code = pick.get("code", "")
+                        if code and len(code) == 6:  # 只诊断A股
+                            codes_to_check.setdefault(code, f"推荐({entry.get('strategy', '')})")
+        except Exception:
+            pass
+
+        # 3) 昨日推荐也跟踪
+        try:
+            journal_2d = load_trade_journal(days=1)
+            for entry in journal_2d:
+                if entry.get("date") != today_str:
+                    for pick in entry.get("picks", []):
+                        code = pick.get("code", "")
+                        if code and len(code) == 6:
+                            codes_to_check.setdefault(code, f"昨推({entry.get('strategy', '')})")
+        except Exception:
+            pass
+
+        if not codes_to_check:
+            print("[诊断] 无持仓/推荐, 跳过")
+            return
+
+        print(f"[诊断] 开始诊断 {len(codes_to_check)} 只...")
+        alerts = []  # 需要告警的
+
+        for code, source in codes_to_check.items():
+            try:
+                result = analyze_stock(code)
+                if "error" in result:
+                    continue
+
+                name = result.get("name", code)
+                price = result.get("price", 0)
+                total = result.get("total_score", 0.5)
+                verdict = result.get("verdict", "")
+                stop_loss = result.get("stop_loss", 0)
+                scores = result.get("scores", {})
+
+                # 告警条件: 看空 / 跌破止损 / 动量极弱
+                alert_reasons = []
+                if total <= 0.40:
+                    alert_reasons.append(f"评分{total:.2f}偏低")
+                if result.get("direction") == "bearish":
+                    alert_reasons.append("信号看空")
+                if scores.get("momentum", 0.5) <= 0.30:
+                    alert_reasons.append(f"动量极弱({scores['momentum']:.2f})")
+                if scores.get("volume", 0.5) <= 0.30:
+                    alert_reasons.append(f"量价异常({scores['volume']:.2f})")
+
+                status = "正常" if not alert_reasons else "⚠告警"
+                print(f"  {code}({name}) [{source}] {total:.2f} {verdict} {status}")
+
+                if alert_reasons:
+                    alerts.append({
+                        "code": code, "name": name, "source": source,
+                        "price": price, "total": total, "verdict": verdict,
+                        "stop_loss": stop_loss, "reasons": alert_reasons,
+                        "report": result.get("report_text", ""),
+                    })
+            except Exception as e:
+                print(f"  {code} 诊断失败: {e}")
+
+        # 有告警就推送微信
+        if alerts:
+            lines = [f"盘中诊断告警 ({len(alerts)}只异常)\n"]
+            for a in alerts:
+                lines.append(
+                    f"⚠ {a['name']}({a['code']}) [{a['source']}]\n"
+                    f"  现价{a['price']:.2f} 评分{a['total']:.2f} {a['verdict']}\n"
+                    f"  止损位: {a['stop_loss']}\n"
+                    f"  原因: {', '.join(a['reasons'])}\n"
+                )
+            from notifier import notify_alert, LEVEL_WARNING
+            notify_alert(LEVEL_WARNING, "盘中诊断告警", "\n".join(lines))
+            print(f"[诊断] {len(alerts)} 只告警已推送微信")
+        else:
+            print(f"[诊断] {len(codes_to_check)} 只全部正常")
+
+    except Exception as e:
+        print(f"[诊断异常] {e}")
+        import traceback
+        traceback.print_exc()
 
 
 def job_paper_monitor():
@@ -1083,7 +1245,7 @@ def setup_schedule():
     print(f"  策略加载器: {n_strategies} 个策略已从 strategies.json 动态注册")
 
     # 3 个批量推送
-    schedule.every().day.at("09:35").do(job_batch_morning)
+    schedule.every().day.at("09:26").do(job_batch_morning)
     schedule.every().day.at("10:30").do(job_batch_midday)
     schedule.every().day.at("14:50").do(job_batch_afternoon)
 
@@ -1092,7 +1254,7 @@ def setup_schedule():
         schedule.every().day.at(t).do(job_monitor)
 
     # 每日评分 + 黑名单更新
-    schedule.every().day.at("09:20").do(job_scorecard)
+    schedule.every().day.at("15:35").do(job_scorecard)
 
     # 每周周报 (周五 15:30)
     schedule.every().friday.at("15:30").do(job_weekly_report)
@@ -1104,6 +1266,10 @@ def setup_schedule():
     schedule.every().day.at("16:10").do(job_var_risk)
     schedule.every().day.at("16:30").do(job_learning)
     schedule.every().day.at("17:10").do(job_ml_train)
+
+    # 盘中自动诊断 (持仓+推荐 实时复诊)
+    schedule.every().day.at("10:00").do(job_stock_diagnosis)
+    schedule.every().day.at("13:00").do(job_stock_diagnosis)
 
     # 纸盘模拟交易
     schedule.every().day.at("11:00").do(job_paper_monitor)
@@ -1183,10 +1349,13 @@ def _start_self_watchdog(interval: int = 300):
     import threading
 
     def _watchdog_loop():
+        _last_alert_task = None   # 上次告警的任务名
+        _last_alert_time = 0.0    # 上次告警时间戳
+        _ALERT_COOLDOWN = 3600    # 同一任务1小时内只报一次
+
         while True:
             time.sleep(interval)
             try:
-                # 检查夜班是否卡死
                 night_log_path = os.path.join(
                     os.path.dirname(os.path.abspath(__file__)),
                     "night_shift_log.json")
@@ -1201,13 +1370,19 @@ def _start_self_watchdog(interval: int = 300):
                             age = (_dt.now() - last).total_seconds()
                             task = night_log.get("_current_task", "?")
                             if age > 900:  # 15 分钟无心跳
+                                # 冷却: 同一任务1小时内只告警一次
+                                now_ts = time.time()
+                                if task == _last_alert_task and (now_ts - _last_alert_time) < _ALERT_COOLDOWN:
+                                    continue
+                                _last_alert_task = task
+                                _last_alert_time = now_ts
                                 msg = (f"夜班疑似卡死!\n"
                                        f"当前任务: {task}\n"
                                        f"最后心跳: {hb} ({age/60:.0f}分钟前)")
                                 print(f"[自监控] {msg}")
                                 try:
-                                    from notifier import notify_wechat_raw
-                                    notify_wechat_raw("夜班卡死告警", msg)
+                                    from notifier import notify_alert, LEVEL_CRITICAL
+                                    notify_alert(LEVEL_CRITICAL, "夜班卡死告警", msg)
                                 except Exception:
                                     pass
                         except ValueError:
@@ -1247,6 +1422,27 @@ def run_daemon():
 
     print(f"\n调度器已启动, 每 30 秒检查一次...")
     print("caffeinate 已自动启动, 无需手动加\n")
+
+    # 启动时立即更新心跳 (避免 watchdog 误报)
+    try:
+        from watchdog import update_heartbeat
+        update_heartbeat()
+    except Exception:
+        pass
+
+    # 清理遗留的夜班 "running" 状态 (防止重启后自监控误报卡死)
+    try:
+        from json_store import safe_load, safe_save
+        _night_log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "night_shift_log.json")
+        _nl = safe_load(_night_log_path, default={})
+        if _nl.get("status") == "running":
+            _nl["status"] = "interrupted"
+            _nl["_heartbeat"] = ""
+            _nl["_current_task"] = ""
+            safe_save(_night_log_path, _nl)
+            print("  清理遗留夜班状态: running → interrupted")
+    except Exception:
+        pass
 
     # 心跳独立线程: 不受策略执行阻塞影响
     import threading
@@ -1354,6 +1550,26 @@ if __name__ == "__main__":
         job_signal_tracker()
     elif mode == "status":
         _show_system_status()
+    elif mode == "sources":
+        from api_guard import get_source_health, get_api_stats
+        health = get_source_health()
+        stats = get_api_stats()
+        print("=" * 60)
+        print("  API 源健康状态")
+        print("=" * 60)
+        if health:
+            print(f"{'源':<20} {'成功率':>8} {'延迟ms':>8} {'调用数':>6} {'断路器':>10}")
+            print("-" * 60)
+            for src, d in sorted(health.items()):
+                rate_str = f"{d['success_rate']*100:.0f}%"
+                print(f"{src:<20} {rate_str:>8} {d['avg_ms']:>8.0f} {d['calls']:>6} {d['circuit']:>10}")
+        else:
+            print("  (暂无数据, 需要运行策略后才有)")
+        print(f"\n全局统计: 总调用={stats.get('total_calls',0)} "
+              f"缓存命中={stats.get('cache_hits',0)} "
+              f"重试={stats.get('retries',0)} "
+              f"限流={stats.get('rate_limited',0)} "
+              f"错误={stats.get('errors',0)}")
     elif mode.startswith("analyze"):
         # python3 scheduler.py analyze 002221 [--push] [--journal]
         codes_arg = sys.argv[2] if len(sys.argv) > 2 else ""
@@ -1408,4 +1624,5 @@ if __name__ == "__main__":
         print("  python3 scheduler.py signals     # 信号追踪 (入库+验证)")
         print("  python3 scheduler.py status      # 系统状态面板")
         print("  python3 scheduler.py analyze 002221  # 个股诊断")
+        print("  python3 scheduler.py sources     # API源健康状态")
         sys.exit(1)

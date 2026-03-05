@@ -1577,3 +1577,621 @@
 [2026-03-03 22:00:02] quant.position DEBUG: 跳过非A股代码: {'XLF', 'CF', 'RU', 'FU', 'IM', 'BU'}
 [2026-03-03 22:01:04] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
 [2026-03-03 22:01:04] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 22:05:07] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'BU', 'IM', 'CF', 'FU'}
+[2026-03-03 22:05:45] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'BU', 'IM', 'CF', 'FU'}
+[2026-03-03 22:06:09] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'BU', 'IM', 'CF', 'FU'}
+[2026-03-03 22:06:10] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'BU', 'IM', 'CF', 'FU'}
+[2026-03-03 22:06:10] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'BU', 'IM', 'CF', 'FU'}
+[2026-03-03 22:06:10] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'BU', 'IM', 'CF', 'FU'}
+[2026-03-03 22:06:10] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'BU', 'IM', 'CF', 'FU'}
+[2026-03-03 22:06:11] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'BU', 'IM', 'CF', 'FU'}
+[2026-03-03 22:06:11] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'BU', 'IM', 'CF', 'FU'}
+[2026-03-03 22:06:11] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'BU', 'IM', 'CF', 'FU'}
+[2026-03-03 22:06:41] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 22:06:41] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 22:11:22] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'IM', 'RU'}
+[2026-03-03 22:11:57] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'IM', 'RU'}
+[2026-03-03 22:12:21] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'IM', 'RU'}
+[2026-03-03 22:12:22] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'IM', 'RU'}
+[2026-03-03 22:12:22] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'IM', 'RU'}
+[2026-03-03 22:12:22] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'IM', 'RU'}
+[2026-03-03 22:12:22] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'IM', 'RU'}
+[2026-03-03 22:12:23] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'IM', 'RU'}
+[2026-03-03 22:12:23] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'IM', 'RU'}
+[2026-03-03 22:12:23] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'IM', 'RU'}
+[2026-03-03 22:12:42] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 22:12:42] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 22:16:49] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'BU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:17:25] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'BU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:17:49] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'BU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:17:50] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'BU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:17:50] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'BU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:17:50] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'BU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:17:51] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'BU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:17:51] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'BU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:17:51] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'BU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:17:51] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'BU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:18:14] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 22:18:14] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 22:22:14] quant.position DEBUG: 跳过非A股代码: {'BU', 'IM', 'FU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:22:49] quant.position DEBUG: 跳过非A股代码: {'BU', 'IM', 'FU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:23:13] quant.position DEBUG: 跳过非A股代码: {'BU', 'IM', 'FU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:23:13] quant.position DEBUG: 跳过非A股代码: {'BU', 'IM', 'FU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:23:14] quant.position DEBUG: 跳过非A股代码: {'BU', 'IM', 'FU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:23:14] quant.position DEBUG: 跳过非A股代码: {'BU', 'IM', 'FU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:23:14] quant.position DEBUG: 跳过非A股代码: {'BU', 'IM', 'FU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:23:14] quant.position DEBUG: 跳过非A股代码: {'BU', 'IM', 'FU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:23:15] quant.position DEBUG: 跳过非A股代码: {'BU', 'IM', 'FU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:23:15] quant.position DEBUG: 跳过非A股代码: {'BU', 'IM', 'FU', 'RU', 'XLF', 'CF'}
+[2026-03-03 22:23:40] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 22:23:40] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 22:31:51] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'FU', 'IM', 'XLF', 'RU'}
+[2026-03-03 22:32:27] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'FU', 'IM', 'XLF', 'RU'}
+[2026-03-03 22:32:51] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'FU', 'IM', 'XLF', 'RU'}
+[2026-03-03 22:32:52] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'FU', 'IM', 'XLF', 'RU'}
+[2026-03-03 22:32:52] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'FU', 'IM', 'XLF', 'RU'}
+[2026-03-03 22:32:52] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'FU', 'IM', 'XLF', 'RU'}
+[2026-03-03 22:32:53] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'FU', 'IM', 'XLF', 'RU'}
+[2026-03-03 22:32:53] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'FU', 'IM', 'XLF', 'RU'}
+[2026-03-03 22:32:53] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'FU', 'IM', 'XLF', 'RU'}
+[2026-03-03 22:32:53] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'FU', 'IM', 'XLF', 'RU'}
+[2026-03-03 22:33:20] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 22:33:20] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 22:37:39] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'CF', 'BU', 'XLF', 'RU'}
+[2026-03-03 22:38:15] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'CF', 'BU', 'XLF', 'RU'}
+[2026-03-03 22:38:39] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'CF', 'BU', 'XLF', 'RU'}
+[2026-03-03 22:38:39] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'CF', 'BU', 'XLF', 'RU'}
+[2026-03-03 22:38:40] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'CF', 'BU', 'XLF', 'RU'}
+[2026-03-03 22:38:40] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'CF', 'BU', 'XLF', 'RU'}
+[2026-03-03 22:38:40] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'CF', 'BU', 'XLF', 'RU'}
+[2026-03-03 22:38:40] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'CF', 'BU', 'XLF', 'RU'}
+[2026-03-03 22:38:41] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'CF', 'BU', 'XLF', 'RU'}
+[2026-03-03 22:38:41] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'CF', 'BU', 'XLF', 'RU'}
+[2026-03-03 22:39:05] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 22:39:05] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 22:52:17] quant.position INFO: 新增 1 条持仓记录 (集合竞价选股)
+[2026-03-03 22:52:40] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 22:54:29] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 23:12:04] quant.position DEBUG: 跳过非A股代码: {'CF', 'RU', 'FU', 'BU', 'XLF', 'IM'}
+[2026-03-03 23:12:08] quant.position DEBUG: 跳过非A股代码: {'CF', 'RU', 'FU', 'BU', 'XLF', 'IM'}
+[2026-03-03 23:12:32] quant.position DEBUG: 跳过非A股代码: {'CF', 'RU', 'FU', 'BU', 'XLF', 'IM'}
+[2026-03-03 23:12:33] quant.position DEBUG: 跳过非A股代码: {'CF', 'RU', 'FU', 'BU', 'XLF', 'IM'}
+[2026-03-03 23:12:33] quant.position DEBUG: 跳过非A股代码: {'CF', 'RU', 'FU', 'BU', 'XLF', 'IM'}
+[2026-03-03 23:12:34] quant.position DEBUG: 跳过非A股代码: {'CF', 'RU', 'FU', 'BU', 'XLF', 'IM'}
+[2026-03-03 23:12:34] quant.position DEBUG: 跳过非A股代码: {'CF', 'RU', 'FU', 'BU', 'XLF', 'IM'}
+[2026-03-03 23:12:35] quant.position DEBUG: 跳过非A股代码: {'CF', 'RU', 'FU', 'BU', 'XLF', 'IM'}
+[2026-03-03 23:12:35] quant.position DEBUG: 跳过非A股代码: {'CF', 'RU', 'FU', 'BU', 'XLF', 'IM'}
+[2026-03-03 23:12:36] quant.position DEBUG: 跳过非A股代码: {'CF', 'RU', 'FU', 'BU', 'XLF', 'IM'}
+[2026-03-03 23:12:55] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 23:12:55] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 23:16:59] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'BU', 'FU', 'XLF', 'RU'}
+[2026-03-03 23:17:03] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'BU', 'FU', 'XLF', 'RU'}
+[2026-03-03 23:17:28] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'BU', 'FU', 'XLF', 'RU'}
+[2026-03-03 23:17:29] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'BU', 'FU', 'XLF', 'RU'}
+[2026-03-03 23:17:29] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'BU', 'FU', 'XLF', 'RU'}
+[2026-03-03 23:17:29] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'BU', 'FU', 'XLF', 'RU'}
+[2026-03-03 23:17:30] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'BU', 'FU', 'XLF', 'RU'}
+[2026-03-03 23:17:30] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'BU', 'FU', 'XLF', 'RU'}
+[2026-03-03 23:17:31] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'BU', 'FU', 'XLF', 'RU'}
+[2026-03-03 23:17:31] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'BU', 'FU', 'XLF', 'RU'}
+[2026-03-03 23:17:50] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 23:17:50] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 23:26:14] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'RU', 'BU', 'IM', 'XLF'}
+[2026-03-03 23:26:18] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'RU', 'BU', 'IM', 'XLF'}
+[2026-03-03 23:26:43] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'RU', 'BU', 'IM', 'XLF'}
+[2026-03-03 23:26:43] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'RU', 'BU', 'IM', 'XLF'}
+[2026-03-03 23:26:44] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'RU', 'BU', 'IM', 'XLF'}
+[2026-03-03 23:26:44] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'RU', 'BU', 'IM', 'XLF'}
+[2026-03-03 23:26:45] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'RU', 'BU', 'IM', 'XLF'}
+[2026-03-03 23:26:45] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'RU', 'BU', 'IM', 'XLF'}
+[2026-03-03 23:26:46] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'RU', 'BU', 'IM', 'XLF'}
+[2026-03-03 23:26:46] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'RU', 'BU', 'IM', 'XLF'}
+[2026-03-03 23:27:07] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 23:27:07] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 23:47:31] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'RU', 'XLF', 'IM', 'BU'}
+[2026-03-03 23:47:34] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'RU', 'XLF', 'IM', 'BU'}
+[2026-03-03 23:47:59] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'RU', 'XLF', 'IM', 'BU'}
+[2026-03-03 23:47:59] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'RU', 'XLF', 'IM', 'BU'}
+[2026-03-03 23:48:00] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'RU', 'XLF', 'IM', 'BU'}
+[2026-03-03 23:48:00] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'RU', 'XLF', 'IM', 'BU'}
+[2026-03-03 23:48:00] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'RU', 'XLF', 'IM', 'BU'}
+[2026-03-03 23:48:00] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'RU', 'XLF', 'IM', 'BU'}
+[2026-03-03 23:48:01] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'RU', 'XLF', 'IM', 'BU'}
+[2026-03-03 23:48:01] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'RU', 'XLF', 'IM', 'BU'}
+[2026-03-03 23:48:22] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 23:48:22] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 23:48:43] quant.position DEBUG: 跳过非A股代码: {'RU', 'CF', 'FU', 'XLF', 'BU', 'IM'}
+[2026-03-03 23:48:46] quant.position DEBUG: 跳过非A股代码: {'RU', 'CF', 'FU', 'XLF', 'BU', 'IM'}
+[2026-03-03 23:49:11] quant.position DEBUG: 跳过非A股代码: {'RU', 'CF', 'FU', 'XLF', 'BU', 'IM'}
+[2026-03-03 23:49:11] quant.position DEBUG: 跳过非A股代码: {'RU', 'CF', 'FU', 'XLF', 'BU', 'IM'}
+[2026-03-03 23:49:12] quant.position DEBUG: 跳过非A股代码: {'RU', 'CF', 'FU', 'XLF', 'BU', 'IM'}
+[2026-03-03 23:49:12] quant.position DEBUG: 跳过非A股代码: {'RU', 'CF', 'FU', 'XLF', 'BU', 'IM'}
+[2026-03-03 23:49:12] quant.position DEBUG: 跳过非A股代码: {'RU', 'CF', 'FU', 'XLF', 'BU', 'IM'}
+[2026-03-03 23:49:13] quant.position DEBUG: 跳过非A股代码: {'RU', 'CF', 'FU', 'XLF', 'BU', 'IM'}
+[2026-03-03 23:49:13] quant.position DEBUG: 跳过非A股代码: {'RU', 'CF', 'FU', 'XLF', 'BU', 'IM'}
+[2026-03-03 23:49:13] quant.position DEBUG: 跳过非A股代码: {'RU', 'CF', 'FU', 'XLF', 'BU', 'IM'}
+[2026-03-03 23:49:39] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 23:49:39] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 23:49:58] quant.position DEBUG: 跳过非A股代码: {'XLF', 'CF', 'FU', 'BU', 'RU', 'IM'}
+[2026-03-03 23:50:02] quant.position DEBUG: 跳过非A股代码: {'XLF', 'CF', 'FU', 'BU', 'RU', 'IM'}
+[2026-03-03 23:50:27] quant.position DEBUG: 跳过非A股代码: {'XLF', 'CF', 'FU', 'BU', 'RU', 'IM'}
+[2026-03-03 23:50:27] quant.position DEBUG: 跳过非A股代码: {'XLF', 'CF', 'FU', 'BU', 'RU', 'IM'}
+[2026-03-03 23:50:28] quant.position DEBUG: 跳过非A股代码: {'XLF', 'CF', 'FU', 'BU', 'RU', 'IM'}
+[2026-03-03 23:50:28] quant.position DEBUG: 跳过非A股代码: {'XLF', 'CF', 'FU', 'BU', 'RU', 'IM'}
+[2026-03-03 23:50:28] quant.position DEBUG: 跳过非A股代码: {'XLF', 'CF', 'FU', 'BU', 'RU', 'IM'}
+[2026-03-03 23:50:29] quant.position DEBUG: 跳过非A股代码: {'XLF', 'CF', 'FU', 'BU', 'RU', 'IM'}
+[2026-03-03 23:50:29] quant.position DEBUG: 跳过非A股代码: {'XLF', 'CF', 'FU', 'BU', 'RU', 'IM'}
+[2026-03-03 23:50:29] quant.position DEBUG: 跳过非A股代码: {'XLF', 'CF', 'FU', 'BU', 'RU', 'IM'}
+[2026-03-03 23:50:56] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 23:50:56] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 23:52:23] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'CF', 'XLF', 'BU'}
+[2026-03-03 23:52:26] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'CF', 'XLF', 'BU'}
+[2026-03-03 23:52:51] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'CF', 'XLF', 'BU'}
+[2026-03-03 23:52:51] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'CF', 'XLF', 'BU'}
+[2026-03-03 23:52:51] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'CF', 'XLF', 'BU'}
+[2026-03-03 23:52:52] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'CF', 'XLF', 'BU'}
+[2026-03-03 23:52:52] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'CF', 'XLF', 'BU'}
+[2026-03-03 23:52:52] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'CF', 'XLF', 'BU'}
+[2026-03-03 23:52:53] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'CF', 'XLF', 'BU'}
+[2026-03-03 23:52:53] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'CF', 'XLF', 'BU'}
+[2026-03-03 23:53:19] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-03 23:53:19] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-03 23:59:27] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'CF', 'XLF', 'IM'}
+[2026-03-03 23:59:31] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'CF', 'XLF', 'IM'}
+[2026-03-03 23:59:55] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'CF', 'XLF', 'IM'}
+[2026-03-03 23:59:56] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'CF', 'XLF', 'IM'}
+[2026-03-03 23:59:56] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'CF', 'XLF', 'IM'}
+[2026-03-03 23:59:56] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'CF', 'XLF', 'IM'}
+[2026-03-03 23:59:57] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'CF', 'XLF', 'IM'}
+[2026-03-03 23:59:57] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'CF', 'XLF', 'IM'}
+[2026-03-03 23:59:57] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'CF', 'XLF', 'IM'}
+[2026-03-03 23:59:58] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'CF', 'XLF', 'IM'}
+[2026-03-04 00:00:16] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 00:00:16] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 00:06:50] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 00:06:54] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 00:07:19] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 00:07:19] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 00:07:20] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 00:07:20] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 00:07:20] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 00:07:20] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 00:07:21] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 00:07:21] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 00:07:47] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 00:07:47] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 00:27:00] quant.position DEBUG: 跳过非A股代码: {'BU', 'FU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 00:27:03] quant.position DEBUG: 跳过非A股代码: {'BU', 'FU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 00:27:28] quant.position DEBUG: 跳过非A股代码: {'BU', 'FU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 00:27:28] quant.position DEBUG: 跳过非A股代码: {'BU', 'FU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 00:27:28] quant.position DEBUG: 跳过非A股代码: {'BU', 'FU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 00:27:29] quant.position DEBUG: 跳过非A股代码: {'BU', 'FU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 00:27:29] quant.position DEBUG: 跳过非A股代码: {'BU', 'FU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 00:27:29] quant.position DEBUG: 跳过非A股代码: {'BU', 'FU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 00:27:30] quant.position DEBUG: 跳过非A股代码: {'BU', 'FU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 00:27:30] quant.position DEBUG: 跳过非A股代码: {'BU', 'FU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 00:28:08] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 00:28:08] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 09:15:09] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'RU', 'FU', 'BU', 'CF'}
+[2026-03-04 09:15:14] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'IM', 'XLF'}
+[2026-03-04 09:55:12] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 10:30:07] quant.position INFO: 检查 10 只持仓...
+[2026-03-04 10:30:07] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'RU', 'FU', 'BU', 'CF'}
+[2026-03-04 10:30:08] quant.position DEBUG: 未触发退出信号
+[2026-03-04 10:30:14] quant.position INFO: 检查 10 只持仓...
+[2026-03-04 10:30:14] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'IM', 'XLF'}
+[2026-03-04 10:30:14] quant.position DEBUG: 未触发退出信号
+[2026-03-04 10:30:21] quant.position INFO: 检查 10 只持仓...
+[2026-03-04 10:30:21] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'XLF', 'CF', 'FU', 'IM'}
+[2026-03-04 10:30:21] quant.position DEBUG: 未触发退出信号
+[2026-03-04 11:15:09] quant.position INFO: 检查 10 只持仓...
+[2026-03-04 11:15:09] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'RU', 'FU', 'BU', 'CF'}
+[2026-03-04 11:15:09] quant.position DEBUG: 未触发退出信号
+[2026-03-04 11:15:15] quant.position INFO: 检查 10 只持仓...
+[2026-03-04 11:15:15] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'IM', 'XLF'}
+[2026-03-04 11:15:15] quant.position DEBUG: 未触发退出信号
+[2026-03-04 11:15:24] quant.position INFO: 检查 10 只持仓...
+[2026-03-04 11:15:24] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'XLF', 'CF', 'FU', 'IM'}
+[2026-03-04 11:15:25] quant.position DEBUG: 未触发退出信号
+[2026-03-04 13:20:23] quant.position DEBUG: 跳过非A股代码: {'RU', 'IM', 'FU', 'XLF', 'BU', 'CF'}
+[2026-03-04 13:20:27] quant.position DEBUG: 跳过非A股代码: {'RU', 'IM', 'FU', 'XLF', 'BU', 'CF'}
+[2026-03-04 13:20:51] quant.position DEBUG: 跳过非A股代码: {'RU', 'IM', 'FU', 'XLF', 'BU', 'CF'}
+[2026-03-04 13:20:52] quant.position DEBUG: 跳过非A股代码: {'RU', 'IM', 'FU', 'XLF', 'BU', 'CF'}
+[2026-03-04 13:20:52] quant.position DEBUG: 跳过非A股代码: {'RU', 'IM', 'FU', 'XLF', 'BU', 'CF'}
+[2026-03-04 13:20:53] quant.position DEBUG: 跳过非A股代码: {'RU', 'IM', 'FU', 'XLF', 'BU', 'CF'}
+[2026-03-04 13:20:53] quant.position DEBUG: 跳过非A股代码: {'RU', 'IM', 'FU', 'XLF', 'BU', 'CF'}
+[2026-03-04 13:20:53] quant.position DEBUG: 跳过非A股代码: {'RU', 'IM', 'FU', 'XLF', 'BU', 'CF'}
+[2026-03-04 13:20:54] quant.position DEBUG: 跳过非A股代码: {'RU', 'IM', 'FU', 'XLF', 'BU', 'CF'}
+[2026-03-04 13:20:54] quant.position DEBUG: 跳过非A股代码: {'RU', 'IM', 'FU', 'XLF', 'BU', 'CF'}
+[2026-03-04 13:21:14] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 13:21:14] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 13:25:06] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 13:25:10] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 13:25:35] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 13:25:36] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 13:25:36] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 13:25:36] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 13:25:37] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 13:25:37] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 13:25:37] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 13:25:38] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'CF', 'RU', 'XLF', 'IM'}
+[2026-03-04 13:26:03] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 13:26:03] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 13:29:56] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'XLF', 'BU', 'RU', 'CF'}
+[2026-03-04 13:29:59] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'XLF', 'BU', 'RU', 'CF'}
+[2026-03-04 13:30:12] quant.position INFO: 检查 10 只持仓...
+[2026-03-04 13:30:12] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'RU', 'FU', 'BU', 'CF'}
+[2026-03-04 13:30:17] quant.position DEBUG: 未触发退出信号
+[2026-03-04 13:30:17] quant.position INFO: 检查 10 只持仓...
+[2026-03-04 13:30:17] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'IM', 'XLF'}
+[2026-03-04 13:30:23] quant.position DEBUG: 未触发退出信号
+[2026-03-04 13:30:25] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'XLF', 'BU', 'RU', 'CF'}
+[2026-03-04 13:30:25] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'XLF', 'BU', 'RU', 'CF'}
+[2026-03-04 13:30:25] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'XLF', 'BU', 'RU', 'CF'}
+[2026-03-04 13:30:26] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'XLF', 'BU', 'RU', 'CF'}
+[2026-03-04 13:30:26] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'XLF', 'BU', 'RU', 'CF'}
+[2026-03-04 13:30:27] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'XLF', 'BU', 'RU', 'CF'}
+[2026-03-04 13:30:27] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'XLF', 'BU', 'RU', 'CF'}
+[2026-03-04 13:30:27] quant.position INFO: 检查 10 只持仓...
+[2026-03-04 13:30:27] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'XLF', 'CF', 'FU', 'IM'}
+[2026-03-04 13:30:27] quant.position DEBUG: 跳过非A股代码: {'IM', 'FU', 'XLF', 'BU', 'RU', 'CF'}
+[2026-03-04 13:30:32] quant.position DEBUG: 未触发退出信号
+[2026-03-04 13:30:47] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 13:30:47] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 13:48:14] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'IM', 'XLF', 'FU', 'RU'}
+[2026-03-04 13:48:17] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'IM', 'XLF', 'FU', 'RU'}
+[2026-03-04 13:48:42] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'IM', 'XLF', 'FU', 'RU'}
+[2026-03-04 13:48:43] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'IM', 'XLF', 'FU', 'RU'}
+[2026-03-04 13:48:43] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'IM', 'XLF', 'FU', 'RU'}
+[2026-03-04 13:48:44] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'IM', 'XLF', 'FU', 'RU'}
+[2026-03-04 13:48:44] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'IM', 'XLF', 'FU', 'RU'}
+[2026-03-04 13:48:44] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'IM', 'XLF', 'FU', 'RU'}
+[2026-03-04 13:48:45] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'IM', 'XLF', 'FU', 'RU'}
+[2026-03-04 13:48:45] quant.position DEBUG: 跳过非A股代码: {'BU', 'CF', 'IM', 'XLF', 'FU', 'RU'}
+[2026-03-04 13:49:06] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 13:49:06] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 13:49:48] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'BU', 'XLF', 'CF'}
+[2026-03-04 13:49:51] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'BU', 'XLF', 'CF'}
+[2026-03-04 13:50:17] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'BU', 'XLF', 'CF'}
+[2026-03-04 13:50:17] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'BU', 'XLF', 'CF'}
+[2026-03-04 13:50:18] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'BU', 'XLF', 'CF'}
+[2026-03-04 13:50:18] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'BU', 'XLF', 'CF'}
+[2026-03-04 13:50:18] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'BU', 'XLF', 'CF'}
+[2026-03-04 13:50:19] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'BU', 'XLF', 'CF'}
+[2026-03-04 13:50:19] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'BU', 'XLF', 'CF'}
+[2026-03-04 13:50:19] quant.position DEBUG: 跳过非A股代码: {'FU', 'IM', 'RU', 'BU', 'XLF', 'CF'}
+[2026-03-04 13:50:42] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 13:50:42] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 13:56:54] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'BU', 'IM', 'CF'}
+[2026-03-04 13:56:57] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'BU', 'IM', 'CF'}
+[2026-03-04 13:57:23] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'BU', 'IM', 'CF'}
+[2026-03-04 13:57:23] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'BU', 'IM', 'CF'}
+[2026-03-04 13:57:23] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'BU', 'IM', 'CF'}
+[2026-03-04 13:57:24] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'BU', 'IM', 'CF'}
+[2026-03-04 13:57:24] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'BU', 'IM', 'CF'}
+[2026-03-04 13:57:24] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'BU', 'IM', 'CF'}
+[2026-03-04 13:57:25] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'BU', 'IM', 'CF'}
+[2026-03-04 13:57:25] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'BU', 'IM', 'CF'}
+[2026-03-04 13:57:44] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 13:57:44] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 14:12:55] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 14:27:17] quant.position DEBUG: 跳过非A股代码: {'FU', 'XLF', 'BU', 'IM', 'RU', 'CF'}
+[2026-03-04 14:27:21] quant.position DEBUG: 跳过非A股代码: {'FU', 'XLF', 'BU', 'IM', 'RU', 'CF'}
+[2026-03-04 14:27:45] quant.position DEBUG: 跳过非A股代码: {'FU', 'XLF', 'BU', 'IM', 'RU', 'CF'}
+[2026-03-04 14:27:46] quant.position DEBUG: 跳过非A股代码: {'FU', 'XLF', 'BU', 'IM', 'RU', 'CF'}
+[2026-03-04 14:27:46] quant.position DEBUG: 跳过非A股代码: {'FU', 'XLF', 'BU', 'IM', 'RU', 'CF'}
+[2026-03-04 14:27:47] quant.position DEBUG: 跳过非A股代码: {'FU', 'XLF', 'BU', 'IM', 'RU', 'CF'}
+[2026-03-04 14:27:47] quant.position DEBUG: 跳过非A股代码: {'FU', 'XLF', 'BU', 'IM', 'RU', 'CF'}
+[2026-03-04 14:27:47] quant.position DEBUG: 跳过非A股代码: {'FU', 'XLF', 'BU', 'IM', 'RU', 'CF'}
+[2026-03-04 14:27:48] quant.position DEBUG: 跳过非A股代码: {'FU', 'XLF', 'BU', 'IM', 'RU', 'CF'}
+[2026-03-04 14:27:48] quant.position DEBUG: 跳过非A股代码: {'FU', 'XLF', 'BU', 'IM', 'RU', 'CF'}
+[2026-03-04 14:28:18] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 14:28:18] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 14:32:36] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'CF', 'FU', 'RU', 'BU'}
+[2026-03-04 14:32:39] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'CF', 'FU', 'RU', 'BU'}
+[2026-03-04 14:33:04] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'CF', 'FU', 'RU', 'BU'}
+[2026-03-04 14:33:05] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'CF', 'FU', 'RU', 'BU'}
+[2026-03-04 14:33:05] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'CF', 'FU', 'RU', 'BU'}
+[2026-03-04 14:33:05] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'CF', 'FU', 'RU', 'BU'}
+[2026-03-04 14:33:06] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'CF', 'FU', 'RU', 'BU'}
+[2026-03-04 14:33:06] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'CF', 'FU', 'RU', 'BU'}
+[2026-03-04 14:33:06] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'CF', 'FU', 'RU', 'BU'}
+[2026-03-04 14:33:07] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'CF', 'FU', 'RU', 'BU'}
+[2026-03-04 14:33:28] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 14:33:28] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 14:37:27] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'FU', 'CF', 'RU'}
+[2026-03-04 14:37:30] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'FU', 'CF', 'RU'}
+[2026-03-04 14:37:55] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'FU', 'CF', 'RU'}
+[2026-03-04 14:37:55] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'FU', 'CF', 'RU'}
+[2026-03-04 14:37:56] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'FU', 'CF', 'RU'}
+[2026-03-04 14:37:56] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'FU', 'CF', 'RU'}
+[2026-03-04 14:37:56] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'FU', 'CF', 'RU'}
+[2026-03-04 14:37:57] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'FU', 'CF', 'RU'}
+[2026-03-04 14:37:57] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'FU', 'CF', 'RU'}
+[2026-03-04 14:37:57] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'FU', 'CF', 'RU'}
+[2026-03-04 14:38:25] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 14:38:25] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 14:42:29] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'CF', 'BU', 'IM'}
+[2026-03-04 14:42:32] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'CF', 'BU', 'IM'}
+[2026-03-04 14:42:57] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'CF', 'BU', 'IM'}
+[2026-03-04 14:42:58] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'CF', 'BU', 'IM'}
+[2026-03-04 14:42:58] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'CF', 'BU', 'IM'}
+[2026-03-04 14:42:58] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'CF', 'BU', 'IM'}
+[2026-03-04 14:42:59] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'CF', 'BU', 'IM'}
+[2026-03-04 14:42:59] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'CF', 'BU', 'IM'}
+[2026-03-04 14:42:59] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'CF', 'BU', 'IM'}
+[2026-03-04 14:43:00] quant.position DEBUG: 跳过非A股代码: {'FU', 'RU', 'XLF', 'CF', 'BU', 'IM'}
+[2026-03-04 14:43:18] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 14:43:18] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 14:50:01] quant.position INFO: 检查 11 只持仓...
+[2026-03-04 14:50:01] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'XLF', 'CF', 'FU', 'IM'}
+[2026-03-04 14:50:10] quant.position INFO: 检查 9 只持仓...
+[2026-03-04 14:50:10] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'FU', 'BU', 'CF', 'RU'}
+[2026-03-04 14:50:10] quant.position DEBUG: 未触发退出信号
+[2026-03-04 14:50:25] quant.position INFO: 检查 9 只持仓...
+[2026-03-04 14:50:25] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'RU', 'FU', 'BU', 'CF'}
+[2026-03-04 14:50:25] quant.position DEBUG: 未触发退出信号
+[2026-03-04 14:50:27] quant.position INFO: 检查 9 只持仓...
+[2026-03-04 14:50:27] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'XLF', 'BU', 'RU', 'FU'}
+[2026-03-04 14:50:29] quant.position INFO: 检查 9 只持仓...
+[2026-03-04 14:50:29] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'IM', 'XLF'}
+[2026-03-04 14:50:29] quant.position DEBUG: 未触发退出信号
+[2026-03-04 14:50:33] quant.position DEBUG: 未触发退出信号
+[2026-03-04 15:32:08] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'IM', 'XLF', 'CF'}
+[2026-03-04 15:32:11] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'IM', 'XLF', 'CF'}
+[2026-03-04 15:32:36] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'IM', 'XLF', 'CF'}
+[2026-03-04 15:32:36] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'IM', 'XLF', 'CF'}
+[2026-03-04 15:32:37] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'IM', 'XLF', 'CF'}
+[2026-03-04 15:32:37] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'IM', 'XLF', 'CF'}
+[2026-03-04 15:32:37] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'IM', 'XLF', 'CF'}
+[2026-03-04 15:32:38] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'IM', 'XLF', 'CF'}
+[2026-03-04 15:32:38] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'IM', 'XLF', 'CF'}
+[2026-03-04 15:32:38] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'IM', 'XLF', 'CF'}
+[2026-03-04 15:32:55] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 15:32:55] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 15:33:29] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'IM', 'XLF', 'CF', 'FU'}
+[2026-03-04 15:33:32] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'IM', 'XLF', 'CF', 'FU'}
+[2026-03-04 15:33:57] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'IM', 'XLF', 'CF', 'FU'}
+[2026-03-04 15:33:58] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'IM', 'XLF', 'CF', 'FU'}
+[2026-03-04 15:33:58] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'IM', 'XLF', 'CF', 'FU'}
+[2026-03-04 15:33:58] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'IM', 'XLF', 'CF', 'FU'}
+[2026-03-04 15:33:59] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'IM', 'XLF', 'CF', 'FU'}
+[2026-03-04 15:33:59] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'IM', 'XLF', 'CF', 'FU'}
+[2026-03-04 15:33:59] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'IM', 'XLF', 'CF', 'FU'}
+[2026-03-04 15:34:00] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'IM', 'XLF', 'CF', 'FU'}
+[2026-03-04 15:34:17] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 15:34:17] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 16:15:05] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'XLF', 'CF', 'FU', 'IM'}
+[2026-03-04 16:15:14] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'FU', 'BU', 'CF', 'RU'}
+[2026-03-04 16:15:16] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'IM', 'XLF'}
+[2026-03-04 16:15:16] quant.position DEBUG: 跳过非A股代码: {'IM', 'CF', 'XLF', 'BU', 'RU', 'FU'}
+[2026-03-04 16:15:30] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'RU', 'FU', 'BU', 'CF'}
+[2026-03-04 17:39:28] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'IM', 'FU', 'RU', 'BU'}
+[2026-03-04 17:59:29] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'IM', 'FU'}
+[2026-03-04 17:59:33] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'IM', 'FU'}
+[2026-03-04 17:59:58] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'IM', 'FU'}
+[2026-03-04 17:59:58] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'IM', 'FU'}
+[2026-03-04 17:59:58] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'IM', 'FU'}
+[2026-03-04 17:59:59] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'IM', 'FU'}
+[2026-03-04 17:59:59] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'IM', 'FU'}
+[2026-03-04 18:00:00] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'IM', 'FU'}
+[2026-03-04 18:00:00] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'IM', 'FU'}
+[2026-03-04 18:00:00] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'IM', 'FU'}
+[2026-03-04 18:00:21] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 18:00:21] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 18:04:41] quant.position DEBUG: 跳过非A股代码: {'IM', 'RU', 'BU', 'XLF', 'FU', 'CF'}
+[2026-03-04 18:04:44] quant.position DEBUG: 跳过非A股代码: {'IM', 'RU', 'BU', 'XLF', 'FU', 'CF'}
+[2026-03-04 18:05:09] quant.position DEBUG: 跳过非A股代码: {'IM', 'RU', 'BU', 'XLF', 'FU', 'CF'}
+[2026-03-04 18:05:10] quant.position DEBUG: 跳过非A股代码: {'IM', 'RU', 'BU', 'XLF', 'FU', 'CF'}
+[2026-03-04 18:05:10] quant.position DEBUG: 跳过非A股代码: {'IM', 'RU', 'BU', 'XLF', 'FU', 'CF'}
+[2026-03-04 18:05:10] quant.position DEBUG: 跳过非A股代码: {'IM', 'RU', 'BU', 'XLF', 'FU', 'CF'}
+[2026-03-04 18:05:11] quant.position DEBUG: 跳过非A股代码: {'IM', 'RU', 'BU', 'XLF', 'FU', 'CF'}
+[2026-03-04 18:05:11] quant.position DEBUG: 跳过非A股代码: {'IM', 'RU', 'BU', 'XLF', 'FU', 'CF'}
+[2026-03-04 18:05:11] quant.position DEBUG: 跳过非A股代码: {'IM', 'RU', 'BU', 'XLF', 'FU', 'CF'}
+[2026-03-04 18:05:12] quant.position DEBUG: 跳过非A股代码: {'IM', 'RU', 'BU', 'XLF', 'FU', 'CF'}
+[2026-03-04 18:05:33] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 18:05:33] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 18:09:36] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'RU', 'IM'}
+[2026-03-04 18:09:41] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'RU', 'IM'}
+[2026-03-04 18:10:06] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'RU', 'IM'}
+[2026-03-04 18:10:06] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'RU', 'IM'}
+[2026-03-04 18:10:06] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'RU', 'IM'}
+[2026-03-04 18:10:07] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'RU', 'IM'}
+[2026-03-04 18:10:07] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'RU', 'IM'}
+[2026-03-04 18:10:07] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'RU', 'IM'}
+[2026-03-04 18:10:08] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'RU', 'IM'}
+[2026-03-04 18:10:08] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'BU', 'FU', 'RU', 'IM'}
+[2026-03-04 18:10:27] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 18:10:27] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 18:29:18] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 18:29:22] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 18:29:47] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 18:29:47] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 18:29:48] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 18:29:48] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 18:29:49] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 18:29:49] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 18:29:50] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 18:29:50] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'IM', 'CF', 'FU', 'RU'}
+[2026-03-04 18:30:20] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 18:30:20] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 18:53:56] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 18:54:00] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 18:54:25] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 18:54:25] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 18:54:25] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 18:54:26] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 18:54:26] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 18:54:27] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 18:54:28] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 18:54:28] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 18:54:50] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 18:54:50] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 18:58:39] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'IM', 'XLF', 'CF'}
+[2026-03-04 18:58:43] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'IM', 'XLF', 'CF'}
+[2026-03-04 18:59:09] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'IM', 'XLF', 'CF'}
+[2026-03-04 18:59:09] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'IM', 'XLF', 'CF'}
+[2026-03-04 18:59:10] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'IM', 'XLF', 'CF'}
+[2026-03-04 18:59:10] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'IM', 'XLF', 'CF'}
+[2026-03-04 18:59:11] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'IM', 'XLF', 'CF'}
+[2026-03-04 18:59:11] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'IM', 'XLF', 'CF'}
+[2026-03-04 18:59:12] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'IM', 'XLF', 'CF'}
+[2026-03-04 18:59:12] quant.position DEBUG: 跳过非A股代码: {'RU', 'BU', 'FU', 'IM', 'XLF', 'CF'}
+[2026-03-04 18:59:32] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 18:59:32] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 19:03:23] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 19:03:27] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 19:03:52] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 19:03:53] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 19:03:53] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 19:03:54] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 19:03:54] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 19:03:55] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 19:03:55] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 19:03:56] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'CF', 'FU', 'RU'}
+[2026-03-04 19:04:19] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 19:04:19] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 21:28:28] quant.position DEBUG: 跳过非A股代码: {'CF', 'IM', 'BU', 'RU', 'FU', 'XLF'}
+[2026-03-04 21:28:29] quant.position DEBUG: 跳过非A股代码: {'CF', 'IM', 'BU', 'RU', 'FU', 'XLF'}
+[2026-03-04 21:28:30] quant.position DEBUG: 跳过非A股代码: {'CF', 'IM', 'BU', 'RU', 'FU', 'XLF'}
+[2026-03-04 21:28:30] quant.position DEBUG: 跳过非A股代码: {'CF', 'IM', 'BU', 'RU', 'FU', 'XLF'}
+[2026-03-04 21:28:31] quant.position DEBUG: 跳过非A股代码: {'CF', 'IM', 'BU', 'RU', 'FU', 'XLF'}
+[2026-03-04 21:28:31] quant.position DEBUG: 跳过非A股代码: {'CF', 'IM', 'BU', 'RU', 'FU', 'XLF'}
+[2026-03-04 21:28:32] quant.position DEBUG: 跳过非A股代码: {'CF', 'IM', 'BU', 'RU', 'FU', 'XLF'}
+[2026-03-04 21:28:32] quant.position DEBUG: 跳过非A股代码: {'CF', 'IM', 'BU', 'RU', 'FU', 'XLF'}
+[2026-03-04 21:29:32] quant.position DEBUG: 跳过非A股代码: {'BU', 'RU', 'FU', 'IM', 'CF', 'XLF'}
+[2026-03-04 21:29:39] quant.position DEBUG: 跳过非A股代码: {'BU', 'RU', 'FU', 'IM', 'CF', 'XLF'}
+[2026-03-04 21:30:04] quant.position DEBUG: 跳过非A股代码: {'BU', 'RU', 'FU', 'IM', 'CF', 'XLF'}
+[2026-03-04 21:30:06] quant.position DEBUG: 跳过非A股代码: {'BU', 'RU', 'FU', 'IM', 'CF', 'XLF'}
+[2026-03-04 21:30:07] quant.position DEBUG: 跳过非A股代码: {'BU', 'RU', 'FU', 'IM', 'CF', 'XLF'}
+[2026-03-04 21:30:09] quant.position DEBUG: 跳过非A股代码: {'BU', 'RU', 'FU', 'IM', 'CF', 'XLF'}
+[2026-03-04 21:30:10] quant.position DEBUG: 跳过非A股代码: {'BU', 'RU', 'FU', 'IM', 'CF', 'XLF'}
+[2026-03-04 21:30:12] quant.position DEBUG: 跳过非A股代码: {'BU', 'RU', 'FU', 'IM', 'CF', 'XLF'}
+[2026-03-04 21:30:14] quant.position DEBUG: 跳过非A股代码: {'BU', 'RU', 'FU', 'IM', 'CF', 'XLF'}
+[2026-03-04 21:30:15] quant.position DEBUG: 跳过非A股代码: {'BU', 'RU', 'FU', 'IM', 'CF', 'XLF'}
+[2026-03-04 21:30:52] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'RU', 'FU', 'IM', 'BU'}
+[2026-03-04 21:30:56] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'RU', 'FU', 'IM', 'BU'}
+[2026-03-04 21:31:21] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'RU', 'FU', 'IM', 'BU'}
+[2026-03-04 21:31:21] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'RU', 'FU', 'IM', 'BU'}
+[2026-03-04 21:31:22] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'RU', 'FU', 'IM', 'BU'}
+[2026-03-04 21:31:22] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'RU', 'FU', 'IM', 'BU'}
+[2026-03-04 21:31:23] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'RU', 'FU', 'IM', 'BU'}
+[2026-03-04 21:31:23] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'RU', 'FU', 'IM', 'BU'}
+[2026-03-04 21:31:24] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'RU', 'FU', 'IM', 'BU'}
+[2026-03-04 21:31:24] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'RU', 'FU', 'IM', 'BU'}
+[2026-03-04 21:32:37] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'RU', 'CF', 'XLF', 'IM'}
+[2026-03-04 21:32:41] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'RU', 'CF', 'XLF', 'IM'}
+[2026-03-04 21:33:06] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'RU', 'CF', 'XLF', 'IM'}
+[2026-03-04 21:33:06] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'RU', 'CF', 'XLF', 'IM'}
+[2026-03-04 21:33:06] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'RU', 'CF', 'XLF', 'IM'}
+[2026-03-04 21:33:07] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'RU', 'CF', 'XLF', 'IM'}
+[2026-03-04 21:33:08] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'RU', 'CF', 'XLF', 'IM'}
+[2026-03-04 21:33:08] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'RU', 'CF', 'XLF', 'IM'}
+[2026-03-04 21:33:09] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'RU', 'CF', 'XLF', 'IM'}
+[2026-03-04 21:33:09] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'RU', 'CF', 'XLF', 'IM'}
+[2026-03-04 21:33:33] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-04 21:33:33] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-04 22:18:30] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'RU', 'IM', 'XLF', 'BU'}
+[2026-03-04 22:20:49] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:21:02] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:21:15] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:22:25] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:22:46] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:23:04] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:24:27] quant.position DEBUG: 跳过非A股代码: {'CF', 'XLF', 'FU', 'IM', 'RU', 'BU'}
+[2026-03-04 22:26:38] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:26:54] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:27:08] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:28:09] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:28:32] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:30:16] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'FU', 'RU', 'BU', 'CF'}
+[2026-03-04 22:32:29] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:32:56] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:33:12] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:33:47] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:34:07] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:34:30] quant.position DEBUG: 跳过非A股代码: {'FU', 'BU', 'XLF', 'RU', 'CF', 'IM'}
+[2026-03-04 22:39:15] quant.position DEBUG: 跳过非A股代码: {'CF', 'FU', 'IM', 'XLF', 'BU', 'RU'}
+[2026-03-04 22:44:52] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'RU', 'FU', 'CF'}
+[2026-03-04 22:55:02] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'RU', 'FU', 'CF'}
+[2026-03-04 23:10:46] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'RU', 'FU', 'CF'}
+[2026-03-04 23:13:34] quant.position DEBUG: 跳过非A股代码: {'IM', 'XLF', 'BU', 'RU', 'FU', 'CF'}
+[2026-03-04 23:14:09] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'RU', 'FU'}
+[2026-03-04 23:16:51] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'RU', 'FU', 'CF', 'BU'}
+[2026-03-04 23:18:38] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'RU', 'FU'}
+[2026-03-04 23:19:55] quant.position DEBUG: 跳过非A股代码: {'XLF', 'IM', 'BU', 'CF', 'RU', 'FU'}
+[2026-03-04 23:34:23] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'IM', 'FU', 'BU', 'CF'}
+[2026-03-05 09:15:27] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'IM', 'XLF', 'FU', 'RU'}
+[2026-03-05 09:16:35] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'IM', 'FU', 'BU', 'CF'}
+[2026-03-05 09:28:23] quant.position INFO: 新增 1 条持仓记录 (集合竞价选股)
+[2026-03-05 10:24:10] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'XLF', 'IM'}
+[2026-03-05 10:24:14] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'XLF', 'IM'}
+[2026-03-05 10:24:39] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'XLF', 'IM'}
+[2026-03-05 10:24:39] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'XLF', 'IM'}
+[2026-03-05 10:24:40] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'XLF', 'IM'}
+[2026-03-05 10:24:40] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'XLF', 'IM'}
+[2026-03-05 10:24:41] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'XLF', 'IM'}
+[2026-03-05 10:24:41] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'XLF', 'IM'}
+[2026-03-05 10:24:41] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'XLF', 'IM'}
+[2026-03-05 10:24:42] quant.position DEBUG: 跳过非A股代码: {'RU', 'FU', 'BU', 'CF', 'XLF', 'IM'}
+[2026-03-05 10:25:05] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-05 10:25:05] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-05 10:28:43] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-05 10:28:43] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-05 10:30:21] quant.position INFO: 检查 10 只持仓...
+[2026-03-05 10:30:21] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'CF', 'FU', 'RU', 'IM'}
+[2026-03-05 10:35:20] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-05 10:35:20] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-05 10:35:20] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'XLF', 'BU', 'IM', 'RU'}
+[2026-03-05 10:35:21] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'XLF', 'BU', 'IM', 'RU'}
+[2026-03-05 10:35:21] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'XLF', 'BU', 'IM', 'RU'}
+[2026-03-05 10:35:22] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'XLF', 'BU', 'IM', 'RU'}
+[2026-03-05 10:35:22] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'XLF', 'BU', 'IM', 'RU'}
+[2026-03-05 10:35:23] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'XLF', 'BU', 'IM', 'RU'}
+[2026-03-05 10:35:23] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'XLF', 'BU', 'IM', 'RU'}
+[2026-03-05 10:35:23] quant.position DEBUG: 跳过非A股代码: {'FU', 'CF', 'XLF', 'BU', 'IM', 'RU'}
+[2026-03-05 10:53:48] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-05 10:53:48] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-05 11:09:44] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-05 11:15:04] quant.position INFO: 检查 11 只持仓...
+[2026-03-05 11:15:04] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'CF', 'FU', 'RU', 'IM'}
+[2026-03-05 11:15:04] quant.position DEBUG: 未触发退出信号
+[2026-03-05 11:16:24] quant.position DEBUG: 跳过非A股代码: {'RU', 'XLF', 'IM', 'FU', 'BU', 'CF'}
+[2026-03-05 11:23:46] quant.position DEBUG: 跳过非A股代码: {'XLF', 'FU', 'CF', 'RU', 'BU', 'IM'}
+[2026-03-05 11:30:57] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'CF', 'FU', 'RU', 'IM'}
+[2026-03-05 11:57:34] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'CF', 'RU', 'FU', 'IM'}
+[2026-03-05 11:57:37] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'CF', 'RU', 'FU', 'IM'}
+[2026-03-05 11:58:03] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'CF', 'RU', 'FU', 'IM'}
+[2026-03-05 11:58:03] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'CF', 'RU', 'FU', 'IM'}
+[2026-03-05 11:58:04] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'CF', 'RU', 'FU', 'IM'}
+[2026-03-05 11:58:04] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'CF', 'RU', 'FU', 'IM'}
+[2026-03-05 11:58:05] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'CF', 'RU', 'FU', 'IM'}
+[2026-03-05 11:58:05] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'CF', 'RU', 'FU', 'IM'}
+[2026-03-05 11:58:06] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'CF', 'RU', 'FU', 'IM'}
+[2026-03-05 11:58:06] quant.position DEBUG: 跳过非A股代码: {'XLF', 'BU', 'CF', 'RU', 'FU', 'IM'}
+[2026-03-05 11:58:30] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-05 11:58:30] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-05 12:02:23] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'RU', 'IM', 'FU', 'CF'}
+[2026-03-05 12:02:26] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'RU', 'IM', 'FU', 'CF'}
+[2026-03-05 12:02:51] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'RU', 'IM', 'FU', 'CF'}
+[2026-03-05 12:02:52] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'RU', 'IM', 'FU', 'CF'}
+[2026-03-05 12:02:52] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'RU', 'IM', 'FU', 'CF'}
+[2026-03-05 12:02:53] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'RU', 'IM', 'FU', 'CF'}
+[2026-03-05 12:02:53] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'RU', 'IM', 'FU', 'CF'}
+[2026-03-05 12:02:54] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'RU', 'IM', 'FU', 'CF'}
+[2026-03-05 12:02:54] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'RU', 'IM', 'FU', 'CF'}
+[2026-03-05 12:02:55] quant.position DEBUG: 跳过非A股代码: {'BU', 'XLF', 'RU', 'IM', 'FU', 'CF'}
+[2026-03-05 12:03:14] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-05 12:03:14] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)
+[2026-03-05 12:07:02] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'FU', 'IM'}
+[2026-03-05 12:07:05] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'FU', 'IM'}
+[2026-03-05 12:07:31] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'FU', 'IM'}
+[2026-03-05 12:07:32] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'FU', 'IM'}
+[2026-03-05 12:07:34] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'FU', 'IM'}
+[2026-03-05 12:07:35] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'FU', 'IM'}
+[2026-03-05 12:07:37] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'FU', 'IM'}
+[2026-03-05 12:07:40] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'FU', 'IM'}
+[2026-03-05 12:07:41] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'FU', 'IM'}
+[2026-03-05 12:07:42] quant.position DEBUG: 跳过非A股代码: {'CF', 'BU', 'RU', 'XLF', 'FU', 'IM'}
+[2026-03-05 12:08:16] quant.position INFO: 新增 1 条持仓记录 (趋势跟踪选股)
+[2026-03-05 12:08:16] quant.position INFO: 新增 1 条持仓记录 (放量突破选股)

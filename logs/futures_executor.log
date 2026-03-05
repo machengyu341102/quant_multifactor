@@ -2990,3 +2990,1300 @@
 [2026-03-03 22:01:41] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
 [2026-03-03 22:01:41] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
 [2026-03-03 22:01:41] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:06:14] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:07:18] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-03 22:07:18] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:07:18] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:07:18] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:07:18] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:07:18] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:07:18] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:07:18] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:07:18] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:07:18] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:07:18] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-03 22:07:18] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:07:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:12:26] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:13:18] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-03 22:13:18] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:13:18] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:13:18] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:13:18] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:13:18] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:13:18] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:13:18] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:13:18] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:13:18] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:13:18] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-03 22:13:18] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:13:18] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:17:55] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:18:50] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-03 22:18:50] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:18:50] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:18:50] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:18:50] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:18:50] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:18:50] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:18:50] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:18:50] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:18:50] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:18:50] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-03 22:18:50] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:18:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:23:19] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:24:17] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-03 22:24:17] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:24:17] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:24:17] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:24:17] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:24:17] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:24:17] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:24:17] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:24:17] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:24:17] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:24:17] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-03 22:24:17] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:24:17] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:32:57] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:33:56] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-03 22:33:56] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:33:56] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:33:56] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:33:56] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:33:56] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:33:56] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:33:56] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:33:56] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:33:56] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:33:56] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-03 22:33:56] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:33:56] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:38:45] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 22:39:41] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-03 22:39:41] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:39:41] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:39:41] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:39:41] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:39:41] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:39:41] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:39:41] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:39:41] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 22:39:41] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 22:39:41] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-03 22:39:41] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 22:39:41] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:12:39] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 23:13:31] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-03 23:13:31] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:13:31] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:13:31] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:13:31] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:13:31] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:13:31] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:13:31] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:13:31] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:13:31] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:13:31] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-03 23:13:31] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:13:31] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:17:34] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 23:18:26] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-03 23:18:26] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:18:26] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:18:26] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:18:26] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:18:26] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:18:26] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:18:26] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:18:26] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:18:26] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:18:26] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-03 23:18:26] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:18:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:26:50] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 23:27:43] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-03 23:27:43] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:27:43] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:27:43] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:27:43] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:27:43] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:27:43] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:27:43] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:27:43] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:27:43] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:27:43] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-03 23:27:43] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:27:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:48:04] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 23:49:16] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 23:50:33] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 23:52:56] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-03 23:53:55] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-03 23:53:55] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:53:55] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:53:55] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:53:55] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:53:55] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:53:55] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:53:55] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:53:55] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-03 23:53:55] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-03 23:53:55] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-03 23:53:55] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-03 23:53:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:00:01] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 00:00:57] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 00:00:57] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:00:57] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:00:57] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:00:57] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:00:57] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:00:57] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:00:57] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:00:57] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:00:57] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:00:57] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 00:00:57] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:00:57] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:07:25] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 00:08:24] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 00:08:24] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:08:24] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:08:24] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:08:24] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:08:24] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:08:24] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:08:24] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:08:24] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:08:24] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:08:24] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 00:08:24] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:08:24] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:27:34] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 00:28:43] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 00:28:43] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:28:43] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:28:43] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:28:43] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:28:43] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:28:43] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:28:43] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:28:43] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 00:28:43] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 00:28:43] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 00:28:43] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 00:28:43] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 07:30:05] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 07:30:41] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 09:30:19] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 09:30:19] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 09:30:19] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 09:30:19] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.ru → SHFE.ru2605
+[2026-03-04 09:30:19] quant.futures_executor WARNING: [tqsdk平仓失败] RU: 平仓无成交(非交易时段)
+[2026-03-04 09:30:23] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 09:30:23] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 09:30:23] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 09:30:23] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.ru → SHFE.ru2605
+[2026-03-04 09:30:24] quant.futures_executor WARNING: [tqsdk平仓失败] RU: 平仓无成交(非交易时段)
+[2026-03-04 10:30:08] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 10:30:08] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 10:30:08] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 10:30:08] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 10:30:08] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 10:30:14] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 10:30:14] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 10:30:14] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 10:30:14] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 10:30:15] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 10:30:21] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 10:30:22] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 10:30:23] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 10:30:24] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 10:30:24] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 10:30:24] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 11:15:09] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 11:15:09] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 11:15:09] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 11:15:09] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 11:15:10] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 11:15:15] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 11:15:15] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 11:15:15] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 11:15:15] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 11:15:16] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 11:15:25] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 11:15:25] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 11:15:25] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 11:15:25] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 11:15:25] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 13:20:57] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 13:21:50] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 13:21:50] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:21:50] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:21:50] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:21:50] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:21:50] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:21:50] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:21:50] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:21:50] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:21:50] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:21:50] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 13:21:50] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:21:50] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:25:41] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 13:26:39] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 13:26:39] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:26:39] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:26:39] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:26:39] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:26:39] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:26:39] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:26:39] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:26:39] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:26:39] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:26:39] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 13:26:39] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:26:39] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:30:17] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 13:30:17] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 13:30:17] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 13:30:17] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 13:30:17] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 13:30:23] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 13:30:23] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 13:30:23] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 13:30:23] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 13:30:23] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 13:30:31] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 13:30:32] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 13:30:32] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 13:30:32] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 13:30:32] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 13:30:33] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 13:31:23] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 13:31:23] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:31:23] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:31:23] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:31:23] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:31:23] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:31:23] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:31:23] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:31:23] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:31:23] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:31:23] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 13:31:23] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:31:23] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:48:48] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 13:50:22] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 13:51:19] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 13:51:19] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:51:19] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:51:19] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:51:19] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:51:19] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:51:19] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:51:19] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:51:19] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:51:19] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:51:19] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 13:51:19] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:51:19] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:57:28] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 13:58:26] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 13:58:26] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:58:26] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:58:26] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:58:26] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:58:26] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:58:26] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:58:26] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:58:26] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 13:58:26] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 13:58:26] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 13:58:26] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 13:58:26] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:27:52] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 14:28:55] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 14:28:55] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:28:55] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:28:55] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:28:55] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:28:55] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:28:55] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:28:55] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:28:55] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:28:55] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:28:55] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 14:28:55] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:28:55] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:30:24] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 14:30:24] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 14:30:24] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 14:30:24] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 14:30:25] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 14:30:28] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 14:30:28] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 14:30:28] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 14:30:28] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 14:30:29] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 14:30:30] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 14:30:30] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 14:30:30] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 14:30:30] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 14:30:31] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 14:30:35] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 14:30:36] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 14:30:37] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 14:30:37] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 14:30:37] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 14:30:39] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 14:30:39] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 14:30:40] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 14:33:11] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 14:34:05] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 14:34:05] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:34:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:34:05] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:34:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:34:05] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:34:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:34:05] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:34:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:34:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:34:05] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 14:34:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:34:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:38:01] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 14:39:11] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 14:39:11] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:39:11] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:39:11] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:39:11] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:39:11] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:39:11] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:39:11] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:39:11] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:39:11] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:39:11] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 14:39:11] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:39:11] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:43:03] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 14:43:59] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 14:43:59] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:43:59] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:43:59] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:43:59] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:43:59] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:43:59] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:43:59] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:43:59] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 14:43:59] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 14:43:59] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 14:43:59] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 14:43:59] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 15:32:42] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 15:34:03] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 15:34:54] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 15:34:54] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 15:34:54] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 15:34:54] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 15:34:54] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 15:34:54] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 15:34:54] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 15:34:54] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 15:34:54] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 15:34:54] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 15:34:54] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 15:34:54] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 15:34:54] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:00:06] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 18:01:00] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 18:01:00] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:01:00] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:01:00] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:01:00] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:01:00] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:01:00] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:01:00] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:01:00] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:01:00] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:01:00] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 18:01:00] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:01:00] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:05:17] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 18:06:10] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 18:06:10] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:06:10] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:06:10] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:06:10] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:06:10] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:06:10] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:06:10] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:06:10] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:06:10] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:06:10] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 18:06:10] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:06:10] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:10:12] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 18:11:05] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 18:11:05] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:11:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:11:05] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:11:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:11:05] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:11:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:11:05] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:11:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:11:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:11:05] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 18:11:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:11:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:29:54] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 18:30:52] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 18:30:52] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:30:52] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:30:52] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:30:52] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:30:52] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:30:52] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:30:52] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:30:52] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:30:52] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:30:52] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 18:30:52] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:30:52] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:54:32] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 18:55:21] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 18:55:21] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:55:21] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:55:21] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:55:21] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:55:21] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:55:21] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:55:21] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:55:21] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:55:21] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 18:55:21] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 18:55:21] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 18:55:21] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 18:59:16] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 19:00:05] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 19:00:05] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:00:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 19:00:05] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:00:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 19:00:05] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:00:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 19:00:05] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:00:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:00:05] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 19:00:05] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 19:00:05] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 19:00:05] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:04:00] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 19:04:51] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 19:04:51] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:04:51] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 19:04:51] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:04:51] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 19:04:51] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:04:51] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 19:04:51] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:04:51] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 19:04:51] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 19:04:51] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 19:04:51] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 19:04:51] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 21:30:00] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-04 21:30:06] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 21:30:08] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-04 21:30:09] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-04 21:30:09] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-04 21:30:09] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-04 21:30:19] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 21:31:28] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 21:33:13] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-04 21:34:04] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-04 21:34:04] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 21:34:04] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 21:34:04] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 21:34:04] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 21:34:04] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 21:34:04] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 21:34:04] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 21:34:04] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-04 21:34:04] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-04 21:34:04] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-04 21:34:04] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-04 21:34:04] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 07:30:27] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-05 09:30:23] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-05 09:30:23] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-05 09:30:23] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-05 09:30:23] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.bu → SHFE.bu2604
+[2026-03-05 09:30:24] quant.futures_executor WARNING: [tqsdk平仓失败] BU: 平仓无成交(非交易时段)
+[2026-03-05 10:24:46] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-05 10:25:40] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-05 10:25:40] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 10:25:40] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 10:25:40] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 10:25:40] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 10:25:40] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 10:25:40] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 10:25:40] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 10:25:40] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 10:25:40] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 10:25:40] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-05 10:25:40] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 10:25:40] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 10:30:26] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-05 10:30:27] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-05 10:30:28] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-05 10:30:28] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-05 11:15:04] quant.futures_executor INFO: 检查 3 个期货持仓...
+[2026-03-05 11:15:04] quant.futures_executor INFO: [tqsdk] KQ.m@SHFE.fu → SHFE.fu2605
+[2026-03-05 11:15:04] quant.futures_executor WARNING: [tqsdk平仓失败] FU: 平仓无成交(非交易时段)
+[2026-03-05 11:58:09] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-05 11:59:01] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-05 11:59:01] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 11:59:01] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 11:59:01] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 11:59:01] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 11:59:01] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 11:59:01] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 11:59:01] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 11:59:01] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 11:59:01] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 11:59:01] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-05 11:59:01] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 11:59:01] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:02:58] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-05 12:03:45] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-05 12:03:45] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:03:45] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 12:03:45] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:03:45] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 12:03:45] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:03:45] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 12:03:45] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:03:45] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:03:45] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 12:03:45] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-05 12:03:45] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 12:03:45] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:07:53] quant.futures_executor INFO: [tqsdk] 连接成功 (mode=simnow)
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: 共执行 2 笔开仓
+[2026-03-05 12:08:46] quant.futures_executor INFO: [跳过] RB 已有持仓
+[2026-03-05 12:08:46] quant.futures_executor INFO: [跳过] AU 已有持仓
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] AU 做空 价格=650.00 手数=1 保证金=52000 止损=667.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:08:46] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 12:08:46] quant.futures_executor INFO: [平仓] TEST 多 100.00→89.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] TEST 做空 价格=100.00 手数=1 保证金=1000 止损=110.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:08:46] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 12:08:46] quant.futures_executor INFO: [平仓] TEST 空 100.00→111.00 ATR止损 盈亏-11.00% (¥-110.00)
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:08:46] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 12:08:46] quant.futures_executor INFO: [平仓] TEST 多 100.00→106.00 固定止盈 盈亏6.00% (¥60.00)
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:08:46] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] TEST 做多 价格=100.00 手数=1 保证金=1000 止损=90.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: 共执行 1 笔开仓
+[2026-03-05 12:08:46] quant.futures_executor INFO: 检查 1 个期货持仓...
+[2026-03-05 12:08:46] quant.futures_executor INFO: [平仓] TEST 多 100.00→102.30 追踪止盈 盈亏2.30% (¥23.00)
+[2026-03-05 12:08:46] quant.futures_executor INFO: [PAPER开仓] RB 做多 价格=3650.00 手数=2 保证金=7300 止损=3560.00
+[2026-03-05 12:08:46] quant.futures_executor INFO: 共执行 1 笔开仓

@@ -213,8 +213,9 @@ class TestGuardedCall(unittest.TestCase):
 
     def test_circuit_break_raises(self):
         """断路器熔断应抛异常"""
-        # 手动触发熔断
-        for _ in range(10):
+        # 手动触发熔断 (阈值从config动态读取)
+        threshold = _global_breaker.failure_threshold
+        for _ in range(threshold):
             _global_breaker.record_failure("test_break_src")
         with self.assertRaises(RuntimeError) as ctx:
             guarded_call(lambda: None, source="test_break_src")

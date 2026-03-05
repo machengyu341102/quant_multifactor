@@ -23,8 +23,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import asyncio
 import threading
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
+from fastapi.responses import HTMLResponse, PlainTextResponse
 from datetime import date, timedelta
 
 from json_store import safe_load
@@ -35,6 +35,336 @@ logger = get_logger("dashboard")
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = FastAPI(title="量化多因子仪表盘", version="1.0")
+
+
+# ================================================================
+#  企业微信回调验证 (用于配置可信IP)
+# ================================================================
+
+# 企业微信验证 Token 和 EncodingAESKey (在后台"接收消息服务器URL"处设置)
+_WECOM_CALLBACK_TOKEN = "fUgKQPK5fCxD35k0gcy9E7Bv3YfJt"
+_WECOM_CALLBACK_AES_KEY = "oErRa7eT3BW5sYGaWYghoVQ8J3OlWHR3w9eoqOru6ah"
+
+
+@app.get("/wecom_callback")
+def wecom_verify(request: Request, msg_signature: str = "", timestamp: str = "", nonce: str = "", echostr: str = ""):
+    """企业微信服务器URL验证 — 解密 echostr 返回明文"""
+    import logging
+    from urllib.parse import parse_qs
+    log = logging.getLogger("wecom_callback")
+    # 从原始 query string 取 echostr, 避免 + 被解码成空格
+    raw_qs = request.url.query or ""
+    raw_params = parse_qs(raw_qs, keep_blank_values=True)
+    raw_echostr = raw_params.get("echostr", [""])[0]
+    log.warning(f"[回调验证] sig={msg_signature}, ts={timestamp}, nonce={nonce}")
+    log.warning(f"[回调验证] fastapi_echostr({len(echostr)})={echostr}")
+    log.warning(f"[回调验证] raw_echostr({len(raw_echostr)})={raw_echostr}")
+    use_echostr = raw_echostr or echostr
+    if use_echostr:
+        try:
+            from wecom_crypto import WXBizMsgCrypt
+            crypt = WXBizMsgCrypt(_WECOM_CALLBACK_TOKEN, _WECOM_CALLBACK_AES_KEY, "ww3ffca53860e3a5f7")
+            # 先用 raw, 如果签名不过再试 fastapi 的
+            ret, reply = crypt.VerifyURL(msg_signature, timestamp, nonce, use_echostr)
+            if ret != 0 and raw_echostr != echostr:
+                log.warning(f"[回调验证] raw失败, 尝试fastapi版本")
+                ret, reply = crypt.VerifyURL(msg_signature, timestamp, nonce, echostr)
+            log.warning(f"[回调验证] ret={ret}, reply={reply[:80] if reply else ''}")
+            if ret == 0:
+                return PlainTextResponse(reply)
+            else:
+                log.warning(f"[回调验证] 失败: {reply}")
+                return PlainTextResponse("fail", status_code=403)
+        except Exception as e:
+            log.exception(f"[回调验证] 异常: {e}")
+            return PlainTextResponse("error", status_code=500)
+    return PlainTextResponse("ok")
+
+
+def _match(text: str, *keywords) -> bool:
+    """智能匹配: 短指令精确匹配, 长句子只匹配开头, 防止误触发"""
+    t = text.strip()
+    for k in keywords:
+        if t == k:                    # 完全匹配: "持仓" == "持仓"
+            return True
+        if len(t) <= 6 and k in t:    # 短文本(<=6字): 包含即匹配
+            return True
+        if t.startswith(k):           # 长文本: 只匹配开头 "持仓怎么样" → True
+            return True
+    return False
+
+
+def _handle_wecom_command(text: str) -> str:
+    """处理微信发来的命令, 返回回复文本"""
+    text = text.strip()
+    # 帮助
+    if _match(text, "帮助", "help", "菜单", "命令") or text in ("?", "？"):
+        return ("📋 查询命令:\n"
+                "• 状态 — 系统运行状态\n"
+                "• 持仓 — 当前持仓\n"
+                "• 今日 — 今日策略信号\n"
+                "• 收益 — 近期收益\n"
+                "• 风险 — VaR风险评估\n"
+                "• 健康 — 系统健康检查\n"
+                "\n🔧 操作命令:\n"
+                "• 跑策略 — 立即运行全部策略\n"
+                "• 早报 — 发送早报\n"
+                "• 晚报 — 发送晚报\n"
+                "• 诊断 — 个股诊断(如: 诊断 000001)\n"
+                "• 优化 — 运行参数优化\n"
+                "\n💬 其他任意文字 → AI智能回答")
+    # 系统状态
+    if _match(text, "状态", "运行情况", "系统情况"):
+        try:
+            from db_store import load_scorecard
+            rows = load_scorecard(days=3)
+            if rows:
+                # 按策略汇总
+                from collections import Counter
+                by_strat = Counter(r.get("strategy", "?") for r in rows)
+                lines = ["📊 近3天策略运行:"]
+                for s, cnt in by_strat.most_common():
+                    lines.append(f"  {s}: {cnt}只")
+                return "\n".join(lines)
+            return "暂无策略运行记录"
+        except Exception as e:
+            return f"查询失败: {e}"
+    # 持仓
+    if _match(text, "持仓", "仓位", "买了什么", "holdings"):
+        try:
+            from position_manager import get_portfolio_summary, load_positions
+            positions = load_positions()
+            if positions:
+                lines = ["📈 当前持仓:"]
+                for p in positions[:10]:
+                    lines.append(f"  {p.get('code','')} {p.get('name','')} | {p.get('strategy','')} | 成本{p.get('entry_price',0)}")
+                summary = get_portfolio_summary()
+                lines.append(f"\n合计{summary.get('count',0)}只, 盈亏{summary.get('total_pnl_pct',0):.2f}%")
+                return "\n".join(lines)
+            return "当前无持仓"
+        except Exception as e:
+            return f"查询失败: {e}"
+    # 今日信号
+    if _match(text, "今日", "today", "信号", "推荐", "选股结果"):
+        try:
+            from db_store import load_scorecard
+            from datetime import date
+            today = date.today().isoformat()
+            rows = load_scorecard(days=1)
+            today_rows = [r for r in rows if r.get("rec_date", "") == today]
+            if today_rows:
+                lines = [f"📡 今日信号 ({today}):"]
+                for r in today_rows[:10]:
+                    lines.append(f"  {r.get('code','')} {r.get('name','')} | {r.get('strategy','')} | 分数{r.get('score','')}")
+                if len(today_rows) > 10:
+                    lines.append(f"  ...共{len(today_rows)}只")
+                return "\n".join(lines)
+            return f"今日({today})暂无信号"
+        except Exception as e:
+            return f"查询失败: {e}"
+    # 收益
+    if _match(text, "收益", "profit", "盈亏", "赚了", "亏了", "赚钱"):
+        try:
+            from scorecard import calc_equity_curve
+            eq = calc_equity_curve(7)
+            if eq:
+                return (f"💰 近7天收益:\n"
+                        f"  净值: {eq.get('nav_final',1.0):.4f}\n"
+                        f"  夏普: {eq.get('sharpe',0):.2f}\n"
+                        f"  最大回撤: {eq.get('max_drawdown',0):.2f}%\n"
+                        f"  胜率: {eq.get('win_rate',0):.1f}%")
+            return "暂无收益记录"
+        except Exception as e:
+            return f"查询失败: {e}"
+    # 风险
+    if _match(text, "风险", "risk", "var", "风控"):
+        try:
+            from utils import safe_load
+            var_data = safe_load("var_report.json", default={})
+            if var_data:
+                level = var_data.get("risk_level", "未知")
+                var95 = var_data.get("var_95", 0)
+                cvar = var_data.get("cvar_95", 0)
+                return (f"⚠️ 风险评估:\n"
+                        f"  风险等级: {level}\n"
+                        f"  VaR(95%): {var95:.2%}\n"
+                        f"  CVaR(95%): {cvar:.2%}")
+            return "暂无风险评估数据"
+        except Exception as e:
+            return f"查询失败: {e}"
+    # 健康
+    if _match(text, "健康", "health", "检查", "体检"):
+        try:
+            from self_healer import SelfHealer
+            healer = SelfHealer()
+            report = healer.run_smoke_tests()
+            passed = sum(1 for r in report if r.get("ok"))
+            total = len(report)
+            failed = [r["name"] for r in report if not r.get("ok")]
+            if failed:
+                return f"🏥 健康检查: {passed}/{total} 通过\n❌ 异常: {', '.join(failed)}"
+            return f"✅ 健康检查: {passed}/{total} 全部通过"
+        except Exception as e:
+            return f"检查失败: {e}"
+    # === 操作命令 ===
+    # 跑策略
+    if _match(text, "跑策略", "运行策略", "选股", "跑一下", "开始选"):
+        import threading
+        def _run():
+            try:
+                from scheduler import job_batch_morning, job_batch_midday, job_batch_afternoon
+                from scheduler import (run_strategy_overnight, run_strategy_intraday_volume,
+                                       run_strategy_intraday_dip, run_strategy_intraday_shrink,
+                                       run_strategy_intraday_trend, run_strategy_tail,
+                                       run_strategy_sector, run_strategy_event)
+                # 按顺序跑所有股票策略
+                for fn in [run_strategy_overnight, run_strategy_intraday_volume,
+                           run_strategy_intraday_dip, run_strategy_intraday_shrink,
+                           run_strategy_intraday_trend, run_strategy_tail,
+                           run_strategy_sector, run_strategy_event]:
+                    try:
+                        fn()
+                    except Exception:
+                        pass
+            except Exception:
+                pass
+        threading.Thread(target=_run, daemon=True).start()
+        return "🚀 策略开始运行，跑完会自动推送结果。"
+    # 早报
+    if _match(text, "早报", "早间报告", "早间"):
+        import threading
+        def _morning():
+            try:
+                from agent_brain import push_morning_briefing
+                push_morning_briefing()
+            except Exception as e:
+                from notifier import _wecom_app_send
+                _wecom_app_send(f"早报生成失败: {e}", "text")
+        threading.Thread(target=_morning, daemon=True).start()
+        return "📰 正在生成早报，稍等..."
+    # 晚报
+    if _match(text, "晚报", "晚间报告", "晚间", "总结"):
+        import threading
+        def _evening():
+            try:
+                from agent_brain import run_agent_cycle, generate_evening_summary
+                run_agent_cycle()
+                evening = generate_evening_summary()
+                if evening:
+                    from notifier import notify_wechat_raw
+                    notify_wechat_raw("Agent 晚间摘要", evening)
+            except Exception as e:
+                from notifier import _wecom_app_send
+                _wecom_app_send(f"晚报生成失败: {e}", "text")
+        threading.Thread(target=_evening, daemon=True).start()
+        return "📰 正在生成晚报，稍等..."
+    # 诊断
+    if text.startswith("诊断"):
+        code = text.replace("诊断", "").strip()
+        if not code:
+            return "用法: 诊断 000001\n输入股票代码即可"
+        try:
+            from scheduler import job_stock_diagnosis
+            import threading
+            def _diag():
+                try:
+                    job_stock_diagnosis(code)
+                except Exception as e:
+                    from notifier import _wecom_app_send
+                    _wecom_app_send(f"诊断失败: {e}", "text")
+            threading.Thread(target=_diag, daemon=True).start()
+            return f"🔍 正在诊断 {code}，结果会推送给你..."
+        except Exception as e:
+            return f"诊断失败: {e}"
+    # 优化
+    if _match(text, "优化", "参数优化", "调参"):
+        import threading
+        def _opt():
+            try:
+                from auto_optimizer import run_daily_optimization
+                run_daily_optimization()
+            except Exception as e:
+                from notifier import _wecom_app_send
+                _wecom_app_send(f"优化失败: {e}", "text")
+        threading.Thread(target=_opt, daemon=True).start()
+        return "⚙️ 开始参数优化，完成后推送结果..."
+
+    # === 自然语言 → AI 对话 ===
+    try:
+        from llm_advisor import chat as llm_chat
+        answer = llm_chat(text)
+        if "[LLM 不可用]" not in answer:
+            return answer
+    except Exception:
+        pass
+    return ("没听懂你的意思😅\n\n"
+            "试试这些命令:\n"
+            "状态 / 持仓 / 今日 / 收益\n"
+            "风险 / 健康 / 跑策略 / 早报\n"
+            "晚报 / 诊断 000001 / 优化\n\n"
+            "发「帮助」看完整菜单")
+
+
+# 消息去重缓存 (MsgId → 时间戳, 防止企业微信重试导致重复回复)
+_msg_seen: dict[str, float] = {}
+_MSG_DEDUP_TTL = 30  # 30秒内同一消息不重复处理
+
+
+@app.post("/wecom_callback")
+async def wecom_receive(request: Request):
+    """接收企业微信消息并回复 (立即返回, 异步处理)"""
+    import logging
+    import xml.etree.ElementTree as ET
+    log = logging.getLogger("wecom_callback")
+    try:
+        body = await request.body()
+        xml_data = body.decode("utf-8")
+        root = ET.fromstring(xml_data)
+        encrypt_node = root.find("Encrypt")
+        if encrypt_node is None:
+            return PlainTextResponse("success")
+        encrypt = encrypt_node.text
+        qs = request.query_params
+        msg_sig = qs.get("msg_signature", "")
+        ts = qs.get("timestamp", "")
+        nonce = qs.get("nonce", "")
+        from wecom_crypto import WXBizMsgCrypt
+        crypt = WXBizMsgCrypt(_WECOM_CALLBACK_TOKEN, _WECOM_CALLBACK_AES_KEY, "ww3ffca53860e3a5f7")
+        ret, xml_content = crypt.DecryptMsg(msg_sig, ts, nonce, encrypt)
+        if ret != 0:
+            return PlainTextResponse("success")
+        msg_root = ET.fromstring(xml_content)
+        msg_type = msg_root.findtext("MsgType", "")
+        content = msg_root.findtext("Content", "").strip()
+        from_user = msg_root.findtext("FromUserName", "")
+        msg_id = msg_root.findtext("MsgId", "")
+
+        # 去重: 企业微信5秒没响应会重试, 同一 MsgId 只处理一次
+        import time as _time
+        now = _time.time()
+        # 清理过期缓存
+        expired = [k for k, v in _msg_seen.items() if now - v > _MSG_DEDUP_TTL]
+        for k in expired:
+            _msg_seen.pop(k, None)
+        if msg_id and msg_id in _msg_seen:
+            return PlainTextResponse("success")
+        if msg_id:
+            _msg_seen[msg_id] = now
+
+        log.warning(f"[收到消息] from={from_user}, type={msg_type}, content={content}")
+        if msg_type == "text" and content:
+            import threading
+            def _async_reply():
+                try:
+                    reply_text = _handle_wecom_command(content)
+                    from notifier import _wecom_app_send_to
+                    _wecom_app_send_to(from_user, reply_text)
+                except Exception as exc:
+                    log.exception(f"[回复失败] {exc}")
+            threading.Thread(target=_async_reply, daemon=True).start()
+    except Exception as e:
+        log.exception(f"[消息处理异常] {e}")
+    return PlainTextResponse("success")
 
 
 # ================================================================
@@ -109,6 +439,28 @@ def push_event(event_type: str, payload: dict):
             loop.close()
         except Exception:
             pass
+
+
+@app.post("/api/push_event")
+async def api_push_event(request: Request):
+    """接收外部进程推送的事件, 广播到 WebSocket 客户端
+
+    用法 (从 scheduler 等外部进程):
+        import urllib.request, json
+        urllib.request.urlopen(
+            urllib.request.Request("http://127.0.0.1:8501/api/push_event",
+                data=json.dumps({"type":"strategy_complete","payload":{}}).encode(),
+                headers={"Content-Type":"application/json"}),
+            timeout=2)
+    """
+    try:
+        body = await request.json()
+        event_type = body.get("type", "unknown")
+        payload = body.get("payload", {})
+        push_event(event_type, payload)
+        return {"ok": True}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
 
 
 @app.websocket("/ws")
@@ -252,6 +604,16 @@ def api_agents():
                 "uptime_pct": round(info.uptime_pct(), 1),
             })
         return {"agents": agents}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.get("/api/source_health")
+def api_source_health():
+    """API 源健康状态"""
+    try:
+        from api_guard import get_source_health
+        return {"sources": get_source_health()}
     except Exception as e:
         return {"error": str(e)}
 

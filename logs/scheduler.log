@@ -62,3 +62,54 @@
 [2026-03-03 21:48:36] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
 [2026-03-03 21:48:44] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
 [2026-03-03 21:48:47] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-03 22:30:19] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-03 23:23:31] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 00:05:20] quant.scheduler INFO: API 日统计: calls=0 cache_hits=0 retries=0 errors=0 rate_limited=0
+[2026-03-04 00:33:13] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 00:33:15] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 09:22:12] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 09:22:17] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 09:25:14] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 09:25:19] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 09:50:19] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 09:50:24] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 09:51:23] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 10:00:01] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 10:00:25] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 10:00:28] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 10:05:21] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 10:05:22] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 10:05:25] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 10:15:05] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 10:15:12] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 10:15:27] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 13:34:34] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 14:00:03] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 14:00:10] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 14:00:17] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 14:00:23] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 14:01:46] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 14:30:04] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 14:30:10] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 14:30:19] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 14:30:23] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 14:30:26] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-04 14:48:26] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 21:22:39] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 21:22:46] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 21:22:49] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 21:23:00] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 22:18:44] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 22:18:45] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 22:18:58] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 22:51:08] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 22:51:18] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-04 22:51:35] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体
+[2026-03-05 00:05:06] quant.scheduler INFO: API 日统计: calls=0 cache_hits=0 retries=0 errors=0 rate_limited=0
+[2026-03-05 09:22:27] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-05 09:25:29] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-05 09:50:24] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-05 10:00:28] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-05 10:05:03] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-05 10:15:24] quant.scheduler INFO: 大盘环境: neutral (score=0.50, scale=0.8, max_pos=6)
+[2026-03-05 10:23:19] quant.scheduler INFO: [多智能体] 注册表初始化完成, 10 个智能体

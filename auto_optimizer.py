@@ -121,7 +121,7 @@ def evaluate_strategy_health(strategy: str, days: int = None) -> dict:
         from db_store import load_scorecard
         records = load_scorecard(days=days)
     except Exception:
-        records = safe_load(_SCORECARD_PATH)
+        records = safe_load(_SCORECARD_PATH, default=[])
     cutoff = (date.today() - timedelta(days=days)).isoformat()
 
     # 按策略名称匹配 (记分卡中策略名可能含中文后缀)
@@ -139,7 +139,7 @@ def evaluate_strategy_health(strategy: str, days: int = None) -> dict:
     keyword = strategy_map.get(strategy, strategy)
 
     filtered = [
-        r for r in records
+        r for r in (records or [])
         if r.get("rec_date", "") >= cutoff
         and keyword in r.get("strategy", "")
     ]
@@ -474,7 +474,7 @@ def _check_panic_freeze(strategy: str) -> bool:
         from db_store import load_scorecard
         records = load_scorecard(days=3)
     except Exception:
-        records = safe_load(_SCORECARD_PATH)
+        records = safe_load(_SCORECARD_PATH, default=[])
     cutoff = (date.today() - timedelta(days=3)).isoformat()
 
     strategy_map = {
@@ -491,7 +491,7 @@ def _check_panic_freeze(strategy: str) -> bool:
     keyword = strategy_map.get(strategy, strategy)
 
     recent = [
-        r for r in records
+        r for r in (records or [])
         if r.get("rec_date", "") >= cutoff
         and keyword in r.get("strategy", "")
     ]

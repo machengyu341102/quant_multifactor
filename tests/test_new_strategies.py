@@ -292,14 +292,10 @@ class TestSectorRotation:
 class TestNotifyBatch:
     """批量推送测试"""
 
-    @patch("notifier.requests.post")
-    def test_batch_format(self, mock_post):
+    @patch("notifier._send_push")
+    def test_batch_format(self, mock_push):
         """合并推送格式正确"""
         from notifier import notify_batch_wechat
-        mock_resp = MagicMock()
-        mock_resp.status_code = 200
-        mock_resp.json.return_value = {"code": 0}
-        mock_post.return_value = mock_resp
 
         results = [
             ("集合竞价选股", [{"code": "000001", "name": "平安", "price": 10.0, "score": 0.8, "reason": "test"}]),
@@ -307,12 +303,11 @@ class TestNotifyBatch:
         ]
         notify_batch_wechat("测试批次", results)
 
-        assert mock_post.called
-        call_data = mock_post.call_args
-        desp = call_data.kwargs.get("data", call_data[1].get("data", {})).get("desp", "")
-        assert "集合竞价选股" in desp
-        assert "放量突破选股" in desp
-        assert "000001" in desp
+        assert mock_push.called
+        title, body = mock_push.call_args[0]
+        assert "集合竞价选股" in body
+        assert "放量突破选股" in body
+        assert "000001" in body
 
     def test_batch_empty_skip(self):
         """空 buffer 不应调用推送"""
@@ -422,9 +417,9 @@ class TestConfigIntegrity:
         assert len(alloc) == 11
 
     def test_max_wechat_daily(self):
-        """微信配额应为 5"""
+        """微信配额应合理 (企业微信放宽到50)"""
         from config import MAX_WECHAT_DAILY
-        assert MAX_WECHAT_DAILY == 5
+        assert MAX_WECHAT_DAILY >= 5
 
 
 # ================================================================

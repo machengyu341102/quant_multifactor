@@ -1790,3 +1790,1220 @@
 [2026-03-03 22:00:01] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
 [2026-03-03 22:00:01] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
 [2026-03-03 22:00:02] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 22:05:07] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:05:07] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:06:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:06:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:06:09] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 22:06:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:06:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:06:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:06:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:06:09] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 22:06:09] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 22:06:10] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:06:10] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:06:10] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:06:10] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:06:10] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:06:10] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:06:11] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:06:11] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:06:11] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 22:11:22] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:11:22] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:12:21] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:12:21] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:12:21] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 22:12:21] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:12:21] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:12:21] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:12:21] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:12:21] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 22:12:21] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 22:12:22] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:12:22] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:12:22] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:12:22] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:12:22] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:12:22] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:12:23] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:12:23] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:12:23] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 22:16:49] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:16:49] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:17:49] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:17:49] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:17:49] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 22:17:49] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:17:49] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:17:49] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:17:49] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:17:49] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 22:17:49] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 22:17:50] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:17:50] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:17:50] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:17:50] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:17:50] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:17:50] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:17:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:17:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:17:51] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 22:22:14] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:22:14] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:23:13] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:23:13] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:23:13] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 22:23:13] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:23:13] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:23:13] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:23:13] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:23:13] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 22:23:13] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 22:23:13] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:23:13] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:23:14] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:23:14] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:23:14] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:23:14] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:23:14] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:23:14] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:23:15] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 22:31:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:31:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:32:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:32:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:32:51] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 22:32:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:32:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:32:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:32:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:32:51] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 22:32:51] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 22:32:52] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:32:52] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:32:52] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:32:52] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:32:53] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:32:53] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:32:53] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:32:53] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:32:53] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 22:37:39] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:37:39] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:38:39] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:38:39] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:38:39] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 22:38:39] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:38:39] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:38:39] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:38:39] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:38:39] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 22:38:39] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 22:38:39] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:38:39] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:38:40] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:38:40] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:38:40] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:38:40] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:38:40] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 22:38:40] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 22:38:41] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 23:00:00] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:00:00] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:12:04] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:12:04] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:12:32] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:12:32] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:12:32] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 23:12:32] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:12:32] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:12:32] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:12:32] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:12:32] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 23:12:32] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 23:12:33] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:12:33] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:12:34] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:12:34] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:12:34] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:12:34] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:12:35] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:12:35] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:12:36] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 23:16:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:16:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:17:28] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:17:28] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:17:28] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 23:17:28] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:17:28] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:17:28] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:17:28] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:17:28] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 23:17:28] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 23:17:28] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:17:28] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:17:29] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:17:29] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:17:30] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:17:30] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:17:30] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:17:30] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:17:31] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 23:26:15] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:26:15] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:26:43] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:26:43] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:26:43] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 23:26:43] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:26:43] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:26:43] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:26:43] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:26:43] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 23:26:43] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 23:26:43] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:26:43] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:26:44] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:26:44] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:26:45] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:26:45] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:26:45] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:26:45] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:26:46] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 23:47:31] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:47:31] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:47:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:47:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:47:59] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 23:47:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:47:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:47:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:47:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:47:59] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 23:47:59] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 23:47:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:47:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:48:00] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:48:00] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:48:00] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:48:00] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:48:00] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:48:00] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:48:01] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 23:48:43] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:48:43] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:49:11] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:49:11] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:49:11] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 23:49:11] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:49:11] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:49:11] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:49:11] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:49:11] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 23:49:11] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 23:49:11] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:49:11] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:49:12] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:49:12] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:49:12] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:49:12] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:49:12] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:49:12] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:49:13] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 23:49:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:49:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:50:27] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:50:27] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:50:27] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 23:50:27] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:50:27] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:50:27] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:50:27] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:50:27] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 23:50:27] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 23:50:27] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:50:27] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:50:28] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:50:28] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:50:28] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:50:28] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:50:29] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:50:29] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:50:29] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 23:52:23] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:52:23] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:52:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:52:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:52:51] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 23:52:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:52:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:52:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:52:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:52:51] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 23:52:51] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 23:52:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:52:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:52:52] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:52:52] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:52:52] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:52:52] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:52:52] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:52:52] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:52:53] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-03 23:59:28] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:59:28] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:59:55] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:59:55] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:59:55] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-03 23:59:55] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:59:55] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:59:55] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:59:55] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:59:55] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-03 23:59:55] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-03 23:59:56] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:59:56] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:59:56] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:59:56] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:59:57] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:59:57] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:59:57] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-03 23:59:57] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-03 23:59:58] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 00:06:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:06:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:07:19] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:07:19] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:07:19] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 00:07:19] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:07:19] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:07:19] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:07:19] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:07:19] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 00:07:19] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 00:07:19] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:07:19] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:07:20] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:07:20] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:07:20] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:07:20] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:07:20] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:07:20] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:07:21] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 00:27:00] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:27:00] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:27:28] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:27:28] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:27:28] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 00:27:28] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:27:28] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:27:28] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:27:28] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:27:28] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 00:27:28] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 00:27:28] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:27:28] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:27:29] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:27:29] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:27:29] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:27:29] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:27:29] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 00:27:29] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 00:27:30] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 09:15:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 09:15:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 09:15:14] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 09:15:14] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:20:23] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:20:23] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:20:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:20:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:20:51] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 13:20:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:20:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:20:51] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:20:51] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:20:51] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 13:20:51] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 13:20:52] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:20:52] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:20:52] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:20:52] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:20:53] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:20:53] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:20:53] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:20:53] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:20:54] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 13:25:07] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:25:07] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:25:35] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:25:35] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:25:35] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 13:25:35] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:25:35] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:25:35] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:25:35] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:25:35] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 13:25:35] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 13:25:36] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:25:36] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:25:36] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:25:36] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:25:37] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:25:37] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:25:37] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:25:37] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:25:38] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 13:29:56] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:29:56] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:30:25] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:30:25] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:30:25] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 13:30:25] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:30:25] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:30:25] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:30:25] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:30:25] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 13:30:25] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 13:30:25] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:30:25] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:30:26] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:30:26] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:30:26] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:30:26] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:30:27] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:30:27] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:30:27] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 13:48:14] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:48:14] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:48:42] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:48:42] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:48:42] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 13:48:42] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:48:42] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:48:42] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:48:42] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:48:42] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 13:48:42] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 13:48:43] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:48:43] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:48:44] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:48:44] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:48:44] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:48:44] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:48:44] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:48:44] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:48:45] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 13:49:49] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:49:49] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:50:17] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:50:17] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:50:17] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 13:50:17] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:50:17] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:50:17] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:50:17] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:50:17] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 13:50:17] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 13:50:17] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:50:17] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:50:18] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:50:18] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:50:18] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:50:18] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:50:19] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:50:19] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:50:19] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 13:56:55] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:56:55] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:57:23] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:57:23] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:57:23] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 13:57:23] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:57:23] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:57:23] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:57:23] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:57:23] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 13:57:23] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 13:57:23] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:57:23] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:57:24] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:57:24] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:57:24] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:57:24] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:57:24] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 13:57:24] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 13:57:25] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 14:27:18] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:27:18] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:27:45] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:27:45] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:27:45] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 14:27:45] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:27:45] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:27:45] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:27:45] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:27:45] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 14:27:45] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 14:27:46] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:27:46] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:27:46] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:27:46] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:27:47] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:27:47] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:27:47] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:27:47] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:27:48] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 14:32:36] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:32:36] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:33:04] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:33:04] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:33:04] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 14:33:04] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:33:04] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:33:04] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:33:04] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:33:04] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 14:33:04] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 14:33:05] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:33:05] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:33:05] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:33:05] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:33:06] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:33:06] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:33:06] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:33:06] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:33:07] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 14:37:27] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:37:27] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:37:55] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:37:55] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:37:55] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 14:37:55] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:37:55] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:37:55] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:37:55] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:37:55] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 14:37:55] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 14:37:55] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:37:55] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:37:56] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:37:56] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:37:56] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:37:56] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:37:57] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:37:57] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:37:57] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 14:42:29] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:42:29] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:42:57] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:42:57] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:42:57] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 14:42:57] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:42:57] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:42:57] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:42:57] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:42:57] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 14:42:57] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 14:42:58] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:42:58] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:42:58] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:42:58] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:42:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:42:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:42:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 14:42:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 14:43:00] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 15:32:08] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:32:08] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:32:36] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:32:36] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:32:36] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 15:32:36] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:32:36] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:32:36] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:32:36] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:32:36] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 15:32:36] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 15:32:36] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:32:36] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:32:37] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:32:37] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:32:37] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:32:37] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:32:38] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:32:38] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:32:38] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 15:33:29] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:33:29] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:33:57] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:33:57] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:33:57] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 15:33:57] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:33:57] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:33:57] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:33:57] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:33:57] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 15:33:57] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 15:33:58] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:33:58] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:33:58] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:33:58] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:33:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:33:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:33:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 15:33:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 15:34:00] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 16:15:03] quant.llm_advisor INFO: [LLM] anthropic 包未安装, LLM 功能降级
+[2026-03-04 16:15:12] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 16:15:12] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 16:15:13] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 16:15:13] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 17:43:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 17:43:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 17:59:30] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 17:59:30] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 17:59:58] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 17:59:58] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 17:59:58] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 17:59:58] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 17:59:58] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 17:59:58] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 17:59:58] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 17:59:58] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 17:59:58] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 17:59:58] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 17:59:58] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 17:59:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 17:59:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 17:59:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 17:59:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 17:59:59] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 17:59:59] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:00:00] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 18:04:41] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:04:41] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:05:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:05:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:05:09] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 18:05:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:05:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:05:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:05:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:05:09] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 18:05:09] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 18:05:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:05:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:05:10] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:05:10] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:05:10] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:05:10] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:05:11] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:05:11] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:05:11] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 18:07:42] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:07:42] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:09:37] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:09:37] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:10:06] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:10:06] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:10:06] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 18:10:06] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:10:06] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:10:06] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:10:06] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:10:06] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 18:10:06] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 18:10:06] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:10:06] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:10:07] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:10:07] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:10:07] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:10:07] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:10:07] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:10:07] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:10:08] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 18:29:19] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:29:19] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:29:47] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:29:47] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:29:47] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 18:29:47] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:29:47] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:29:47] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:29:47] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:29:47] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 18:29:47] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 18:29:47] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:29:47] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:29:48] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:29:48] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:29:49] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:29:49] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:29:49] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:29:49] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:29:50] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 18:53:57] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:53:57] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:54:25] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:54:25] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:54:25] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 18:54:25] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:54:25] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:54:25] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:54:25] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:54:25] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 18:54:25] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 18:54:25] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:54:25] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:54:26] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:54:26] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:54:26] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:54:26] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:54:27] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:54:27] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:54:28] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 18:58:40] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:58:40] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:59:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:59:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:59:09] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 18:59:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:59:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:59:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:59:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:59:09] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 18:59:09] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 18:59:09] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:59:09] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:59:10] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:59:10] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:59:11] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:59:11] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:59:11] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 18:59:11] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 18:59:12] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 19:03:24] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 19:03:24] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 19:03:52] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 19:03:52] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 19:03:52] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 19:03:52] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 19:03:52] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 19:03:52] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 19:03:52] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 19:03:52] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 19:03:52] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 19:03:53] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 19:03:53] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 19:03:54] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 19:03:54] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 19:03:54] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 19:03:54] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 19:03:55] quant.llm_advisor INFO: [LLM] 环境变量 ANTHROPIC_API_KEY 未设置, LLM 功能降级
+[2026-03-04 19:03:55] quant.llm_advisor INFO: [LLM] 启用方法: export ANTHROPIC_API_KEY=sk-ant-xxx (添加到 ~/.zshrc 可持久化)
+[2026-03-04 19:03:56] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 21:28:28] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:28:28] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:28:28] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:28:28] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:28:28] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 21:28:28] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:28:28] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:28:28] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:28:28] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:28:28] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:28:28] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:28:28] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:28:28] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:28:28] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 21:28:28] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 21:28:29] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:28:29] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:28:29] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:28:29] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:28:30] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:28:30] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:28:30] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:28:30] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:28:31] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:28:31] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:28:31] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:28:31] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:28:31] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:28:31] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:28:31] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:28:31] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:28:32] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 21:29:33] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:29:33] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:29:33] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:29:33] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:30:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:30:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:30:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:30:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:30:04] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 21:30:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:30:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:30:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:30:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:30:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:30:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:30:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:30:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:30:04] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 21:30:04] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 21:30:06] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:30:06] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:30:06] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:30:06] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:30:09] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:30:09] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:30:09] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:30:09] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:30:10] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:30:10] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:30:10] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:30:10] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:30:12] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:30:12] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:30:12] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:30:12] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:30:15] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 21:30:52] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:30:52] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:30:52] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:30:52] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:31:21] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:31:21] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:31:21] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:31:21] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:31:21] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 21:31:21] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:31:21] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:31:21] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:31:21] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:31:21] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:31:21] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:31:21] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:31:21] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:31:21] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 21:31:21] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 21:31:21] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:31:21] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:31:21] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:31:21] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:31:22] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:31:22] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:31:22] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:31:22] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:31:23] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:31:23] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:31:23] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:31:23] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:31:23] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:31:23] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:31:23] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:31:23] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:31:24] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 21:32:38] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:32:38] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:32:38] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:32:38] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:33:06] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:33:06] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:33:06] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:33:06] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:33:06] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-04 21:33:06] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:33:06] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:33:06] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:33:06] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:33:06] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:33:06] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:33:06] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:33:06] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:33:06] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-04 21:33:06] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-04 21:33:06] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:33:06] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:33:06] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:33:06] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:33:07] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:33:07] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:33:07] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:33:07] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:33:07] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:33:07] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:33:07] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:33:07] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:33:08] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 21:33:08] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 21:33:08] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 21:33:08] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 21:33:09] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-04 22:18:30] quant.llm_advisor INFO: [LLM] 使用 deepseek 后端 (模型=deepseek-chat)
+[2026-03-04 22:20:49] quant.llm_advisor INFO: [LLM] 使用 deepseek 后端 (模型=deepseek-chat)
+[2026-03-04 22:30:16] quant.llm_advisor INFO: [LLM] 使用 deepseek 后端 (模型=deepseek-chat)
+[2026-03-04 22:30:28] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-04 22:30:28] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-04 22:30:28] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-04 22:30:28] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-04 22:31:49] quant.llm_advisor WARNING: [LLM] 调用失败: Request timed out.
+[2026-03-04 22:39:15] quant.llm_advisor INFO: [LLM] 使用 deepseek 后端 (模型=deepseek-chat)
+[2026-03-04 22:44:52] quant.llm_advisor INFO: [LLM] 使用 deepseek 后端 (模型=deepseek-chat)
+[2026-03-04 23:14:09] quant.llm_advisor INFO: [LLM] 使用 deepseek 后端 (模型=deepseek-chat)
+[2026-03-04 23:16:51] quant.llm_advisor INFO: [LLM] 使用 deepseek 后端 (模型=deepseek-chat)
+[2026-03-04 23:34:23] quant.llm_advisor INFO: [LLM] 使用 deepseek 后端 (模型=deepseek-reasoner)
+[2026-03-05 09:15:27] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 09:15:27] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 09:15:27] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 09:15:27] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:24:11] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:24:11] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:24:11] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:24:11] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:24:39] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:24:39] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:24:39] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:24:39] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:24:39] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-05 10:24:39] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:24:39] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:24:39] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:24:39] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:24:39] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:24:39] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:24:39] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:24:39] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:24:39] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-05 10:24:39] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-05 10:24:39] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:24:39] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:24:39] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:24:39] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:24:40] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:24:40] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:24:40] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:24:40] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:24:41] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:24:41] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:24:41] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:24:41] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:24:41] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:24:41] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:24:41] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:24:41] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:24:42] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-05 10:35:20] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:35:20] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:35:20] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:35:20] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:35:20] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-05 10:35:20] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:35:20] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:35:20] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:35:20] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:35:20] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:35:20] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:35:20] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:35:20] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:35:20] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-05 10:35:20] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-05 10:35:21] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:35:21] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:35:21] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:35:21] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:35:22] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:35:22] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:35:22] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:35:22] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:35:22] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:35:22] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:35:22] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:35:22] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:35:23] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 10:35:23] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 10:35:23] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 10:35:23] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 10:35:23] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-05 10:35:55] quant.llm_advisor INFO: [LLM] 使用 deepseek 后端 (模型=deepseek-reasoner)
+[2026-03-05 11:57:34] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:34] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:34] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:34] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:35] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:35] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:35] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:35] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:35] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:35] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:35] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:35] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:35] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:35] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:35] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:35] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:35] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:35] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:35] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:35] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:36] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:57:38] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:57:38] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:57:38] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:57:38] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:58:03] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:58:03] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-05 11:58:03] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:58:03] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:58:03] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:58:03] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:58:03] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:58:03] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:58:03] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-05 11:58:03] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:58:03] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:58:03] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:58:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:58:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:58:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:58:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:58:05] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:58:05] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:58:05] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:58:05] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:58:05] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 11:58:05] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 11:58:05] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 11:58:05] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 11:58:06] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-05 12:02:23] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:23] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:23] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:23] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:24] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:25] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:25] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:25] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:25] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:25] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:25] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:25] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:25] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:25] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:25] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:25] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:25] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:25] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:25] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:25] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:25] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:25] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:25] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:25] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:25] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:27] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:27] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:27] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:27] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:51] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:51] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:51] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:51] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:51] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-05 12:02:51] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:51] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:51] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:51] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:51] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:51] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:51] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:51] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:51] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:51] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:51] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:51] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:51] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-05 12:02:51] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-05 12:02:52] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:52] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:52] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:52] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:53] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:53] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:53] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:53] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:53] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:53] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:53] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:53] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:54] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:02:54] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:02:54] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:02:54] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:02:55] quant.llm_advisor WARNING: [LLM] 调用失败: timeout
+[2026-03-05 12:07:03] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:03] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:03] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:03] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:03] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:03] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:03] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:03] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:03] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:03] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:03] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:03] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:03] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:03] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:03] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:03] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:03] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:03] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:03] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:03] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:04] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:06] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:06] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:06] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:06] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:31] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:31] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:31] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:31] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:31] quant.llm_advisor INFO: [LLM] 已禁用
+[2026-03-05 12:07:31] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:31] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:31] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:31] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:31] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:31] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:31] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:31] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:31] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:31] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:31] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:31] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:31] quant.llm_advisor WARNING: [LLM] 调用失败: API error
+[2026-03-05 12:07:31] quant.llm_advisor INFO: [LLM] 今日调用已达上限
+[2026-03-05 12:07:32] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:32] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:32] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:32] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:35] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:35] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:35] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:35] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:37] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:37] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:37] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:37] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:40] quant.llm_advisor DEBUG: [LLM] deepseek: 环境变量 DEEPSEEK_API_KEY 未设置, 跳过
+[2026-03-05 12:07:40] quant.llm_advisor DEBUG: [LLM] anthropic: 环境变量 ANTHROPIC_API_KEY 未设置, 跳过
+[2026-03-05 12:07:40] quant.llm_advisor INFO: [LLM] 无可用后端, 功能降级
+[2026-03-05 12:07:40] quant.llm_advisor INFO: [LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)
+[2026-03-05 12:07:42] quant.llm_advisor WARNING: [LLM] 调用失败: timeout

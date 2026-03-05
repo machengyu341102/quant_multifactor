@@ -194,5 +194,51 @@
       "trading_day": "none",
       "agent_check": true
     }
+  },
+  {
+    "id": "cb_morning",
+    "cli_aliases": ["cb", "convertible"],
+    "name": "可转债T+0选债",
+    "module": "cb_strategy",
+    "function": "get_cb_recommendations",
+    "schedule": "09:35",
+    "type": "direct_push",
+    "enabled": true,
+    "push_title": "可转债T+0早盘推荐",
+    "push_header": "可转债日内扫描:",
+    "push_format": {"price_symbol": "¥", "price_fmt": ".2f", "show_direction": false},
+    "gates": {
+      "trading_day": true,
+      "agent_check": true
+    }
+  },
+  {
+    "id": "cb_afternoon",
+    "name": "可转债T+0选债",
+    "module": "cb_strategy",
+    "function": "get_cb_recommendations",
+    "schedule": "13:30",
+    "type": "direct_push",
+    "enabled": true,
+    "push_title": "可转债T+0午盘推荐",
+    "push_header": "可转债午盘扫描:",
+    "push_format": {"price_symbol": "¥", "price_fmt": ".2f", "show_direction": false},
+    "gates": {
+      "trading_day": true,
+      "agent_check": true
+    }
+  },
+  {
+    "id": "sector_alert",
+    "cli_aliases": ["sector_alert", "板块"],
+    "name": "板块异动监控",
+    "module": "sector_monitor",
+    "function": "scan_sector_anomaly",
+    "schedule": "5min",
+    "type": "interval",
+    "enabled": true,
+    "gates": {
+      "trading_day": true
+    }
   }
 ]

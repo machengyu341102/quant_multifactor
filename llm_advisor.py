@@ -1,12 +1,17 @@
 """
-LLM 顾问 — 接入 Claude API 深度推理/分析/辅助决策
-===================================================
+LLM 顾问 — 多后端 (DeepSeek/Anthropic) 深度推理/分析/辅助决策
+===============================================================
 核心能力:
   L1 润色: 增强早报/晚报 (市场预判+操作建议+风险提示)
   L1 建议: 对 medium-confidence findings 提供 LLM 建议
   L2 深度推理: OODA 各阶段 LLM 深度介入 (orient/decide/learn)
   L2 夜班分析: 22:30+ 深度复盘/因子体检/明日预判/认知沉淀
   对话: CLI 问答系统状态
+
+后端支持:
+  - DeepSeek (OpenAI 兼容, 优先) — 便宜高效
+  - Anthropic Claude (备用)
+  - 自动选择第一个有 API key 的后端
 
 安全机制:
   - API key 不存在 → 所有函数降级为原始输出
@@ -35,22 +40,24 @@ logger = get_logger("llm_advisor")
 _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 _USAGE_PATH = os.path.join(_BASE_DIR, "llm_usage.json")
 
-# 延迟初始化的 client
-_client = None
+# 延迟初始化
+_client = None              # 实际 client 对象
+_client_backend = None      # "openai_compatible" | "anthropic"
+_client_model = None        # 使用的模型名
 _client_init_attempted = False
 
 
 # ================================================================
-#  Client 初始化
+#  Client 初始化 (多后端)
 # ================================================================
 
 def _get_client():
-    """延迟初始化 Anthropic client (异常安全)
+    """延迟初始化 LLM client — 按 backends 优先级自动选择
 
     Returns:
-        Anthropic client 或 None
+        (client, backend_type, model) 或 (None, None, None)
     """
-    global _client, _client_init_attempted
+    global _client, _client_backend, _client_model, _client_init_attempted
 
     if _client_init_attempted:
         return _client
@@ -61,30 +68,63 @@ def _get_client():
         logger.info("[LLM] 已禁用")
         return None
 
-    api_key_env = LLM_ADVISOR_PARAMS.get("api_key_env", "ANTHROPIC_API_KEY")
-    api_key = os.environ.get(api_key_env, "")
-    if not api_key:
-        logger.info("[LLM] 环境变量 %s 未设置, LLM 功能降级", api_key_env)
-        logger.info("[LLM] 启用方法: export %s=sk-ant-xxx (添加到 ~/.zshrc 可持久化)", api_key_env)
-        return None
+    backends = LLM_ADVISOR_PARAMS.get("backends", [])
+    if not backends:
+        # 兼容旧配置 (单后端)
+        backends = [{
+            "name": "anthropic",
+            "api_key_env": LLM_ADVISOR_PARAMS.get("api_key_env", "ANTHROPIC_API_KEY"),
+            "model": LLM_ADVISOR_PARAMS.get("model", "claude-sonnet-4-20250514"),
+            "type": "anthropic",
+        }]
 
-    try:
-        import anthropic
-        _client = anthropic.Anthropic(api_key=api_key)
-        logger.info("[LLM] Client 初始化成功")
-        return _client
-    except ImportError:
-        logger.info("[LLM] anthropic 包未安装, LLM 功能降级")
-        return None
-    except Exception as e:
-        logger.warning("[LLM] Client 初始化失败: %s", e)
-        return None
+    for backend in backends:
+        api_key_env = backend.get("api_key_env", "")
+        api_key = os.environ.get(api_key_env, "")
+        if not api_key:
+            logger.debug("[LLM] %s: 环境变量 %s 未设置, 跳过",
+                         backend.get("name"), api_key_env)
+            continue
+
+        backend_type = backend.get("type", "openai_compatible")
+        model = backend.get("model", "deepseek-chat")
+
+        try:
+            if backend_type == "anthropic":
+                import anthropic
+                _client = anthropic.Anthropic(api_key=api_key)
+            else:
+                # OpenAI 兼容 (DeepSeek, 通义千问等)
+                from openai import OpenAI
+                _client = OpenAI(
+                    api_key=api_key,
+                    base_url=backend.get("base_url", "https://api.deepseek.com"),
+                )
+
+            _client_backend = backend_type
+            _client_model = model
+            logger.info("[LLM] 使用 %s 后端 (模型=%s)", backend.get("name"), model)
+            return _client
+        except ImportError:
+            logger.info("[LLM] %s SDK 未安装, 跳过", backend.get("name"))
+            continue
+        except Exception as e:
+            logger.warning("[LLM] %s 初始化失败: %s", backend.get("name"), e)
+            continue
+
+    # 初始化失败时不锁定, 下次重试 (环境变量可能稍后可用)
+    _client_init_attempted = False
+    logger.info("[LLM] 无可用后端, 功能降级")
+    logger.info("[LLM] 启用方法: export DEEPSEEK_API_KEY=sk-xxx (添加到 ~/.zshrc)")
+    return None
 
 
 def reset_client():
     """重置 client 状态 (供测试使用)"""
-    global _client, _client_init_attempted
+    global _client, _client_backend, _client_model, _client_init_attempted
     _client = None
+    _client_backend = None
+    _client_model = None
     _client_init_attempted = False
 
 
@@ -133,7 +173,7 @@ def get_usage_today() -> dict:
 # ================================================================
 
 def _call_llm(prompt: str, system: str = "", max_tokens: int = None) -> str:
-    """统一 LLM 调用 (限流+异常安全+计数)
+    """统一 LLM 调用 (限流+异常安全+计数, 自动适配后端)
 
     Returns:
         LLM 回复文本, 或空字符串 (失败时)
@@ -148,29 +188,52 @@ def _call_llm(prompt: str, system: str = "", max_tokens: int = None) -> str:
 
     if max_tokens is None:
         max_tokens = LLM_ADVISOR_PARAMS.get("max_tokens", 1024)
-    model = LLM_ADVISOR_PARAMS.get("model", "claude-sonnet-4-20250514")
+    model = _client_model or "deepseek-chat"
     temperature = LLM_ADVISOR_PARAMS.get("temperature", 0.3)
     timeout = LLM_ADVISOR_PARAMS.get("timeout_sec", 30)
 
     try:
-        messages = [{"role": "user", "content": prompt}]
-        kwargs = {
-            "model": model,
-            "max_tokens": max_tokens,
-            "messages": messages,
-            "temperature": temperature,
-        }
-        if system:
-            kwargs["system"] = system
-
-        response = client.messages.create(**kwargs, timeout=timeout)
-        _increment_usage()
-
-        text = ""
-        for block in response.content:
-            if hasattr(block, "text"):
-                text += block.text
-        return text
+        if _client_backend == "anthropic":
+            # Anthropic SDK
+            messages = [{"role": "user", "content": prompt}]
+            kwargs = {
+                "model": model,
+                "max_tokens": max_tokens,
+                "messages": messages,
+                "temperature": temperature,
+            }
+            if system:
+                kwargs["system"] = system
+            response = client.messages.create(**kwargs, timeout=timeout)
+            _increment_usage()
+            text = ""
+            for block in response.content:
+                if hasattr(block, "text"):
+                    text += block.text
+            return text
+        else:
+            # OpenAI 兼容 (DeepSeek 等)
+            is_reasoner = "reasoner" in (model or "")
+            messages = []
+            if system:
+                if is_reasoner:
+                    # R1 不支持 system role, 合并到 user 消息
+                    prompt = f"[背景信息]\n{system}\n\n[问题]\n{prompt}"
+                else:
+                    messages.append({"role": "system", "content": system})
+            messages.append({"role": "user", "content": prompt})
+            kwargs = {
+                "model": model,
+                "messages": messages,
+                "max_tokens": max_tokens,
+                "timeout": timeout,
+            }
+            # R1 不支持 temperature 参数
+            if not is_reasoner:
+                kwargs["temperature"] = temperature
+            response = client.chat.completions.create(**kwargs)
+            _increment_usage()
+            return response.choices[0].message.content or ""
     except Exception as e:
         logger.warning("[LLM] 调用失败: %s", e)
         return ""
@@ -192,7 +255,7 @@ def _build_system_context() -> str:
     try:
         from scorecard import calc_cumulative_stats
         stats = calc_cumulative_stats(30)
-        parts.append(f"\n近30天统计: 总记录{stats.get('total_records', 0)}, "
+        parts.append(f"\n近30天统计: 总记录{stats.get('total', 0)}, "
                      f"胜率{stats.get('win_rate', 0):.1f}%, "
                      f"平均收益{stats.get('avg_net_return', 0):.2f}%")
     except Exception:
@@ -208,12 +271,19 @@ def _build_system_context() -> str:
     except Exception:
         pass
 
-    # 当前持仓
+    # 当前持仓 (含明细)
     try:
         from position_manager import get_portfolio_summary
         summary = get_portfolio_summary()
         parts.append(f"当前持仓{summary.get('count', 0)}只, "
                      f"组合盈亏{summary.get('total_pnl_pct', 0):.2f}%")
+        details = summary.get("details", [])
+        if details:
+            for d in details[:10]:
+                parts.append(f"  {d.get('code')} {d.get('name')} "
+                             f"({d.get('strategy')}) "
+                             f"成本{d.get('entry_price',0):.2f} "
+                             f"盈亏{d.get('pnl_pct',0):.1f}%")
     except Exception:
         pass
 
@@ -241,7 +311,77 @@ def _build_system_context() -> str:
     except Exception:
         pass
 
-    parts.append("\n请用简洁中文回答。关注风险, 给出可操作的建议。")
+    # 今日推送记录 (trade_journal + position_manager 双源, 确保不遗漏)
+    try:
+        import sqlite3, json as _json
+        from datetime import date
+        today = date.today().isoformat()
+        all_picks = []
+        seen_codes = set()
+
+        # 源1: trade_journal (有完整因子评分)
+        try:
+            _db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "quant_data.db")
+            _conn = sqlite3.connect(_db_path)
+            rows = _conn.execute(
+                "SELECT strategy, picks, trade_date FROM trade_journal "
+                "WHERE trade_date = ? ORDER BY id DESC", (today,)
+            ).fetchall()
+            _conn.close()
+            for strategy, picks_json, _ in rows:
+                try:
+                    picks = _json.loads(picks_json) if picks_json else []
+                    for p in picks:
+                        code = p.get('code', '')
+                        seen_codes.add(code)
+                        all_picks.append(f"  {code} {p.get('name','')} "
+                                         f"({strategy}) "
+                                         f"评分{p.get('total_score', p.get('score', 0)):.3f} "
+                                         f"价格{p.get('price', 0)}")
+                except Exception:
+                    continue
+        except Exception:
+            pass
+
+        # 源2: position_manager 今日新增持仓 (补充 trade_journal 遗漏的)
+        try:
+            from position_manager import load_positions
+            positions = load_positions()
+            for p in positions:
+                if p.get("entry_date") == today and p.get("code") not in seen_codes:
+                    seen_codes.add(p["code"])
+                    all_picks.append(f"  {p['code']} {p.get('name','')} "
+                                     f"({p.get('strategy','')}) "
+                                     f"价格{p.get('entry_price', 0)} "
+                                     f"[{p.get('entry_time','')}建仓]")
+        except Exception:
+            pass
+
+        if all_picks:
+            parts.append(f"\n今日系统推荐信号({len(all_picks)}只):")
+            parts.extend(all_picks[:20])
+    except Exception:
+        pass
+
+    # 今日板块异动
+    try:
+        from json_store import safe_load as _sl
+        alerts = _sl(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                     "sector_alerts.json"), default={})
+        from datetime import date
+        today = date.today().isoformat()
+        today_alerts = [r for r in alerts.get("today_log", [])
+                        if r.get("date") == today]
+        if today_alerts:
+            parts.append(f"\n今日板块异动({len(today_alerts)}个):")
+            for a in today_alerts:
+                leaders = ", ".join(f"{l['name']}{l['change_pct']:+.1f}%"
+                                   for l in a.get("leaders", []))
+                parts.append(f"  {a['sector']} {a['change_pct']:+.2f}% → {leaders}")
+    except Exception:
+        pass
+
+    parts.append("\n请用简洁中文回答。关注风险, 给出可操作的建议。如果用户问到某只股票是系统推荐的, 请查看上面的今日推送信号确认。")
     return "\n".join(parts)
 
 
@@ -776,7 +916,7 @@ def chat(question: str) -> str:
     """
     client = _get_client()
     if client is None:
-        return "[LLM 不可用] 请设置环境变量 ANTHROPIC_API_KEY"
+        return "[LLM 不可用] 请设置环境变量 DEEPSEEK_API_KEY 或 ANTHROPIC_API_KEY"
 
     system = _build_system_context()
     answer = _call_llm(question, system=system)

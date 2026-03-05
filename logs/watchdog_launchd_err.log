@@ -1,154 +1,11 @@
-  [quant.watchdog] 系统异常! 无心跳记录 (调度器可能未启动); 无PID记录; 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
+  [quant.watchdog] 系统异常! 策略 [可转债T+0选债] 今日未运行 (预期 09:35)
 /Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
   warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [集合竞价选股] 今日未运行 (预期 09:25); 策略 [放量突破选股] 今日未运行 (预期 10:00); 策略 [尾盘短线选股] 今日未运行 (预期 14:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统健康
+  [quant.watchdog] 告警冷却中 (600秒前已报), 跳过
+  [quant.watchdog] 告警冷却中 (1200秒前已报), 跳过
+  [quant.watchdog] 告警冷却中 (1800秒前已报), 跳过
+  [quant.watchdog] 告警冷却中 (2401秒前已报), 跳过
+  [quant.watchdog] 告警冷却中 (3001秒前已报), 跳过
   [quant.watchdog] 系统健康
   [quant.watchdog] 系统健康
   [quant.watchdog] 系统健康
@@ -210,37 +67,12 @@
   [quant.watchdog] 系统健康
   [quant.watchdog] 系统健康
   [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统异常! 策略 [期货趋势选股] 今日未运行 (预期 09:05)
+  [quant.watchdog] 系统异常! 策略 [可转债T+0选债] 今日未运行 (预期 09:35)
 /Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
   warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [期货趋势选股] 今日未运行 (预期 09:05)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
+  [quant.watchdog] 告警冷却中 (600秒前已报), 跳过
+  [quant.watchdog] 告警冷却中 (1200秒前已报), 跳过
+  [quant.watchdog] 告警冷却中 (1800秒前已报), 跳过
   [quant.watchdog] 系统健康
   [quant.watchdog] 系统健康
   [quant.watchdog] 系统健康
@@ -256,65 +88,3 @@
   [quant.watchdog] 系统健康
   [quant.watchdog] 系统健康
   [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统健康
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(
-  [quant.watchdog] 系统异常! 策略 [币圈趋势选股] 今日未运行 (预期 01:00); 策略 [美股收盘分析] 今日未运行 (预期 05:30)
-/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-  warnings.warn(

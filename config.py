@@ -489,9 +489,18 @@ BACKTEST_PARAMS = {
 }
 
 # ================================================================
-#  微信推送每日上限
+#  推送渠道配置
 # ================================================================
-MAX_WECHAT_DAILY = 5  # 批量合并推送: 1早报 + 1上午批 + 1盘中批 + 1下午批 + 1晚报
+# 主渠道: 企业微信应用消息 (直推个人, 不需要群)
+WECOM_CORP_ID = "ww3ffca53860e3a5f7"
+WECOM_AGENT_ID = 1000002
+WECOM_SECRET = "VN1tkGHIQqTE8VWSZzioTi6wFrJFD0wRHduYvvNxZLY"
+
+# 群机器人 (备选, 留空则不用)
+WECOM_BOT_KEY = ""
+
+# Server酱 (最后备选)
+MAX_WECHAT_DAILY = 100  # 应用消息限制宽松, 放到100
 
 # ================================================================
 #  智能体 (Agent Brain) 参数
@@ -523,16 +532,30 @@ LEARNING_ENGINE_PARAMS = {
 }
 
 # ================================================================
-#  LLM 顾问 (Claude API)
+#  LLM 顾问 (多后端: DeepSeek 优先, Anthropic 备用)
 # ================================================================
 LLM_ADVISOR_PARAMS = {
     "enabled": True,
-    "api_key_env": "ANTHROPIC_API_KEY",    # 从环境变量读取
-    "model": "claude-sonnet-4-20250514",
+    # 后端优先级: deepseek → anthropic (自动选第一个有 API key 的)
+    "backends": [
+        {
+            "name": "deepseek",
+            "api_key_env": "DEEPSEEK_API_KEY",
+            "base_url": "https://api.deepseek.com",
+            "model": "deepseek-reasoner",      # DeepSeek-R1 (深度推理)
+            "type": "openai_compatible",
+        },
+        {
+            "name": "anthropic",
+            "api_key_env": "ANTHROPIC_API_KEY",
+            "model": "claude-sonnet-4-20250514",
+            "type": "anthropic",
+        },
+    ],
     "max_tokens": 1024,
     "temperature": 0.3,
-    "timeout_sec": 30,
-    "max_daily_calls": 20,                  # 每日 API 调用上限
+    "timeout_sec": 60,
+    "max_daily_calls": 50,                  # DeepSeek 便宜, 上调额度
 }
 
 # ================================================================
@@ -587,9 +610,9 @@ EXPERIMENT_PARAMS = {
 API_GUARD_PARAMS = {
     "enabled": True,
     "max_rpm": 600,                         # 全局每分钟最大请求数 (跨进程文件锁协调)
-    "burst": 60,                            # 令牌桶突发容量
-    "circuit_failure_threshold": 10,        # 连续失败N次 → 熔断 (5→10, akshare波动大)
-    "circuit_cooldown_sec": 60,             # 熔断冷却时间 (120→60s, 快速恢复)
+    "burst": 80,                            # 令牌桶突发容量 (60→80, 15策略并发需更大余量)
+    "circuit_failure_threshold": 20,        # 连续失败N次 → 熔断 (10→20, 密集策略场景)
+    "circuit_cooldown_sec": 30,             # 熔断冷却时间 (60→30s, 快速恢复)
     "pool_cache_ttl_sec": 3600,             # 中证1000成分股缓存 1小时
     "daily_kline_cache_ttl_sec": 300,       # 日K缓存 5分钟
     # Tushare Pro 配置 (注册后填入)

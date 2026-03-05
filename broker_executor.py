@@ -726,16 +726,30 @@ def _get_price(code: str) -> float:
 
 
 def _fetch_prices(codes: list[str]) -> dict[str, float]:
-    """批量获取价格"""
+    """批量获取价格 (smart_source 自动切换)"""
     if not codes:
         return {}
-    try:
+    from api_guard import smart_source, SOURCE_SINA_HTTP, SOURCE_EM_SPOT
+
+    def _sina():
         from intraday_strategy import _sina_batch_quote
         result = _sina_batch_quote(codes)
         return {code: info.get("price", 0) for code, info in result.items()
                 if info.get("price", 0) > 0}
-    except Exception:
-        return {}
+
+    def _em():
+        import akshare as ak
+        df = ak.stock_zh_a_spot_em()
+        code_col = "代码" if "代码" in df.columns else df.columns[1]
+        price_col = "最新价" if "最新价" in df.columns else df.columns[2]
+        df[code_col] = df[code_col].astype(str)
+        code_set = set(codes)
+        filtered = df[df[code_col].isin(code_set)]
+        return {r[code_col]: float(r[price_col]) for _, r in filtered.iterrows()
+                if str(r[price_col]).replace(".", "").replace("-", "").isdigit() and float(r[price_col]) > 0}
+
+    result = smart_source([(SOURCE_SINA_HTTP, _sina), (SOURCE_EM_SPOT, _em)])
+    return result if result else {}
 
 
 def _calc_stop_price(entry_price: float, atr: float) -> float:

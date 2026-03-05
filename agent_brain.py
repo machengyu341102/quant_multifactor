@@ -483,7 +483,8 @@ def detect_portfolio_risk(snapshot: dict, memory: dict) -> list:
     """组合层风控检测器 (L4): 调用 portfolio_risk 模块"""
     try:
         from portfolio_risk import check_portfolio_risk
-        return check_portfolio_risk().get("findings", [])
+        result = check_portfolio_risk()
+        return result.get("findings", []) if result else []
     except Exception:
         return []
 
@@ -501,14 +502,14 @@ def detect_signal_quality(snapshot: dict, memory: dict) -> list:
         # 1. 策略级 T+1 胜率暴跌
         for strategy, info in stats.get("by_strategy", {}).items():
             wr = info.get("t1_win_rate")
-            if wr is not None and info["total"] >= 5 and wr < 30:
+            if wr is not None and info.get("total", 0) >= 5 and wr < 30:
                 findings.append({
                     "type": "signal_quality_degradation",
-                    "message": f"策略 [{strategy}] T+1胜率仅 {wr}% (近14天, {info['total']}条)",
+                    "message": f"策略 [{strategy}] T+1胜率仅 {wr}% (近14天, {info.get('total', 0)}条)",
                     "severity": "warning",
                     "confidence": 0.7,
                     "suggested_action": "pause_strategy",
-                    "details": {"strategy": strategy, "win_rate": wr, "total": info["total"]},
+                    "details": {"strategy": strategy, "win_rate": wr, "total": info.get("total", 0)},
                 })
 
         # 2. 信号衰减严重 (T+1 赚但 T+5 亏 → 信号太短命)

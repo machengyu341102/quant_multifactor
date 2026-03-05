@@ -1,0 +1,20 @@
+[签名] token=fUgKQPK5fCxD35k0gcy9E7Bv3YfJt, echostr_len=472, computed=41bfb4aea1d3f62cf7678523659e628ca6380ec9
+[收到消息] from=MaChengYu, type=text, content=选股需要跑多久
+/Users/zchtech002/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+[签名] token=fUgKQPK5fCxD35k0gcy9E7Bv3YfJt, echostr_len=472, computed=632b802cdf3f4e3ef84af8e884b05b5d2c65ccaf
+[收到消息] from=MaChengYu, type=text, content=这么慢
+  [quant.llm_advisor] [LLM] 使用 deepseek 后端 (模型=deepseek-reasoner)
+  [quant.db_store] 数据库初始化完成: /Users/zchtech002/machengyu/quant_multifactor/quant_data.db
+  [quant.db_store] 数据库初始化完成: /Users/zchtech002/machengyu/quant_multifactor/quant_data.db
+  [quant.db_store] 数据库初始化完成: /Users/zchtech002/machengyu/quant_multifactor/quant_data.db
+  [quant.db_store] 数据库初始化完成: /Users/zchtech002/machengyu/quant_multifactor/quant_data.db
+[签名] token=fUgKQPK5fCxD35k0gcy9E7Bv3YfJt, echostr_len=472, computed=f0a6b0d325baa41064121941687b5b16c1d0c069
+[收到消息] from=MaChengYu, type=text, content=卡死问题没有了
+  [quant.db_store] 数据库初始化完成: /Users/zchtech002/machengyu/quant_multifactor/quant_data.db
+[签名] token=fUgKQPK5fCxD35k0gcy9E7Bv3YfJt, echostr_len=472, computed=a8e519e6e44264478861d653570aaa1b29b04da9
+[收到消息] from=MaChengYu, type=text, content=明泰铝业是怎么放量突破的
+[签名] token=fUgKQPK5fCxD35k0gcy9E7Bv3YfJt, echostr_len=684, computed=46c832f9a94ca69e722847ea4adb92137378183a
+[收到消息] from=MaChengYu, type=image, content=
+[签名] token=fUgKQPK5fCxD35k0gcy9E7Bv3YfJt, echostr_len=684, computed=624402296020f60b0e01cd3ad180c31dabeea9fe
+[收到消息] from=MaChengYu, type=image, content=

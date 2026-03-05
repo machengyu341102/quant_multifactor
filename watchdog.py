@@ -34,12 +34,15 @@ _STRATEGY_SCHEDULE = {
     "期货趋势选股": "09:05",
     "事件驱动选股": "09:22",
     "集合竞价选股": "09:25",
+    "可转债T+0选债": "09:35",
     "低吸回调选股": "09:50",
     "放量突破选股": "10:00",
     "趋势跟踪选股": "10:00",
     "缩量整理选股": "10:15",
     "板块轮动选股": "14:00",
     "尾盘短线选股": "14:30",
+    # 板块异动监控: 轮询策略(每5分钟), 不做定时检查
+    # 币圈/美股/跨市场/作战计划: 夜班子任务, 从 night_shift_log 检查
 }
 
 _HEARTBEAT_TIMEOUT = 300  # 5分钟
@@ -203,27 +206,47 @@ def check_health() -> dict:
 #  告警
 # ================================================================
 
+_ALERT_LOCK_PATH = os.path.join(_DIR, ".watchdog_alert_lock")
+_ALERT_COOLDOWN = 3600  # 同一问题1小时内只报一次
+
+
 def alert_if_unhealthy():
-    """不健康时推送告警 (紧急告警不受每日限额约束)"""
+    """不健康时推送告警 (1小时冷却, 不重复刷屏)"""
     result = check_health()
     if result["healthy"]:
         logger.info("系统健康")
+        # 健康时清除锁
+        if os.path.exists(_ALERT_LOCK_PATH):
+            os.remove(_ALERT_LOCK_PATH)
         return
+
+    # 冷却检查: 1小时内不重复告警
+    if os.path.exists(_ALERT_LOCK_PATH):
+        try:
+            lock_age = time.time() - os.path.getmtime(_ALERT_LOCK_PATH)
+            if lock_age < _ALERT_COOLDOWN:
+                logger.info("告警冷却中 (%.0f秒前已报), 跳过", lock_age)
+                return
+        except Exception:
+            pass
 
     issues_text = "\n".join(f"- {i}" for i in result["issues"])
     alert_msg = (
-        f"## 系统告警\n\n"
-        f"**时间:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-        f"### 异常项\n{issues_text}\n\n"
-        f"**进程状态:** {'存活' if result['process_alive'] else '不存在'}\n"
-        f"**今日错误:** {result['errors_today']} 次"
+        f"系统告警\n\n"
+        f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+        f"异常项:\n{issues_text}\n\n"
+        f"进程状态: {'存活' if result['process_alive'] else '不存在'}\n"
+        f"今日错误: {result['errors_today']} 次"
     )
 
     logger.error("系统异常! %s", "; ".join(result["issues"]))
 
     try:
-        from notifier import notify_wechat_raw
-        notify_wechat_raw("系统异常告警", alert_msg)
+        from notifier import notify_alert, LEVEL_CRITICAL
+        notify_alert(LEVEL_CRITICAL, "系统异常告警", alert_msg)
+        # 写锁文件
+        with open(_ALERT_LOCK_PATH, "w") as f:
+            f.write(datetime.now().isoformat())
     except Exception as e:
         logger.error("告警推送失败: %s", e)
 

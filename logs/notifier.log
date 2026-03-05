@@ -1,0 +1,15 @@
+[2026-03-04 16:34:13] quant.notifier WARNING: 企业微信应用消息失败: {'errcode': 60020, 'errmsg': 'not allow to access from your ip, hint: [1772613252038292950744032], from ip: 223.244.82.145, more info at https://open.work.weixin.qq.com/devtool/query?e=60020'}
+[2026-03-04 18:00:21] quant.notifier WARNING: 企业微信应用消息失败: {'code': 0}
+[2026-03-04 18:00:21] quant.notifier WARNING: 企业微信应用消息失败, 尝试备选: [18:00] 测试批次
+[2026-03-04 18:05:33] quant.notifier WARNING: 企业微信应用消息失败: {'code': 0}
+[2026-03-04 18:05:33] quant.notifier WARNING: 企业微信应用消息失败, 尝试备选: [18:05] 测试批次
+[2026-03-04 18:10:27] quant.notifier WARNING: 企业微信应用消息失败: {'code': 0}
+[2026-03-04 18:10:27] quant.notifier WARNING: 企业微信应用消息失败, 尝试备选: [18:10] 测试批次
+[2026-03-04 18:30:20] quant.notifier WARNING: 企业微信应用消息失败: {'code': 0}
+[2026-03-04 18:30:20] quant.notifier WARNING: 企业微信应用消息失败, 尝试备选: [18:30] 测试批次
+[2026-03-04 18:54:50] quant.notifier WARNING: 企业微信应用消息失败: {'code': 0}
+[2026-03-04 18:54:50] quant.notifier WARNING: 企业微信应用消息失败, 尝试备选: [18:54] 测试批次
+[2026-03-04 18:59:32] quant.notifier WARNING: 企业微信应用消息失败: {'code': 0}
+[2026-03-04 18:59:32] quant.notifier WARNING: 企业微信应用消息失败, 尝试备选: [18:59] 测试批次
+[2026-03-04 19:04:19] quant.notifier WARNING: 企业微信应用消息失败: {'code': 0}
+[2026-03-04 19:04:19] quant.notifier WARNING: 企业微信应用消息失败, 尝试备选: [19:04] 测试批次

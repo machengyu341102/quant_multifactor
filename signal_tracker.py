@@ -36,6 +36,7 @@ logger = get_logger("signal_tracker")
 _DIR = os.path.dirname(os.path.abspath(__file__))
 _SIGNALS_DB_PATH = os.path.join(_DIR, "signals_db.json")
 _JOURNAL_PATH = os.path.join(_DIR, "trade_journal.json")
+_JOURNAL_DEFAULT = _JOURNAL_PATH
 
 # 验证周期: T+1, T+3, T+5
 VERIFY_PERIODS = [1, 3, 5]
@@ -90,38 +91,58 @@ def _is_stock_code(code: str) -> bool:
 # ================================================================
 
 def _fetch_stock_close(code: str, target_date: str) -> float | None:
-    """获取 A 股某日收盘价"""
-    try:
-        from api_guard import guarded_call
+    """获取 A 股某日收盘价 (腾讯优先, 东财备选, 独立断路器)"""
+    from api_guard import smart_source, SOURCE_TENCENT_KLINE, SOURCE_EM_KLINE
+
+    start = target_date.replace("-", "")
+    d = datetime.strptime(target_date, "%Y-%m-%d").date()
+    end = (d + timedelta(days=5)).strftime("%Y%m%d")
+    sym = f"sh{code}" if code.startswith(("6", "9")) else f"sz{code}"
+
+    def _tx():
         import akshare as ak
-
-        start = target_date.replace("-", "")
-        d = datetime.strptime(target_date, "%Y-%m-%d").date()
-        end = (d + timedelta(days=5)).strftime("%Y%m%d")
-
-        sym = f"sh{code}" if code.startswith(("6", "9")) else f"sz{code}"
-        df = guarded_call(
-            ak.stock_zh_a_hist_tx,
+        df = ak.stock_zh_a_hist_tx(
             symbol=sym, start_date=start, end_date=end, adjust="qfq",
-            cache_key=f"signal_tracker_{code}",
-            cache_ttl=300,
         )
         if df is None or df.empty:
-            return None
-
+            raise ValueError("腾讯收盘价返回空")
         df["date_str"] = df["date"].astype(str).str[:10]
         row = df[df["date_str"] == target_date]
         if row.empty:
             row = df.head(1)
         return float(row.iloc[0]["close"])
+
+    def _em():
+        import akshare as ak
+        df = ak.stock_zh_a_hist(
+            symbol=code, period="daily",
+            start_date=start, end_date=end, adjust="qfq",
+        )
+        if df is None or df.empty:
+            raise ValueError("东财收盘价返回空")
+        date_col = "日期" if "日期" in df.columns else "date"
+        close_col = "收盘" if "收盘" in df.columns else "close"
+        df["date_str"] = df[date_col].astype(str).str[:10]
+        row = df[df["date_str"] == target_date]
+        if row.empty:
+            row = df.head(1)
+        return float(row.iloc[0][close_col])
+
+    try:
+        return smart_source([
+            (SOURCE_TENCENT_KLINE, _tx),
+            (SOURCE_EM_KLINE, _em),
+        ])
     except Exception as e:
-        logger.debug("获取 %s %s 收盘价失败: %s", code, target_date, e)
+        logger.debug("A股收盘价双源均失败 %s %s: %s", code, target_date, e)
         return None
 
 
 def _fetch_crypto_close(symbol: str, target_date: str) -> float | None:
-    """获取币圈某日收盘价 (Binance)"""
-    try:
+    """获取币圈某日收盘价 (Binance, 独立断路器)"""
+    from api_guard import smart_source, SOURCE_BINANCE
+
+    def _binance():
         import requests
         pair = f"{symbol}USDT"
         ts = int(datetime.strptime(target_date, "%Y-%m-%d").timestamp() * 1000)
@@ -130,47 +151,61 @@ def _fetch_crypto_close(symbol: str, target_date: str) -> float | None:
         r = requests.get(url, params=params, timeout=10)
         data = r.json()
         if data and len(data) > 0:
-            return float(data[0][4])  # close
+            return float(data[0][4])
+        raise ValueError("Binance无数据")
+
+    try:
+        return smart_source([(SOURCE_BINANCE, _binance)])
     except Exception as e:
         logger.debug("获取 %s %s 币价失败: %s", symbol, target_date, e)
     return None
 
 
 def _fetch_us_close(symbol: str, target_date: str) -> float | None:
-    """获取美股某日收盘价 (yfinance)"""
-    try:
+    """获取美股某日收盘价 (yfinance, 独立断路器)"""
+    from api_guard import smart_source, SOURCE_YFINANCE
+
+    def _yf():
         import yfinance as yf
         d = datetime.strptime(target_date, "%Y-%m-%d").date()
         end = d + timedelta(days=5)
         t = yf.Ticker(symbol)
         hist = t.history(start=d.isoformat(), end=end.isoformat())
-        if hist is not None and not hist.empty:
-            hist.index = hist.index.tz_localize(None) if hist.index.tz else hist.index
-            target = hist[hist.index.date == d]
-            if not target.empty:
-                return float(target.iloc[0]["Close"])
-            return float(hist.iloc[0]["Close"])
+        if hist is None or hist.empty:
+            raise ValueError("yfinance无数据")
+        hist.index = hist.index.tz_localize(None) if hist.index.tz else hist.index
+        target = hist[hist.index.date == d]
+        if not target.empty:
+            return float(target.iloc[0]["Close"])
+        return float(hist.iloc[0]["Close"])
+
+    try:
+        return smart_source([(SOURCE_YFINANCE, _yf)])
     except Exception as e:
         logger.debug("获取 %s %s 美股价失败: %s", symbol, target_date, e)
     return None
 
 
 def _fetch_futures_close(symbol: str, target_date: str) -> float | None:
-    """获取期货某日收盘价 (akshare, 新浪主力连续)"""
-    try:
+    """获取期货某日收盘价 (新浪主力连续, 独立断路器)"""
+    from api_guard import smart_source, SOURCE_SINA_FUTURES
+
+    def _sina():
         import akshare as ak
         sym = symbol.lower() + "0"  # e.g. FU→fu0 (主力连续)
         df = ak.futures_main_sina(symbol=sym)
         if df is None or df.empty:
-            return None
-        # 列名为中文: 日期/收盘价
+            raise ValueError("新浪期货数据返回空")
         date_col = "日期" if "日期" in df.columns else "date"
         close_col = "收盘价" if "收盘价" in df.columns else "close"
         df["date_str"] = df[date_col].astype(str).str[:10]
         row = df[df["date_str"] == target_date]
         if not row.empty:
             return float(row.iloc[0][close_col])
-        return None
+        raise ValueError(f"无 {target_date} 数据")
+
+    try:
+        return smart_source([(SOURCE_SINA_FUTURES, _sina)])
     except Exception as e:
         logger.debug("获取 %s %s 期货价失败: %s", symbol, target_date, e)
     return None
@@ -204,13 +239,20 @@ def ingest_from_journal(target_date: str | None = None) -> int:
     if target_date is None:
         target_date = date.today().isoformat()
 
-    journal = safe_load(_JOURNAL_PATH, default=[])
+    # 优先读 SQLite, 回退 JSON (测试环境 monkeypatch 时走 JSON)
+    try:
+        if _JOURNAL_PATH != _JOURNAL_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_trade_journal
+        journal = load_trade_journal(days=7)
+    except (ImportError, Exception):
+        journal = safe_load(_JOURNAL_PATH, default=[])
     db = safe_load(_SIGNALS_DB_PATH, default=[])
 
     # 已有信号的 key 集合 (date+strategy+code 去重)
     existing_keys = set()
     for sig in db:
-        key = f"{sig['date']}|{sig['strategy']}|{sig['code']}"
+        key = f"{sig.get('date', '')}|{sig.get('strategy', '')}|{sig.get('code', '')}"
         existing_keys.add(key)
 
     added = 0
@@ -413,7 +455,7 @@ def get_stats(days: int = 30) -> dict:
     """
     db = safe_load(_SIGNALS_DB_PATH, default=[])
     cutoff = (date.today() - timedelta(days=days)).isoformat()
-    signals = [s for s in db if s["date"] >= cutoff and s.get("verify")]
+    signals = [s for s in db if s.get("date", "") >= cutoff and s.get("verify")]
 
     if not signals:
         return {"total": 0, "by_strategy": {}, "by_regime": {},

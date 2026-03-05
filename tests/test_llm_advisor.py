@@ -1,8 +1,8 @@
 """
 llm_advisor 单元测试
 ====================
-覆盖: API key 缺失降级/调用限额/增强早报/chat 上下文/异常安全
-所有测试 mock Claude API, 无网络依赖
+覆盖: 多后端初始化/API key 缺失降级/调用限额/增强早报/chat 上下文/异常安全
+所有测试 mock LLM API, 无网络依赖
 """
 
 import json
@@ -31,9 +31,20 @@ def tmp_dir(tmp_path, monkeypatch):
     import llm_advisor
     usage_path = str(tmp_path / "llm_usage.json")
     monkeypatch.setattr(llm_advisor, "_USAGE_PATH", usage_path)
+    # 确保无 API key 环境变量干扰
+    monkeypatch.delenv("DEEPSEEK_API_KEY", raising=False)
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     # 重置 client 状态
     llm_advisor.reset_client()
     return tmp_path
+
+
+def _setup_mock_anthropic_client(llm_advisor, mock_client):
+    """设置 mock Anthropic 后端"""
+    llm_advisor._client = mock_client
+    llm_advisor._client_backend = "anthropic"
+    llm_advisor._client_model = "claude-sonnet-4-20250514"
+    llm_advisor._client_init_attempted = True
 
 
 @pytest.fixture
@@ -54,9 +65,8 @@ def mock_client():
 
 class TestGetClient:
     def test_no_api_key(self, tmp_dir, monkeypatch):
-        """无 API key 应返回 None"""
+        """无任何 API key 应返回 None"""
         import llm_advisor
-        monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
         llm_advisor.reset_client()
         client = llm_advisor._get_client()
         assert client is None
@@ -76,7 +86,6 @@ class TestGetClient:
         """client 应被缓存 (延迟初始化只执行一次)"""
         import llm_advisor
         llm_advisor.reset_client()
-        monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
         c1 = llm_advisor._get_client()
         c2 = llm_advisor._get_client()
         assert c1 is c2  # 都是 None, 但只初始化了一次
@@ -95,9 +104,10 @@ class TestDailyLimit:
     def test_at_limit(self, tmp_dir):
         """达到上限应返回 False"""
         import llm_advisor
+        max_calls = llm_advisor.LLM_ADVISOR_PARAMS.get("max_daily_calls", 50)
         _write_json(llm_advisor._USAGE_PATH, {
             "date": date.today().isoformat(),
-            "count": 20,
+            "count": max_calls,
         })
         assert llm_advisor._check_daily_limit() is False
 
@@ -124,7 +134,7 @@ class TestDailyLimit:
         usage = llm_advisor.get_usage_today()
         assert usage["date"] == date.today().isoformat()
         assert usage["count"] == 0
-        assert usage["max"] == 20
+        assert usage["max"] == llm_advisor.LLM_ADVISOR_PARAMS.get("max_daily_calls", 50)
 
 
 # ================================================================
@@ -135,7 +145,6 @@ class TestCallLLM:
     def test_no_client_returns_empty(self, tmp_dir, monkeypatch):
         """client 为 None 时返回空字符串"""
         import llm_advisor
-        monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
         llm_advisor.reset_client()
         result = llm_advisor._call_llm("test prompt")
         assert result == ""
@@ -144,8 +153,7 @@ class TestCallLLM:
         """成功调用应返回文本"""
         import llm_advisor
         llm_advisor.reset_client()
-        llm_advisor._client = mock_client
-        llm_advisor._client_init_attempted = True
+        _setup_mock_anthropic_client(llm_advisor, mock_client)
 
         result = llm_advisor._call_llm("test prompt")
         assert result == "这是 LLM 的回复"
@@ -155,10 +163,9 @@ class TestCallLLM:
         """调用异常应返回空字符串"""
         import llm_advisor
         llm_advisor.reset_client()
-        mock_client = MagicMock()
-        mock_client.messages.create.side_effect = Exception("API error")
-        llm_advisor._client = mock_client
-        llm_advisor._client_init_attempted = True
+        mock_err = MagicMock()
+        mock_err.messages.create.side_effect = Exception("API error")
+        _setup_mock_anthropic_client(llm_advisor, mock_err)
 
         result = llm_advisor._call_llm("test prompt")
         assert result == ""
@@ -167,12 +174,12 @@ class TestCallLLM:
         """超限时返回空字符串"""
         import llm_advisor
         llm_advisor.reset_client()
-        llm_advisor._client = mock_client
-        llm_advisor._client_init_attempted = True
+        _setup_mock_anthropic_client(llm_advisor, mock_client)
 
+        max_calls = llm_advisor.LLM_ADVISOR_PARAMS.get("max_daily_calls", 50)
         _write_json(llm_advisor._USAGE_PATH, {
             "date": date.today().isoformat(),
-            "count": 20,
+            "count": max_calls,
         })
         result = llm_advisor._call_llm("test prompt")
         assert result == ""
@@ -181,8 +188,7 @@ class TestCallLLM:
         """成功调用应递增计数"""
         import llm_advisor
         llm_advisor.reset_client()
-        llm_advisor._client = mock_client
-        llm_advisor._client_init_attempted = True
+        _setup_mock_anthropic_client(llm_advisor, mock_client)
 
         llm_advisor._call_llm("test")
         usage = llm_advisor.get_usage_today()
@@ -197,7 +203,6 @@ class TestEnhanceMorningBriefing:
     def test_fallback_when_no_client(self, tmp_dir, monkeypatch):
         """LLM 不可用时返回原始文本"""
         import llm_advisor
-        monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
         llm_advisor.reset_client()
         raw = "## 今日交易简报\n\ntest"
         result = llm_advisor.enhance_morning_briefing(raw)
@@ -207,8 +212,7 @@ class TestEnhanceMorningBriefing:
         """LLM 可用时返回增强文本"""
         import llm_advisor
         llm_advisor.reset_client()
-        llm_advisor._client = mock_client
-        llm_advisor._client_init_attempted = True
+        _setup_mock_anthropic_client(llm_advisor, mock_client)
 
         raw = "## 今日交易简报\n\ntest"
         result = llm_advisor.enhance_morning_briefing(raw)
@@ -223,7 +227,6 @@ class TestEnhanceEveningSummary:
     def test_fallback_when_no_client(self, tmp_dir, monkeypatch):
         """LLM 不可用时返回原始文本"""
         import llm_advisor
-        monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
         llm_advisor.reset_client()
         raw = "## Agent 今日洞察\n\ntest"
         result = llm_advisor.enhance_evening_summary(raw)
@@ -233,8 +236,7 @@ class TestEnhanceEveningSummary:
         """含决策列表的增强晚报"""
         import llm_advisor
         llm_advisor.reset_client()
-        llm_advisor._client = mock_client
-        llm_advisor._client_init_attempted = True
+        _setup_mock_anthropic_client(llm_advisor, mock_client)
 
         raw = "## Agent 今日洞察"
         decisions = [{
@@ -254,7 +256,6 @@ class TestAdviseOnFindings:
     def test_no_client_passthrough(self, tmp_dir, monkeypatch):
         """LLM 不可用时原样返回 findings"""
         import llm_advisor
-        monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
         llm_advisor.reset_client()
         findings = [{"severity": "warning", "confidence": 0.5,
                       "message": "test", "suggested_action": "log_insight"}]
@@ -266,8 +267,7 @@ class TestAdviseOnFindings:
         """LLM 可用时应添加 llm_advice 字段"""
         import llm_advisor
         llm_advisor.reset_client()
-        llm_advisor._client = mock_client
-        llm_advisor._client_init_attempted = True
+        _setup_mock_anthropic_client(llm_advisor, mock_client)
 
         findings = [
             {"severity": "warning", "confidence": 0.5,
@@ -280,8 +280,7 @@ class TestAdviseOnFindings:
         """高置信度 findings 不请求 LLM 建议"""
         import llm_advisor
         llm_advisor.reset_client()
-        llm_advisor._client = mock_client
-        llm_advisor._client_init_attempted = True
+        _setup_mock_anthropic_client(llm_advisor, mock_client)
 
         findings = [
             {"severity": "critical", "confidence": 0.95,
@@ -301,7 +300,6 @@ class TestChat:
     def test_no_client_fallback(self, tmp_dir, monkeypatch):
         """LLM 不可用时返回降级提示"""
         import llm_advisor
-        monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
         llm_advisor.reset_client()
         result = llm_advisor.chat("最近表现如何")
         assert "不可用" in result
@@ -310,8 +308,7 @@ class TestChat:
         """LLM 可用时返回回复"""
         import llm_advisor
         llm_advisor.reset_client()
-        llm_advisor._client = mock_client
-        llm_advisor._client_init_attempted = True
+        _setup_mock_anthropic_client(llm_advisor, mock_client)
 
         result = llm_advisor.chat("最近表现如何")
         assert result == "这是 LLM 的回复"
@@ -320,10 +317,9 @@ class TestChat:
         """LLM 调用失败时返回重试提示"""
         import llm_advisor
         llm_advisor.reset_client()
-        mock_client = MagicMock()
-        mock_client.messages.create.side_effect = Exception("timeout")
-        llm_advisor._client = mock_client
-        llm_advisor._client_init_attempted = True
+        mock_err = MagicMock()
+        mock_err.messages.create.side_effect = Exception("timeout")
+        _setup_mock_anthropic_client(llm_advisor, mock_err)
 
         result = llm_advisor.chat("test")
         assert "失败" in result or "重试" in result

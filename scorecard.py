@@ -98,31 +98,31 @@ def _tx_sym(code: str) -> str:
 
 
 def _fetch_next_day_ohlc(code: str, rec_date: str) -> dict | None:
-    """获取推荐日次日的 OHLC (用 ak.stock_zh_a_hist_tx)"""
+    """获取推荐日次日的 OHLC (腾讯优先, 东财备选, 独立断路器)"""
     next_day = _next_trading_day(rec_date)
     if not next_day:
         return None
 
-    try:
-        import akshare as ak
-        start = next_day.replace("-", "")
-        d = datetime.strptime(next_day, "%Y-%m-%d").date()
-        end = (d + timedelta(days=5)).strftime("%Y%m%d")
+    import akshare as ak
+    from api_guard import smart_source, SOURCE_TENCENT_KLINE, SOURCE_EM_KLINE
 
+    start = next_day.replace("-", "")
+    d = datetime.strptime(next_day, "%Y-%m-%d").date()
+    end = (d + timedelta(days=5)).strftime("%Y%m%d")
+
+    def _tx():
         df = ak.stock_zh_a_hist_tx(
             symbol=_tx_sym(code),
             start_date=start,
             end_date=end,
             adjust="qfq",
         )
-        if df.empty:
-            return None
-
+        if df is None or df.empty:
+            raise ValueError("腾讯OHLC返回空")
         df["date_str"] = df["date"].astype(str).str[:10]
         target = df[df["date_str"] == next_day]
         if target.empty:
             target = df.head(1)
-
         row = target.iloc[0]
         return {
             "date": next_day,
@@ -131,8 +131,35 @@ def _fetch_next_day_ohlc(code: str, rec_date: str) -> dict | None:
             "high": float(row["high"]),
             "low": float(row["low"]),
         }
+
+    def _em():
+        df = ak.stock_zh_a_hist(
+            symbol=code, period="daily",
+            start_date=start, end_date=end, adjust="qfq",
+        )
+        if df is None or df.empty:
+            raise ValueError("东财OHLC返回空")
+        date_col = "日期" if "日期" in df.columns else "date"
+        df["date_str"] = df[date_col].astype(str).str[:10]
+        target = df[df["date_str"] == next_day]
+        if target.empty:
+            target = df.head(1)
+        row = target.iloc[0]
+        return {
+            "date": next_day,
+            "open": float(row.get("开盘", row.get("open", 0))),
+            "close": float(row.get("收盘", row.get("close", 0))),
+            "high": float(row.get("最高", row.get("high", 0))),
+            "low": float(row.get("最低", row.get("low", 0))),
+        }
+
+    try:
+        return smart_source([
+            (SOURCE_TENCENT_KLINE, _tx),
+            (SOURCE_EM_KLINE, _em),
+        ])
     except Exception as e:
-        logger.warning("获取 %s 次日K线失败: %s", code, e)
+        logger.warning("获取 %s 次日K线双源均失败: %s", code, e)
         return None
 
 
@@ -141,12 +168,16 @@ def _fetch_next_day_ohlc(code: str, rec_date: str) -> dict | None:
 # ================================================================
 
 def score_yesterday() -> list[dict]:
-    """对昨日推荐进行次日表现评分
+    """对前一交易日推荐进行次日表现评分
 
-    1. 确定"昨日" = _prev_trading_day(today)
-    2. 从 positions.json 找 entry_date = 昨日的记录
-    3. 对每条: 获取次日K线 -> 计算收益(扣TRADE_COST) -> 判定win/loss
-    4. 去重后追加到 scorecard.json
+    评分 T-2 的推荐, 用 T-1 (昨天) 的完整 K 线打分.
+    这样确保次日 OHLC 数据已完整可用.
+
+    流程:
+    1. 确定 T-1 = 上一交易日, T-2 = T-1 的上一交易日
+    2. 从 positions.json 找 entry_date = T-2 的记录
+    3. 对每条: 获取 T-1 K线 -> 计算收益 -> 判定 win/loss
+    4. 去重后写入 scorecard (SQLite)
     """
     today_str = date.today().isoformat()
     yesterday = _prev_trading_day(today_str)
@@ -154,30 +185,36 @@ def score_yesterday() -> list[dict]:
         logger.warning("无法确定昨日交易日, 跳过评分")
         return []
 
-    logger.info("评分日期: %s (次日表现)", yesterday)
+    # 评分 T-2 的推荐 (用 T-1 的 OHLC, 确保数据完整)
+    score_date = _prev_trading_day(yesterday)
+    if not score_date:
+        logger.warning("无法确定前日交易日, 跳过评分")
+        return []
+
+    logger.info("评分日期: %s → 次日表现(%s)", score_date, yesterday)
 
     positions = safe_load_strict(_POS_PATH)
-    yesterday_entries = [
+    score_entries = [
         p for p in positions
-        if p.get("entry_date") == yesterday
+        if p.get("entry_date") == score_date
     ]
 
-    if not yesterday_entries:
-        logger.info("%s 无推荐记录, 跳过", yesterday)
+    if not score_entries:
+        logger.info("%s 无推荐记录, 跳过", score_date)
         return []
 
     from db_store import load_scorecard as _db_load, save_scorecard_records
     existing = _db_load()
     existing_keys = {
-        (r["rec_date"], r["code"], r["strategy"])
+        (r.get("rec_date", ""), r.get("code", ""), r.get("strategy", ""))
         for r in existing
     }
 
     new_scores = []
-    for p in yesterday_entries:
+    for p in score_entries:
         code = p["code"]
         strategy = p["strategy"]
-        key = (yesterday, code, strategy)
+        key = (score_date, code, strategy)
         if key in existing_keys:
             continue
 
@@ -193,7 +230,7 @@ def score_yesterday() -> list[dict]:
             hit_tp = p.get("exit_reason") == "止盈"
 
             record = {
-                "rec_date": yesterday,
+                "rec_date": score_date,
                 "strategy": strategy,
                 "code": code,
                 "name": p.get("name", ""),
@@ -209,9 +246,9 @@ def score_yesterday() -> list[dict]:
                 "result": "win" if net_return_pct > 0 else "loss",
             }
         else:
-            ohlc = _fetch_next_day_ohlc(code, yesterday)
+            ohlc = _fetch_next_day_ohlc(code, score_date)
             if not ohlc:
-                logger.warning("%s %s 次日数据获取失败, 跳过", code, p.get("name", ""))
+                logger.warning("%s %s 次日(%s)数据获取失败, 跳过", code, p.get("name", ""), yesterday)
                 continue
 
             time.sleep(0.3)
@@ -230,7 +267,7 @@ def score_yesterday() -> list[dict]:
             net_return_pct = raw_return_pct - _TOTAL_COST_PCT
 
             record = {
-                "rec_date": yesterday,
+                "rec_date": score_date,
                 "strategy": strategy,
                 "code": code,
                 "name": p.get("name", ""),
@@ -261,9 +298,9 @@ def score_yesterday() -> list[dict]:
         save_scorecard_records(new_scores)
         wins = sum(1 for s in new_scores if s["result"] == "win")
         losses = len(new_scores) - wins
-        logger.info("%s 评分完成: %d 只 (%d胜%d负)", yesterday, len(new_scores), wins, losses)
+        logger.info("%s 评分完成: %d 只 (%d胜%d负)", score_date, len(new_scores), wins, losses)
     else:
-        logger.info("%s 无新增评分记录", yesterday)
+        logger.info("%s 无新增评分记录", score_date)
 
     return new_scores
 
@@ -281,6 +318,8 @@ def calc_cumulative_stats(days: int | None = None) -> dict:
         records = load_scorecard(days=days)
     except Exception:
         records = safe_load_strict(_SCORECARD_PATH)
+    # 排除 ML 回测填充数据, 只统计真实交易信号
+    records = [r for r in records if r.get("strategy") != "ml_backfill"]
     if not records:
         return {
             "total": 0, "win_rate": 0,
@@ -345,6 +384,8 @@ def calc_equity_curve(days: int | None = None) -> dict:
         records = load_scorecard(days=days)
     except Exception:
         records = safe_load_strict(_SCORECARD_PATH)
+    # 排除 ML 回测填充数据
+    records = [r for r in records if r.get("strategy") != "ml_backfill"]
     if not records:
         return {"nav_series": [], "total_return": 0, "max_drawdown": 0,
                 "sharpe": 0, "daily_returns": []}
@@ -497,12 +538,12 @@ def generate_weekly_report() -> str:
         worst = sorted_by_return[0]
         lines.append("### 最佳/最差推荐")
         lines.append(
-            f"- 最佳: {best['code']} {best.get('name', '')} "
+            f"- 最佳: {best.get('code', '')} {best.get('name', '')} "
             f"{best.get('net_return_pct', 0):+.1f}% "
             f"({best.get('strategy', '')} {best.get('rec_date', '')})"
         )
         lines.append(
-            f"- 最差: {worst['code']} {worst.get('name', '')} "
+            f"- 最差: {worst.get('code', '')} {worst.get('name', '')} "
             f"{worst.get('net_return_pct', 0):+.1f}% "
             f"({worst.get('strategy', '')} {worst.get('rec_date', '')})"
         )

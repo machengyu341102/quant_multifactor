@@ -3274,5 +3274,1325 @@
     "timestamp": "2026-03-03T21:59:00.168905",
     "event_id": "0ee337a2",
     "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T22:05:02.385024",
+    "event_id": "1b960577",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T22:05:07.250953",
+    "event_id": "36917119",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T22:05:07.251302",
+    "event_id": "16f49daf",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T22:11:16.895723",
+    "event_id": "46787194",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T22:11:22.625143",
+    "event_id": "21f03675",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T22:11:22.625557",
+    "event_id": "266fba66",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T22:16:36.135886",
+    "event_id": "37c9c783",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T22:16:49.061299",
+    "event_id": "466d061b",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T22:16:49.061651",
+    "event_id": "e2706855",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T22:22:07.288188",
+    "event_id": "7f67bdef",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T22:22:14.232286",
+    "event_id": "1d12c841",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T22:22:14.232619",
+    "event_id": "0551ae8c",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T22:31:47.016761",
+    "event_id": "47719c3d",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T22:31:51.287502",
+    "event_id": "a583017c",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T22:31:51.287837",
+    "event_id": "19c9fdd8",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T22:37:33.449738",
+    "event_id": "2c12f9f4",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T22:37:39.268019",
+    "event_id": "04cea4ab",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T22:37:39.268385",
+    "event_id": "bee93c42",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T23:11:58.285136",
+    "event_id": "b68decf6",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T23:12:04.279933",
+    "event_id": "1848daae",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T23:12:04.280324",
+    "event_id": "4caf7f9f",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T23:16:54.657537",
+    "event_id": "015c5c36",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T23:16:59.300573",
+    "event_id": "38eb7e58",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T23:16:59.300901",
+    "event_id": "1716cb99",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T23:26:10.516658",
+    "event_id": "592e3b59",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T23:26:14.664580",
+    "event_id": "49b3e93b",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T23:26:14.664936",
+    "event_id": "8cdc9331",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T23:47:28.357099",
+    "event_id": "d6179aea",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T23:47:31.669844",
+    "event_id": "e182ae34",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T23:47:31.670175",
+    "event_id": "2812120b",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T23:48:40.475350",
+    "event_id": "f574025f",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T23:48:43.511747",
+    "event_id": "07023dcd",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T23:48:43.512080",
+    "event_id": "870c9769",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T23:49:55.664004",
+    "event_id": "efddb0b0",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T23:49:58.896980",
+    "event_id": "1b8ad8ee",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T23:49:58.897311",
+    "event_id": "943e044f",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T23:52:18.571420",
+    "event_id": "9ff4bb9d",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T23:52:23.054273",
+    "event_id": "a4ffbac5",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T23:52:23.054599",
+    "event_id": "0c64932c",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-03T23:59:22.800664",
+    "event_id": "49ba86e9",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-03T23:59:27.754529",
+    "event_id": "b8e0f99e",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-03T23:59:27.754874",
+    "event_id": "4d120ae2",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T00:06:47.466565",
+    "event_id": "f8b63cf0",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T00:06:50.940566",
+    "event_id": "1adefe7a",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T00:06:50.940911",
+    "event_id": "23652b8d",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T00:26:57.102946",
+    "event_id": "baad837c",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T00:27:00.297059",
+    "event_id": "d4bf8d19",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T00:27:00.297461",
+    "event_id": "f999588b",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T01:00:34.953321",
+    "event_id": "d2064748",
+    "consumed": true
+  },
+  {
+    "source": "self_healer",
+    "priority": 2,
+    "event_type": "smoke_test_failed",
+    "category": "risk",
+    "payload": {
+      "passed": false,
+      "failed": [
+        "akshare可用"
+      ],
+      "message": "冒烟测试失败: akshare可用"
+    },
+    "timestamp": "2026-03-04T09:10:35.177926",
+    "event_id": "7c98c650",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T13:30:17.081631",
+    "event_id": "9e5b093c",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T17:59:25.409802",
+    "event_id": "350237d6",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T17:59:29.930076",
+    "event_id": "35982dd2",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T17:59:29.930603",
+    "event_id": "f4e0237e",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T18:04:37.347723",
+    "event_id": "f0b7a62f",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T18:04:41.406194",
+    "event_id": "8a4f1106",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T18:04:41.406585",
+    "event_id": "2f3052b0",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T18:09:33.236421",
+    "event_id": "af7518cb",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T18:09:36.815775",
+    "event_id": "d0f2031d",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T18:09:36.816137",
+    "event_id": "de79c9bf",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T18:29:12.264620",
+    "event_id": "5c2ecad0",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T18:29:18.519562",
+    "event_id": "fb17b85b",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T18:29:18.520096",
+    "event_id": "68eccff5",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T18:53:51.357443",
+    "event_id": "62d8bdb9",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T18:53:56.627078",
+    "event_id": "5148091c",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T18:53:56.627695",
+    "event_id": "7ce2f47d",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T18:58:34.307046",
+    "event_id": "7d4c0367",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T18:58:39.626006",
+    "event_id": "f7588402",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T18:58:39.626443",
+    "event_id": "0cb60bf8",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T19:03:17.926524",
+    "event_id": "f88ecee3",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T19:03:23.784454",
+    "event_id": "8f6bd874",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T19:03:23.784869",
+    "event_id": "2491b181",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T21:29:26.036261",
+    "event_id": "e3659606",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T21:29:32.442456",
+    "event_id": "54433afa",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T21:29:32.442840",
+    "event_id": "a3b3cbcb",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T21:30:47.680813",
+    "event_id": "07d89123",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T21:30:52.040473",
+    "event_id": "e493c895",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T21:30:52.040845",
+    "event_id": "5e2892e6",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-04T21:32:33.125744",
+    "event_id": "8a6272cb",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-04T21:32:37.572958",
+    "event_id": "e8967d98",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-04T21:32:37.573381",
+    "event_id": "d9b8dfe1",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-05T10:24:06.347134",
+    "event_id": "7a2c3222",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-05T10:24:10.832322",
+    "event_id": "33ecb164",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-05T10:24:10.832709",
+    "event_id": "0009955b",
+    "consumed": true
+  },
+  {
+    "source": "paper_trader",
+    "priority": 3,
+    "event_type": "paper_close",
+    "category": "strategy",
+    "payload": {
+      "code": "002216",
+      "name": "三全食品",
+      "pnl_pct": -4.8,
+      "reason": "止损",
+      "message": "纸盘平仓 002216 三全食品 -4.80% [止损]"
+    },
+    "timestamp": "2026-03-05T10:24:11.769664",
+    "event_id": "85c6806f",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-05T11:57:30.315639",
+    "event_id": "2ba84699",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-05T11:57:34.211215",
+    "event_id": "e7893f08",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-05T11:57:34.211648",
+    "event_id": "229e432a",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-05T12:02:19.775355",
+    "event_id": "b075e28e",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-05T12:02:23.283786",
+    "event_id": "d3788749",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-05T12:02:23.284185",
+    "event_id": "3386ca75",
+    "consumed": true
+  },
+  {
+    "source": "smart_trader",
+    "priority": 3,
+    "event_type": "regime_change",
+    "category": "regime",
+    "payload": {
+      "regime": "neutral",
+      "score": 0.5,
+      "message": "行情检测: neutral (评分0.50)"
+    },
+    "timestamp": "2026-03-05T12:06:59.010187",
+    "event_id": "0bc67395",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 1,
+    "event_type": "pause_strategy",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股连续亏损5次, 达到阈值4",
+      "strategy": "放量突破选股",
+      "severity": "critical"
+    },
+    "timestamp": "2026-03-05T12:07:02.554136",
+    "event_id": "7165f62a",
+    "consumed": true
+  },
+  {
+    "source": "agent_brain",
+    "priority": 2,
+    "event_type": "escalate_human",
+    "category": "strategy",
+    "payload": {
+      "message": "放量突破选股近5日胜率0%, 远低于正常水平",
+      "strategy": "放量突破选股",
+      "severity": "warning"
+    },
+    "timestamp": "2026-03-05T12:07:02.554532",
+    "event_id": "5dc59582",
+    "consumed": true
   }
 ]

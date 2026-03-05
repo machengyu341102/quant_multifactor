@@ -1394,3 +1394,840 @@
 [2026-03-03 22:00:00] quant.learning INFO: 无需调整信号权重
 [2026-03-03 22:00:00] quant.learning INFO: 学习状态已持久化 v14
 [2026-03-03 22:00:00] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 22:06:09] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 22:06:09] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:06:09] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:06:09] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 22:06:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:06:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:06:09] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 22:06:09] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 22:06:09] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:06:09] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:06:09] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 22:06:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:06:09] quant.learning INFO: 学习报告已生成
+[2026-03-03 22:06:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:06:09] quant.learning INFO: 无需调整信号权重
+[2026-03-03 22:06:09] quant.learning INFO: 学习状态已持久化 v15
+[2026-03-03 22:06:09] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 22:12:21] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 22:12:21] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:12:21] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:12:21] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 22:12:21] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:12:21] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:12:21] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 22:12:21] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 22:12:21] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:12:21] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:12:21] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 22:12:21] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:12:21] quant.learning INFO: 学习报告已生成
+[2026-03-03 22:12:21] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:12:21] quant.learning INFO: 无需调整信号权重
+[2026-03-03 22:12:21] quant.learning INFO: 学习状态已持久化 v16
+[2026-03-03 22:12:21] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 22:17:49] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 22:17:49] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:17:49] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:17:49] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 22:17:49] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:17:49] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:17:49] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 22:17:49] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 22:17:49] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:17:49] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:17:49] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 22:17:49] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:17:49] quant.learning INFO: 学习报告已生成
+[2026-03-03 22:17:49] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:17:49] quant.learning INFO: 无需调整信号权重
+[2026-03-03 22:17:49] quant.learning INFO: 学习状态已持久化 v17
+[2026-03-03 22:17:49] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 22:23:13] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 22:23:13] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:23:13] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:23:13] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 22:23:13] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:23:13] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:23:13] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 22:23:13] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 22:23:13] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:23:13] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:23:13] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 22:23:13] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:23:13] quant.learning INFO: 学习报告已生成
+[2026-03-03 22:23:13] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:23:13] quant.learning INFO: 无需调整信号权重
+[2026-03-03 22:23:13] quant.learning INFO: 学习状态已持久化 v18
+[2026-03-03 22:23:13] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 22:32:51] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 22:32:51] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:32:51] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:32:51] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 22:32:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:32:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:32:51] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 22:32:51] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 22:32:51] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:32:51] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:32:51] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 22:32:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:32:51] quant.learning INFO: 学习报告已生成
+[2026-03-03 22:32:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:32:51] quant.learning INFO: 无需调整信号权重
+[2026-03-03 22:32:51] quant.learning INFO: 学习状态已持久化 v19
+[2026-03-03 22:32:51] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 22:38:39] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 22:38:39] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:38:39] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 22:38:39] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 22:38:39] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:38:39] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:38:39] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 22:38:39] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 22:38:39] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:38:39] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 22:38:39] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 22:38:39] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:38:39] quant.learning INFO: 学习报告已生成
+[2026-03-03 22:38:39] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 22:38:39] quant.learning INFO: 无需调整信号权重
+[2026-03-03 22:38:39] quant.learning INFO: 学习状态已持久化 v20
+[2026-03-03 22:38:39] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 23:12:32] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 23:12:32] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:12:32] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:12:32] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 23:12:32] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:12:32] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:12:32] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 23:12:32] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 23:12:32] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:12:32] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:12:32] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 23:12:32] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:12:32] quant.learning INFO: 学习报告已生成
+[2026-03-03 23:12:32] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:12:32] quant.learning INFO: 无需调整信号权重
+[2026-03-03 23:12:32] quant.learning INFO: 学习状态已持久化 v21
+[2026-03-03 23:12:32] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 23:17:28] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 23:17:28] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:17:28] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:17:28] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 23:17:28] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:17:28] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:17:28] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 23:17:28] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 23:17:28] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:17:28] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:17:28] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 23:17:28] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:17:28] quant.learning INFO: 学习报告已生成
+[2026-03-03 23:17:28] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:17:28] quant.learning INFO: 无需调整信号权重
+[2026-03-03 23:17:28] quant.learning INFO: 学习状态已持久化 v22
+[2026-03-03 23:17:28] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 23:26:43] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 23:26:43] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:26:43] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:26:43] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 23:26:43] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:26:43] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:26:43] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 23:26:43] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 23:26:43] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:26:43] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:26:43] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 23:26:43] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:26:43] quant.learning INFO: 学习报告已生成
+[2026-03-03 23:26:43] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:26:43] quant.learning INFO: 无需调整信号权重
+[2026-03-03 23:26:43] quant.learning INFO: 学习状态已持久化 v23
+[2026-03-03 23:26:43] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 23:47:59] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 23:47:59] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:47:59] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:47:59] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 23:47:59] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:47:59] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:47:59] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 23:47:59] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 23:47:59] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:47:59] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:47:59] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 23:47:59] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:47:59] quant.learning INFO: 学习报告已生成
+[2026-03-03 23:47:59] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:47:59] quant.learning INFO: 无需调整信号权重
+[2026-03-03 23:47:59] quant.learning INFO: 学习状态已持久化 v24
+[2026-03-03 23:47:59] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 23:49:11] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 23:49:11] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:49:11] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:49:11] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 23:49:11] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:49:11] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:49:11] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 23:49:11] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 23:49:11] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:49:11] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:49:11] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 23:49:11] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:49:11] quant.learning INFO: 学习报告已生成
+[2026-03-03 23:49:11] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:49:11] quant.learning INFO: 无需调整信号权重
+[2026-03-03 23:49:11] quant.learning INFO: 学习状态已持久化 v25
+[2026-03-03 23:49:11] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 23:50:27] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 23:50:27] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:50:27] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:50:27] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 23:50:27] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:50:27] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:50:27] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 23:50:27] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 23:50:27] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:50:27] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:50:27] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 23:50:27] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:50:27] quant.learning INFO: 学习报告已生成
+[2026-03-03 23:50:27] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:50:27] quant.learning INFO: 无需调整信号权重
+[2026-03-03 23:50:27] quant.learning INFO: 学习状态已持久化 v26
+[2026-03-03 23:50:27] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 23:52:51] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 23:52:51] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:52:51] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:52:51] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 23:52:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:52:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:52:51] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 23:52:51] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 23:52:51] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:52:51] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:52:51] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 23:52:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:52:51] quant.learning INFO: 学习报告已生成
+[2026-03-03 23:52:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:52:51] quant.learning INFO: 无需调整信号权重
+[2026-03-03 23:52:51] quant.learning INFO: 学习状态已持久化 v27
+[2026-03-03 23:52:51] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-03 23:59:55] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (2 picks)
+[2026-03-03 23:59:55] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:59:55] quant.learning INFO: trade_journal 记录: 2026-03-03 集合竞价选股 (1 picks)
+[2026-03-03 23:59:55] quant.learning INFO: trade_journal 已存在 2026-03-03 集合竞价选股, 跳过
+[2026-03-03 23:59:55] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:59:55] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:59:55] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-03 23:59:55] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-03 23:59:55] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:59:55] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-03 23:59:55] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-03 23:59:55] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:59:55] quant.learning INFO: 学习报告已生成
+[2026-03-03 23:59:55] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-03 23:59:55] quant.learning INFO: 无需调整信号权重
+[2026-03-03 23:59:55] quant.learning INFO: 学习状态已持久化 v28
+[2026-03-03 23:59:55] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 00:07:19] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 00:07:19] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 00:07:19] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 00:07:19] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 00:07:19] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 00:07:19] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 00:07:19] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 00:07:19] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 00:07:19] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 00:07:19] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 00:07:19] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 00:07:19] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 00:07:19] quant.learning INFO: 学习报告已生成
+[2026-03-04 00:07:19] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 00:07:19] quant.learning INFO: 无需调整信号权重
+[2026-03-04 00:07:19] quant.learning INFO: 学习状态已持久化 v29
+[2026-03-04 00:07:19] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 00:27:28] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 00:27:28] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 00:27:28] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 00:27:28] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 00:27:28] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 00:27:28] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 00:27:28] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 00:27:28] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 00:27:28] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 00:27:28] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 00:27:28] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 00:27:28] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 00:27:28] quant.learning INFO: 学习报告已生成
+[2026-03-04 00:27:28] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 00:27:28] quant.learning INFO: 无需调整信号权重
+[2026-03-04 00:27:28] quant.learning INFO: 学习状态已持久化 v30
+[2026-03-04 00:27:28] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 13:20:51] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 13:20:51] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:20:51] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:20:51] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 13:20:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:20:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:20:51] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 13:20:51] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:20:51] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 13:20:51] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:20:51] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:20:51] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 13:20:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:20:51] quant.learning INFO: 学习报告已生成
+[2026-03-04 13:20:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:20:51] quant.learning INFO: 无需调整信号权重
+[2026-03-04 13:20:51] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:20:51] quant.learning INFO: 学习状态已持久化 v31
+[2026-03-04 13:20:51] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 13:25:35] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 13:25:35] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:25:35] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:25:35] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 13:25:35] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:25:35] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:25:35] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 13:25:35] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:25:35] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 13:25:35] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:25:35] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:25:35] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 13:25:35] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:25:35] quant.learning INFO: 学习报告已生成
+[2026-03-04 13:25:35] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:25:35] quant.learning INFO: 无需调整信号权重
+[2026-03-04 13:25:35] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:25:35] quant.learning INFO: 学习状态已持久化 v32
+[2026-03-04 13:25:35] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 13:30:25] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 13:30:25] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:30:25] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:30:25] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 13:30:25] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:30:25] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:30:25] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 13:30:25] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:30:25] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 13:30:25] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:30:25] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:30:25] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 13:30:25] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:30:25] quant.learning INFO: 学习报告已生成
+[2026-03-04 13:30:25] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:30:25] quant.learning INFO: 无需调整信号权重
+[2026-03-04 13:30:25] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:30:25] quant.learning INFO: 学习状态已持久化 v33
+[2026-03-04 13:30:25] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 13:48:42] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 13:48:42] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:48:42] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:48:42] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 13:48:42] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:48:42] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:48:42] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 13:48:42] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:48:42] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 13:48:42] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:48:42] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:48:42] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 13:48:42] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:48:42] quant.learning INFO: 学习报告已生成
+[2026-03-04 13:48:42] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:48:42] quant.learning INFO: 无需调整信号权重
+[2026-03-04 13:48:42] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:48:42] quant.learning INFO: 学习状态已持久化 v34
+[2026-03-04 13:48:42] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 13:50:17] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 13:50:17] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:50:17] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:50:17] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 13:50:17] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:50:17] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:50:17] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 13:50:17] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:50:17] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 13:50:17] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:50:17] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:50:17] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 13:50:17] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:50:17] quant.learning INFO: 学习报告已生成
+[2026-03-04 13:50:17] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:50:17] quant.learning INFO: 无需调整信号权重
+[2026-03-04 13:50:17] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:50:17] quant.learning INFO: 学习状态已持久化 v35
+[2026-03-04 13:50:17] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 13:57:23] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 13:57:23] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:57:23] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 13:57:23] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 13:57:23] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:57:23] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:57:23] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 13:57:23] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:57:23] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 13:57:23] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:57:23] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 13:57:23] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 13:57:23] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:57:23] quant.learning INFO: 学习报告已生成
+[2026-03-04 13:57:23] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 13:57:23] quant.learning INFO: 无需调整信号权重
+[2026-03-04 13:57:23] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 13:57:23] quant.learning INFO: 学习状态已持久化 v36
+[2026-03-04 13:57:23] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 14:27:45] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 14:27:45] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 14:27:45] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 14:27:45] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 14:27:45] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:27:45] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:27:45] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 14:27:45] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 14:27:45] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 14:27:45] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 14:27:45] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 14:27:45] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 14:27:45] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:27:45] quant.learning INFO: 学习报告已生成
+[2026-03-04 14:27:45] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:27:45] quant.learning INFO: 无需调整信号权重
+[2026-03-04 14:27:45] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 14:27:45] quant.learning INFO: 学习状态已持久化 v37
+[2026-03-04 14:27:45] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 14:33:04] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 14:33:04] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 14:33:04] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 14:33:04] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 14:33:04] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:33:04] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:33:04] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 14:33:04] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 14:33:04] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 14:33:04] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 14:33:04] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 14:33:04] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 14:33:04] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:33:04] quant.learning INFO: 学习报告已生成
+[2026-03-04 14:33:04] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:33:04] quant.learning INFO: 无需调整信号权重
+[2026-03-04 14:33:04] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 14:33:04] quant.learning INFO: 学习状态已持久化 v38
+[2026-03-04 14:33:04] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 14:37:55] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 14:37:55] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 14:37:55] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 14:37:55] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 14:37:55] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:37:55] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:37:55] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 14:37:55] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 14:37:55] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 14:37:55] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 14:37:55] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 14:37:55] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 14:37:55] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:37:55] quant.learning INFO: 学习报告已生成
+[2026-03-04 14:37:55] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:37:55] quant.learning INFO: 无需调整信号权重
+[2026-03-04 14:37:55] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 14:37:55] quant.learning INFO: 学习状态已持久化 v39
+[2026-03-04 14:37:55] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 14:42:57] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 14:42:57] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 14:42:57] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 14:42:57] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 14:42:57] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:42:57] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:42:57] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 14:42:57] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 14:42:57] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 14:42:57] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 14:42:57] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 14:42:57] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 14:42:57] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:42:57] quant.learning INFO: 学习报告已生成
+[2026-03-04 14:42:57] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 14:42:57] quant.learning INFO: 无需调整信号权重
+[2026-03-04 14:42:57] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 14:42:57] quant.learning INFO: 学习状态已持久化 v40
+[2026-03-04 14:42:57] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 15:32:36] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 15:32:36] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 15:32:36] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 15:32:36] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 15:32:36] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 15:32:36] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 15:32:36] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 15:32:36] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 15:32:36] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 15:32:36] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 15:32:36] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 15:32:36] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 15:32:36] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 15:32:36] quant.learning INFO: 学习报告已生成
+[2026-03-04 15:32:36] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 15:32:36] quant.learning INFO: 无需调整信号权重
+[2026-03-04 15:32:36] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 15:32:36] quant.learning INFO: 学习状态已持久化 v41
+[2026-03-04 15:32:36] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 15:33:57] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 15:33:57] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 15:33:57] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 15:33:57] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 15:33:57] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 15:33:57] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 15:33:57] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 15:33:57] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 15:33:57] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 15:33:57] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 15:33:57] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 15:33:57] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 15:33:57] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 15:33:57] quant.learning INFO: 学习报告已生成
+[2026-03-04 15:33:57] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 15:33:57] quant.learning INFO: 无需调整信号权重
+[2026-03-04 15:33:57] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 15:33:57] quant.learning INFO: 学习状态已持久化 v42
+[2026-03-04 15:33:57] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 16:30:01] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 16:30:01] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 16:30:01] quant.learning INFO: 学习报告已生成
+[2026-03-04 16:30:01] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 16:30:01] quant.learning INFO: 无需调整信号权重
+[2026-03-04 16:30:01] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 16:30:01] quant.learning INFO: 学习状态已持久化 v43
+[2026-03-04 16:30:01] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 16:30:06] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 16:30:06] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 16:30:06] quant.learning INFO: 学习报告已生成
+[2026-03-04 16:30:06] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 16:30:06] quant.learning INFO: 无需调整信号权重
+[2026-03-04 16:30:06] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 16:30:06] quant.learning INFO: 学习状态已持久化 v44
+[2026-03-04 16:30:06] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 16:30:15] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 16:30:15] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 16:30:15] quant.learning INFO: 学习报告已生成
+[2026-03-04 16:30:15] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 16:30:15] quant.learning INFO: 无需调整信号权重
+[2026-03-04 16:30:15] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 16:30:15] quant.learning INFO: 学习状态已持久化 v45
+[2026-03-04 16:30:15] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 16:30:16] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 16:30:16] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 16:30:16] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 16:30:16] quant.learning INFO: 学习报告已生成
+[2026-03-04 16:30:16] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 16:30:16] quant.learning INFO: 无需调整信号权重
+[2026-03-04 16:30:16] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 16:30:16] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 16:30:16] quant.learning INFO: 学习报告已生成
+[2026-03-04 16:30:16] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 16:30:16] quant.learning INFO: 无需调整信号权重
+[2026-03-04 16:30:16] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 16:30:17] quant.learning INFO: 学习状态已持久化 v46
+[2026-03-04 16:30:17] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 16:30:17] quant.learning INFO: 学习状态已持久化 v46
+[2026-03-04 16:30:17] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 17:59:58] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 17:59:58] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 17:59:58] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 17:59:58] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 17:59:58] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 17:59:58] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 17:59:58] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 17:59:58] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 17:59:58] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 17:59:58] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 17:59:58] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 17:59:58] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 17:59:58] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 17:59:58] quant.learning INFO: 学习报告已生成
+[2026-03-04 17:59:58] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 17:59:58] quant.learning INFO: 无需调整信号权重
+[2026-03-04 17:59:58] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 17:59:58] quant.learning INFO: 学习状态已持久化 v47
+[2026-03-04 17:59:58] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 18:05:09] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 18:05:09] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 18:05:09] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 18:05:09] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 18:05:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:05:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:05:09] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 18:05:09] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 18:05:09] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 18:05:09] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 18:05:09] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 18:05:09] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 18:05:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:05:09] quant.learning INFO: 学习报告已生成
+[2026-03-04 18:05:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:05:09] quant.learning INFO: 无需调整信号权重
+[2026-03-04 18:05:09] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 18:05:09] quant.learning INFO: 学习状态已持久化 v48
+[2026-03-04 18:05:09] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 18:10:06] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 18:10:06] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 18:10:06] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 18:10:06] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 18:10:06] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:10:06] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:10:06] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 18:10:06] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 18:10:06] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 18:10:06] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 18:10:06] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 18:10:06] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 18:10:06] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:10:06] quant.learning INFO: 学习报告已生成
+[2026-03-04 18:10:06] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:10:06] quant.learning INFO: 无需调整信号权重
+[2026-03-04 18:10:06] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 18:10:06] quant.learning INFO: 学习状态已持久化 v49
+[2026-03-04 18:10:06] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 18:29:47] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 18:29:47] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 18:29:47] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 18:29:47] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 18:29:47] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:29:47] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:29:47] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 18:29:47] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 18:29:47] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 18:29:47] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 18:29:47] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 18:29:47] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 18:29:47] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:29:47] quant.learning INFO: 学习报告已生成
+[2026-03-04 18:29:47] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:29:47] quant.learning INFO: 无需调整信号权重
+[2026-03-04 18:29:47] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 18:29:47] quant.learning INFO: 学习状态已持久化 v50
+[2026-03-04 18:29:47] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 18:54:25] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 18:54:25] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 18:54:25] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 18:54:25] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 18:54:25] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:54:25] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:54:25] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 18:54:25] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 18:54:25] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 18:54:25] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 18:54:25] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 18:54:25] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 18:54:25] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:54:25] quant.learning INFO: 学习报告已生成
+[2026-03-04 18:54:25] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:54:25] quant.learning INFO: 无需调整信号权重
+[2026-03-04 18:54:25] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 18:54:25] quant.learning INFO: 学习状态已持久化 v51
+[2026-03-04 18:54:25] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 18:59:09] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 18:59:09] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 18:59:09] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 18:59:09] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 18:59:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:59:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:59:09] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 18:59:09] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 18:59:09] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 18:59:09] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 18:59:09] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 18:59:09] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 18:59:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:59:09] quant.learning INFO: 学习报告已生成
+[2026-03-04 18:59:09] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 18:59:09] quant.learning INFO: 无需调整信号权重
+[2026-03-04 18:59:09] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 18:59:09] quant.learning INFO: 学习状态已持久化 v52
+[2026-03-04 18:59:09] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 19:03:52] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 19:03:52] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 19:03:52] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 19:03:52] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 19:03:52] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 19:03:52] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 19:03:52] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 19:03:52] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 19:03:52] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 19:03:52] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 19:03:52] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 19:03:52] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 19:03:52] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 19:03:52] quant.learning INFO: 学习报告已生成
+[2026-03-04 19:03:52] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 19:03:52] quant.learning INFO: 无需调整信号权重
+[2026-03-04 19:03:52] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 19:03:52] quant.learning INFO: 学习状态已持久化 v53
+[2026-03-04 19:03:52] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 21:30:04] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 21:30:04] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 21:30:04] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 21:30:04] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 21:30:04] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:30:04] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:30:04] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 21:30:04] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 21:30:04] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 21:30:04] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 21:30:04] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 21:30:04] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 21:30:04] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:30:04] quant.learning INFO: 学习报告已生成
+[2026-03-04 21:30:04] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:30:04] quant.learning INFO: 无需调整信号权重
+[2026-03-04 21:30:04] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 21:30:04] quant.learning INFO: 学习状态已持久化 v54
+[2026-03-04 21:30:04] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 21:31:21] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 21:31:21] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 21:31:21] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 21:31:21] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 21:31:21] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:31:21] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:31:21] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 21:31:21] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 21:31:21] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 21:31:21] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 21:31:21] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 21:31:21] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 21:31:21] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:31:21] quant.learning INFO: 学习报告已生成
+[2026-03-04 21:31:21] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:31:21] quant.learning INFO: 无需调整信号权重
+[2026-03-04 21:31:21] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 21:31:21] quant.learning INFO: 学习状态已持久化 v55
+[2026-03-04 21:31:21] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-04 21:33:05] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (2 picks)
+[2026-03-04 21:33:05] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 21:33:05] quant.learning INFO: trade_journal 记录: 2026-03-04 集合竞价选股 (1 picks)
+[2026-03-04 21:33:05] quant.learning INFO: trade_journal 已存在 2026-03-04 集合竞价选股, 跳过
+[2026-03-04 21:33:06] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:33:06] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:33:06] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-04 21:33:06] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 21:33:06] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-04 21:33:06] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 21:33:06] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-04 21:33:06] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-04 21:33:06] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:33:06] quant.learning INFO: 学习报告已生成
+[2026-03-04 21:33:06] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-04 21:33:06] quant.learning INFO: 无需调整信号权重
+[2026-03-04 21:33:06] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-04 21:33:06] quant.learning INFO: 学习状态已持久化 v56
+[2026-03-04 21:33:06] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-05 09:28:23] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 集合竞价选股 (1 picks)
+[2026-03-05 10:24:39] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (2 picks)
+[2026-03-05 10:24:39] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (1 picks)
+[2026-03-05 10:24:39] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (1 picks)
+[2026-03-05 10:24:39] quant.learning INFO: trade_journal 已存在 2026-03-05 集合竞价选股, 跳过
+[2026-03-05 10:24:39] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 10:24:39] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 10:24:39] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-05 10:24:39] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-05 10:24:39] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-05 10:24:39] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-05 10:24:39] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-05 10:24:39] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-05 10:24:39] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 10:24:39] quant.learning INFO: 学习报告已生成
+[2026-03-05 10:24:39] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 10:24:39] quant.learning INFO: 无需调整信号权重
+[2026-03-05 10:24:39] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-05 10:24:39] quant.learning INFO: 学习状态已持久化 v57
+[2026-03-05 10:24:39] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-05 11:32:46] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (2 picks)
+[2026-03-05 11:32:46] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (1 picks)
+[2026-03-05 11:32:46] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (1 picks)
+[2026-03-05 11:32:46] quant.learning INFO: trade_journal 已存在 2026-03-05 集合竞价选股, 跳过
+[2026-03-05 11:32:46] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 11:32:46] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 11:32:46] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-05 11:32:46] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-05 11:32:46] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-05 11:32:46] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-05 11:32:46] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-05 11:32:46] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-05 11:32:46] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 11:32:46] quant.learning INFO: 学习报告已生成
+[2026-03-05 11:32:46] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 11:32:46] quant.learning INFO: 无需调整信号权重
+[2026-03-05 11:32:46] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-05 11:32:46] quant.learning INFO: 学习状态已持久化 v58
+[2026-03-05 11:32:46] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-05 11:54:20] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 集合竞价选股 (3 picks)
+[2026-03-05 11:55:26] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 放量突破选股 (1 picks)
+[2026-03-05 11:56:14] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 趋势跟踪选股 (3 picks)
+[2026-03-05 11:57:43] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 尾盘短线选股 (2 picks)
+[2026-03-05 11:58:03] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (2 picks)
+[2026-03-05 11:58:03] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (1 picks)
+[2026-03-05 11:58:03] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (1 picks)
+[2026-03-05 11:58:03] quant.learning INFO: trade_journal 已存在 2026-03-05 集合竞价选股, 跳过
+[2026-03-05 11:58:03] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 11:58:03] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 11:58:03] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-05 11:58:03] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-05 11:58:03] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-05 11:58:03] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-05 11:58:03] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-05 11:58:03] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-05 11:58:03] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 11:58:03] quant.learning INFO: 学习报告已生成
+[2026-03-05 11:58:03] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 11:58:03] quant.learning INFO: 无需调整信号权重
+[2026-03-05 11:58:03] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-05 11:58:03] quant.learning INFO: 学习状态已持久化 v59
+[2026-03-05 11:58:03] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-05 11:58:06] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 期货趋势选股 (3 picks)
+[2026-03-05 11:58:30] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 期货趋势选股 (3 picks)
+[2026-03-05 11:58:41] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 币圈趋势选股 (3 picks)
+[2026-03-05 11:58:58] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 美股收盘分析 (3 picks)
+[2026-03-05 11:59:10] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 可转债T+0选债 (3 picks)
+[2026-03-05 11:59:24] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 可转债T+0选债 (3 picks)
+[2026-03-05 11:59:25] quant.learning INFO: trade_journal 记录 (SQLite): 2026-03-05 板块异动监控 (2 picks)
+[2026-03-05 12:02:51] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (2 picks)
+[2026-03-05 12:02:51] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (1 picks)
+[2026-03-05 12:02:51] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (1 picks)
+[2026-03-05 12:02:51] quant.learning INFO: trade_journal 已存在 2026-03-05 集合竞价选股, 跳过
+[2026-03-05 12:02:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 12:02:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 12:02:51] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-05 12:02:51] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-05 12:02:51] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-05 12:02:51] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-05 12:02:51] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-05 12:02:51] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-05 12:02:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 12:02:51] quant.learning INFO: 学习报告已生成
+[2026-03-05 12:02:51] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 12:02:51] quant.learning INFO: 无需调整信号权重
+[2026-03-05 12:02:51] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-05 12:02:51] quant.learning INFO: 学习状态已持久化 v60
+[2026-03-05 12:02:51] quant.learning INFO: === 学习引擎完成 ===
+[2026-03-05 12:07:31] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (2 picks)
+[2026-03-05 12:07:31] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (1 picks)
+[2026-03-05 12:07:31] quant.learning INFO: trade_journal 记录: 2026-03-05 集合竞价选股 (1 picks)
+[2026-03-05 12:07:31] quant.learning INFO: trade_journal 已存在 2026-03-05 集合竞价选股, 跳过
+[2026-03-05 12:07:31] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 12:07:31] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 12:07:31] quant.learning INFO: 信号权重已更新至 v1, 调整 1 个信号
+[2026-03-05 12:07:31] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-05 12:07:31] quant.learning INFO: [自主进化] 采纳 breakout v1: 胜率+3.0% 收益+0.80%
+[2026-03-05 12:07:31] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-05 12:07:31] quant.learning INFO: [自主进化] 发现 1 条新规则
+[2026-03-05 12:07:31] quant.learning INFO: === 学习引擎启动 ===
+[2026-03-05 12:07:31] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 12:07:31] quant.learning INFO: 学习报告已生成
+[2026-03-05 12:07:31] quant.learning INFO: 信号分析无数据, 跳过权重调整
+[2026-03-05 12:07:31] quant.learning INFO: 无需调整信号权重
+[2026-03-05 12:07:31] quant.learning INFO: [自主进化] 无采纳建议
+[2026-03-05 12:07:31] quant.learning INFO: 学习状态已持久化 v61
+[2026-03-05 12:07:31] quant.learning INFO: === 学习引擎完成 ===

@@ -1,7 +1,7 @@
 """
 API 防封机制
 ===========
-集中式速率限制 + 断路器 + 智能重试 + 缓存
+集中式速率限制 + 断路器 + 智能重试 + 缓存 + 动态源负载均衡
 防止 API 被封禁 (403/429), 消除冗余调用
 
 组件:
@@ -9,6 +9,8 @@ API 防封机制
   2. CircuitBreaker — 按源分组, 连续5次失败 → 熔断120s
   3. smart_retry  — 限流vs网络错误区分退避
   4. DataCache    — TTL缓存, CSI1000 1小时 / 日K 5分钟
+  5. SourceHealth — 每个 API 源独立健康追踪 (延迟/成功率/状态)
+  6. smart_source — 优先级自动切换, 主源挂了自动降级备用源
 """
 
 import time
@@ -379,6 +381,156 @@ _global_cache = DataCache()
 
 
 # ================================================================
+#  源健康追踪 (SourceHealth)
+# ================================================================
+
+# 标准源标识 — 每个逻辑 API 端点一个独立断路器
+SOURCE_TENCENT_KLINE = "tencent_kline"   # ak.stock_zh_a_hist_tx
+SOURCE_EM_KLINE = "em_kline"             # ak.stock_zh_a_hist
+SOURCE_EM_SPOT = "em_spot"               # ak.stock_zh_a_spot_em
+SOURCE_EM_MISC = "em_misc"               # fund_flow, lhb, financials
+SOURCE_SINA_HTTP = "sina_http"           # hq.sinajs.cn batch quotes
+SOURCE_SINA_FUTURES = "sina_futures"     # ak.futures_main_sina
+SOURCE_SINA_CALENDAR = "sina_calendar"   # ak.tool_trade_date_hist_sina
+SOURCE_AKSHARE_POOL = "akshare_pool"    # ak.index_stock_cons_*
+SOURCE_BINANCE = "binance"               # api.binance.com
+SOURCE_YFINANCE = "yfinance"             # yfinance lib
+SOURCE_TUSHARE = "tushare"               # tushare pro
+
+# 旧 "akshare" 键映射到默认源 (向后兼容)
+_LEGACY_SOURCE = "akshare"
+
+
+class SourceHealth:
+    """每源独立健康追踪: 延迟、成功/失败计数、状态"""
+
+    def __init__(self):
+        self._data: dict = {}  # source -> {calls, ok, fail, avg_ms, last_fail_ts}
+        self._lock = threading.Lock()
+
+    def _ensure(self, source: str) -> dict:
+        if source not in self._data:
+            self._data[source] = {
+                "calls": 0, "ok": 0, "fail": 0,
+                "avg_ms": 0.0, "last_fail_ts": 0.0,
+                "last_ok_ts": 0.0,
+            }
+        return self._data[source]
+
+    def record_call(self, source: str, success: bool, latency_ms: float = 0):
+        with self._lock:
+            d = self._ensure(source)
+            d["calls"] += 1
+            if success:
+                d["ok"] += 1
+                d["last_ok_ts"] = time.time()
+                # 指数移动平均延迟
+                if d["avg_ms"] == 0:
+                    d["avg_ms"] = latency_ms
+                else:
+                    d["avg_ms"] = d["avg_ms"] * 0.7 + latency_ms * 0.3
+            else:
+                d["fail"] += 1
+                d["last_fail_ts"] = time.time()
+
+    def success_rate(self, source: str) -> float:
+        """成功率 0~1, 无数据返回 1.0 (乐观)"""
+        with self._lock:
+            d = self._ensure(source)
+            return d["ok"] / d["calls"] if d["calls"] > 0 else 1.0
+
+    def get_all(self) -> dict:
+        """获取所有源健康数据 (dashboard 用)"""
+        with self._lock:
+            result = {}
+            for src, d in self._data.items():
+                rate = d["ok"] / d["calls"] if d["calls"] > 0 else 1.0
+                result[src] = {
+                    "calls": d["calls"],
+                    "success_rate": round(rate, 3),
+                    "avg_ms": round(d["avg_ms"], 1),
+                    "circuit": _global_breaker.get_state(src),
+                }
+            return result
+
+    def reset(self):
+        with self._lock:
+            self._data.clear()
+
+
+_source_health = SourceHealth()
+
+
+def get_source_health() -> dict:
+    """获取所有 API 源健康状态 (供 dashboard / CLI)"""
+    return _source_health.get_all()
+
+
+def smart_source(sources: list, cache_key: str = "", cache_ttl: int = 0):
+    """
+    优先级自动切换 — 按顺序尝试多个 API 源, 自动跳过熔断源
+
+    Args:
+        sources: [(source_key, callable), ...] 优先级从高到低
+        cache_key: 缓存键 (空=不缓存)
+        cache_ttl: 缓存 TTL 秒
+
+    Returns:
+        第一个成功的 callable 返回值
+
+    Raises:
+        最后一个源的异常 (全部失败)
+    """
+    # 1. 查缓存
+    if cache_key and cache_ttl > 0:
+        cached = _global_cache.get(cache_key)
+        if cached is not None:
+            with _stats_lock:
+                _stats["cache_hits"] += 1
+            return cached
+
+    last_exc = None
+    for source_key, fn in sources:
+        # 跳过已熔断的源
+        if not _global_breaker.allow(source_key):
+            continue
+
+        # 限速
+        if not _global_limiter.acquire(timeout=10):
+            continue
+
+        with _stats_lock:
+            _stats["total_calls"] += 1
+
+        t0 = time.monotonic()
+        try:
+            result = fn()
+            latency = (time.monotonic() - t0) * 1000
+            _global_breaker.record_success(source_key)
+            _source_health.record_call(source_key, True, latency)
+
+            # 写缓存
+            if cache_key and cache_ttl > 0:
+                _global_cache.set(cache_key, result, cache_ttl)
+            return result
+        except Exception as e:
+            latency = (time.monotonic() - t0) * 1000
+            _global_breaker.record_failure(source_key)
+            _source_health.record_call(source_key, False, latency)
+            with _stats_lock:
+                _stats["errors"] += 1
+            last_exc = e
+            import logging
+            logging.getLogger("api_guard").debug(
+                "smart_source %s 失败: %s, 尝试下一个源", source_key, e)
+            continue
+
+    if last_exc:
+        raise last_exc
+    raise RuntimeError("所有 API 源均不可用 (全部熔断)")
+
+
+# ================================================================
 #  智能重试
 # ================================================================
 
@@ -472,10 +624,15 @@ def guarded_call(func, *args, source="akshare", retries=3, cache_key="", cache_t
     with _stats_lock:
         _stats["total_calls"] += 1
 
-    # 4. 执行 + 智能重试
+    # 4. 执行 + 智能重试 + 源健康追踪
+    t0 = time.monotonic()
     try:
         result = smart_retry(func, args=args, kwargs=func_kwargs, source=source, retries=retries)
+        latency = (time.monotonic() - t0) * 1000
+        _source_health.record_call(source, True, latency)
     except Exception as e:
+        latency = (time.monotonic() - t0) * 1000
+        _source_health.record_call(source, False, latency)
         with _stats_lock:
             _stats["errors"] += 1
         raise
@@ -563,7 +720,7 @@ def cached_pool():
     try:
         df = guarded_call(
             ak.index_stock_cons_csindex, "000852",
-            source="akshare", retries=3,
+            source=SOURCE_AKSHARE_POOL, retries=3,
         )
         code_col = "成分券代码" if "成分券代码" in df.columns else "品种代码"
         name_col = "成分券名称" if "成分券名称" in df.columns else "品种名称"
@@ -575,7 +732,7 @@ def cached_pool():
     except Exception:
         df = guarded_call(
             ak.index_stock_cons, "000852",
-            source="akshare", retries=3,
+            source=SOURCE_AKSHARE_POOL, retries=3,
         )
         all_codes = df["品种代码"].tolist()
         name_map = dict(zip(df["品种代码"], df["品种名称"]))

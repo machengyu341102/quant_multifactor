@@ -69,11 +69,32 @@
 - [x] **EX-04**: 纸盘模拟交易面板 (持仓/交易/7天统计)
 - [x] 全量 637 tests passed, 0 failed
 - [x] OP-01~09 全部 💎已核准
+- [x] **EX-05~07**: 信号闭环修复 + 盘中自动诊断 + stock_analyzer实时化
+- [x] **OP-10**: SQLite查询防御性重构 (10个崩溃点: agent_brain/scorecard/signal_tracker/auto_optimizer/risk_manager/db_store)
+- [x] **OP-11**: 动态API源负载均衡 (SourceHealth + smart_source + 11个独立断路器 + 4模块接入)
+- [x] 全量 637 tests passed, 0 failed
+- [x] OP-01~11 全部完成
+
+## 2026-03-05
+
+### 已完成
+- [x] **微信AI不认账修复**: `_build_system_context()` 双源补充 (trade_journal + position_manager)
+  - 根因: 放量突破选股经风控过滤后items变空, `_record_learning`跳过, trade_journal无记录
+  - 修复1: llm_advisor.py `_build_system_context()` 增加 position_manager 今日新增持仓作为补充源
+  - 修复2: scheduler.py `run_with_retry()` 在风控过滤前先记录 trade_journal (确保原始推荐不遗漏)
+- [x] **OP-16: sector_monitor + notifier 防御性修复**
+  - sector_monitor.py: 3处 `return None` → `return []`
+  - notifier.py: `format_recommendation` 加 `if items is None: items = []`
+- [x] **Dashboard launchd 集成**: `com.quant.dashboard.plist` (开机自启+崩溃重启)
+- [x] **push_event 接入**: scheduler → HTTP POST → dashboard WebSocket 广播
+  - dashboard.py: 新增 `/api/push_event` POST 端点
+  - scheduler.py: `run_with_retry` 成功/失败都推事件 (`strategy_complete`/`strategy_failed`)
+  - `_push_dashboard_event()` 工具函数 (urllib, 2s超时, 失败静默)
+- [x] 系统健康审计: 10智能体全active/health=1.0, 纸盘9笔(6持仓3已平, 胜率67%), 学习引擎v58正常(待数据积累)
+- 637 tests passed, 0 failed
 
 ### 待办队列
 - [ ] 系统运行满一周后: 信号追踪报告分析 + 参数首次调优
-- [ ] Dashboard launchd 集成: 开机自启动
-- [ ] push_event 接入策略执行链路 (strategy_loader → dashboard)
 
 ## 2026-03-02 晚
 

@@ -944,3 +944,971 @@
 [2026-03-03 21:59:50] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
 [2026-03-03 21:59:50] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
 [2026-03-03 21:59:50] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:05:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:05:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:05:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:05:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:05:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:05:59] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 22:05:59] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 22:05:59] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 22:05:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:05:59] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 22:05:59] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 22:05:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:05:59] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:05:59] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 22:05:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:05:59] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:05:59] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 22:05:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:05:59] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:05:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:05:59] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 22:05:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:12:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:12:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:12:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:12:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:12:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:12:11] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 22:12:11] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 22:12:11] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 22:12:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:12:11] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 22:12:11] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 22:12:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:12:11] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:12:11] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 22:12:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:12:11] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:12:11] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 22:12:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:12:11] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:12:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:12:11] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 22:12:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:17:39] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:17:39] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:17:39] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:17:39] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:17:39] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:17:39] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 22:17:39] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 22:17:39] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 22:17:39] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:17:39] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 22:17:39] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 22:17:39] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:17:39] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:17:39] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 22:17:39] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:17:39] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:17:39] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 22:17:39] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:17:39] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:17:39] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:17:39] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 22:17:39] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:23:03] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:23:03] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:23:03] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:23:03] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:23:03] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:23:03] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 22:23:03] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 22:23:03] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 22:23:03] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:23:03] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 22:23:03] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 22:23:03] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:23:03] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:23:03] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 22:23:03] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:23:03] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:23:03] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 22:23:03] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:23:03] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:23:03] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:23:03] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 22:23:03] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:32:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:32:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:32:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:32:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:32:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:32:41] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 22:32:41] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 22:32:41] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 22:32:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:32:41] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 22:32:41] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 22:32:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:32:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:32:41] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 22:32:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:32:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:32:41] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 22:32:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:32:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:32:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:32:41] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 22:32:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:38:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:38:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:38:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:38:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:38:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:38:29] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 22:38:29] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 22:38:29] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 22:38:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:38:29] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 22:38:29] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 22:38:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:38:29] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:38:29] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 22:38:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:38:29] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:38:29] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 22:38:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:38:29] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 22:38:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 22:38:29] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 22:38:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:12:22] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:12:22] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:12:22] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:12:22] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:12:22] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:12:22] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 23:12:22] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 23:12:22] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 23:12:22] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:12:22] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 23:12:22] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 23:12:22] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:12:22] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:12:22] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 23:12:22] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:12:22] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:12:22] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 23:12:22] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:12:22] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:12:22] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:12:22] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 23:12:22] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:17:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:17:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:17:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:17:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:17:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:17:18] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 23:17:18] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 23:17:18] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 23:17:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:17:18] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 23:17:18] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 23:17:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:17:18] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:17:18] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 23:17:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:17:18] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:17:18] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 23:17:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:17:18] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:17:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:17:18] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 23:17:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:26:33] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:26:33] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:26:33] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:26:33] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:26:33] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:26:33] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 23:26:33] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 23:26:33] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 23:26:33] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:26:33] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 23:26:33] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 23:26:33] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:26:33] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:26:33] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 23:26:33] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:26:33] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:26:33] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 23:26:33] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:26:33] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:26:33] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:26:33] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 23:26:33] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:47:49] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:47:49] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:47:49] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:47:49] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:47:49] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:47:49] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 23:47:49] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 23:47:49] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 23:47:49] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:47:49] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 23:47:49] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 23:47:49] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:47:49] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:47:49] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 23:47:49] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:47:49] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:47:49] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 23:47:49] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:47:49] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:47:49] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:47:49] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 23:47:49] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:49:01] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:49:01] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:49:01] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:49:01] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:49:01] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:49:01] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 23:49:01] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 23:49:01] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 23:49:01] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:49:01] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 23:49:01] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 23:49:01] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:49:01] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:49:01] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 23:49:01] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:49:01] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:49:01] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 23:49:01] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:49:01] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:49:01] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:49:01] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 23:49:01] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:50:17] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:50:17] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:50:17] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:50:17] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:50:17] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:50:17] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 23:50:17] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 23:50:17] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 23:50:17] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:50:17] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 23:50:17] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 23:50:17] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:50:17] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:50:17] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 23:50:17] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:50:17] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:50:17] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 23:50:17] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:50:17] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:50:17] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:50:17] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 23:50:17] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:52:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:52:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:52:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:52:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:52:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:52:41] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 23:52:41] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 23:52:41] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 23:52:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:52:41] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 23:52:41] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 23:52:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:52:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:52:41] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 23:52:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:52:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:52:41] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 23:52:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:52:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:52:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:52:41] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 23:52:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:59:46] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:59:46] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:59:46] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:59:46] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:59:46] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:59:46] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-03 23:59:46] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-03 23:59:46] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-03 23:59:46] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:59:46] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-03 23:59:46] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-03 23:59:46] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:59:46] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:59:46] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-03 23:59:46] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:59:46] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:59:46] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-03 23:59:46] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:59:46] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-03 23:59:46] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-03 23:59:46] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-03 23:59:46] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:07:09] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:07:09] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:07:09] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:07:09] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:07:09] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:07:09] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 00:07:09] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 00:07:09] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 00:07:09] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:07:09] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 00:07:09] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 00:07:09] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:07:09] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 00:07:09] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 00:07:09] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:07:09] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 00:07:09] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 00:07:09] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:07:09] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 00:07:09] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:07:09] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 00:07:09] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:27:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:27:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:27:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:27:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:27:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:27:18] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 00:27:18] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 00:27:18] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 00:27:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:27:18] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 00:27:18] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 00:27:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:27:18] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 00:27:18] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 00:27:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:27:18] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 00:27:18] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 00:27:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:27:18] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 00:27:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 00:27:18] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 00:27:18] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:20:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:20:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:20:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:20:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:20:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:20:41] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 13:20:41] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 13:20:41] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 13:20:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:20:41] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 13:20:41] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 13:20:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:20:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:20:41] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 13:20:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:20:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:20:41] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 13:20:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:20:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:20:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:20:41] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 13:20:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:25:25] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:25:25] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:25:25] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:25:25] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:25:25] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:25:25] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 13:25:25] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 13:25:25] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 13:25:25] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:25:25] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 13:25:25] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 13:25:25] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:25:25] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:25:25] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 13:25:25] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:25:25] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:25:25] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 13:25:25] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:25:25] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:25:25] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:25:25] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 13:25:25] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:30:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:30:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:30:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:30:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:30:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:30:15] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 13:30:15] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 13:30:15] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 13:30:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:30:15] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 13:30:15] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 13:30:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:30:15] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:30:15] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 13:30:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:30:15] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:30:15] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 13:30:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:30:15] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:30:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:30:15] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 13:30:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:48:32] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:48:32] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:48:32] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:48:32] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:48:32] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:48:32] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 13:48:32] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 13:48:32] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 13:48:32] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:48:32] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 13:48:32] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 13:48:32] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:48:32] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:48:32] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 13:48:32] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:48:32] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:48:32] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 13:48:32] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:48:32] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:48:32] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:48:32] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 13:48:32] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:50:07] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:50:07] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:50:07] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:50:07] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:50:07] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:50:07] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 13:50:07] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 13:50:07] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 13:50:07] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:50:07] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 13:50:07] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 13:50:07] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:50:07] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:50:07] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 13:50:07] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:50:07] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:50:07] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 13:50:07] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:50:07] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:50:07] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:50:07] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 13:50:07] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:57:12] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:57:12] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:57:12] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:57:12] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:57:12] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:57:12] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 13:57:12] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 13:57:12] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 13:57:12] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:57:12] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 13:57:12] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 13:57:12] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:57:12] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:57:12] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 13:57:12] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:57:12] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:57:12] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 13:57:12] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:57:12] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 13:57:12] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 13:57:12] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 13:57:12] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:27:35] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:27:35] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:27:35] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:27:35] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:27:35] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:27:35] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 14:27:35] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 14:27:35] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 14:27:35] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:27:35] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 14:27:35] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 14:27:35] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:27:35] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:27:35] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 14:27:35] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:27:35] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:27:35] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 14:27:35] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:27:35] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:27:35] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:27:35] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 14:27:35] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:32:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:32:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:32:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:32:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:32:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:32:54] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 14:32:54] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 14:32:54] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 14:32:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:32:54] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 14:32:54] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 14:32:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:32:54] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:32:54] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 14:32:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:32:54] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:32:54] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 14:32:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:32:54] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:32:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:32:54] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 14:32:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:37:45] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:37:45] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:37:45] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:37:45] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:37:45] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:37:45] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 14:37:45] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 14:37:45] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 14:37:45] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:37:45] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 14:37:45] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 14:37:45] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:37:45] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:37:45] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 14:37:45] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:37:45] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:37:45] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 14:37:45] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:37:45] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:37:45] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:37:45] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 14:37:45] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:42:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:42:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:42:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:42:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:42:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:42:47] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 14:42:47] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 14:42:47] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 14:42:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:42:47] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 14:42:47] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 14:42:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:42:47] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:42:47] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 14:42:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:42:47] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:42:47] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 14:42:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:42:47] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 14:42:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 14:42:47] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 14:42:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:32:26] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:32:26] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:32:26] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:32:26] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:32:26] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:32:26] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 15:32:26] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 15:32:26] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 15:32:26] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:32:26] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 15:32:26] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 15:32:26] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:32:26] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 15:32:26] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 15:32:26] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:32:26] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 15:32:26] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 15:32:26] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:32:26] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 15:32:26] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:32:26] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 15:32:26] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:33:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:33:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:33:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:33:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:33:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:33:47] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 15:33:47] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 15:33:47] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 15:33:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:33:47] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 15:33:47] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 15:33:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:33:47] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 15:33:47] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 15:33:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:33:47] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 15:33:47] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 15:33:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:33:47] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 15:33:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 15:33:47] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 15:33:47] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 17:59:48] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 17:59:48] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 17:59:48] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 17:59:48] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 17:59:48] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 17:59:48] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 17:59:48] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 17:59:48] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 17:59:48] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 17:59:48] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 17:59:48] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 17:59:48] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 17:59:48] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 17:59:48] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 17:59:48] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 17:59:48] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 17:59:48] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 17:59:48] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 17:59:48] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 17:59:48] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 17:59:48] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 17:59:48] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:04:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:04:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:04:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:04:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:04:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:04:59] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 18:04:59] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 18:04:59] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 18:04:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:04:59] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 18:04:59] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 18:04:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:04:59] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:04:59] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 18:04:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:04:59] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:04:59] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 18:04:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:04:59] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:04:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:04:59] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 18:04:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:09:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:09:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:09:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:09:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:09:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:09:56] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 18:09:56] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 18:09:56] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 18:09:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:09:56] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 18:09:56] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 18:09:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:09:56] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:09:56] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 18:09:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:09:56] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:09:56] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 18:09:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:09:56] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:09:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:09:56] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 18:09:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:29:37] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:29:37] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:29:37] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:29:37] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:29:37] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:29:37] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 18:29:37] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 18:29:37] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 18:29:37] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:29:37] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 18:29:37] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 18:29:37] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:29:37] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:29:37] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 18:29:37] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:29:37] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:29:37] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 18:29:37] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:29:37] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:29:37] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:29:37] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 18:29:37] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:54:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:54:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:54:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:54:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:54:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:54:15] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 18:54:15] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 18:54:15] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 18:54:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:54:15] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 18:54:15] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 18:54:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:54:15] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:54:15] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 18:54:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:54:15] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:54:15] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 18:54:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:54:15] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:54:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:54:15] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 18:54:15] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:58:58] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:58:58] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:58:58] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:58:58] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:58:58] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:58:58] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 18:58:58] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 18:58:58] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 18:58:58] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:58:58] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 18:58:58] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 18:58:58] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:58:58] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:58:58] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 18:58:58] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:58:58] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:58:59] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 18:58:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:58:59] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 18:58:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 18:58:59] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 18:58:59] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 19:03:42] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 19:03:42] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 19:03:42] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 19:03:42] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 19:03:42] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 19:03:42] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 19:03:42] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 19:03:42] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 19:03:42] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 19:03:42] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 19:03:42] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 19:03:42] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 19:03:42] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 19:03:42] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 19:03:42] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 19:03:42] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 19:03:42] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 19:03:42] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 19:03:42] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 19:03:42] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 19:03:42] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 19:03:42] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:29:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:29:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:29:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:29:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:29:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:29:54] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 21:29:54] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 21:29:54] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 21:29:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:29:54] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 21:29:54] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 21:29:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:29:54] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 21:29:54] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 21:29:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:29:54] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 21:29:54] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 21:29:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:29:54] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 21:29:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:29:54] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 21:29:54] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:31:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:31:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:31:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:31:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:31:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:31:11] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 21:31:11] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 21:31:11] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 21:31:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:31:11] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 21:31:11] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 21:31:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:31:11] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 21:31:11] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 21:31:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:31:11] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 21:31:11] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 21:31:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:31:11] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 21:31:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:31:11] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 21:31:11] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:32:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:32:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:32:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:32:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:32:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:32:56] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-04 21:32:56] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-04 21:32:56] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-04 21:32:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:32:56] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-04 21:32:56] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-04 21:32:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:32:56] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 21:32:56] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-04 21:32:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:32:56] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 21:32:56] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-04 21:32:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:32:56] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-04 21:32:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-04 21:32:56] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-04 21:32:56] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:24:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:24:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:24:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:24:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:24:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:24:29] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-05 10:24:29] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-05 10:24:29] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-05 10:24:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:24:29] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-05 10:24:29] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-05 10:24:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:24:29] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 10:24:29] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-05 10:24:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:24:29] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 10:24:29] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-05 10:24:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:24:29] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 10:24:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:24:29] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-05 10:24:29] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:28:43] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:28:43] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:28:43] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:28:43] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:28:43] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:28:43] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-05 10:28:43] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-05 10:28:43] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-05 10:28:43] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:28:43] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-05 10:28:43] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-05 10:28:43] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:28:43] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 10:28:43] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-05 10:28:43] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:28:43] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 10:28:43] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-05 10:28:43] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:28:43] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 10:28:43] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:28:43] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-05 10:28:43] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:35:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:35:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:35:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:35:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:35:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:35:20] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-05 10:35:20] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-05 10:35:20] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-05 10:35:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:35:20] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-05 10:35:20] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-05 10:35:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:35:20] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 10:35:20] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-05 10:35:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:35:20] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 10:35:20] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-05 10:35:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:35:20] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 10:35:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 10:35:20] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-05 10:35:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 11:57:53] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 11:57:53] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 11:57:53] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 11:57:53] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 11:57:53] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 11:57:53] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-05 11:57:53] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-05 11:57:53] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-05 11:57:53] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 11:57:53] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-05 11:57:53] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-05 11:57:53] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 11:57:53] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 11:57:53] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-05 11:57:53] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 11:57:53] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 11:57:53] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-05 11:57:53] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 11:57:53] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 11:57:53] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 11:57:53] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-05 11:57:53] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:02:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:02:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:02:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:02:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:02:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:02:41] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-05 12:02:41] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-05 12:02:41] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-05 12:02:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:02:41] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-05 12:02:41] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-05 12:02:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:02:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 12:02:41] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-05 12:02:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:02:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 12:02:41] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-05 12:02:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:02:41] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 12:02:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:02:41] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-05 12:02:41] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:07:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:07:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:07:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:07:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:07:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:07:20] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试停止
+[2026-03-05 12:07:20] quant.broker_exec WARNING: [KILL SWITCH] 紧急停止已激活: 测试
+[2026-03-05 12:07:20] quant.broker_exec INFO: [KILL SWITCH] 紧急停止已清除
+[2026-03-05 12:07:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:07:20] quant.broker_exec INFO: [Broker] 买入 000001 平安银行 x1200 @ 12.51 [paper]
+[2026-03-05 12:07:20] quant.broker_exec WARNING: [Broker] 交易被拦截: 手动紧急停止: test
+[2026-03-05 12:07:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:07:20] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 12:07:20] quant.broker_exec INFO: [Broker] 已持有 000001, 跳过
+[2026-03-05 12:07:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:07:20] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 12:07:20] quant.broker_exec INFO: [Broker] 卖出 000001 A x1500 @ 9.20 (-8.39%) [止损]
+[2026-03-05 12:07:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:07:20] quant.broker_exec INFO: [Broker] 买入 000001 A x1500 @ 10.01 [paper]
+[2026-03-05 12:07:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪
+[2026-03-05 12:07:20] quant.broker_exec WARNING: [Broker] 不支持的 broker: unknown_broker, 回退到纸盘
+[2026-03-05 12:07:20] quant.broker_exec INFO: [PaperBroker] 纸盘模式就绪

@@ -219,7 +219,8 @@ def scorecard_count() -> int:
     """记分卡总记录数"""
     init_db()
     conn = _get_conn()
-    return conn.execute("SELECT COUNT(*) FROM scorecard").fetchone()[0]
+    row = conn.execute("SELECT COUNT(*) FROM scorecard").fetchone()
+    return row[0] if row else 0
 
 
 # ================================================================
@@ -278,7 +279,7 @@ def save_conflict_audit_record(record: dict):
         VALUES (?, ?, ?, ?, ?, ?, ?)
     """, (
         record.get("time", datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
-        record.get("strategy", ""),
+        record.get("strategy") or "SYSTEM",
         winner.get("action", ""),
         winner.get("authority", 0),
         loser.get("action", ""),
@@ -392,14 +393,16 @@ def migrate_trade_journal_from_json(json_path: str | None = None) -> int:
 
     init_db()
     conn = _get_conn()
-    existing = conn.execute("SELECT COUNT(*) FROM trade_journal").fetchone()[0]
+    row = conn.execute("SELECT COUNT(*) FROM trade_journal").fetchone()
+    existing = row[0] if row else 0
     if existing >= len(records):
         logger.info("trade_journal SQLite 已有 %d 条 (JSON %d), 跳过", existing, len(records))
         return 0
 
     logger.info("迁移 trade_journal.json → SQLite (%d 条)", len(records))
     count = save_trade_journal_batch(records)
-    total = conn.execute("SELECT COUNT(*) FROM trade_journal").fetchone()[0]
+    row2 = conn.execute("SELECT COUNT(*) FROM trade_journal").fetchone()
+    total = row2[0] if row2 else 0
     logger.info("trade_journal 迁移完成: 新增 %d, 总计 %d", count, total)
     return count
 
@@ -450,7 +453,8 @@ def migrate_conflict_audit_from_json(json_path: str | None = None) -> int:
 
     init_db()
     conn = _get_conn()
-    existing = conn.execute("SELECT COUNT(*) FROM conflict_audit").fetchone()[0]
+    row = conn.execute("SELECT COUNT(*) FROM conflict_audit").fetchone()
+    existing = row[0] if row else 0
     if existing > 0:
         logger.info("conflict_audit 已有 %d 条, 跳过迁移", existing)
         return 0
@@ -482,9 +486,9 @@ if __name__ == "__main__":
     elif len(sys.argv) > 1 and sys.argv[1] == "stats":
         init_db()
         conn = _get_conn()
-        sc = conn.execute("SELECT COUNT(*) FROM scorecard").fetchone()[0]
-        ca = conn.execute("SELECT COUNT(*) FROM conflict_audit").fetchone()[0]
-        tj = conn.execute("SELECT COUNT(*) FROM trade_journal").fetchone()[0]
+        sc = (conn.execute("SELECT COUNT(*) FROM scorecard").fetchone() or (0,))[0]
+        ca = (conn.execute("SELECT COUNT(*) FROM conflict_audit").fetchone() or (0,))[0]
+        tj = (conn.execute("SELECT COUNT(*) FROM trade_journal").fetchone() or (0,))[0]
         print(f"scorecard: {sc}, conflict_audit: {ca}, trade_journal: {tj}")
     else:
         print("用法:")

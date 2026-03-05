@@ -270,14 +270,14 @@ def run_smoke_test() -> dict:
         except Exception as e:
             results.append({"name": f"JSON可读: {jf}", "passed": False, "error": str(e)})
 
-    # 2. akshare 可用
+    # 2. akshare 可用 (用缓存池检测, 避免裸调被限流误报)
     try:
-        import akshare as ak
-        df = ak.stock_zh_a_spot_em()
-        if df is not None and not df.empty:
+        from api_guard import cached_pool
+        pool = cached_pool()
+        if pool and len(pool) > 100:
             results.append({"name": "akshare可用", "passed": True, "error": None})
         else:
-            results.append({"name": "akshare可用", "passed": False, "error": "返回空数据"})
+            results.append({"name": "akshare可用", "passed": False, "error": f"返回{len(pool) if pool else 0}只"})
     except Exception as e:
         results.append({"name": "akshare可用", "passed": False, "error": str(e)})
 

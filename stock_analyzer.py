@@ -55,28 +55,24 @@ def _get_stock_name(code: str) -> str:
 
 def _fetch_klines(code: str, days: int = 120) -> list[dict]:
     """获取日K线数据, 返回 [{date, open, high, low, close, volume, turnover}, ...]
-    按日期升序排列 (最旧在前)
+    按日期升序排列 (最旧在前). 腾讯优先, 东财备选 (独立断路器).
     """
-    try:
-        from api_guard import guarded_call
-        import akshare as ak
+    import akshare as ak
+    from api_guard import smart_source, SOURCE_TENCENT_KLINE, SOURCE_EM_KLINE
 
-        end_d = date.today()
-        start_d = end_d - timedelta(days=days + 30)
-        sym = f"sh{code}" if code.startswith(("6", "9")) else f"sz{code}"
+    end_d = date.today()
+    start_d = end_d - timedelta(days=days + 30)
+    sym = f"sh{code}" if code.startswith(("6", "9")) else f"sz{code}"
 
-        df = guarded_call(
-            ak.stock_zh_a_hist_tx,
+    def _tx():
+        df = ak.stock_zh_a_hist_tx(
             symbol=sym,
             start_date=start_d.strftime("%Y%m%d"),
             end_date=end_d.strftime("%Y%m%d"),
             adjust="qfq",
-            cache_key=f"analyzer_{code}_klines",
-            cache_ttl=300,
         )
         if df is None or df.empty:
-            return []
-
+            raise ValueError("腾讯K线返回空")
         rows = []
         for _, r in df.iterrows():
             rows.append({
@@ -89,29 +85,58 @@ def _fetch_klines(code: str, days: int = 120) -> list[dict]:
                 "turnover": float(r.get("turnover", 0)),
             })
         return rows
+
+    def _em():
+        df = ak.stock_zh_a_hist(
+            symbol=code,
+            period="daily",
+            start_date=start_d.strftime("%Y%m%d"),
+            end_date=end_d.strftime("%Y%m%d"),
+            adjust="qfq",
+        )
+        if df is None or df.empty:
+            raise ValueError("东财K线返回空")
+        rows = []
+        for _, r in df.iterrows():
+            rows.append({
+                "date": str(r.get("日期", r.get("date", "")))[:10],
+                "open": float(r.get("开盘", r.get("open", 0))),
+                "high": float(r.get("最高", r.get("high", 0))),
+                "low": float(r.get("最低", r.get("low", 0))),
+                "close": float(r.get("收盘", r.get("close", 0))),
+                "volume": float(r.get("成交额", r.get("amount", 0))),
+                "turnover": float(r.get("换手率", r.get("turnover", 0))),
+            })
+        return rows
+
+    try:
+        return smart_source([
+            (SOURCE_TENCENT_KLINE, _tx),
+            (SOURCE_EM_KLINE, _em),
+        ])
     except Exception as e:
-        logger.warning("获取K线失败 %s: %s", code, e)
+        logger.warning("K线双源均失败 %s: %s", code, e)
         return []
 
 
 def _fetch_realtime(code: str) -> dict | None:
-    """获取实时行情快照"""
-    try:
-        from api_guard import guarded_call
-        import akshare as ak
+    """获取实时行情快照 (东财优先, 新浪备选, 独立断路器)"""
+    from api_guard import smart_source, SOURCE_EM_SPOT, SOURCE_SINA_HTTP
 
+    def _em():
+        import akshare as ak
+        from api_guard import guarded_call
         df = guarded_call(
             ak.stock_zh_a_spot_em,
-            cache_key=f"analyzer_spot_em",
+            source=SOURCE_EM_SPOT,
+            cache_key="analyzer_spot_em",
             cache_ttl=60,
         )
         if df is None or df.empty:
-            return None
-
+            raise ValueError("东财快照返回空")
         row = df[df["代码"] == code]
         if row.empty:
-            return None
-
+            raise ValueError(f"东财快照无 {code}")
         r = row.iloc[0]
         return {
             "price": float(r.get("最新价", 0)),
@@ -129,8 +154,42 @@ def _fetch_realtime(code: str) -> dict | None:
             "pre_close": float(r.get("昨收", 0)),
             "amount": float(r.get("成交额", 0)),
         }
+
+    def _sina():
+        import requests, re
+        prefix = "sh" if code.startswith("6") else "sz"
+        url = f"https://hq.sinajs.cn/list={prefix}{code}"
+        resp = requests.get(url, headers={"Referer": "https://finance.sina.com.cn"}, timeout=10)
+        m = re.search(r'"(.+)"', resp.text)
+        if not m:
+            raise ValueError("新浪行情解析失败")
+        f = m.group(1).split(",")
+        if len(f) < 32:
+            raise ValueError("新浪行情字段不足")
+        return {
+            "price": float(f[3]),
+            "pct_change": round((float(f[3]) - float(f[2])) / float(f[2]) * 100, 2) if float(f[2]) > 0 else 0,
+            "volume_ratio": 0,
+            "turnover_rate": 0,
+            "name": f[0],
+            "total_mv": 0,
+            "circ_mv": 0,
+            "pe": 0,
+            "pb": 0,
+            "high": float(f[4]),
+            "low": float(f[5]),
+            "open": float(f[1]),
+            "pre_close": float(f[2]),
+            "amount": float(f[9]),
+        }
+
+    try:
+        return smart_source([
+            (SOURCE_EM_SPOT, _em),
+            (SOURCE_SINA_HTTP, _sina),
+        ])
     except Exception as e:
-        logger.warning("获取实时行情失败 %s: %s", code, e)
+        logger.warning("行情双源均失败 %s: %s", code, e)
         return None
 
 
@@ -534,6 +593,30 @@ def analyze_stock(code: str, push: bool = False, journal: bool = False) -> dict:
     closes = [k["close"] for k in klines]
     price = rt["price"] if rt and rt["price"] > 0 else closes[-1]
     name = rt["name"] if rt and rt.get("name") else _get_stock_name(code)
+
+    # 将实时数据注入 closes/klines, 让技术指标反映盘中最新状态
+    if rt and rt["price"] > 0:
+        today_str_check = date.today().isoformat()
+        last_date = klines[-1]["date"][:10] if klines else ""
+        if last_date != today_str_check:
+            # K线数据还没有今天的, 用实时行情构造当日K线
+            today_kline = {
+                "date": today_str_check,
+                "open": rt.get("open", price),
+                "high": rt.get("high", price),
+                "low": rt.get("low", price),
+                "close": price,
+                "volume": rt.get("amount", 0),
+                "turnover": rt.get("turnover_rate", 0),
+            }
+            klines = klines + [today_kline]
+            closes = closes + [price]
+        else:
+            # K线已有今天的数据, 用实时价格覆盖收盘价
+            klines[-1] = {**klines[-1], "close": price,
+                          "high": max(klines[-1]["high"], price),
+                          "low": min(klines[-1]["low"], price)}
+            closes[-1] = price
 
     # 2. 五维打分
     s_trend, d_trend = _score_trend(closes, price)

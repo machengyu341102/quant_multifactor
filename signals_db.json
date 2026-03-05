@@ -43,8 +43,15 @@
     "regime_score": 0,
     "market_signals": {},
     "direction": "long",
-    "verify": {},
-    "status": "pending"
+    "verify": {
+      "t1": {
+        "date": "2026-03-04",
+        "close": 51.21,
+        "return_pct": -0.18,
+        "result": "loss"
+      }
+    },
+    "status": "partial"
   },
   {
     "date": "2026-03-03",
@@ -223,8 +230,15 @@
     "regime_score": 0,
     "market_signals": {},
     "direction": "long",
-    "verify": {},
-    "status": "pending"
+    "verify": {
+      "t1": {
+        "date": "2026-03-04",
+        "close": 18.57,
+        "return_pct": 0.05,
+        "result": "win"
+      }
+    },
+    "status": "partial"
   },
   {
     "date": "2026-03-03",

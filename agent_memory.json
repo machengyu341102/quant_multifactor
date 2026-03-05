@@ -6,8 +6,10 @@
       "pause_reason": null,
       "auto_resume_date": null,
       "consecutive_losses": 0,
-      "consecutive_wins": 0,
-      "last_5_results": []
+      "consecutive_wins": 1,
+      "last_5_results": [
+        "win"
+      ]
     },
     "放量突破选股": {
       "status": "active",
@@ -78,8 +80,10 @@
       "pause_reason": null,
       "auto_resume_date": null,
       "consecutive_losses": 0,
-      "consecutive_wins": 0,
-      "last_5_results": []
+      "consecutive_wins": 1,
+      "last_5_results": [
+        "win"
+      ]
     },
     "币圈趋势选股": {
       "status": "active",
@@ -95,9 +99,11 @@
       "paused_since": null,
       "pause_reason": null,
       "auto_resume_date": null,
-      "consecutive_losses": 0,
+      "consecutive_losses": 1,
       "consecutive_wins": 0,
-      "last_5_results": []
+      "last_5_results": [
+        "loss"
+      ]
     }
   },
   "rules": [
@@ -166,10 +172,73 @@
       "message": "行情检测: neutral (评分0.50)",
       "action_taken": "log_insight",
       "pushed": false
+    },
+    {
+      "time": "2026-03-04 16:15:03",
+      "severity": "info",
+      "message": "行情检测: neutral (评分0.50)",
+      "action_taken": "log_insight",
+      "pushed": false
+    },
+    {
+      "time": "2026-03-04 16:15:03",
+      "severity": "info",
+      "message": "行情检测: neutral (评分0.50)",
+      "action_taken": "log_insight",
+      "pushed": false
+    },
+    {
+      "time": "2026-03-04 16:15:12",
+      "severity": "info",
+      "message": "行情检测: neutral (评分0.50)",
+      "action_taken": "log_insight",
+      "pushed": false
+    },
+    {
+      "time": "2026-03-04 16:15:14",
+      "severity": "warning",
+      "message": "冒烟测试失败: akshare可用",
+      "action_taken": "escalate_human",
+      "pushed": false
+    },
+    {
+      "time": "2026-03-04 16:15:14",
+      "severity": "info",
+      "message": "行情检测: neutral (评分0.50)",
+      "action_taken": "log_insight",
+      "pushed": false
+    },
+    {
+      "time": "2026-03-04 16:15:14",
+      "severity": "info",
+      "message": "行情检测: neutral (评分0.50)",
+      "action_taken": "log_insight",
+      "pushed": false
+    },
+    {
+      "time": "2026-03-04 16:15:28",
+      "severity": "warning",
+      "message": "冒烟测试失败: akshare可用",
+      "action_taken": "escalate_human",
+      "pushed": false
+    },
+    {
+      "time": "2026-03-04 16:15:28",
+      "severity": "info",
+      "message": "行情检测: neutral (评分0.50)",
+      "action_taken": "log_insight",
+      "pushed": false
+    },
+    {
+      "time": "2026-03-04 16:15:28",
+      "severity": "info",
+      "message": "行情检测: neutral (评分0.50)",
+      "action_taken": "log_insight",
+      "pushed": false
     }
   ],
   "meta": {
-    "last_cycle": "2026-03-03 18:04:13",
-    "total_cycles": 4
+    "last_cycle": "2026-03-04 16:15:28",
+    "total_cycles": 8
   }
 }
