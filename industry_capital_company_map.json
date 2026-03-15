@@ -1,0 +1,235 @@
+{
+  "directions": [
+    {
+      "id": "ai-digital",
+      "company_watchlist": [
+        {
+          "code": "000063",
+          "name": "中兴通讯",
+          "role": "算力与通信底座",
+          "chain_position": "中游",
+          "tracking_reason": "运营商、算力网络和国产通信设备共振时，最容易先体现资本开支与订单验证。",
+          "action": "跟踪运营商资本开支、服务器和网络设备招标。"
+        },
+        {
+          "code": "603019",
+          "name": "中科曙光",
+          "role": "算力整机与平台",
+          "chain_position": "中游",
+          "tracking_reason": "算力基础设施扩张时，整机与平台层最容易直接吃到预算和交付验证。",
+          "action": "看算力中心项目、交付节奏和毛利率修复。"
+        },
+        {
+          "code": "002230",
+          "name": "科大讯飞",
+          "role": "应用侧龙头",
+          "chain_position": "下游",
+          "tracking_reason": "AI 从基础设施转向应用兑现时，应用侧龙头更能体现商业化渗透率。",
+          "action": "观察政企订单、教育办公落地和模型商业化。"
+        }
+      ],
+      "research_targets": ["运营商算力建设团队", "算力设备集成商", "行业数字化应用客户", "地方数据要素平台"],
+      "validation_signals": ["算力中心招标放量", "行业应用试点转正式采购", "数据要素流通政策落地", "关键设备交付周期缩短"]
+    },
+    {
+      "id": "new-energy",
+      "company_watchlist": [
+        {
+          "code": "600089",
+          "name": "特变电工",
+          "role": "电网与设备主干",
+          "chain_position": "中游",
+          "tracking_reason": "新能源真正走中期，电网配套和输变电扩容往往先于终端装机体现。",
+          "action": "跟踪电网投资计划、特高压与储能配套订单。"
+        },
+        {
+          "code": "300274",
+          "name": "阳光电源",
+          "role": "逆变器与储能核心",
+          "chain_position": "中游",
+          "tracking_reason": "储能与逆变器是国内外装机兑现最快的利润映射环节。",
+          "action": "看海外需求、储能订单和盈利弹性。"
+        },
+        {
+          "code": "002129",
+          "name": "TCL中环",
+          "role": "上游材料与成本映射",
+          "chain_position": "上游",
+          "tracking_reason": "供需改善是否真实，往往先体现在硅片和材料价格与产能利用率上。",
+          "action": "观察价格、库存、开工率和资本开支。"
+        }
+      ],
+      "research_targets": ["电网设备商", "储能系统集成商", "工业园区与用能客户", "新能源项目开发方"],
+      "validation_signals": ["电网招标加速", "储能订单持续放量", "价格企稳并向利润传导", "装机并网数据改善"]
+    },
+    {
+      "id": "finance-demand",
+      "company_watchlist": [
+        {
+          "code": "601688",
+          "name": "华泰证券",
+          "role": "风险偏好映射",
+          "chain_position": "下游",
+          "tracking_reason": "金融条件改善时，券商最能映射风险偏好和资本市场活跃度。",
+          "action": "看成交额、两融、投行业务和估值修复。"
+        },
+        {
+          "code": "600036",
+          "name": "招商银行",
+          "role": "信用扩张映射",
+          "chain_position": "中游",
+          "tracking_reason": "银行更适合验证信用扩张和实体需求修复是否真实。",
+          "action": "跟踪社融、零售信贷和息差变化。"
+        }
+      ],
+      "research_targets": ["区域金融机构", "产业园区平台", "消费链渠道方", "地产链核心客户"],
+      "validation_signals": ["社融与信贷改善", "成交额放大", "消费与地产链需求回暖", "风险偏好持续抬升"]
+    },
+    {
+      "id": "energy-security",
+      "company_watchlist": [
+        {
+          "code": "600256",
+          "name": "广汇能源",
+          "role": "资源与价格映射",
+          "chain_position": "上游",
+          "tracking_reason": "能源安全线里，上游资源最容易先吃到价格与供应扰动。",
+          "action": "跟踪原油/天然气价格、库存与长协变化。"
+        },
+        {
+          "code": "000301",
+          "name": "东方盛虹",
+          "role": "中游炼化传导",
+          "chain_position": "中游",
+          "tracking_reason": "只有当价格向中游利润传导，能源安全线才更像持续主线而不是纯资源脉冲。",
+          "action": "看价差、开工率和利润弹性。"
+        }
+      ],
+      "research_targets": ["资源贸易商", "炼化与化工企业", "物流运输方", "高耗能制造客户"],
+      "validation_signals": ["资源价格站稳", "库存持续下降", "中游利润修复", "长协与保供安排强化"]
+    },
+    {
+      "id": "defense-security",
+      "company_watchlist": [
+        {
+          "code": "600760",
+          "name": "中航沈飞",
+          "role": "整机龙头",
+          "chain_position": "下游",
+          "tracking_reason": "军工安全线真正起势时，整机龙头和核心平台最容易形成主升。",
+          "action": "跟踪预算、订单预期和交付节奏。"
+        },
+        {
+          "code": "002465",
+          "name": "海格通信",
+          "role": "信息化配套",
+          "chain_position": "中游",
+          "tracking_reason": "安全议题升温时，通信与信息化往往扩散更快，也更容易体现景气外溢。",
+          "action": "观察军工信息化、卫星通信与项目验证。"
+        }
+      ],
+      "research_targets": ["军工配套厂商", "特种材料方", "军贸服务方", "整机与系统集成企业"],
+      "validation_signals": ["国防预算强化", "订单预期提升", "核心配套环节扩散", "龙头承接稳定"]
+    },
+    {
+      "id": "consumption-recovery",
+      "company_watchlist": [
+        {
+          "code": "000858",
+          "name": "五粮液",
+          "role": "高端消费风向标",
+          "chain_position": "下游",
+          "tracking_reason": "消费修复是否是中期线，高端消费和品牌龙头最能体现需求与价格体系稳定。",
+          "action": "看渠道库存、动销和价格体系。"
+        },
+        {
+          "code": "600754",
+          "name": "锦江酒店",
+          "role": "出行与文旅映射",
+          "chain_position": "下游",
+          "tracking_reason": "消费恢复不是只看白酒，还要看客流、住宿和文旅恢复是否同步。",
+          "action": "跟踪入住率、RevPAR 和节假日客流。"
+        }
+      ],
+      "research_targets": ["品牌渠道商", "文旅平台", "终端零售客户", "区域消费服务商"],
+      "validation_signals": ["客流与零售数据提升", "渠道库存改善", "价格体系稳定", "高端与大众消费同步扩散"]
+    },
+    {
+      "id": "domestic-substitution",
+      "company_watchlist": [
+        {
+          "code": "688041",
+          "name": "海光信息",
+          "role": "核心算力替代",
+          "chain_position": "中游",
+          "tracking_reason": "自主可控从提法走到兑现，先看关键芯片和算力替代环节。",
+          "action": "跟踪政企客户验证、产品导入与放量。"
+        },
+        {
+          "code": "603019",
+          "name": "中科曙光",
+          "role": "整机与生态承接",
+          "chain_position": "中游",
+          "tracking_reason": "替代要能兑现，整机和生态配套是最直接的承接层。",
+          "action": "观察信创项目、行业复制和招投标节奏。"
+        }
+      ],
+      "research_targets": ["政企客户", "信创集成商", "关键器件厂商", "软件生态伙伴"],
+      "validation_signals": ["采购与招标放量", "试点转行业复制", "国产化率提升", "业绩兑现开始体现"]
+    },
+    {
+      "id": "china-us-rivalry",
+      "company_watchlist": [
+        {
+          "code": "688981",
+          "name": "中芯国际",
+          "role": "先进制造与替代主轴",
+          "chain_position": "中游",
+          "tracking_reason": "中美博弈深化时，制造能力和资本开支最能体现替代是否进入兑现期。",
+          "action": "看产能、资本开支、客户结构和良率。"
+        },
+        {
+          "code": "300604",
+          "name": "长川科技",
+          "role": "设备替代环节",
+          "chain_position": "上游",
+          "tracking_reason": "设备环节是被制裁和反制最直接影响的替代链条之一。",
+          "action": "跟踪验证订单、客户导入和国产替代率。"
+        },
+        {
+          "code": "688012",
+          "name": "中微公司",
+          "role": "高端设备关键节点",
+          "chain_position": "上游",
+          "tracking_reason": "高端设备决定替代链的上限，是观察政策兑现和产业升级的关键锚点。",
+          "action": "看新品突破、交付节奏和大客户验证。"
+        }
+      ],
+      "research_targets": ["国产替代方案商", "关键器件和材料厂商", "政企采购部门", "供应链备份伙伴"],
+      "validation_signals": ["出口管制或反制升级", "采购替代加速", "大客户验证通过", "订单和扩产节奏改善"]
+    },
+    {
+      "id": "resource-counter",
+      "company_watchlist": [
+        {
+          "code": "000831",
+          "name": "中国稀土",
+          "role": "资源反制核心",
+          "chain_position": "上游",
+          "tracking_reason": "资源反制线里，上游资源价格与政策最直接共振。",
+          "action": "看价格、库存和出口限制口径。"
+        },
+        {
+          "code": "600111",
+          "name": "北方稀土",
+          "role": "加工与利润扩张",
+          "chain_position": "中游",
+          "tracking_reason": "只有当价格向加工利润传导，资源反制才会从政策脉冲走向中期行情。",
+          "action": "观察价差、库存和下游承接。"
+        }
+      ],
+      "research_targets": ["矿山资源方", "冶炼加工方", "高端材料客户", "替代材料研发伙伴"],
+      "validation_signals": ["出口限制口径强化", "价格持续抬升", "库存下降", "利润向产业链传导"]
+    }
+  ]
+}

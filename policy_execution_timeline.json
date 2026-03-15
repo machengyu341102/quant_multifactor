@@ -1,0 +1,67 @@
+{
+  "directions": [
+    {
+      "id": "ai-digital",
+      "official_documents": ["政府工作报告", "十五五数字中国方向", "工信部算力与数据基础设施口径"],
+      "timeline_checkpoints": ["政策定调", "专项与示范", "资本开支", "订单落地", "业绩验证"],
+      "cooperation_targets": ["地方国资平台", "运营商与IDC", "算力设备商", "行业应用集成商"],
+      "cooperation_modes": ["联合方案", "场景试点", "供应链导入", "渠道合作"]
+    },
+    {
+      "id": "new-energy",
+      "official_documents": ["能源发展规划", "新能源装机与储能政策", "电网投资方向"],
+      "timeline_checkpoints": ["政策定调", "项目核准", "招标中标", "装机并网", "盈利修复"],
+      "cooperation_targets": ["电网设备商", "储能系统集成商", "电站开发商", "工业园区客户"],
+      "cooperation_modes": ["项目合作", "系统集成", "设备供货", "联合投建"]
+    },
+    {
+      "id": "finance-demand",
+      "official_documents": ["政府工作报告", "央行货币政策口径", "财政发力方向"],
+      "timeline_checkpoints": ["预期升温", "政策落地", "信用扩张", "需求回暖", "盈利兑现"],
+      "cooperation_targets": ["区域金融机构", "产业园区平台", "消费与地产链客户", "渠道金融合作方"],
+      "cooperation_modes": ["融资协同", "联合招商", "客户导流", "产业服务"]
+    },
+    {
+      "id": "energy-security",
+      "official_documents": ["能源安全口径", "战略储备与价格调控信息", "国际供给扰动追踪"],
+      "timeline_checkpoints": ["冲突扰动", "供给收紧", "价格确认", "利润释放", "资本开支反馈"],
+      "cooperation_targets": ["资源品贸易商", "炼化链企业", "物流运输方", "下游制造客户"],
+      "cooperation_modes": ["供应保障", "贸易协同", "价格联动", "长协采购"]
+    },
+    {
+      "id": "defense-security",
+      "official_documents": ["国防预算信息", "装备建设方向", "安全议题口径"],
+      "timeline_checkpoints": ["安全议题", "预算确认", "订单预期", "交付加速", "业绩兑现"],
+      "cooperation_targets": ["军工配套企业", "特种材料方", "精密制造厂商", "军贸服务方"],
+      "cooperation_modes": ["配套导入", "联合研制", "订单协同", "产业资源对接"]
+    },
+    {
+      "id": "consumption-recovery",
+      "official_documents": ["促消费政策", "文旅和零售恢复口径", "统计与客流数据"],
+      "timeline_checkpoints": ["政策刺激", "需求恢复", "价格稳定", "渠道回暖", "盈利兑现"],
+      "cooperation_targets": ["品牌商", "渠道商", "文旅平台", "终端零售客户"],
+      "cooperation_modes": ["渠道合作", "联合营销", "区域拓展", "供应链协同"]
+    },
+    {
+      "id": "domestic-substitution",
+      "official_documents": ["自主可控采购方向", "试点复制口径", "行业国产化推进"],
+      "timeline_checkpoints": ["政策提法", "试点推进", "采购放量", "行业复制", "盈利兑现"],
+      "cooperation_targets": ["政企客户", "信创集成商", "关键器件厂商", "软件生态伙伴"],
+      "cooperation_modes": ["试点合作", "联合投标", "生态共建", "产品导入"]
+    },
+    {
+      "id": "china-us-rivalry",
+      "official_documents": ["商务部反制口径", "出口管制与豁免信息", "产业安全相关口径"],
+      "timeline_checkpoints": ["制裁升级", "反制落地", "采购替代", "行业扩散", "盈利验证"],
+      "cooperation_targets": ["国产替代方案商", "关键器件和材料厂商", "政企客户", "供应链备份伙伴"],
+      "cooperation_modes": ["平替验证", "联合采购", "供应链重构", "客户共同开发"]
+    },
+    {
+      "id": "resource-counter",
+      "official_documents": ["资源反制口径", "出口限制信息", "价格与库存追踪"],
+      "timeline_checkpoints": ["政策发声", "价格抬升", "库存确认", "利润释放", "资本开支扩张"],
+      "cooperation_targets": ["矿山资源方", "冶炼加工方", "下游制造客户", "替代材料伙伴"],
+      "cooperation_modes": ["长协采购", "价格联动", "保供合作", "替代材料联合开发"]
+    }
+  ]
+}

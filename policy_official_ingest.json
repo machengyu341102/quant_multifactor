@@ -1,0 +1,162 @@
+{
+  "directions": [
+    {
+      "id": "ai-digital",
+      "official_source_entries": [
+        {
+          "title": "政府工作报告中的数字经济与人工智能方向",
+          "issuer": "国务院",
+          "published_at": "2026-03-05",
+          "source_type": "政府工作报告",
+          "reference": "2026 年政府工作报告",
+          "reference_url": "https://www.gov.cn/yaowen/liebiao/202603/content_7022758.htm",
+          "excerpt": "数字经济、人工智能、数据基础设施和产业数智化仍是中长期重点方向。",
+          "key_points": [
+            "数字基础设施仍是底层抓手",
+            "AI 重点从底座走向行业应用",
+            "后续要看项目、预算和招标兑现"
+          ],
+          "watch_tags": [
+            "算力建设",
+            "数据基础设施",
+            "行业应用"
+          ]
+        },
+        {
+          "title": "十五五数字中国方向口径",
+          "issuer": "国家数据局",
+          "published_at": "2026-02-13",
+          "source_type": "征求意见",
+          "reference": "十五五时期数字中国建设意见征求",
+          "reference_url": "https://www.nda.gov.cn/sjj/jgsz/jld/llh/llhldhd/0213/20260213191358499112765_pc.html",
+          "excerpt": "政策重心正在从概念扩散走向数据要素、数字科技自立自强和现代产业体系数智化。",
+          "key_points": [
+            "数据要素流通是中期兑现抓手",
+            "算力和应用要同步看",
+            "继续盯试点、预算和项目复制"
+          ],
+          "watch_tags": [
+            "数据要素",
+            "数智化转型",
+            "试点复制"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "domestic-substitution",
+      "official_source_entries": [
+        {
+          "title": "自主可控与行业采购复制",
+          "issuer": "国务院",
+          "published_at": "2026-03-05",
+          "source_type": "政府工作报告",
+          "reference": "2026 年政府工作报告",
+          "reference_url": "https://www.gov.cn/yaowen/liebiao/202603/content_7022758.htm",
+          "excerpt": "自主可控的关键不是提法，而是试点是否进入行业复制和采购放量。",
+          "key_points": [
+            "先看试点复制，再看行业采购",
+            "订单和份额提升才算真正兑现",
+            "优先跟政企采购与招标节奏"
+          ],
+          "watch_tags": [
+            "试点复制",
+            "采购放量",
+            "份额提升"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "china-us-rivalry",
+      "official_source_entries": [
+        {
+          "title": "制裁反制与产业安全口径",
+          "issuer": "国务院 / 商务部 / 工信部",
+          "published_at": "2025-12-31",
+          "source_type": "商务部公告",
+          "reference": "商务部关于发布两用物项出口管制信息的公告",
+          "reference_url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_7d3ec152e6964bdf991532a5ca7b4b01.html",
+          "excerpt": "中美博弈的核心不在情绪，而在关键环节供给安全、采购替代和产业链重构。",
+          "key_points": [
+            "先看制裁与反制清单变化",
+            "再看采购替代与客户验证是否推进",
+            "最终落脚在交付、扩产和利润兑现"
+          ],
+          "watch_tags": [
+            "出口管制",
+            "采购替代",
+            "产业安全"
+          ]
+        },
+        {
+          "title": "去美化重构与客户导入验证",
+          "issuer": "海关总署 / 产业安全口径",
+          "published_at": "2025-12-30",
+          "source_type": "商务部目录",
+          "reference": "商务部关于公布出口许可证管理货物目录的公告",
+          "reference_url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_aeedf3d61b564f34be33c825640af4db.html",
+          "excerpt": "真正受益的不是所有概念股，而是已经进入客户验证、交付和扩产节奏的链条。",
+          "key_points": [
+            "看客户导入和扩产节奏",
+            "看是否从题材走向产业兑现",
+            "只跟踪可交付、可验证的公司"
+          ],
+          "watch_tags": [
+            "客户导入",
+            "扩产节奏",
+            "交付验证"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "defense-security",
+      "official_source_entries": [
+        {
+          "title": "安全议题与装备建设节奏",
+          "issuer": "国务院",
+          "published_at": "2026-03-05",
+          "source_type": "政府工作报告",
+          "reference": "2026 年政府工作报告",
+          "reference_url": "https://www.gov.cn/yaowen/liebiao/202603/content_7022758.htm",
+          "excerpt": "军工安全方向的持续性看预算、装备建设和交付，而不是单次事件刺激。",
+          "key_points": [
+            "预算与订单是第一验证",
+            "再看整机向信息化、材料扩散",
+            "弱市里更重视承接质量"
+          ],
+          "watch_tags": [
+            "预算确认",
+            "装备建设",
+            "订单交付"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "resource-counter",
+      "official_source_entries": [
+        {
+          "title": "资源反制与价格主导权",
+          "issuer": "商务部",
+          "published_at": "2025-12-31",
+          "source_type": "商务部公告",
+          "reference": "商务部关于发布两用物项出口管制信息的公告",
+          "reference_url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_7d3ec152e6964bdf991532a5ca7b4b01.html",
+          "excerpt": "资源反制方向的关键是出口限制、库存和价格能否持续共振，不是单纯题材刺激。",
+          "key_points": [
+            "先看价格与库存",
+            "再看利润是否向资源端集中",
+            "最后看是否扩散到中下游"
+          ],
+          "watch_tags": [
+            "出口限制",
+            "价格抬升",
+            "利润传导"
+          ]
+        }
+      ]
+    }
+  ]
+}

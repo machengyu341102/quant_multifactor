@@ -1,0 +1,169 @@
+{
+  "directions": [
+    {
+      "id": "ai-digital",
+      "direction": "AI与数字基础设施",
+      "policy_bucket": "国家战略",
+      "focus_sectors": ["科技", "半导体", "通信"],
+      "keywords": ["人工智能", "ai", "算力", "量子", "芯片", "半导体", "模型", "数据", "数字中国"],
+      "industry_phase_map": {
+        "watch": "导入验证期",
+        "warming": "渗透加速期",
+        "expansion": "业绩兑现期"
+      },
+      "demand_drivers": ["算力资本开支", "模型迭代", "企业数字化需求"],
+      "supply_drivers": ["先进制程", "国产替代", "服务器与光模块产能"],
+      "upstream": ["算力芯片", "先进制程", "IDC电力"],
+      "midstream": ["服务器", "交换机", "CPO/通信设备"],
+      "downstream": ["行业应用", "企业软件", "智能终端"],
+      "milestones": ["政策提法", "专项支持", "资本开支", "订单落地", "业绩验证"]
+    },
+    {
+      "id": "new-energy",
+      "direction": "新能源与电力系统",
+      "policy_bucket": "产业升级",
+      "focus_sectors": ["新能源", "电力", "光伏", "风电", "储能"],
+      "keywords": ["新能源", "储能", "光伏", "风电", "电力", "新能源车", "电网"],
+      "industry_phase_map": {
+        "watch": "需求筑底期",
+        "warming": "装机修复期",
+        "expansion": "景气扩散期"
+      },
+      "demand_drivers": ["装机需求", "电网投资", "新能源车渗透率"],
+      "supply_drivers": ["硅料电芯价格", "电网设备产能", "储能成本下降"],
+      "upstream": ["锂电材料", "硅料", "电力设备原材"],
+      "midstream": ["电池", "逆变器", "风机设备", "储能系统"],
+      "downstream": ["电站运营", "工商业储能", "新能源车"],
+      "milestones": ["政策提法", "项目核准", "装机数据", "订单验证", "盈利修复"]
+    },
+    {
+      "id": "finance-demand",
+      "direction": "金融稳增长",
+      "policy_bucket": "宏观政策",
+      "focus_sectors": ["银行", "证券", "保险"],
+      "keywords": ["降息", "降准", "lpr", "宽松", "流动性", "信贷", "财政", "刺激"],
+      "industry_phase_map": {
+        "watch": "预期博弈期",
+        "warming": "流动性改善期",
+        "expansion": "信用扩张期"
+      },
+      "demand_drivers": ["融资需求", "市场活跃度", "居民资产配置"],
+      "supply_drivers": ["货币政策", "财政发力", "资本市场改革"],
+      "upstream": ["流动性", "政策利率", "财政投放"],
+      "midstream": ["银行信贷", "券商经纪与投行", "保险资管"],
+      "downstream": ["地产链融资", "消费金融", "权益市场"],
+      "milestones": ["政策预期", "利率落地", "社融改善", "资产扩张", "盈利兑现"]
+    },
+    {
+      "id": "energy-security",
+      "direction": "能源安全",
+      "policy_bucket": "全球博弈",
+      "focus_sectors": ["能源", "石化"],
+      "keywords": ["原油", "石油", "天然气", "中东", "战争", "制裁", "供应", "储备"],
+      "industry_phase_map": {
+        "watch": "供给扰动期",
+        "warming": "价格抬升期",
+        "expansion": "利润扩张期"
+      },
+      "demand_drivers": ["全球补库", "地缘冲突", "工业需求"],
+      "supply_drivers": ["油气供给", "库存释放", "制裁扰动"],
+      "upstream": ["原油", "天然气", "油服"],
+      "midstream": ["炼化", "油气运输", "化工原料"],
+      "downstream": ["化纤", "塑料", "终端制造"],
+      "milestones": ["冲突升级", "供给收紧", "价格确认", "利润兑现", "资本开支反馈"]
+    },
+    {
+      "id": "defense-security",
+      "direction": "军工安全",
+      "policy_bucket": "国家安全",
+      "focus_sectors": ["军工", "航空", "国防", "航天"],
+      "keywords": ["战争", "冲突", "军工", "国防", "导弹", "军演", "制裁"],
+      "industry_phase_map": {
+        "watch": "主题预热期",
+        "warming": "订单预期升温期",
+        "expansion": "装备兑现期"
+      },
+      "demand_drivers": ["装备更新", "国防预算", "地缘冲突升温"],
+      "supply_drivers": ["军工产能", "关键材料", "航空航天配套"],
+      "upstream": ["特种材料", "电子元件", "精密制造"],
+      "midstream": ["整机制造", "导弹航天", "军工电子"],
+      "downstream": ["装备交付", "航空航运保障", "军贸"],
+      "milestones": ["安全议题", "预算确认", "订单预期", "交付加速", "业绩兑现"]
+    },
+    {
+      "id": "consumption-recovery",
+      "direction": "内需消费修复",
+      "policy_bucket": "经济修复",
+      "focus_sectors": ["消费", "白酒", "旅游", "零售"],
+      "keywords": ["消费", "内需", "促消费", "假期", "零售", "白酒", "文旅"],
+      "industry_phase_map": {
+        "watch": "信心修复期",
+        "warming": "需求回补期",
+        "expansion": "盈利释放期"
+      },
+      "demand_drivers": ["居民收入预期", "促消费政策", "节假日客流"],
+      "supply_drivers": ["渠道去库", "价格体系", "品牌升级"],
+      "upstream": ["农产品", "包材", "物流"],
+      "midstream": ["品牌商", "零售渠道", "酒旅供应"],
+      "downstream": ["终端零售", "旅游服务", "餐饮与体验消费"],
+      "milestones": ["政策刺激", "客流恢复", "价格稳定", "渠道回暖", "业绩兑现"]
+    },
+    {
+      "id": "domestic-substitution",
+      "direction": "国产替代与自主可控",
+      "policy_bucket": "国家战略",
+      "focus_sectors": ["国产替代", "自主可控", "信创", "华为概念"],
+      "keywords": ["制裁", "贸易战", "关税", "断供", "出口管制", "自主可控", "国产替代", "信创", "华为"],
+      "industry_phase_map": {
+        "watch": "替代启动期",
+        "warming": "验证放量期",
+        "expansion": "份额提升期"
+      },
+      "demand_drivers": ["自主可控需求", "政企国产化", "关键环节替代"],
+      "supply_drivers": ["国产产能", "兼容生态", "订单验证"],
+      "upstream": ["基础软硬件", "关键器件", "设备材料"],
+      "midstream": ["整机", "操作系统", "数据库中间件"],
+      "downstream": ["政务", "金融", "电信能源等行业客户"],
+      "milestones": ["政策提法", "试点推进", "采购放量", "行业复制", "盈利兑现"],
+      "transmission_paths": ["出口管制 -> 自主可控需求", "断供/制裁 -> 国产替代加速", "平替方案落地 -> 份额提升"]
+    },
+    {
+      "id": "china-us-rivalry",
+      "direction": "中美博弈与反制链",
+      "policy_bucket": "全球博弈",
+      "focus_sectors": ["国产替代", "自主可控", "信创", "华为概念", "半导体"],
+      "keywords": ["中国", "美国", "关税", "贸易战", "制裁", "反制", "豁免", "出口管制", "实体清单", "断供", "平替"],
+      "industry_phase_map": {
+        "watch": "博弈升温期",
+        "warming": "替代验证期",
+        "expansion": "结构重塑期"
+      },
+      "demand_drivers": ["自主可控采购", "政企替代需求", "关键环节去美化"],
+      "supply_drivers": ["国产产能", "平替方案成熟", "供应链本土化"],
+      "upstream": ["关键器件", "设备材料", "EDA/IP"],
+      "midstream": ["芯片设计制造", "基础软硬件", "信创整机"],
+      "downstream": ["政企IT", "运营商", "工业控制"],
+      "milestones": ["制裁升级", "反制落地", "采购替代", "行业扩散", "盈利验证"],
+      "transmission_paths": ["制裁/关税 -> 平替需求", "反制/豁免 -> 供需再定价", "产业链脱钩 -> 行业结构重塑"]
+    },
+    {
+      "id": "resource-counter",
+      "direction": "资源反制与涨价链",
+      "policy_bucket": "全球博弈",
+      "focus_sectors": ["稀土", "有色金属", "工业金属", "能源"],
+      "keywords": ["稀土", "资源", "涨价", "降价", "反制", "出口限制", "供给收缩", "工业金属", "限产", "矿产"],
+      "industry_phase_map": {
+        "watch": "价格博弈期",
+        "warming": "涨价确认期",
+        "expansion": "利润扩张期"
+      },
+      "demand_drivers": ["军工新能源需求", "海外补库", "产业链安全库存"],
+      "supply_drivers": ["出口限制", "限产收缩", "资源品价格上行"],
+      "upstream": ["矿山资源", "冶炼分离", "能源原料"],
+      "midstream": ["磁材加工", "金属加工", "化工冶炼"],
+      "downstream": ["军工", "新能源车", "工业制造"],
+      "milestones": ["政策发声", "价格抬升", "库存确认", "利润释放", "资本开支扩张"],
+      "transmission_paths": ["反制/限制 -> 资源涨价", "涨价/降价 -> 利润重分配", "供给收缩 -> 下游平替与替代材料"]
+    }
+  ]
+}
