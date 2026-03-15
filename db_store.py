@@ -25,9 +25,8 @@ from log_config import get_logger
 
 logger = get_logger("db_store")
 
-_DB_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "quant_data.db"
-)
+_DATA_DIR = os.environ.get("DATA_DIR", os.path.dirname(os.path.abspath(__file__)))
+_DB_PATH = os.path.join(_DATA_DIR, "quant_data.db")
 
 # 线程局部连接 (SQLite 不允许跨线程共享连接)
 _local = threading.local()

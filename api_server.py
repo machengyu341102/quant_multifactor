@@ -47,6 +47,7 @@ from db_store import load_scorecard, load_trade_journal
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(_DIR, ".env"))
+_DATA_DIR = os.environ.get("DATA_DIR", _DIR)
 
 
 def _parse_cors_origins(value: str) -> list[str]:
@@ -100,27 +101,27 @@ async def collect_request_metrics(request: Request, call_next):
 #  数据路径
 # ================================================================
 
-_AGENT_MEMORY = os.path.join(_DIR, "agent_memory.json")
-_STRATEGIES_JSON = os.path.join(_DIR, "strategies.json")
-_SCORECARD_JSON = os.path.join(_DIR, "scorecard.json")
-_TUNABLE_PARAMS = os.path.join(_DIR, "tunable_params.json")
-_PAPER_POSITIONS = os.path.join(_DIR, "paper_positions.json")
-_LEARNING_STATE = os.path.join(_DIR, "learning_state.json")
-_SIGNAL_TRACKER = os.path.join(_DIR, "signal_tracker.json")
-_PUSH_TOKENS = os.path.join(_DIR, "push_tokens.json")
-_FEEDBACK_BOX = os.path.join(_DIR, "feedback_box.json")
-_LEARNING_DAILY_ADVANCE = os.path.join(_DIR, "learning_daily_advance.json")
-_APP_MESSAGE_CENTER = os.path.join(_DIR, "app_message_center.json")
-_SECTOR_ALERTS = os.path.join(_DIR, "sector_alerts.json")
-_NEWS_DIGEST = os.path.join(_DIR, "news_digest.json")
-_POLICY_DIRECTION_CATALOG = os.path.join(_DIR, "policy_direction_catalog.json")
-_POLICY_OFFICIAL_WATCH = os.path.join(_DIR, "policy_official_watch.json")
-_POLICY_OFFICIAL_CARDS = os.path.join(_DIR, "policy_official_cards.json")
-_POLICY_OFFICIAL_INGEST = os.path.join(_DIR, "policy_official_ingest.json")
-_POLICY_EXECUTION_TIMELINE = os.path.join(_DIR, "policy_execution_timeline.json")
-_INDUSTRY_CAPITAL_COMPANY_MAP = os.path.join(_DIR, "industry_capital_company_map.json")
-_INDUSTRY_CAPITAL_RESEARCH_LOG = os.path.join(_DIR, "industry_capital_research_log.json")
-_PUSH_STATE = os.path.join(_DIR, "push_state.json")
+_AGENT_MEMORY = os.path.join(_DATA_DIR, "agent_memory.json")
+_STRATEGIES_JSON = os.path.join(_DATA_DIR, "strategies.json")
+_SCORECARD_JSON = os.path.join(_DATA_DIR, "scorecard.json")
+_TUNABLE_PARAMS = os.path.join(_DATA_DIR, "tunable_params.json")
+_PAPER_POSITIONS = os.path.join(_DATA_DIR, "paper_positions.json")
+_LEARNING_STATE = os.path.join(_DATA_DIR, "learning_state.json")
+_SIGNAL_TRACKER = os.path.join(_DATA_DIR, "signal_tracker.json")
+_PUSH_TOKENS = os.path.join(_DATA_DIR, "push_tokens.json")
+_FEEDBACK_BOX = os.path.join(_DATA_DIR, "feedback_box.json")
+_LEARNING_DAILY_ADVANCE = os.path.join(_DATA_DIR, "learning_daily_advance.json")
+_APP_MESSAGE_CENTER = os.path.join(_DATA_DIR, "app_message_center.json")
+_SECTOR_ALERTS = os.path.join(_DATA_DIR, "sector_alerts.json")
+_NEWS_DIGEST = os.path.join(_DATA_DIR, "news_digest.json")
+_POLICY_DIRECTION_CATALOG = os.path.join(_DATA_DIR, "policy_direction_catalog.json")
+_POLICY_OFFICIAL_WATCH = os.path.join(_DATA_DIR, "policy_official_watch.json")
+_POLICY_OFFICIAL_CARDS = os.path.join(_DATA_DIR, "policy_official_cards.json")
+_POLICY_OFFICIAL_INGEST = os.path.join(_DATA_DIR, "policy_official_ingest.json")
+_POLICY_EXECUTION_TIMELINE = os.path.join(_DATA_DIR, "policy_execution_timeline.json")
+_INDUSTRY_CAPITAL_COMPANY_MAP = os.path.join(_DATA_DIR, "industry_capital_company_map.json")
+_INDUSTRY_CAPITAL_RESEARCH_LOG = os.path.join(_DATA_DIR, "industry_capital_research_log.json")
+_PUSH_STATE = os.path.join(_DATA_DIR, "push_state.json")
 
 _APP_AUTH_USERNAME = os.environ.get("APP_AUTH_USERNAME", "admin")
 _APP_AUTH_PASSWORD = os.environ.get("APP_AUTH_PASSWORD", "SyHG!F1eK4*Y!5Re")
@@ -186,7 +187,7 @@ from log_config import get_logger as _get_logger
 logger = _get_logger("api_server")
 logger.setLevel(_APP_LOG_LEVEL)
 
-_QUANT_DB_PATH = os.path.join(_DIR, "quant_data.db")
+_QUANT_DB_PATH = os.path.join(_DATA_DIR, "quant_data.db")
 
 
 def _cache_enabled() -> bool:
@@ -9866,6 +9867,18 @@ def get_readiness():
     return JSONResponse(status_code=503, content=payload)
 
 
+@app.get("/healthz")
+def healthz():
+    """Kubernetes / Docker 标准存活探针"""
+    return get_liveness()
+
+
+@app.get("/readyz")
+def readyz():
+    """Kubernetes / Docker 标准就绪探针"""
+    return get_readiness()
+
+
 @app.get("/metrics", response_class=PlainTextResponse)
 def get_metrics():
     return _render_metrics_text()
@@ -9898,9 +9911,79 @@ def login(payload: LoginRequest):
     )
 
 
+@app.post("/api/auth/refresh", response_model=LoginResponse)
+def refresh_token(user: AppUser = Depends(_require_app_user)):
+    """用现有有效 token 换取新 token (前端无感续期)"""
+    account = _resolve_app_account(user.username)
+    if account is None:
+        raise HTTPException(status_code=401, detail="用户不存在")
+
+    new_token, expires_at = _create_access_token(user.username)
+    return LoginResponse(
+        access_token=new_token,
+        token_type="bearer",
+        expires_at=expires_at.isoformat(),
+        user=AppUser(
+            username=user.username,
+            display_name=account.get("display_name", user.display_name),
+            role=account.get("role", user.role),
+        ),
+    )
+
+
 @app.get("/api/auth/me", response_model=AppUser)
 def get_me(user: AppUser = Depends(_require_app_user)):
     return user
+
+
+# ================================================================
+#  Brain Orchestrator API
+# ================================================================
+
+@app.post("/api/brain/ask")
+def brain_ask(
+    payload: dict,
+    user: AppUser = Depends(_require_app_user),
+):
+    """Brain 自由问答"""
+    try:
+        from brain_orchestrator import ask, BrainRequest, orchestrate, BrainIntent
+        query = payload.get("query", "")
+        scopes = payload.get("scopes")
+        if query:
+            resp = ask(query, scopes=scopes)
+        else:
+            intent = payload.get("intent", "freeform")
+            resp = orchestrate(BrainRequest(
+                intent=BrainIntent(intent),
+                user_query=payload.get("user_query", ""),
+                context_scope=scopes or ["regime", "positions", "signals"],
+            ))
+        return resp.model_dump()
+    except Exception as exc:
+        logger.exception("Brain orchestrate error")
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.get("/api/brain/market-assessment")
+def brain_market_assessment(user: AppUser = Depends(_require_app_user)):
+    """Brain 盘前市场研判"""
+    try:
+        from brain_orchestrator import market_assessment
+        return market_assessment().model_dump()
+    except Exception as exc:
+        logger.exception("Brain market assessment error")
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.get("/api/brain/tools")
+def brain_list_tools(user: AppUser = Depends(_require_app_user)):
+    """Brain 可用工具列表"""
+    try:
+        from brain_orchestrator import _tool_hub
+        return {"tools": _tool_hub.list_tools()}
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @app.get("/api/system", response_model=SystemStatus)
