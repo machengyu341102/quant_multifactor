@@ -15,6 +15,7 @@
   07:30 开盘前 (夜班尾声)
 """
 
+import os
 import traceback
 from datetime import datetime
 
@@ -77,6 +78,15 @@ def _collect_strategy_health():
         return {}
 
 
+def _collect_news_digest():
+    """收集最新新闻摘要"""
+    try:
+        from global_news_monitor import get_latest_digest
+        return get_latest_digest()
+    except Exception:
+        return None
+
+
 # ================================================================
 #  作战计划生成
 # ================================================================
@@ -103,23 +113,26 @@ def generate_morning_plan():
     print("=" * 65)
 
     # 收集数据
-    print("\n[1/6] 收集跨市场信号...")
+    print("\n[1/7] 收集跨市场信号...")
     cross_market = _collect_cross_market()
 
-    print("[2/6] 收集期货持仓...")
+    print("[2/7] 收集期货持仓...")
     futures = _collect_futures_positions()
 
-    print("[3/6] 收集Agent洞察...")
+    print("[3/7] 收集Agent洞察...")
     insights = _collect_agent_insights()
 
-    print("[4/6] 收集学习引擎摘要...")
+    print("[4/7] 收集学习引擎摘要...")
     learning = _collect_learning_summary()
 
-    print("[5/6] 收集策略健康度...")
+    print("[5/7] 收集策略健康度...")
     health = _collect_strategy_health()
 
+    print("[6/7] 收集全球新闻...")
+    news_digest = _collect_news_digest()
+
     # 生成计划
-    print("[6/6] 生成作战计划...")
+    print("[7/7] 生成作战计划...")
     plan_lines = []
     risk_factors = 0  # 风险因子计数
 
@@ -144,6 +157,32 @@ def generate_morning_plan():
     else:
         plan_lines.append("  数据不可用")
         risk_factors += 1
+
+    # --- 全球新闻 ---
+    plan_lines.append("\n【全球新闻】")
+    if news_digest and news_digest.get("events"):
+        sentiment = news_digest.get("sentiment", 0)
+        mood = "偏多" if sentiment > 0.3 else "偏空" if sentiment < -0.3 else "均衡"
+        plan_lines.append(f"  情绪: {mood} ({sentiment:+.2f})")
+
+        for ev in news_digest["events"][:3]:
+            a = ev.get("analysis", {})
+            tag = {"bullish": "利好", "bearish": "利空"}.get(
+                a.get("impact_direction", ""), "中性")
+            plan_lines.append(f"  · [{tag}] {ev.get('title', '')[:60]}")
+
+        heatmap = news_digest.get("heatmap", {})
+        if heatmap:
+            hm_parts = []
+            for sector, val in list(heatmap.items())[:5]:
+                arrow = "↑" * min(int(abs(val)), 3) if val > 0 else "↓" * min(int(abs(val)), 3)
+                hm_parts.append(f"{sector}{arrow}")
+            plan_lines.append(f"  热力图: {' | '.join(hm_parts)}")
+
+        if sentiment < -0.3:
+            risk_factors += 1
+    else:
+        plan_lines.append("  暂无数据")
 
     # --- 期货持仓 ---
     plan_lines.append("\n【期货持仓】")
@@ -196,6 +235,25 @@ def generate_morning_plan():
 
     risk_label = {"low": "低风险 ✓", "medium": "中等风险 ⚡", "high": "高风险 ⚠"}
 
+    # --- 入场时机建议 ---
+    plan_lines.append("\n【入场时机建议】")
+    try:
+        from json_store import safe_load as _sl_timing
+        timing_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "timing_analysis.json")
+        timing_data = _sl_timing(timing_path, default={})
+        advice = timing_data.get("timing_advice", {})
+        if advice:
+            for strategy, adv in advice.items():
+                if adv["action"] == "wait_pullback":
+                    plan_lines.append(f"  {strategy}: 等回踩 {adv['pullback_target_pct']:.1f}% "
+                                     f"(命中{adv['hit_rate']:.0f}%)")
+                else:
+                    plan_lines.append(f"  {strategy}: 立即买入")
+        else:
+            plan_lines.append("  数据不足")
+    except Exception:
+        plan_lines.append("  不可用")
+
     # --- 今日操作要点 ---
     plan_lines.append(f"\n【今日风险等级】 {risk_label.get(risk_level, '?')}")
     plan_lines.append("\n【操作要点】")
@@ -226,6 +284,7 @@ def generate_morning_plan():
         "insights": insights,
         "learning": learning,
         "health": health,
+        "news_digest": news_digest,
         "plan_text": plan_text,
         "risk_level": risk_level,
         "risk_factors": risk_factors,

@@ -285,12 +285,31 @@ def ingest_from_journal(target_date: str | None = None) -> int:
                 "market_signals": regime.get("signals", {}),
                 "direction": "long",  # 默认做多, 期货/币圈可做空
                 "verify": {},  # T+1/T+3/T+5 验证结果
-                "status": "pending",  # pending/partial/complete
+                "status": "pending",  # pending/partial/complete/ignored
             }
 
-            # 从 reason 或 factor_scores 判断方向
+            explicit_direction = str(pick.get("direction", "")).strip().lower()
+            if explicit_direction in {"long", "short"}:
+                signal["direction"] = explicit_direction
+            elif explicit_direction == "neutral":
+                continue
+
+            actionable = pick.get("actionable")
+            if actionable is False:
+                continue
+
+            # 个股诊断历史上会把中性观察单误写进 journal；没有显式方向时按高分候选过滤
+            if (
+                strategy == "个股诊断"
+                and not explicit_direction
+                and actionable is None
+                and float(pick.get("total_score", 0) or 0) < 0.65
+            ):
+                continue
+
+            # 从 reason 判断方向 (兼容旧数据)
             reason = pick.get("reason", "")
-            if "做空" in reason or "short" in reason.lower():
+            if signal["direction"] == "long" and ("做空" in reason or "short" in reason.lower()):
                 signal["direction"] = "short"
 
             db.append(signal)
@@ -338,6 +357,10 @@ def verify_outcomes() -> dict:
         verify = sig.get("verify", {})
         any_new = False
 
+        if direction not in {"long", "short"}:
+            sig["status"] = "ignored"
+            continue
+
         for period in VERIFY_PERIODS:
             t_key = f"t{period}"
             if t_key in verify:
@@ -381,6 +404,31 @@ def verify_outcomes() -> dict:
     # T+1 结果写入 scorecard.json, 打通 agent_brain/learning_engine 闭环
     _sync_to_scorecard(db)
 
+    # 在线学习: T+1 验证完成后立即回调 learning_engine 做增量微调
+    try:
+        t1_verified = []
+        for sig in db:
+            t1 = sig.get("verify", {}).get("t1", {})
+            if t1 and t1.get("return_pct") is not None:
+                # 只取本次新验证的 (近5天, 覆盖周末+节假日)
+                sig_date = sig.get("date", "")
+                cutoff = (date.today() - timedelta(days=5)).isoformat()
+                if sig_date >= cutoff:
+                    t1_verified.append({
+                        "strategy": sig.get("strategy", ""),
+                        "code": sig.get("code", ""),
+                        "factor_scores": sig.get("factor_scores", {}),
+                        "t1_return_pct": t1["return_pct"],
+                        "t1_result": t1.get("result", ""),
+                    })
+        if t1_verified:
+            from learning_engine import incremental_update
+            online_result = incremental_update(t1_verified)
+            if online_result.get("adjusted", 0) > 0:
+                logger.info("在线学习: 微调 %d 个因子", online_result["adjusted"])
+    except Exception as e:
+        logger.debug("在线学习回调异常: %s", e)
+
     logger.info("信号验证: 新增 %d 条, 跳过 %d, 完成 %d", verified, skipped, completed)
     return {"verified": verified, "skipped": skipped, "completed": completed}
 
@@ -403,10 +451,13 @@ def _sync_to_scorecard(signals: list):
             "name": sig.get("name", ""),
             "strategy": sig.get("strategy", ""),
             "score": sig.get("score", 0),
+            "rec_price": sig.get("entry_price", 0),
             "entry_price": sig.get("entry_price", 0),
             "exit_price": t1["close"],
+            "next_close": t1["close"],
             "net_return_pct": t1["return_pct"],
             "result": t1["result"],
+            "win": 1 if t1["result"] == "win" else 0,
             "regime": sig.get("regime", "unknown"),
             "factor_scores": sig.get("factor_scores", {}),
             "verify_date": t1["date"],

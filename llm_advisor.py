@@ -249,6 +249,9 @@ def _build_system_context() -> str:
         "你是一个量化交易系统的总经理(AI大脑)。"
         "系统运行9个策略: 集合竞价、放量突破、尾盘短线、低吸回调、缩量整理、趋势跟踪、板块轮动、事件驱动(以上A股) + 期货趋势。"
         "你的职责是分析数据、发现问题、做出判断、给出可执行的建议。不要说空话, 要有具体的数据依据。"
+        "\n核心原则: 系统处于早期迭代阶段, 学习引擎每日自动优化因子权重。"
+        "保持运行=积累数据=持续改善。不要因短期数据差就恐慌建议'全面暂停'。"
+        "优先建议渐进优化(调参/调权/缩仓), 暂停策略是最后手段。语气客观平衡, 既指出问题也看到进展。"
     ]
 
     # 近30天统计
@@ -258,8 +261,8 @@ def _build_system_context() -> str:
         parts.append(f"\n近30天统计: 总记录{stats.get('total', 0)}, "
                      f"胜率{stats.get('win_rate', 0):.1f}%, "
                      f"平均收益{stats.get('avg_net_return', 0):.2f}%")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 资金曲线
     try:
@@ -268,8 +271,8 @@ def _build_system_context() -> str:
         parts.append(f"净值{eq.get('nav_final', 1.0):.4f}, "
                      f"夏普{eq.get('sharpe', 0):.2f}, "
                      f"最大回撤{eq.get('max_drawdown', 0):.2f}%")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 当前持仓 (含明细)
     try:
@@ -284,8 +287,8 @@ def _build_system_context() -> str:
                              f"({d.get('strategy')}) "
                              f"成本{d.get('entry_price',0):.2f} "
                              f"盈亏{d.get('pnl_pct',0):.1f}%")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # Agent 状态
     try:
@@ -298,8 +301,8 @@ def _build_system_context() -> str:
                 parts.append(f"{name}: 暂停 (原因: {state.get('pause_reason', '?')})")
             else:
                 parts.append(f"{name}: 运行中")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 组合风控
     try:
@@ -308,8 +311,8 @@ def _build_system_context() -> str:
         dd = pr.get("drawdown", {})
         parts.append(f"组合回撤{dd.get('current_drawdown_pct', 0):.2f}%, "
                      f"净值{dd.get('nav', 1.0):.4f}")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 今日推送记录 (trade_journal + position_manager 双源, 确保不遗漏)
     try:
@@ -340,8 +343,8 @@ def _build_system_context() -> str:
                                          f"价格{p.get('price', 0)}")
                 except Exception:
                     continue
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
         # 源2: position_manager 今日新增持仓 (补充 trade_journal 遗漏的)
         try:
@@ -354,14 +357,14 @@ def _build_system_context() -> str:
                                      f"({p.get('strategy','')}) "
                                      f"价格{p.get('entry_price', 0)} "
                                      f"[{p.get('entry_time','')}建仓]")
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
         if all_picks:
             parts.append(f"\n今日系统推荐信号({len(all_picks)}只):")
             parts.extend(all_picks[:20])
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 今日板块异动
     try:
@@ -378,8 +381,8 @@ def _build_system_context() -> str:
                 leaders = ", ".join(f"{l['name']}{l['change_pct']:+.1f}%"
                                    for l in a.get("leaders", []))
                 parts.append(f"  {a['sector']} {a['change_pct']:+.2f}% → {leaders}")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     parts.append("\n请用简洁中文回答。关注风险, 给出可操作的建议。如果用户问到某只股票是系统推荐的, 请查看上面的今日推送信号确认。")
     return "\n".join(parts)
@@ -554,17 +557,35 @@ def llm_deep_orient(findings: list, snapshot: dict, memory: dict) -> list:
 
     regime = snapshot.get("current_regime", "unknown")
 
+    # 系统改进上下文
+    sys_ctx = ""
+    try:
+        from json_store import safe_load as _sl
+        tp = _sl("tunable_params.json", default={})
+        has_weights = any(k for k in tp if not k.startswith("_"))
+        sys_ctx = (
+            f"\n系统基建: 学习引擎{'已激活' if has_weights else '未激活'}, "
+            f"每日3轮学习 (12:30/16:00-17:30/22:30), "
+            f"因子自发现+自动部署+生命周期管理已运行。\n"
+        )
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
+
     prompt = (
         f"当前大盘环境: {regime}\n\n"
         f"各策略近期表现:\n" + "\n".join(metrics_text) + "\n\n"
-        f"系统检测器发现 {len(findings)} 个信号:\n" + "\n".join(findings_text) + "\n\n"
-        "请你作为总经理进行深度分析:\n"
+        f"系统检测器发现 {len(findings)} 个信号:\n" + "\n".join(findings_text) + "\n"
+        f"{sys_ctx}\n"
+        "**重要原则**: 分析要客观平衡。系统处于早期学习阶段, 短期胜率低是正常的。"
+        "不要轻易建议'暂停策略'——暂停=停止学习=永远不会改善。"
+        "优先建议参数微调、因子优化等渐进改进, 而非一刀切暂停。\n\n"
+        "请深度分析:\n"
         "1. 根因分析: 这些信号背后的真正原因是什么? (不要重复信号本身, 要挖深一层)\n"
         "2. 关联发现: 多个信号之间有没有关联? (例如: 行情转弱导致多个策略同时下滑)\n"
-        "3. 遗漏检测: 基于你的分析, 有没有检测器没发现但值得关注的问题?\n\n"
-        "对于第3点的遗漏, 请用以下JSON格式输出 (如果没有遗漏, 输出空数组[]):\n"
+        "3. 遗漏检测: 有没有检测器没发现但值得关注的问题?\n\n"
+        "对于第3点, JSON格式输出 (无遗漏=空数组[]):\n"
         '```json\n[{"severity": "warning/info", "strategy": "策略名或null", '
-        '"message": "具体发现", "suggested_action": "log_insight/escalate_human/pause_strategy"}]\n```\n\n'
+        '"message": "具体发现", "suggested_action": "log_insight/escalate_human/adjust_params"}]\n```\n\n'
         "分析控制在200字以内, 然后输出JSON。"
     )
 
@@ -659,6 +680,10 @@ def llm_smart_decide(findings: list, memory: dict) -> list:
     prompt = (
         f"{paused_text}\n{analysis}"
         f"以下信号需要你做决策:\n" + "\n".join(descs) + "\n\n"
+        "**决策原则**: 系统处于早期学习阶段, 保持运行才能积累数据和改善。\n"
+        "- pause_strategy 是最后手段, 仅在连续亏损严重(>5次)且无改善迹象时使用\n"
+        "- 优先选择 adjust_params / reduce_position / log_insight 等渐进动作\n"
+        "- 如果策略只是短期表现差但学习系统在调优, 建议 log_insight 观察\n\n"
         "对每个信号, 请判断:\n"
         "1. 是否应该执行建议的动作? (是/否)\n"
         "2. 如果不应该, 更好的动作是什么?\n"
@@ -829,8 +854,8 @@ def llm_night_analysis(memory: dict, performance_review: dict = None) -> str:
         bus_text = (f"\n事件总线: 今日{stats.get('total_emitted', 0)}个事件, "
                     f"已消费{stats.get('total_consumed', 0)}个, "
                     f"去重{stats.get('total_deduped', 0)}个\n")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 智能体健康
     agents_text = ""
@@ -842,8 +867,8 @@ def llm_night_analysis(memory: dict, performance_review: dict = None) -> str:
             agents_text = "\n子智能体健康:\n"
             for a in agents:
                 agents_text += f"- {a.display_name}: {a.status} 健康{a.health:.0%}\n"
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 记分卡统计
     scorecard_text = ""
@@ -858,8 +883,8 @@ def llm_night_analysis(memory: dict, performance_review: dict = None) -> str:
             f"- 近30天: {stats_30d.get('total_records', 0)}笔 胜率{stats_30d.get('win_rate', 0):.1f}% "
             f"均收益{stats_30d.get('avg_net_return', 0):.2f}%\n"
         )
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 绩效考核数据
     review_text = ""
@@ -871,28 +896,43 @@ def llm_night_analysis(memory: dict, performance_review: dict = None) -> str:
                             f"{r.get('grade', '?')}级 {r.get('score', 0):.0f}分 "
                             f"({details})\n")
 
+    # 系统改进上下文 (让 LLM 知道最近修了什么, 避免只看表面数字就恐慌)
+    system_context = ""
+    try:
+        from json_store import safe_load as _sl
+        tp = _sl("tunable_params.json", default={})
+        has_weights = any(k for k in tp if not k.startswith("_"))
+        online_ema = tp.get("_online_ema", {})
+        system_context = (
+            "\n系统基建状态:\n"
+            f"- 学习引擎: {'已激活' if has_weights else '未激活'}"
+            f" (在线EMA追踪 {len(online_ema)} 个因子)\n"
+            f"- 调度: 每日3轮学习 (12:30午盘/16:00-17:30收盘/22:30夜班)\n"
+        )
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
+
     prompt = (
         f"现在是 {datetime.now().strftime('%H:%M')}, 你正在进行每日深度复盘。\n\n"
-        f"{states_text}\n{insights_text}\n{scorecard_text}{bus_text}{agents_text}{review_text}\n"
+        f"{states_text}\n{insights_text}\n{scorecard_text}{bus_text}{agents_text}{review_text}{system_context}\n"
         "请作为总经理完成以下工作:\n\n"
+        "**重要原则**: 你的分析要客观平衡。既要指出问题, 也要看到进展和改善趋势。"
+        "不要因为短期数据差就建议'全面暂停'——那等于放弃学习机会。"
+        "关注: 哪些指标在改善? 学习系统是否在发挥作用? 哪些是系统bug导致的假象?\n\n"
         "## 一、今日复盘\n"
-        "- 今天整体表现如何? 哪些策略表现好/差? 为什么?\n"
+        "- 今天整体表现如何? 哪些策略表现好/差? 根因是什么?\n"
         "- 系统做出了哪些决策? 是否正确?\n\n"
         "## 二、因子体检\n"
-        "- 各策略的胜率趋势是否健康?\n"
-        "- 有没有需要关注的因子衰减迹象?\n\n"
+        "- 各策略的胜率趋势是否健康? 是否有改善迹象?\n"
+        "- 学习引擎的因子微调是否合理?\n\n"
         "## 三、明日预判\n"
         "- 基于今日表现和大盘状态, 明天需要注意什么?\n"
-        "- 哪些策略可能需要调整?\n\n"
+        "- 可操作建议 (具体到策略/参数/仓位)\n\n"
         "## 四、认知沉淀\n"
         "- 今天学到了什么? 有什么经验值得记住?\n\n"
         "## 五、改进建议\n"
         "- 对系统参数或逻辑有什么具体改进建议? (要具体到参数名和数值)\n\n"
-        "## 六、绩效考核点评\n"
-        "- 对每个智能体的表现给出一句话点评\n"
-        "- 谁表现最好? 谁需要改进? 具体改进方向是什么?\n"
-        "- D级智能体是否需要降级或暂停?\n\n"
-        "保持 Markdown 格式, 务实不空谈, 有数据支撑。"
+        "保持简洁, 每段不超过3句话。有数据支撑, 不空谈。"
     )
 
     report = _call_llm(prompt, system=system, max_tokens=2000)
@@ -906,7 +946,7 @@ def llm_night_analysis(memory: dict, performance_review: dict = None) -> str:
 # ================================================================
 
 def chat(question: str) -> str:
-    """CLI 对话 (问答系统状态)
+    """CLI / 微信对话 (问答系统状态)
 
     Args:
         question: 用户问题
@@ -919,7 +959,20 @@ def chat(question: str) -> str:
         return "[LLM 不可用] 请设置环境变量 DEEPSEEK_API_KEY 或 ANTHROPIC_API_KEY"
 
     system = _build_system_context()
-    answer = _call_llm(question, system=system)
+
+    # 包装用户问题, 约束回复风格
+    wrapped = (
+        f"用户问: {question}\n\n"
+        "回复要求:\n"
+        "1. 简洁直接, 控制在150字以内\n"
+        "2. 客观平衡: 既说问题, 也说进展和改善方向\n"
+        "3. 系统处于早期学习阶段, 短期胜率低是正常的, 不要恐慌\n"
+        "4. 不要建议'全面暂停'或'清理所有持仓'这类极端操作\n"
+        "5. 给出1-2条具体可操作的建议, 而非长篇大论\n"
+        "6. 语气: 稳健专业的基金经理, 不是恐慌的散户"
+    )
+
+    answer = _call_llm(wrapped, system=system, max_tokens=400)
     if answer:
         return answer
     return "[LLM] 调用失败, 请稍后重试"

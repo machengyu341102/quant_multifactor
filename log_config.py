@@ -2,7 +2,7 @@
 集中日志配置
 ============
 - 控制台输出 (INFO 级别, 保持现有 print 风格)
-- 文件轮转 (DEBUG 级别, 5MB × 3 个备份)
+- 文件轮转 (DEBUG 级别, 10MB × 5 个备份)
 - 每个模块独立日志文件 + 汇总日志
 
 用法:
@@ -57,7 +57,7 @@ def get_logger(name: str) -> logging.Logger:
 
     自动配置:
       - 控制台 StreamHandler (INFO)
-      - 模块文件 RotatingFileHandler (DEBUG, 5MB×3)
+      - 模块文件 RotatingFileHandler (DEBUG, 10MB×5)
       - 汇总文件 RotatingFileHandler (DEBUG, 10MB×5)
     """
     logger = logging.getLogger(f"quant.{name}")
@@ -78,8 +78,8 @@ def get_logger(name: str) -> logging.Logger:
     # 2. 模块独立文件
     fh = RotatingFileHandler(
         os.path.join(_LOG_DIR, f"{name}.log"),
-        maxBytes=5 * 1024 * 1024,  # 5MB
-        backupCount=3,
+        maxBytes=10 * 1024 * 1024,  # 10MB
+        backupCount=5,
         encoding="utf-8",
         delay=True,  # 延迟打开, 避免 shutdown NameError
     )

@@ -180,8 +180,8 @@ def _get_current_prices(codes: list[str]) -> dict:
                     close_col = next((c for c in ["close", "收盘", "收盘价"] if c in df.columns), None)
                     if close_col:
                         result[code] = float(df[close_col].iloc[-1])
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
         return result
 
     result = smart_source([

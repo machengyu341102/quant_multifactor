@@ -37,10 +37,10 @@ def _zscore(series):
 #  1. 资金流向模块
 # ================================================================
 
-def scan_fund_flow_batch(codes, top_n=50):
+def scan_fund_flow_batch(codes, top_n=300):
     """
     批量获取个股资金流向
-    优先 Tushare (1次批量调用), 失败回退 akshare (逐只串行)
+    优先 Tushare (批量调用, ~75%命中率), 失败回退 akshare (逐只串行)
 
     返回 DataFrame: code, main_pct_1d, main_pct_3d, main_pct_5d,
                     flow_trend, super_large_pct, s_fund_flow
@@ -78,9 +78,12 @@ def scan_fund_flow_batch(codes, top_n=50):
         print(f"    Tushare资金流失败, 回退akshare: {e}")
         records = []
 
-    # ---- 慢速路径: akshare 逐只串行 ----
-    if not records:
-        for i, code in enumerate(codes):
+    # ---- 慢速路径: akshare 逐只串行 (仅处理Tushare未覆盖的) ----
+    covered_codes = set(r["code"] for r in records)
+    remaining = [c for c in codes if c not in covered_codes][:50]  # 串行最多补50只
+    if remaining and len(records) < len(codes) * 0.5:
+        print(f"    Akshare补充: {len(remaining)} 只 (Tushare已覆盖 {len(records)})")
+        for i, code in enumerate(remaining):
             try:
                 time.sleep(REQUEST_DELAY)
                 market = _sina_market(code)

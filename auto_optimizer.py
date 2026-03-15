@@ -94,6 +94,9 @@ def _get_default_weights(strategy: str) -> dict:
         return copy.deepcopy(SECTOR_ROTATION_PARAMS["weights"])
     if strategy == "news_event":
         return copy.deepcopy(NEWS_EVENT_PARAMS["weights"])
+    if strategy == "overnight":
+        from config import OVERNIGHT_PARAMS
+        return copy.deepcopy(OVERNIGHT_PARAMS["weights"])
     if strategy == "futures_trend":
         from config import FUTURES_PARAMS
         return copy.deepcopy(FUTURES_PARAMS["weights"])
@@ -786,7 +789,8 @@ def check_factor_lifecycle() -> list:
 
         # 找出权重低于阈值且 > 0 的因子 (候选淘汰)
         dying = [(k, v) for k, v in weights.items()
-                 if 0 < v < min_threshold]
+                 if 0 < v < min_threshold
+                 and not k.startswith("s_forge_")]  # forge因子由factor_forge管理
         dying.sort(key=lambda x: x[1])  # 最低的先处理
 
         count = 0

@@ -166,8 +166,8 @@ class TQSDKEngine:
         if self.api:
             try:
                 self.api.close()
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
             self.api = None
             self._connected = False
 
@@ -296,8 +296,8 @@ class TQSDKEngine:
                 # 超时未成交, 撤单
                 try:
                     self.api.cancel_order(order)
-                except Exception:
-                    pass
+                except Exception as _exc:
+                    logger.warning("Suppressed exception: %s", _exc)
                 return {
                     "success": False,
                     "order_id": getattr(order, "order_id", ""),
@@ -365,8 +365,8 @@ class TQSDKEngine:
             else:
                 try:
                     self.api.cancel_order(order)
-                except Exception:
-                    pass
+                except Exception as _exc:
+                    logger.debug("Suppressed exception: %s", _exc)
                 return {"success": False, "fill_price": 0, "message": "平仓超时"}
 
         except Exception as e:
@@ -426,8 +426,8 @@ def _get_futures_prices(codes: list) -> dict:
                 df = _fetch_futures_daily(code)
                 if df is not None and not df.empty:
                     result[code] = float(df["close"].values[-1])
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
             time.sleep(0.2)
     except ImportError:
         logger.warning("无法导入 futures_strategy, 跳过价格获取")
@@ -577,15 +577,15 @@ def execute_signals(recommendations: list, mode: str = "paper") -> list:
                     "message": f"开仓 {len(executed)} 笔: {', '.join(codes)}",
                 },
             )
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.warning("Suppressed exception: %s", _exc)
 
     # 更新注册表
     try:
         from agent_registry import get_registry
         get_registry().report_run("execution_judge", success=True)
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     return executed
 
@@ -761,8 +761,8 @@ def check_futures_exits() -> list:
                                     f"{ex.get('exit_reason', '')} {ex.get('pnl_pct', 0):+.2f}%"),
                     },
                 )
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
     return exits
 

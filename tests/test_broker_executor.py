@@ -191,6 +191,8 @@ class TestExecuteBuySignals:
         monkeypatch.setattr("broker_executor._AUDIT_PATH",
                             str(tmp_path / "audit.json"))
         monkeypatch.setattr("broker_executor._broker_instance", None)
+        import broker_executor
+        monkeypatch.setitem(broker_executor.STOCK_EXECUTOR_PARAMS, "mode", "paper")
 
         from broker_executor import execute_buy_signals, load_positions
         recs = [

@@ -4,11 +4,16 @@
 微信推送、调度时间、策略参数、交易日历
 """
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # ================================================================
 #  微信 Server酱 推送配置
 # ================================================================
 # 请在 https://sct.ftqq.com/ 注册获取 SendKey
-SERVERCHAN_SENDKEY = "SCT317368TiF9totWqQwnLSVyyVIfZpmB6"
+SERVERCHAN_SENDKEY = os.environ.get("SERVERCHAN_SENDKEY", "")
 
 # ================================================================
 #  调度时间 (HH:MM 格式)
@@ -28,14 +33,32 @@ SCHEDULE_SECTOR_ROTATION = "14:00" # 板块轮动 (午后板块分化明确)
 TOP_N = 3  # 每次推荐 TOP N 只
 
 # ================================================================
+#  隔夜选股策略参数 (v7: 基于因子-收益Spearman相关性校准)
+# ================================================================
+OVERNIGHT_PARAMS = {
+    "weights": {
+        "s_rsi":         0.08,  # 弱正相关 +0.035
+        "s_boll":        0.15,  # 强正相关 +0.129
+        "s_vol":         0.18,  # 最强正相关 +0.142
+        "s_volatility":  0.10,  # 近零 +0.014, 降权
+        "s_trend":       0.10,  # 负相关 -0.077, 大幅降权
+        "s_flow_1d":     0.08,  # 资金流
+        "s_flow_trend":  0.12,  # 资金流趋势
+        "s_overnight":   0.15,  # 正相关 +0.100
+        "s_hot":         0.02,  # 经常为0
+        "s_fundamental": 0.02,  # 负相关 -0.057
+    },
+}
+
+# ================================================================
 #  放量突破策略参数
 # ================================================================
 BREAKOUT_PARAMS = {
     # 初筛条件
-    "pct_min": 1.0,          # 涨幅下限 (%)
-    "pct_max": 7.0,          # 涨幅上限 (%)
-    "volume_ratio_min": 2.0, # 量比下限
-    "turnover_min": 1.0,     # 换手率下限 (%)
+    "pct_min": 0.3,          # 涨幅下限 (%) (1.0→0.3, 增加学习样本)
+    "pct_max": 8.0,          # 涨幅上限 (%) (7.0→8.0)
+    "volume_ratio_min": 1.2, # 量比下限 (2.0→1.2)
+    "turnover_min": 0.5,     # 换手率下限 (%) (1.0→0.5)
 
     # 因子权重 (v6: 有效因子主导, 空因子降权)
     "weights": {
@@ -140,8 +163,8 @@ DIP_BUY_PARAMS = {
         "s_fund_flow":      0.10,   # 资金流向
         "s_chip":           0.10,   # 筹码分布
     },
-    "rsi_threshold": 30,            # RSI 低于此值才入选
-    "max_drawdown_5d_pct": -8,      # 近5日跌幅 ≥ 8%
+    "rsi_threshold": 40,            # RSI 低于此值才入选 (30→40, 增加学习样本)
+    "max_drawdown_5d_pct": -5,      # 近5日跌幅 ≥ 5% (-8→-5)
 }
 
 # ================================================================
@@ -158,8 +181,8 @@ CONSOLIDATION_PARAMS = {
         "s_fund_flow":       0.10,  # 资金流向
         "s_chip":            0.07,  # 筹码集中度
     },
-    "consolidation_days": 10,       # 整理天数下限
-    "volume_ratio_threshold": 0.6,  # 量比 < 0.6 视为缩量
+    "consolidation_days": 5,        # 整理天数下限 (10→5, 增加学习样本)
+    "volume_ratio_threshold": 0.8,  # 量比 < 0.8 视为缩量 (0.6→0.8)
 }
 
 # ================================================================
@@ -177,7 +200,7 @@ TREND_FOLLOW_PARAMS = {
         "s_chip":           0.07,   # 筹码
     },
     "holding_days": 5,              # 默认持仓天数
-    "adx_threshold": 25,            # ADX > 25 视为有趋势
+    "adx_threshold": 18,            # ADX > 18 视为有趋势 (25→18, 增加学习样本)
 }
 
 # ================================================================
@@ -185,16 +208,16 @@ TREND_FOLLOW_PARAMS = {
 # ================================================================
 SECTOR_ROTATION_PARAMS = {
     "weights": {
-        "s_sector_momentum":  0.25, # 板块近5日涨幅排名
-        "s_sector_flow":      0.20, # 板块资金净流入
+        "s_sector_momentum":  0.20, # 板块近5日涨幅排名
+        "s_sector_flow":      0.15, # 板块资金净流入
         "s_sector_breadth":   0.15, # 板块内上涨家数占比
-        "s_leader_score":     0.15, # 龙头股强度
+        "s_follow_potential": 0.25, # 跟涨潜力 (补涨空间+量能+盘中位置+换手)
         "s_fundamental":      0.08, # 基本面
         "s_relative_strength": 0.10,# 相对大盘强度
         "s_chip":             0.07, # 筹码
     },
-    "top_sectors": 3,               # 选最强 3 个板块
-    "picks_per_sector": 1,          # 每板块选 1 只龙头
+    "top_sectors": 5,               # 选最强 5 个板块 (3→5, 增加学习样本)
+    "picks_per_sector": 10,         # 每板块选 10 只潜力股 (3→10)
 }
 
 # ================================================================
@@ -434,38 +457,57 @@ OPTIMIZATION_PARAMS = {
 ML_PARAMS = {
     "model_type": "gradient_boosting",     # gradient_boosting | xgboost | lightgbm
     "task": "classification",                 # 分类: 预测涨跌方向 (比回归更实用)
-    "n_estimators": 80,                    # 200→80 防过拟合
-    "max_depth": 3,                        # 5→3 限制树深度
+    "n_estimators": 100,                   # 80→100 更多特征需要更多树
+    "max_depth": 4,                        # 3→4 交互特征需要稍深的树
     "learning_rate": 0.05,
-    "min_samples_leaf": 25,                # 10→25 每叶最少样本
+    "min_samples_leaf": 20,                # 25→20 平衡特征数增加
     "subsample": 0.7,                      # 0.8→0.7 增加随机性
     "ml_weight": 0.3,                      # 0.4→0.3 OOS未验证前降低ML权重
     "min_training_samples": 50,
-    "wf_train_days": 30,                   # 90→30 适配54天数据
-    "wf_test_days": 8,                     # 30→8 更多窗口
-    "wf_n_windows": 5,                     # 3→5 多窗口验证
+    "wf_train_days": 60,                   # 30→60 更稳健的训练窗口
+    "wf_test_days": 15,                    # 8→15 更充分的OOS验证
+    "wf_n_windows": 5,                     # 5 个滚动窗口
+    "use_feature_engineering": True,       # 启用自动交互特征
+    "feature_importance_prune": 0.005,     # 重要性低于此值的特征在下次训练时剔除
+    "noise_filter_pct": 0.05,             # 噪声过滤: |return| < 此值的数据不参与训练
+    "confidence_threshold": 0.6,          # 置信度门控: ML预测低于此值时降权
+}
+
+# ================================================================
+#  特征工程参数
+# ================================================================
+FEATURE_ENGINEERING_PARAMS = {
+    "enabled": True,
+    "interaction_types": ["multiply", "ratio"],   # multiply: A*B, ratio: A/(B+eps)
+    "max_interactions": 30,                        # 最多生成 30 个交互特征
+    "top_k_factors": 8,                            # 对方差 top-8 因子做交互
+    "corr_prune_threshold": 0.95,                  # 高相关剪枝阈值
+    "min_nonzero_ratio": 0.3,                      # 因子非零比例门槛
+    "ratio_epsilon": 1e-6,                         # 除法防零
 }
 
 # ================================================================
 #  纸盘模拟交易参数
 # ================================================================
 PAPER_PARAMS = {
+    "enabled": True,                # 启用纸盘交易
     "initial_capital": 100000,      # 初始资金
-    "single_position_pct": 15,      # 单笔仓位上限 (%)
+    "single_position_pct": 10,      # 单笔仓位上限 (%) - 15→10更保守
     "max_positions": 9,             # 最大持仓数
     "max_daily_trades": 9,          # 每日最大开仓数
     "stop_loss_pct": -3.0,          # 基础止损 (%)
-    "take_profit_pct": 5.0,         # 基础止盈 (%)
+    "take_profit_pct": 8.0,         # 基础止盈 (%) - 5→8期货目标更高
     "force_exit_days": 3,           # 最大持仓天数
     "use_smart_trade": True,        # 使用智能交易 (ATR止损/追踪/分批)
+    "support_futures": True,        # 支持期货交易
 }
 
 # ================================================================
 #  券商自动下单参数
 # ================================================================
 STOCK_EXECUTOR_PARAMS = {
-    "mode": "paper",                    # paper | demo | live
-    "broker": "easytrader",             # easytrader | xtquant
+    "mode": "demo",                     # paper | demo | live
+    "broker": "ths_web",                # easytrader | xtquant | ths_web
     "broker_type": "universal_client",  # easytrader 券商类型
     "account_file": "",                 # easytrader 账户配置文件
     "max_positions": 9,
@@ -478,6 +520,15 @@ STOCK_EXECUTOR_PARAMS = {
     "slippage_pct": 0.1,
     "commission_rate": 0.00025,         # 万2.5
     "stamp_tax_rate": 0.0005,           # 印花税 0.05%
+    # --- 同花顺 Web 交易网关 (ths_web) ---
+    "ths_base_url": "http://127.0.0.1:9099",   # 网关地址
+    "ths_username": os.environ.get("THS_USERNAME", ""),   # 账户 (留空=demo模式不需要)
+    "ths_password": os.environ.get("THS_PASSWORD", ""),   # 密码
+    "ths_auth_mode": "token",           # token | cookie
+    "ths_cookie": os.environ.get("THS_COOKIE", ""),       # cookie 模式时填入
+    "ths_timeout_sec": 10,              # HTTP 超时
+    "ths_retry_count": 2,               # 失败重试次数
+    "ths_token_refresh_min": 30,        # token 自动刷新间隔 (分钟)
 }
 
 # ================================================================
@@ -492,12 +543,12 @@ BACKTEST_PARAMS = {
 #  推送渠道配置
 # ================================================================
 # 主渠道: 企业微信应用消息 (直推个人, 不需要群)
-WECOM_CORP_ID = "ww3ffca53860e3a5f7"
-WECOM_AGENT_ID = 1000002
-WECOM_SECRET = "VN1tkGHIQqTE8VWSZzioTi6wFrJFD0wRHduYvvNxZLY"
+WECOM_CORP_ID = os.environ.get("WECOM_CORP_ID", "")
+WECOM_AGENT_ID = int(os.environ.get("WECOM_AGENT_ID", "0"))
+WECOM_SECRET = os.environ.get("WECOM_SECRET", "")
 
 # 群机器人 (备选, 留空则不用)
-WECOM_BOT_KEY = ""
+WECOM_BOT_KEY = os.environ.get("WECOM_BOT_KEY", "")
 
 # Server酱 (最后备选)
 MAX_WECHAT_DAILY = 100  # 应用消息限制宽松, 放到100
@@ -514,6 +565,10 @@ AGENT_PARAMS = {
     "morning_briefing": True,             # 每日早报开关
     "rule_prune_confidence": 0.2,         # 置信度低于此值的规则被清理
     "rule_prune_min_evals": 10,           # 至少评估N次后才清理
+    # 决策闭环验证
+    "decision_verify_after_days": 5,      # 决策 T+N 天后自动验证
+    "decision_accuracy_ema_alpha": 0.2,   # 决策准确率 EMA 衰减系数
+    "adaptive_threshold_enabled": True,   # 自适应阈值开关
 }
 
 # ================================================================
@@ -521,14 +576,23 @@ AGENT_PARAMS = {
 # ================================================================
 LEARNING_ENGINE_PARAMS = {
     "learning_enabled": True,
-    "min_samples_signal": 15,     # 信号分析最少样本
+    "min_samples_signal": 10,     # 信号分析最少样本 (15→10加速冷启动)
     "min_samples_factor": 10,     # 因子分析最少样本
     "min_samples_regime": 5,      # 策略-行情分析最少样本
-    "lookback_days": 30,
-    "max_weight_delta": 0.03,     # 单次最大调整 3%
+    "lookback_days": 60,          # 学习回溯天数 (30→60增加样本量)
+    "max_weight_delta": 0.05,     # 单次最大调整 5% (3%→5%加速学习, 毒因子2倍速)
     "min_weight": 0.03,           # 权重下限
-    "predictive_threshold": 5.0,  # 预测力阈值 (%)
+    "predictive_threshold": 2.0,  # 预测力阈值 (%) (5.0→2.0降低门槛)
     "wechat_learning_report": False,  # 改为False: 学习报告纳入晚报, 不单独发微信
+    # 在线学习 (T+1 验证后实时微调)
+    "online_learning_enabled": True,       # 在线学习开关
+    "online_max_weight_delta": 0.01,       # 在线单次最大调整幅度
+    "online_daily_max_total_delta": 0.05,  # 单日在线调整总量上限
+    "online_ema_alpha": 0.15,             # EMA衰减 (0.1→0.15加速收敛, 半衰期~4天)
+    "online_ema_deadband": 0.1,           # EMA死区 (0.2→0.1降低激活门槛)
+    # 大周期重训 (周日夜班)
+    "full_retrain_enabled": True,          # 大周期重训开关
+    "full_retrain_schedule": "sunday_20",  # 周日 20:00
 }
 
 # ================================================================
@@ -600,8 +664,8 @@ EXPERIMENT_PARAMS = {
     "min_health_score_trigger": 50,          # score < 50 才触发实验
     "backtest_lookback_days": 90,
     "n_candidates": 5,
-    "adopt_threshold_pct": 1.0,              # 收益提升 >= 1% 才采纳
-    "cooldown_days": 7,                      # 同策略最小间隔
+    "adopt_threshold_pct": 0.3,              # 收益提升 >= 0.3% 才采纳 (1.0→0.3降低门槛)
+    "cooldown_days": 3,                      # 同策略最小间隔 (5→3加速实验迭代)
 }
 
 # ================================================================
@@ -616,10 +680,10 @@ API_GUARD_PARAMS = {
     "pool_cache_ttl_sec": 3600,             # 中证1000成分股缓存 1小时
     "daily_kline_cache_ttl_sec": 300,       # 日K缓存 5分钟
     # Safe Mode (降级驾驶模式)
-    "safe_mode_threshold": 3,               # ≥N个源熔断 → 进入Safe Mode
+    "safe_mode_threshold": 5,               # ≥N个源熔断且占比>50% → 进入Safe Mode
     "safe_mode_heartbeat_sec": 60,          # 心跳探测间隔 (秒)
     # Tushare Pro 配置 (注册后填入)
-    "tushare_token": "26f714bafd61fc50e93eed1260549b918b1f367c7915a2fa329bc51e",
+    "tushare_token": os.environ.get("TUSHARE_TOKEN", ""),
     "tushare_enabled": True,
 }
 
@@ -627,6 +691,7 @@ API_GUARD_PARAMS = {
 #  期货趋势策略
 # ================================================================
 SCHEDULE_FUTURES_DAY = "09:05"              # 日盘扫描 (全品种)
+SCHEDULE_HK_STOCK = "09:05"                 # 港股指数 (与期货同时)
 SCHEDULE_FUTURES_NIGHT = "21:10"            # 夜盘扫描 (有夜盘品种)
 
 FUTURES_PARAMS = {
@@ -655,12 +720,12 @@ TRADE_EXECUTOR_PARAMS = {
     "fixed_take_profit_pct": 5.0,           # 固定止盈 (%)
     "monitor_interval_minutes": 30,         # 持仓监控间隔 (分钟)
     # --- tqsdk 天勤量化 (simnow/live 模式需要) ---
-    "tqsdk_user": "蓝天ma12345",             # 天勤账号
-    "tqsdk_password": "as341102",           # 天勤密码
+    "tqsdk_user": os.environ.get("TQSDK_USER", ""),             # 天勤账号
+    "tqsdk_password": os.environ.get("TQSDK_PASSWORD", ""),    # 天勤密码
     # --- 实盘专用 (live 模式需要) ---
-    "broker_id": "",                        # 期货公司 BrokerID
-    "futures_account": "",                  # 期货资金账号
-    "futures_password": "",                 # 期货交易密码
+    "broker_id": os.environ.get("FUTURES_BROKER_ID", ""),      # 期货公司 BrokerID
+    "futures_account": os.environ.get("FUTURES_ACCOUNT", ""),   # 期货资金账号
+    "futures_password": os.environ.get("FUTURES_PASSWORD", ""), # 期货交易密码
 }
 
 # ================================================================
@@ -724,6 +789,18 @@ US_STOCK_PARAMS = {
 }
 
 # ================================================================
+#  港股指数分析
+# ================================================================
+HK_STOCK_PARAMS = {
+    "enabled": True,
+    "weights": {
+        "s_trend":    0.4,                     # 趋势强度
+        "s_momentum": 0.3,                     # 动量
+        "s_volume":   0.3,                     # 量能
+    },
+}
+
+# ================================================================
 #  跨市场信号推演
 # ================================================================
 SCHEDULE_CROSS_MARKET = "06:00"                # 美股收盘+夜盘收盘后综合推演
@@ -768,3 +845,123 @@ NIGHT_SHIFT_PARAMS = {
     },
     "wechat_progress": True,             # 是否推送夜班进度
 }
+
+# ================================================================
+#  Factor Forge — 自主因子发现引擎
+# ================================================================
+SCHEDULE_FACTOR_FORGE = "17:30"
+
+FACTOR_FORGE_PARAMS = {
+    "enabled": True,
+    "min_ic_abs": 0.03,                  # IC 绝对值最低阈值
+    "min_ic_ir": 0.5,                    # IC_IR 最低阈值
+    "min_positive_ic_ratio": 0.55,       # IC 正比例最低阈值
+    "min_ic_dates": 10,                  # IC 评估最少天数
+    "wf_n_windows": 3,                   # WF 滚动窗口数
+    "wf_oos_degradation_max": 0.5,       # OOS 允许的最大衰减
+    "max_active_per_strategy": 5,        # 每策略最多活跃 forge 因子
+    "max_deployments_per_day": 2,        # 每日最多部署数
+    "initial_weight": 0.015,             # 新因子初始权重
+    "kill_min_live_days": 10,            # 退役最少存活天数
+    "kill_spread_threshold": 2.0,        # 退役 spread 阈值
+    "kill_ic_min": 0.01,                 # 退役 IC 最低值
+    "kill_consecutive_days": 5,          # 退役连续低 IC 天数
+}
+
+# ================================================================
+#  Global News Monitor — 全球新闻雷达
+# ================================================================
+
+GLOBAL_NEWS_PARAMS = {
+    "enabled": True,
+    "max_llm_calls_per_scan": 3,         # 每次扫描最多LLM调用数
+    "max_headlines_per_batch": 20,       # 每批最多分析标题数
+    "cache_hours": 6,                    # 新闻缓存时长(小时)
+    "dedup_similarity_threshold": 0.6,   # 去重相似度阈值
+    "min_impact_magnitude": 2,           # 最小影响力(1-5)才推送
+    "push_max_events": 8,                # 推送最多事件数
+    "sources": {
+        "cls": True,      # 财联社
+        "em": True,       # 东方财富
+        "cctv": True,     # CCTV
+        "sina": True,     # 新浪
+        "ths": True,      # 同花顺
+        "caixin": True,   # 财新
+    },
+    "fallback_keywords": {
+        "bullish": ["降准", "降息", "刺激", "利好", "增长", "扩大", "上调", "超预期", "创新高"],
+        "bearish": ["加息", "收紧", "制裁", "冲突", "下调", "衰退", "暴跌", "风险", "违约"],
+    },
+    "sector_keyword_map": {
+        "央行|货币|利率|降准|降息": ["银行", "保险", "证券"],
+        "房地产|限购|房价": ["房地产", "建材", "家居"],
+        "芯片|半导体|AI|人工智能": ["科技", "半导体", "通信"],
+        "新能源|光伏|锂电|储能": ["新能源", "电力"],
+        "军工|国防|武器": ["军工", "航空"],
+        "医药|医疗|创新药": ["医药", "生物"],
+        "油价|原油|天然气": ["石化", "能源"],
+    },
+}
+
+# ================================================================
+#  跨市场因子引擎
+# ================================================================
+SCHEDULE_CROSS_ASSET = "07:35"
+
+CROSS_ASSET_PARAMS = {
+    "enabled": True,
+    "cache_hours": 4,                    # 缓存有效期 (小时)
+}
+
+# ================================================================
+#  环境路由器
+# ================================================================
+SCHEDULE_REGIME_ROUTER = "09:08"
+
+REGIME_ROUTER_PARAMS = {
+    "enabled": True,
+    "lookback_days": 60,                 # 适应度回望天数
+    "min_ratio": 0.05,                   # 低于此比例则跳过策略
+    "max_ratio": 0.30,                   # 单策略最高比例
+    "min_samples": 10,                   # 最少历史样本
+    "default_fitness": 0.5,              # 数据不足时默认适应度
+}
+
+# ================================================================
+#  多策略共识引擎
+# ================================================================
+SCHEDULE_ENSEMBLE_MIDDAY = "10:20"
+SCHEDULE_ENSEMBLE_AFTERNOON = "14:40"
+
+ENSEMBLE_PARAMS = {
+    "enabled": True,
+    "min_strategies": 2,                 # 最少N个策略共识
+    "top_n": 5,
+    "weights": {
+        "consensus_count": 0.35,
+        "avg_score": 0.25,
+        "family_diversity": 0.20,
+        "regime_fit": 0.20,
+    },
+}
+
+# ================================================================
+#  收益归因引擎
+# ================================================================
+SCHEDULE_ATTRIBUTION = "16:20"
+
+ATTRIBUTION_PARAMS = {
+    "enabled": True,
+    "lookback_days": 30,
+}
+
+# ================================================================
+#  入场时机分析
+# ================================================================
+TIMING_PARAMS = {
+    "enabled": True,
+    "lookback_days": 60,
+    "min_samples": 20,
+}
+
+# (GLOBAL_NEWS_PARAMS 已在上方「Global News Monitor」段落定义, 不再重复)

@@ -64,6 +64,7 @@ class Event:
     timestamp: str = ""  # ISO, 自动生成
     event_id: str = ""   # UUID, 自动生成
     consumed: bool = False
+    parent_event_id: str = ""  # 因果链: 触发此事件的上游事件 ID
 
     def __post_init__(self):
         if not self.timestamp:
@@ -85,6 +86,7 @@ class Event:
             timestamp=d.get("timestamp", ""),
             event_id=d.get("event_id", ""),
             consumed=d.get("consumed", False),
+            parent_event_id=d.get("parent_event_id", ""),
         )
 
 
@@ -107,7 +109,8 @@ class EventBus:
         self._load()
 
     def emit(self, source: str, priority: Priority, event_type: str,
-             category: str, payload: dict) -> str:
+             category: str, payload: dict,
+             parent_event_id: str = "") -> str:
         """发射事件, 返回 event_id. 重复事件返回空字符串."""
         # 去重检查
         if self._is_duplicate(source, event_type, payload):
@@ -120,6 +123,7 @@ class EventBus:
             event_type=event_type,
             category=category,
             payload=payload,
+            parent_event_id=parent_event_id,
         )
         self._events.append(event)
         self._total_emitted += 1
@@ -162,6 +166,33 @@ class EventBus:
     def subscribe(self, event_type: str, callback: Callable):
         """注册回调: 当特定 event_type 被 emit 时立即触发"""
         self._subscribers.setdefault(event_type, []).append(callback)
+
+    def get_causal_chain(self, event_id: str, max_depth: int = 10) -> list[Event]:
+        """递归回溯事件因果链: event → parent → grandparent → ...
+
+        Returns:
+            从当前事件到根事件的有序列表
+        """
+        chain = []
+        current_id = event_id
+        visited = set()
+
+        for _ in range(max_depth):
+            if not current_id or current_id in visited:
+                break
+            visited.add(current_id)
+
+            event = next((e for e in self._events if e.event_id == current_id), None)
+            if not event:
+                break
+            chain.append(event)
+            current_id = event.parent_event_id
+
+        return chain
+
+    def get_children(self, event_id: str) -> list[Event]:
+        """获取某事件的所有直接子事件"""
+        return [e for e in self._events if e.parent_event_id == event_id]
 
     def stats(self) -> dict:
         """统计信息"""

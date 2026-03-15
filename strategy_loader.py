@@ -115,8 +115,8 @@ def _make_astock_job(cfg: dict, sched_mod):
                 if not should_strategy_run(strategy_name):
                     print(f"  [{schedule_time}] [Agent] {strategy_name} 已暂停, 跳过")
                     return
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
 
         # Gate 3: 大盘环境
         regime_result = None
@@ -133,8 +133,8 @@ def _make_astock_job(cfg: dict, sched_mod):
                 if check_daily_circuit_breaker():
                     print(f"  [{schedule_time}] 熔断已触发, 跳过{strategy_name}")
                     return
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
 
         # Pre-hook
         if pre_hook == "clear_ths_watchlist":
@@ -197,8 +197,8 @@ def _make_direct_push_job(cfg: dict, sched_mod):
                 if not should_strategy_run(strategy_name):
                     print(f"  [{schedule_time}] [Agent] {strategy_name} 已暂停, 跳过")
                     return
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
 
         # 执行策略
         func = _import_func(module_name, func_name)
@@ -228,8 +228,8 @@ def _make_direct_push_job(cfg: dict, sched_mod):
                 )
             try:
                 notify_wechat_raw(f"[{schedule_time}] {push_title}", "\n".join(lines))
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
 
         # 学习记录
         sched_mod._record_learning(items, strategy_name, None)

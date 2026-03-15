@@ -23,23 +23,23 @@ class TestDipBuy:
     """低吸回调策略测试"""
 
     def test_rsi_filter(self):
-        """RSI < 30 初筛"""
+        """RSI < 40 初筛 (低吸策略阈值)"""
         from mean_reversion_strategy import _score_dip_buy
         df = pd.DataFrame({
-            "code": ["000001", "000002", "000003"],
-            "name": ["测试A", "测试B", "测试C"],
-            "rsi": [25, 35, 20],
-            "pct_chg": [-1.5, -2.0, -3.0],
-            "vol_ratio_5_20": [0.5, 0.6, 0.4],
-            "close": [10.0, 20.0, 15.0],
-            "ma20": [11.0, 22.0, 17.0],
-            "ma60": [12.0, 23.0, 18.0],
-            "shadow_ratio": [2.0, 0.5, 3.0],
-            "above_ma60": [False, False, False],
+            "code": ["000001", "000002", "000003", "000004"],
+            "name": ["测试A", "测试B", "测试C", "测试D"],
+            "rsi": [25, 45, 20, 35],
+            "pct_chg": [-1.5, -2.0, -3.0, -1.0],
+            "vol_ratio_5_20": [0.5, 0.6, 0.4, 0.5],
+            "close": [10.0, 20.0, 15.0, 12.0],
+            "ma20": [11.0, 22.0, 17.0, 13.0],
+            "ma60": [12.0, 23.0, 18.0, 14.0],
+            "shadow_ratio": [2.0, 0.5, 3.0, 1.0],
+            "above_ma60": [False, False, False, False],
         })
-        name_map = {"000001": "测试A", "000002": "测试B", "000003": "测试C"}
+        name_map = {"000001": "测试A", "000002": "测试B", "000003": "测试C", "000004": "测试D"}
         result = _score_dip_buy(df, name_map)
-        # 000002 RSI=35 应被过滤
+        # 000002 RSI=45 应被过滤 (>40 阈值)
         assert "000002" not in result["code"].values
         assert "000001" in result["code"].values
         assert "000003" in result["code"].values
@@ -283,6 +283,131 @@ class TestSectorRotation:
         mock_retry.side_effect = Exception("API error")
         result = _get_sector_stocks("不存在板块")
         assert result == []
+
+    def test_sector_config_weights(self):
+        """板块轮动权重配置: s_follow_potential 存在且权重合约1.0"""
+        from config import SECTOR_ROTATION_PARAMS
+        weights = SECTOR_ROTATION_PARAMS["weights"]
+        assert "s_follow_potential" in weights
+        assert "s_leader_score" not in weights
+        total = sum(weights.values())
+        assert abs(total - 1.0) < 0.01, f"权重合计 {total} != 1.0"
+        assert SECTOR_ROTATION_PARAMS["picks_per_sector"] >= 3  # 可配置, 当前=10
+
+
+# ================================================================
+#  TestPickFollowers — 跟涨潜力股选股
+# ================================================================
+
+class TestPickFollowers:
+    """板块异动跟涨潜力股测试"""
+
+    def _make_board(self, change_pct=3.0):
+        return {"name": "半导体", "code": "BK0101", "change_pct": change_pct}
+
+    def _make_stocks(self):
+        return [
+            {"code": "000001", "name": "股票A", "change_pct": 1.0, "price": 10.5,
+             "high": 11.0, "low": 10.0, "turnover": 5.0, "volume": 100000, "amount": 5000000},
+            {"code": "000002", "name": "股票B", "change_pct": 0.5, "price": 20.2,
+             "high": 20.5, "low": 19.8, "turnover": 4.0, "volume": 80000, "amount": 3000000},
+            {"code": "000003", "name": "股票C", "change_pct": 2.0, "price": 15.0,
+             "high": 15.2, "low": 14.5, "turnover": 6.0, "volume": 120000, "amount": 8000000},
+            {"code": "000004", "name": "股票D", "change_pct": 5.0, "price": 30.0,
+             "high": 31.0, "low": 29.0, "turnover": 10.0, "volume": 200000, "amount": 10000000},
+            {"code": "000005", "name": "股票E", "change_pct": -1.0, "price": 8.0,
+             "high": 8.5, "low": 7.8, "turnover": 2.0, "volume": 50000, "amount": 1000000},
+            {"code": "000006", "name": "ST退市", "change_pct": 1.5, "price": 3.0,
+             "high": 3.1, "low": 2.9, "turnover": 15.0, "volume": 300000, "amount": 500000},
+            {"code": "000007", "name": "涨停股", "change_pct": 10.0, "price": 22.0,
+             "high": 22.0, "low": 20.0, "turnover": 20.0, "volume": 500000, "amount": 15000000},
+        ]
+
+    def test_pick_followers_basic(self):
+        """基本跟涨选股: 排除ST/涨停/下跌, 留下区间内的"""
+        from sector_monitor import _pick_followers
+        board = self._make_board(3.0)
+        stocks = self._make_stocks()
+        result = _pick_followers(board, stocks)
+        assert len(result) <= 3
+        # 排除: D(5%>3%*0.8=2.4%), E(下跌), ST退市, 涨停股
+        codes = [r["code"] for r in result]
+        assert "000005" not in codes  # 下跌
+        assert "000006" not in codes  # ST
+        assert "000007" not in codes  # 涨停
+        assert "000004" not in codes  # 超过板块*0.8
+
+    def test_pick_followers_scores(self):
+        """评分合理: 补涨空间大+量能高 → 分数高"""
+        from sector_monitor import _pick_followers
+        board = self._make_board(3.0)
+        stocks = self._make_stocks()
+        result = _pick_followers(board, stocks)
+        assert len(result) > 0
+        for r in result:
+            assert "follow_score" in r
+            assert 0 <= r["follow_score"] <= 1
+
+    def test_pick_followers_empty_stocks(self):
+        """成分股为空 → 返回空列表"""
+        from sector_monitor import _pick_followers
+        board = self._make_board(3.0)
+        result = _pick_followers(board, [])
+        assert result == []
+
+    def test_pick_followers_all_excluded(self):
+        """所有股票都不符合条件 → 返回空列表"""
+        from sector_monitor import _pick_followers
+        board = self._make_board(2.0)
+        stocks = [
+            {"code": "000001", "name": "ST股", "change_pct": 1.0, "price": 10.0,
+             "high": 10.5, "low": 9.5, "turnover": 5.0, "volume": 100000, "amount": 5000000},
+        ]
+        result = _pick_followers(board, stocks)
+        assert result == []  # ST被排除
+
+    def test_pick_followers_negative_sector(self):
+        """板块下跌时 → 返回空列表"""
+        from sector_monitor import _pick_followers
+        board = self._make_board(-1.0)
+        stocks = self._make_stocks()
+        result = _pick_followers(board, stocks)
+        assert result == []
+
+    def test_pick_followers_gap_pct(self):
+        """gap_pct 补涨空间计算正确"""
+        from sector_monitor import _pick_followers
+        board = self._make_board(3.0)
+        stocks = [
+            {"code": "000001", "name": "股A", "change_pct": 1.0, "price": 10.0,
+             "high": 10.5, "low": 9.5, "turnover": 5.0, "volume": 100000, "amount": 5000000},
+        ]
+        result = _pick_followers(board, stocks)
+        assert len(result) == 1
+        assert result[0]["gap_pct"] == 2.0  # 3.0 - 1.0
+
+    def test_pick_followers_label(self):
+        """跟涨标签包含关键信息"""
+        from sector_monitor import _pick_followers
+        board = self._make_board(3.0)
+        stocks = self._make_stocks()
+        result = _pick_followers(board, stocks)
+        for r in result:
+            assert "label" in r
+            assert isinstance(r["label"], str)
+
+    def test_pick_followers_max_3(self):
+        """最多返回3只"""
+        from sector_monitor import _pick_followers
+        board = self._make_board(5.0)
+        stocks = [
+            {"code": f"00000{i}", "name": f"股{i}", "change_pct": i * 0.5,
+             "price": 10 + i, "high": 11 + i, "low": 9 + i,
+             "turnover": 5.0, "volume": 100000, "amount": 5000000 + i * 1000000}
+            for i in range(1, 8)
+        ]
+        result = _pick_followers(board, stocks)
+        assert len(result) <= 3
 
 
 # ================================================================

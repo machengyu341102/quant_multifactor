@@ -224,6 +224,13 @@ def _fetch_one_kline(code, name_map, start_date, end_date):
         # 存入缓存 (chip 模块复用)
         _kline_cache[code] = {"close": closes, "high": highs, "low": lows}
 
+        # forge 因子缓存
+        try:
+            from factor_forge import cache_klines_for_forge
+            cache_klines_for_forge(code, df)
+        except ImportError:
+            pass
+
         rsi_vals = calc_rsi(closes, 14)
         rsi_now = rsi_vals[-1] if not np.isnan(rsi_vals[-1]) else 50
 
@@ -324,17 +331,81 @@ def get_hot_concept_names():
         return set(), {}
 
 
-def score_and_rank(df, weights, top_n=5):
+# 实盘候选缓冲区: score_and_rank 自动收集全量评分候选
+_scored_buffer = []
+
+
+def flush_scored_to_scorecard(strategy_name: str) -> int:
+    """将缓冲区中的全量候选写入 scorecard (net_return_pct=0, 待次日回填)"""
+    global _scored_buffer
+    buf_size = len(_scored_buffer)
+    if not _scored_buffer:
+        print(f"  [数据管道] {strategy_name}: 缓冲区空, 无候选可写入")
+        return 0
+    from datetime import date as _dt
+    try:
+        from db_store import save_scorecard_records
+    except ImportError:
+        print(f"  [数据管道] {strategy_name}: db_store 不可用, 跳过写入")
+        _scored_buffer = []
+        return 0
+    today = _dt.today().isoformat()
+    records = []
+    for c in _scored_buffer:
+        records.append({
+            "rec_date": today,
+            "code": c["code"],
+            "name": c.get("name", ""),
+            "strategy": strategy_name,
+            "score": c.get("score", 0),
+            "rec_price": c.get("price", 0),
+            "factor_scores": c.get("factor_scores", {}),
+            "net_return_pct": 0,
+        })
+    try:
+        count = save_scorecard_records(records)
+    except Exception as e:
+        print(f"  [数据管道] {strategy_name}: 写入失败! {e}")
+        _scored_buffer = []
+        return 0
+    _scored_buffer = []
+    print(f"  [数据管道] {strategy_name}: {count}/{buf_size} 条候选已写入 scorecard")
+    return count
+
+
+def score_and_rank(df, weights, top_n=5, strategy=None):
     """
-    通用打分排名
+    通用打分排名 (含 ML 融合)
     weights: dict of {因子列名: 权重}
-    每个因子列已经是归一化后的分数
+    strategy: 策略名 (用于加载策略专属 ML 模型)
     """
     df = df.copy()
+
+    # forge 因子钩子: 注入 s_forge_* 列 + 合并权重
+    try:
+        from factor_forge import compute_forge_factors, get_forge_weights
+        df = compute_forge_factors(df)
+        forge_w = get_forge_weights()
+        if forge_w:
+            weights = {**weights, **forge_w}
+    except ImportError:
+        pass
+
     df["total_score"] = 0
     for col, w in weights.items():
         if col in df.columns:
             df["total_score"] += df[col].fillna(0) * w
+
+    # 跨市场 regime 调整: Risk Off 降权, Risk On 略加分
+    try:
+        from cross_asset_factor import get_risk_multiplier
+        risk_mult = get_risk_multiplier()
+        if abs(risk_mult - 1.0) > 0.001:
+            df["total_score"] *= risk_mult
+            label = "RiskOn加分" if risk_mult > 1.0 else "RiskOff降权"
+            print(f"  跨市场regime调整(x{risk_mult:.2f}): {label}")
+    except ImportError:
+        pass
 
     # MA60下方降权
     if "above_ma60" in df.columns:
@@ -343,6 +414,35 @@ def score_and_rank(df, weights, top_n=5):
         below_n = below_mask.sum()
         if below_n > 0:
             print(f"  MA60下方降权(×0.8): {below_n} 只")
+
+    # ML 融合: 规则分 + ML预测 → fused_score
+    try:
+        from ml_factor_model import predict_scores, fuse_scores
+        candidates = []
+        for _, row in df.iterrows():
+            fs = {c: float(row[c]) for c in row.index
+                  if c.startswith("s_") and pd.notna(row.get(c))}
+            candidates.append({
+                "code": row.get("code", ""),
+                "factor_scores": fs,
+                "total_score": float(row.get("total_score", 0)),
+            })
+        candidates = predict_scores(candidates, strategy=strategy)
+        candidates = fuse_scores(candidates)
+        # 写回 df
+        ml_scores = {c["code"]: c for c in candidates if c.get("code")}
+        for idx, row in df.iterrows():
+            info = ml_scores.get(row.get("code", ""), {})
+            df.at[idx, "ml_score"] = info.get("ml_score", 0)
+            if info.get("fused_score") is not None:
+                df.at[idx, "total_score"] = info["fused_score"]
+        ml_active = sum(1 for c in candidates if abs(c.get("ml_score", 0)) > 0.001)
+        if ml_active > 0:
+            print(f"  [ML融合] {ml_active}/{len(candidates)} 只获得ML预测 (策略: {strategy or 'global'})")
+    except ImportError:
+        pass
+    except Exception as e:
+        print(f"  [ML融合跳过] {e}")
 
     df = df.sort_values("total_score", ascending=False)
 
@@ -362,6 +462,24 @@ def score_and_rank(df, weights, top_n=5):
     selected = df.loc[selected_idx] if selected_idx else df.head(top_n)
     sec_dist = selected["sector"].value_counts()
     print(f"  行业分布: {dict(sec_dist)}")
+
+    # 全量候选写入缓冲区 (实盘数据采集)
+    global _scored_buffer
+    _scored_buffer = []
+    for _, row in df.iterrows():
+        fs = {c: float(row[c]) for c in row.index
+              if c.startswith("s_") and pd.notna(row.get(c))}
+        if not fs:
+            continue
+        _scored_buffer.append({
+            "code": row.get("code", ""),
+            "name": row.get("name", ""),
+            "price": float(row.get("price", row.get("close",
+                           row.get("latest_close", 0)))),
+            "score": float(row.get("total_score", 0)),
+            "factor_scores": fs,
+        })
+
     return selected, df
 
 
@@ -414,19 +532,19 @@ def run_auction(top_n=5):
     df["gap_pct"] = (df["open"] - df["prev_close"]) / df["prev_close"] * 100
 
     before = len(df)
-    # 高开幅度 1%~5%
-    df = df[(df["gap_pct"] >= 1) & (df["gap_pct"] <= 5)].copy()
-    print(f"  高开 1%-5% 筛选: {before} → {len(df)}")
+    # 高开幅度 0.3%~7% (放宽: 1-5→0.3-7, 增加学习样本)
+    df = df[(df["gap_pct"] >= 0.3) & (df["gap_pct"] <= 7)].copy()
+    print(f"  高开 0.3%-7% 筛选: {before} → {len(df)}")
 
     before = len(df)
-    # 量比 > 1.5
-    df = df[df["volume_ratio"] > 1.5].copy()
-    print(f"  量比 > 1.5: {before} → {len(df)}")
+    # 量比 > 1.0 (放宽: 1.5→1.0)
+    df = df[df["volume_ratio"] > 1.0].copy()
+    print(f"  量比 > 1.0: {before} → {len(df)}")
 
     before = len(df)
-    # 换手率 > 0.5%
-    df = df[df["turnover"] > 0.5].copy()
-    print(f"  换手率 > 0.5%: {before} → {len(df)}")
+    # 换手率 > 0.3% (放宽: 0.5→0.3)
+    df = df[df["turnover"] > 0.3].copy()
+    print(f"  换手率 > 0.3%: {before} → {len(df)}")
 
     # 标记竞价异动
     df["is_auction_signal"] = df["code"].isin(auction_codes).astype(int)
@@ -459,16 +577,16 @@ def run_auction(top_n=5):
 
     # 技术面过滤
     before = len(tech_df)
-    tech_df = tech_df[tech_df["rsi"].between(30, 60)].copy()
-    print(f"  RSI 30-60: {before} → {len(tech_df)}")
+    tech_df = tech_df[tech_df["rsi"].between(20, 75)].copy()
+    print(f"  RSI 20-75: {before} → {len(tech_df)}")
 
     before = len(tech_df)
-    tech_df = tech_df[tech_df["volatility"] < 0.55].copy()
-    print(f"  波动率 < 55%: {before} → {len(tech_df)}")
+    tech_df = tech_df[tech_df["volatility"] < 0.70].copy()
+    print(f"  波动率 < 70%: {before} → {len(tech_df)}")
 
     before = len(tech_df)
-    tech_df = tech_df[tech_df["pullback_20d"] > -0.25].copy()
-    print(f"  20日回撤 > -25%: {before} → {len(tech_df)}")
+    tech_df = tech_df[tech_df["pullback_20d"] > -0.35].copy()
+    print(f"  20日回撤 > -35%: {before} → {len(tech_df)}")
 
     # 合并竞价数据 + 技术数据
     merged = tech_df.merge(
@@ -543,10 +661,9 @@ def run_auction(top_n=5):
     # 热点板块得分
     merged["s_hot"] = merged["is_hot_leader"].astype(float)
 
-    # 换手率得分: 1%-5%最优
-    tr = merged["turnover"].clip(0, 10)
-    merged["s_turnover"] = np.where(tr.between(1, 5), 1.0, 0.5)
-    merged["s_turnover"] = zscore(merged["s_turnover"])
+    # 换手率得分: 连续值zscore (旧版离散分箱导致全0)
+    tr = pd.to_numeric(merged["turnover"], errors="coerce").fillna(0).clip(0, 30)
+    merged["s_turnover"] = zscore(tr) if tr.std() > 0.01 else 0
 
     # 加权打分 (8原始因子 + 3增强因子 = 11因子)
     default_weights = {
@@ -569,7 +686,7 @@ def run_auction(top_n=5):
         weights = tuned.get("weights", default_weights)
     except Exception:
         weights = default_weights
-    selected, full_df = score_and_rank(merged, weights, top_n=top_n + 3)
+    selected, full_df = score_and_rank(merged, weights, top_n=top_n + 3, strategy="集合竞价选股")
 
     # ---- 第6步: 新闻排雷 ----
     news_n = min(top_n + 3, len(full_df))
@@ -755,19 +872,19 @@ def run_afternoon(top_n=5):
     df = filter_basics(spot_df, pool_set)
 
     before = len(df)
-    # 涨跌幅 0%~5%
-    df = df[(df["pct_chg"] >= 0) & (df["pct_chg"] <= 5)].copy()
-    print(f"  涨跌幅 0%-5%: {before} → {len(df)}")
+    # 涨跌幅 -2%~7% (放宽: 0-5→-2-7, 增加学习样本)
+    df = df[(df["pct_chg"] >= -2) & (df["pct_chg"] <= 7)].copy()
+    print(f"  涨跌幅 -2%-7%: {before} → {len(df)}")
 
     before = len(df)
-    # 量比 > 1.0
-    df = df[df["volume_ratio"] > 1.0].copy()
-    print(f"  量比 > 1.0: {before} → {len(df)}")
+    # 量比 > 0.5 (放宽: 1.0→0.5)
+    df = df[df["volume_ratio"] > 0.5].copy()
+    print(f"  量比 > 0.5: {before} → {len(df)}")
 
     before = len(df)
-    # 换手率 > 1%
-    df = df[df["turnover"] > 1].copy()
-    print(f"  换手率 > 1%: {before} → {len(df)}")
+    # 换手率 > 0.5% (放宽: 1→0.5)
+    df = df[df["turnover"] > 0.5].copy()
+    print(f"  换手率 > 0.5%: {before} → {len(df)}")
 
     print(f"  日内强势候选: {len(df)} 只")
 
@@ -784,7 +901,7 @@ def run_afternoon(top_n=5):
 
     # 限制候选数量, 按涨幅+量比粗排
     df["_rough"] = df["pct_chg"] * 0.5 + df["volume_ratio"] * 0.3 + df["turnover"] * 0.2
-    df = df.sort_values("_rough", ascending=False).head(50)
+    df = df.sort_values("_rough", ascending=False).head(150)
     candidate_codes = df["code"].tolist()
 
     # ---- 第3步: 日内形态验证 ----
@@ -938,7 +1055,7 @@ def run_afternoon(top_n=5):
         weights = tuned.get("weights", default_weights)
     except Exception:
         weights = default_weights
-    selected, full_df = score_and_rank(merged, weights, top_n=top_n + 3)
+    selected, full_df = score_and_rank(merged, weights, top_n=top_n + 3, strategy="尾盘短线选股")
 
     # ---- 第7步: 新闻排雷 ----
     news_n = min(top_n + 3, len(full_df))

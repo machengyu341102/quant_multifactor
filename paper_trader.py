@@ -715,8 +715,8 @@ def _fetch_prices(codes: list[str]) -> dict[str, float]:
             return {row["code"]: float(row["price"])
                     for _, row in df.iterrows()
                     if row.get("price", 0) > 0}
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 回退: 逐个尝试
     prices = {}
@@ -728,8 +728,8 @@ def _fetch_prices(codes: list[str]) -> dict[str, float]:
                 row = df[df["代码"] == code]
                 if len(row) > 0:
                     prices[code] = float(row.iloc[0]["最新价"])
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
     except ImportError:
         pass
 
@@ -770,8 +770,8 @@ def _emit_event(event_type: str, payload: dict):
             category="strategy",
             payload=payload,
         )
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.warning("Suppressed exception: %s", _exc)
 
 
 # ================================================================

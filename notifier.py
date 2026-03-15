@@ -13,9 +13,11 @@ import subprocess
 import requests
 import time
 import threading
+import hashlib
 from datetime import datetime, date
 from config import SERVERCHAN_SENDKEY, MAX_WECHAT_DAILY
 from log_config import get_logger
+from json_store import safe_load, safe_save
 
 logger = get_logger("notifier")
 
@@ -33,6 +35,8 @@ except ImportError:
 
 # 同花顺自选股导出目录 (与本文件同目录)
 _THS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ths_export")
+_APP_MESSAGE_CENTER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "app_message_center.json")
+_app_message_lock = threading.Lock()
 
 # ================================================================
 #  异步推送队列 (不阻塞 OODA 循环)
@@ -67,6 +71,41 @@ def _ensure_push_worker():
         t = threading.Thread(target=_push_worker, daemon=True, name="push-worker")
         t.start()
         _push_worker_started = True
+
+
+def _guess_app_message_level(title: str, body: str) -> str:
+    text = f"{title}\n{body}".lower()
+    if any(keyword in text for keyword in ("critical", "熔断", "止损", "告警", "超时", "warning", "🔴")):
+        return "warning"
+    if any(keyword in text for keyword in ("推荐", "简报", "夜班", "日报", "盘中", "🟢", "完成")):
+        return "info"
+    return "neutral"
+
+
+def _record_app_message(title: str, markdown: str):
+    plain_body = _strip_markdown(markdown)
+    payload = {
+        "id": hashlib.sha1(
+            f"{datetime.now().isoformat()}|{title}|{plain_body[:200]}".encode("utf-8")
+        ).hexdigest()[:16],
+        "title": title,
+        "body": plain_body,
+        "preview": plain_body.replace("\n", " ")[:140],
+        "level": _guess_app_message_level(title, plain_body),
+        "channel": "wechat_mirror",
+        "created_at": datetime.now().isoformat(timespec="seconds"),
+    }
+
+    with _app_message_lock:
+        center = safe_load(_APP_MESSAGE_CENTER, default={"items": []})
+        items = center.get("items", [])
+        if items:
+            latest = items[-1]
+            if latest.get("title") == payload["title"] and latest.get("body") == payload["body"]:
+                return
+        items.append(payload)
+        center["items"] = items[-200:]
+        safe_save(_APP_MESSAGE_CENTER, center)
 
 
 # ================================================================
@@ -328,6 +367,11 @@ def _send_push_sync(title: str, markdown: str) -> bool:
 
 def _send_push(title: str, markdown: str) -> bool:
     """异步推送入口: 投入队列立即返回, 不阻塞调用方"""
+    try:
+        _record_app_message(title, markdown)
+    except Exception as e:
+        logger.warning("APP消息镜像写入失败: %s", e)
+
     _ensure_push_worker()
     try:
         _push_queue.put_nowait((title, markdown))
@@ -362,6 +406,21 @@ def notify_wechat(strategy_name: str, items: list[dict]):
     else:
         md_lines.append("本轮无符合条件的推荐标的")
 
+    # [V4.0] 附加时序因子趋势洞察
+    try:
+        from json_store import safe_load
+        ml_res = safe_load("ml_model_results.json", default=[])
+        if isinstance(ml_res, list) and len(ml_res) > 0:
+            latest = ml_res[-1]
+            trends = latest.get("temporal_trends")
+            if isinstance(trends, dict) and len(trends) > 0:
+                md_lines.append("\n📈 **因子动量追踪 (T-5):**")
+                for f, trend in trends.items():
+                    color = "info" if "↑" in trend else ("warning" if "↓" in trend else "comment")
+                    md_lines.append(f"> {f}: <font color=\"{color}\">{trend}</font>")
+    except Exception as e:
+        logger.debug(f"时序洞察解析跳过: {e}")
+
     md_lines.append(f"\n<font color=\"comment\">{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</font>")
     _send_push(title, "\n".join(md_lines))
 
@@ -389,13 +448,19 @@ def _to_ths_code(code: str) -> str:
     return f"SZ{code}"
 
 
-def export_ths_watchlist(strategy_name: str, items: list[dict]):
+def export_ths_watchlist(strategy_name: str, items):
     """导出推荐股票为同花顺可导入的自选股文件
 
     生成两个文件:
     - ths_export/{策略名}.txt — 单策略自选股
     - ths_export/全部推荐.txt — 当日所有策略汇总
     """
+    try:
+        import pandas as pd
+        if isinstance(items, pd.DataFrame):
+            items = items.to_dict(orient="records")
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
     if not items:
         return
 

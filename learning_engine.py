@@ -132,9 +132,123 @@ def record_trade_context(strategy: str, items: list[dict],
 def _join_journal_scorecard(lookback_days: int = 30) -> list[dict]:
     """将 trade_journal (输入上下文) JOIN scorecard (输出结果)
 
+    V4.0: 优先从 DB scorecard 穿透提取 (10万+量级),
+    回退到 journal+scorecard 关联路径.
+
     关联键: (date, code, strategy)
     返回: [{signals, factor_scores, net_return_pct, regime, strategy, ...}]
     """
+    # === V4.0 穿透式: 直接从 DB scorecard 提取 ===
+    db_result = _join_scorecard_direct(lookback_days)
+    if db_result and len(db_result) >= 20:
+        logger.info("[学习] V4穿透: %d 条 (lookback=%s)",
+                    len(db_result), lookback_days or "全量")
+        return db_result
+
+    # === 回退: journal + scorecard 关联 ===
+    logger.info("[学习] DB穿透不足, 回退 journal 关联")
+    return _join_journal_scorecard_legacy(lookback_days)
+
+
+def _join_scorecard_direct(lookback_days: int = None) -> list[dict] | None:
+    """V4.0 穿透式: 直接从 SQLite scorecard 提取因子+收益数据
+
+    从 scorecard 读取 factor_scores + 收益, 并从 trade_journal 补充 regime signals.
+    支持 lookback_days=None 全量读取 (大周期重训).
+    """
+    import sqlite3
+    import json as _json
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            return None  # test mode
+        from db_store import _DB_PATH
+    except Exception:
+        _db = os.path.join(_DIR, "quant_data.db")
+        if not os.path.exists(_db):
+            return None
+        _DB_PATH = _db
+
+    import time as _time
+    raw = None
+    for _attempt in range(3):
+        try:
+            conn = sqlite3.connect(_DB_PATH, timeout=10)
+            where_parts = ["net_return_pct != 0",
+                           "factor_scores IS NOT NULL",
+                           "length(factor_scores) > 5"]
+            params = []
+
+            if lookback_days:
+                cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
+                where_parts.append("rec_date >= ?")
+                params.append(cutoff)
+
+            where = "WHERE " + " AND ".join(where_parts)
+            sql = f"SELECT rec_date, code, strategy, factor_scores, net_return_pct, regime FROM scorecard {where}"
+            import pandas as pd
+            raw = pd.read_sql(sql, conn, params=params)
+            conn.close()
+            break
+        except Exception as e:
+            if _attempt < 2:
+                _time.sleep(1)
+                continue
+            logger.warning("[学习] DB穿透读取失败(3次重试): %s", e)
+            return None
+
+    if raw.empty:
+        return None
+
+    # 从 trade_journal 补充 regime signals (按日期索引, 同日共享)
+    signals_by_date = {}
+    try:
+        from db_store import load_trade_journal
+        journal = load_trade_journal(days=lookback_days or 365)
+        for entry in journal:
+            d = entry.get("date", "")
+            if d and d not in signals_by_date:
+                regime_info = entry.get("regime", {})
+                signals_by_date[d] = {
+                    "signals": regime_info.get("signals", {}),
+                    "signal_weights": regime_info.get("signal_weights", {}),
+                    "regime_score": regime_info.get("score", 0),
+                }
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
+
+    joined = []
+    for _, rec in raw.iterrows():
+        try:
+            fs_raw = rec["factor_scores"]
+            fs = _json.loads(fs_raw) if isinstance(fs_raw, str) else fs_raw
+            if not isinstance(fs, dict) or not fs:
+                continue
+
+            d = rec["rec_date"]
+            day_ctx = signals_by_date.get(d, {})
+
+            joined.append({
+                "date": d,
+                "strategy": rec["strategy"],
+                "code": rec["code"],
+                "name": "",
+                "total_score": 0,
+                "factor_scores": fs,
+                "signals": day_ctx.get("signals", {}),
+                "signal_weights": day_ctx.get("signal_weights", {}),
+                "regime": rec.get("regime") or "unknown",
+                "regime_score": day_ctx.get("regime_score", 0),
+                "net_return_pct": float(rec["net_return_pct"]),
+                "result": "win" if float(rec["net_return_pct"]) > 0 else "lose",
+            })
+        except Exception:
+            continue
+
+    return joined if joined else None
+
+
+def _join_journal_scorecard_legacy(lookback_days: int = 30) -> list[dict]:
+    """旧路径: journal + scorecard 关联 (回退用)"""
     cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
 
     try:
@@ -152,7 +266,6 @@ def _join_journal_scorecard(lookback_days: int = 30) -> list[dict]:
     except Exception:
         scorecard = safe_load(_SCORECARD_PATH, default=[])
 
-    # 建 scorecard 索引: (rec_date, code, strategy) → record
     sc_index = {}
     for rec in scorecard:
         key = (rec.get("rec_date", ""), rec.get("code", ""), rec.get("strategy", ""))
@@ -599,21 +712,29 @@ def auto_adopt_backtest_results() -> list[dict]:
         })
         safe_save(_EVOLUTION_PATH, history)
 
-        # 设置验证期 (5天后检查效果)
+        # 设置验证期 (5天后检查效果) — 去重: 同策略同日不重复添加
         try:
             verif_path = os.path.join(_DIR, "optimization_verifications.json")
             verifs = safe_load(verif_path, default=[])
-            verifs.append({
-                "strategy": strategy,
-                "adopt_date": date.today().isoformat(),
-                "verify_date": (date.today() + timedelta(days=5)).isoformat(),
-                "source": "night_backtest",
-                "version": version,
-                "status": "pending",
-            })
-            safe_save(verif_path, verifs)
-        except Exception:
-            pass
+            today_str = date.today().isoformat()
+            already_exists = any(
+                v.get("strategy") == strategy
+                and v.get("adopt_date") == today_str
+                and v.get("status") == "pending"
+                for v in verifs
+            )
+            if not already_exists:
+                verifs.append({
+                    "strategy": strategy,
+                    "adopt_date": today_str,
+                    "verify_date": (date.today() + timedelta(days=5)).isoformat(),
+                    "source": "night_backtest",
+                    "version": version,
+                    "status": "pending",
+                })
+                safe_save(verif_path, verifs)
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
         adopted.append({
             "strategy": strategy,
@@ -636,7 +757,7 @@ def discover_rules_from_history(memory: dict) -> list[dict]:
     Returns:
         新发现的规则列表
     """
-    regime_fit = analyze_strategy_regime_fit(lookback_days=60)
+    regime_fit = analyze_strategy_regime_fit(lookback_days=None)
     if not regime_fit:
         return []
 
@@ -810,25 +931,42 @@ def generate_learning_report() -> str:
 _LEARNING_STATE_PATH = os.path.join(_DIR, "learning_state.json")
 
 
-def _persist_learning_state(report: str, proposal: dict | None):
-    """持久化学习状态: 因子分析 + 信号分析 + 权重调整 + 报告摘要"""
+def _persist_learning_state(report: str, proposal: dict | None,
+                            factor_adjusted: int = 0, health: dict | None = None):
+    """持久化学习状态: 因子分析 + 信号分析 + 权重调整 + 健康状态"""
     state = safe_load(_LEARNING_STATE_PATH, default={
         "version": 0, "history": []})
 
     state["last_run"] = datetime.now().isoformat()
     state["version"] = state.get("version", 0) + 1
 
-    # 因子分析快照
+    # 因子分析快照 (按真实策略名分析)
+    # 重要: 如果本次分析失败(DB锁/并发冲突), 保留上一次成功的结果而不是覆盖为空
+    prev_factors = state.get("factor_analysis", [])
     try:
-        factors = analyze_factor_importance("ml_backfill", lookback_days=60)
-        # 也尝试真实策略
-        for strat in ["集合竞价选股", "放量突破选股", "尾盘短线选股"]:
-            strat_factors = analyze_factor_importance(strat, lookback_days=60)
+        factors = []
+        for strat in ["隔夜选股", "板块轮动选股", "趋势跟踪选股", "尾盘短线选股",
+                       "集合竞价选股", "放量突破选股", "低吸回调选股", "缩量整理选股"]:
+            strat_factors = analyze_factor_importance(strat, lookback_days=None)
             if strat_factors:
                 factors.extend(strat_factors)
-        state["factor_analysis"] = factors
-    except Exception:
-        state["factor_analysis"] = []
+        if factors:
+            state["factor_analysis"] = factors
+            logger.info("因子分析快照: %d 因子 (8策略)", len(factors))
+        elif prev_factors:
+            # 本次分析为空但上次有数据 → 保留上次 (可能是DB锁导致)
+            state["factor_analysis"] = prev_factors
+            logger.warning("因子分析快照为空(可能DB锁), 保留上次 %d 因子", len(prev_factors))
+        else:
+            state["factor_analysis"] = []
+    except Exception as e:
+        import traceback
+        logger.error("因子分析快照失败: %s\n%s", e, traceback.format_exc())
+        if prev_factors:
+            state["factor_analysis"] = prev_factors
+            logger.info("异常后保留上次 %d 因子", len(prev_factors))
+        else:
+            state["factor_analysis"] = []
 
     # 信号分析快照
     state["signal_analysis"] = analyze_signal_accuracy()
@@ -843,6 +981,10 @@ def _persist_learning_state(report: str, proposal: dict | None):
     # 报告摘要 (前500字)
     state["last_report_summary"] = (report or "")[:500]
 
+    # 健康状态
+    if health:
+        state["health"] = health
+
     # 历史记录 (最多保留30条)
     state["history"] = state.get("history", [])[-29:]
     state["history"].append({
@@ -850,7 +992,9 @@ def _persist_learning_state(report: str, proposal: dict | None):
         "version": state["version"],
         "n_factors": len(state.get("factor_analysis", [])),
         "n_signals": len(state.get("signal_analysis", [])),
-        "weight_adjusted": proposal is not None,
+        "signal_adjusted": proposal is not None,
+        "factor_adjusted": factor_adjusted,
+        "health": health.get("status") if health else "unknown",
     })
 
     safe_save(_LEARNING_STATE_PATH, state)
@@ -858,11 +1002,749 @@ def _persist_learning_state(report: str, proposal: dict | None):
 
 
 # ================================================================
-#  5. 主循环 — run_learning_cycle
+#  4b. 在线学习 — T+1 验证后实时微调
+# ================================================================
+
+# 进程内: 跟踪今日在线调整总量
+_online_daily_tracker = {"date": "", "total_delta": 0.0, "updates": 0}
+
+# 策略名 → tunable_params key 映射
+_STRATEGY_TUNABLE_KEYS = {
+    "集合竞价选股": "auction",
+    "尾盘短线选股": "afternoon",
+    "放量突破选股": "breakout",
+    "低吸回调选股": "dip_buy",
+    "缩量整理选股": "consolidation",
+    "趋势跟踪选股": "trend_follow",
+    "板块轮动选股": "sector_rotation",
+    "事件驱动选股": "news_event",
+    "隔夜选股": "overnight",
+}
+
+
+def _apply_online_deltas_to_strategies(tunable: dict, adjustments: dict,
+                                        strategy_factors: dict):
+    """将在线学习的因子 delta 实际应用到各策略的权重中
+
+    对每个策略: 找到该策略使用的因子, 将 EMA delta 累加到其权重上.
+    这使得在线学习不再空转, 因子权重真正随 T+1 反馈动态调整.
+    """
+    min_weight = LEARNING_ENGINE_PARAMS.get("min_weight", 0.03)
+
+    for strat_name, factor_set in strategy_factors.items():
+        key = _STRATEGY_TUNABLE_KEYS.get(strat_name, "")
+        if not key:
+            continue
+
+        # 读取当前策略权重 (无则从默认初始化)
+        strat_section = tunable.get(key, {})
+        weights = dict(strat_section.get("weights", {}))
+        if not weights:
+            try:
+                from auto_optimizer import _get_default_weights
+                weights = _get_default_weights(key)
+            except Exception:
+                weights = {}
+            if not weights:
+                continue
+            strat_section["weights"] = weights
+            strat_section["initialized_from"] = "default"
+            tunable[key] = strat_section
+
+        changed = False
+        for fname in factor_set:
+            if fname not in adjustments or fname not in weights:
+                continue
+            delta = adjustments[fname]["delta"]
+            old_w = weights[fname]
+            new_w = max(min_weight, old_w + delta)
+            if new_w != old_w:
+                weights[fname] = round(new_w, 4)
+                changed = True
+
+        if changed:
+            strat_section["weights"] = weights
+            strat_section["online_updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            tunable[key] = strat_section
+            logger.debug("[在线学习] 策略 %s 权重已微调", strat_name)
+
+
+def incremental_update(verified_signals: list[dict]) -> dict:
+    """T+1 验证结果出来后立即做增量权重微调
+
+    与夜班全量学习互补:
+    - 在线: ±0.01 限幅, 单日总量 ±0.05, 用 EMA 快速响应
+    - 夜班: ±0.03 限幅, 全量统计分析
+
+    Args:
+        verified_signals: [{strategy, code, factor_scores, t1_return_pct, t1_result}]
+
+    Returns:
+        {"adjusted": int, "skipped_budget": bool, "adjustments": {}}
+    """
+    global _online_daily_tracker
+
+    params = LEARNING_ENGINE_PARAMS
+    if not params.get("online_learning_enabled", True):
+        return {"adjusted": 0, "skipped_budget": False}
+
+    max_delta = params.get("online_max_weight_delta", 0.01)
+    daily_max = params.get("online_daily_max_total_delta", 0.05)
+    alpha = params.get("online_ema_alpha", 0.1)
+
+    today = date.today().isoformat()
+    if _online_daily_tracker["date"] != today:
+        _online_daily_tracker = {"date": today, "total_delta": 0.0, "updates": 0}
+
+    # 预算检查
+    if _online_daily_tracker["total_delta"] >= daily_max:
+        logger.debug("[在线学习] 今日调整预算已用尽 (%.4f/%.4f)",
+                     _online_daily_tracker["total_delta"], daily_max)
+        return {"adjusted": 0, "skipped_budget": True}
+
+    if not verified_signals:
+        return {"adjusted": 0, "skipped_budget": False}
+
+    # 按策略聚合: 每个因子的 (return, factor_score) 对
+    factor_outcomes = {}  # factor_name -> [(score, return)]
+    strategy_factors = {}  # strategy -> set(factor_names) — 追踪每个策略用了哪些因子
+    for sig in verified_signals:
+        factor_scores = sig.get("factor_scores", {})
+        ret = sig.get("t1_return_pct", 0)
+        strat = sig.get("strategy", "")
+        for fname, fscore in factor_scores.items():
+            if isinstance(fscore, (int, float)):
+                factor_outcomes.setdefault(fname, []).append((fscore, ret))
+                if strat:
+                    strategy_factors.setdefault(strat, set()).add(fname)
+
+    if not factor_outcomes:
+        return {"adjusted": 0, "skipped_budget": False}
+
+    # 读取当前策略权重 (从 tunable_params.json)
+    tunable = safe_load(_TUNABLE_PATH, default={})
+    adjustments = {}
+    adjusted = 0
+
+    # 对每个因子做 EMA 更新
+    online_state = tunable.setdefault("_online_ema", {})
+
+    for fname, outcomes in factor_outcomes.items():
+        if len(outcomes) < 1:
+            continue
+
+        # 计算本批次该因子的信号质量: 高分时收益 vs 低分时收益
+        scores = [o[0] for o in outcomes]
+        returns = [o[1] for o in outcomes]
+        median_score = sorted(scores)[len(scores) // 2] if scores else 0.5
+
+        high_returns = [r for s, r in outcomes if s >= median_score]
+        low_returns = [r for s, r in outcomes if s < median_score]
+
+        if not high_returns or not low_returns:
+            continue
+
+        avg_high = sum(high_returns) / len(high_returns)
+        avg_low = sum(low_returns) / len(low_returns)
+        spread = avg_high - avg_low  # > 0 说明因子有效
+
+        # EMA 更新
+        old_ema = online_state.get(fname, 0.0)
+        new_ema = (1 - alpha) * old_ema + alpha * spread
+        online_state[fname] = round(new_ema, 6)
+
+        # 根据 EMA 方向决定调整
+        deadband = params.get("online_ema_deadband", 0.1)
+        if abs(new_ema) < deadband:
+            continue  # 信号太弱, 不调
+
+        remaining_budget = daily_max - _online_daily_tracker["total_delta"]
+        if remaining_budget <= 0:
+            break
+
+        delta = max_delta if new_ema > 0 else -max_delta
+        delta = max(-remaining_budget, min(remaining_budget, delta))
+
+        adjustments[fname] = {
+            "delta": round(delta, 4),
+            "ema_spread": round(new_ema, 4),
+            "batch_spread": round(spread, 4),
+        }
+        _online_daily_tracker["total_delta"] += abs(delta)
+        adjusted += 1
+
+    # 保存 online EMA 状态
+    tunable["_online_ema"] = online_state
+    if adjustments:
+        tunable["_online_last_update"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        tunable["_online_daily_adjustments"] = tunable.get("_online_daily_adjustments", 0) + adjusted
+
+        # === 关键: 将 EMA delta 实际应用到各策略的因子权重 ===
+        _apply_online_deltas_to_strategies(tunable, adjustments, strategy_factors)
+
+    safe_save(_TUNABLE_PATH, tunable)
+    _online_daily_tracker["updates"] += adjusted
+
+    if adjustments:
+        logger.info("[在线学习] 微调 %d 个因子 (今日第%d次, 预算%.4f/%.4f)",
+                    adjusted, _online_daily_tracker["updates"],
+                    _online_daily_tracker["total_delta"], daily_max)
+        # 写入 evolution_history, 让 weight_evolution 健康检查能看到变更
+        try:
+            history = safe_load(_EVOLUTION_PATH, default=[])
+            history.append({
+                "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "source": "online_ema",
+                "action": "incremental_update",
+                "reason": f"T+1在线学习微调 {adjusted} 个因子",
+                "n_factors": adjusted,
+                "details": {k: v["delta"] for k, v in adjustments.items()},
+            })
+            safe_save(_EVOLUTION_PATH, history)
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
+
+    return {
+        "adjusted": adjusted,
+        "skipped_budget": False,
+        "adjustments": adjustments,
+    }
+
+
+# ================================================================
+#  3c. 因子权重直调 — 基于因子重要性分析直接调权
+# ================================================================
+
+def propose_factor_weight_update() -> list[dict]:
+    """基于因子重要性分析, 直接调整各策略的因子权重
+
+    与 incremental_update (在线EMA) 互补:
+    - incremental_update: T+1验证 → 快速EMA微调 (需要signal_tracker数据)
+    - propose_factor_weight: 全量统计分析 → 周期性校正 (只需scorecard)
+
+    这确保即使 signal_tracker 停摆, 学习系统仍能从历史数据中调权.
+    """
+    params = LEARNING_ENGINE_PARAMS
+    max_delta = params.get("max_weight_delta", 0.03)
+    min_weight = params.get("min_weight", 0.03)
+    min_samples = params.get("min_samples_factor", 10)
+
+    all_adjustments = []
+    tunable = safe_load(_TUNABLE_PATH, default={})
+
+    for strat_name, tunable_key in _STRATEGY_TUNABLE_KEYS.items():
+        try:
+            factors = analyze_factor_importance(strat_name, lookback_days=None)
+        except Exception:
+            continue
+        if not factors:
+            continue
+
+        # 读取当前策略权重
+        strat_section = tunable.get(tunable_key, {})
+        weights = dict(strat_section.get("weights", {}))
+        if not weights:
+            try:
+                from auto_optimizer import _get_default_weights
+                weights = _get_default_weights(tunable_key)
+            except Exception:
+                weights = {}
+            if not weights:
+                continue
+
+        changed = False
+        adjustments = {}
+        for f in factors:
+            fname = f["factor"]
+            if fname not in weights or f.get("samples", 0) < min_samples:
+                continue
+
+            corr = f.get("correlation", 0) or 0
+            top25 = f.get("top25_return", 0) or 0
+            bot25 = f.get("bottom25_return", 0) or 0
+            spread = top25 - bot25
+
+            # --- 死因子检测: corr=0 且 top25==bottom25 → 压到最低权重 ---
+            if corr == 0.0 and abs(spread) < 0.001:
+                old_w = weights[fname]
+                if old_w > min_weight + 0.001:
+                    weights[fname] = min_weight
+                    changed = True
+                    adjustments[fname] = {
+                        "old": old_w, "new": min_weight,
+                        "delta": round(min_weight - old_w, 4),
+                        "corr": 0.0, "spread": 0.0,
+                        "reason": "zero_variance",
+                    }
+                    logger.info("[因子直调] %s:%s 零方差→压至最低 %.3f→%.3f",
+                                strat_name, fname, old_w, min_weight)
+                continue
+
+            # 信号太弱则跳过
+            if abs(corr) < 0.02 and abs(spread) < 0.5:
+                continue
+
+            # --- 毒因子快速降权: corr < -0.05 使用加倍 delta ---
+            if corr < -0.05 and spread < 0:
+                # 负相关+负spread = 确定性毒因子, 加速降权
+                strength = min(abs(corr) * 10 + abs(spread) / 2, 1.0)
+                aggressive_delta = max_delta * 2  # 2倍速降权
+                delta = -1 * min(aggressive_delta, aggressive_delta * strength)
+            else:
+                # 正常调整
+                direction = 1 if (corr > 0 and spread > 0) else (-1 if (corr < 0 and spread < 0) else 0)
+                if direction == 0:
+                    # 信号矛盾 (corr和spread方向不一致), 小幅度调整
+                    direction = 1 if corr > 0 else -1
+                    strength = min(abs(corr) * 5, 0.5)  # 半强度
+                else:
+                    strength = min(abs(corr) * 10 + abs(spread) / 2, 1.0)
+                delta = direction * min(max_delta, max_delta * strength)
+
+            old_w = weights[fname]
+            new_w = max(min_weight, round(old_w + delta, 4))
+            if abs(new_w - old_w) > 1e-5:
+                weights[fname] = new_w
+                changed = True
+                adjustments[fname] = {
+                    "old": old_w, "new": new_w,
+                    "delta": round(new_w - old_w, 4),
+                    "corr": round(corr, 4), "spread": round(spread, 4),
+                }
+
+        if changed:
+            # 归一化
+            total_w = sum(weights.values())
+            if total_w > 0:
+                weights = {k: round(v / total_w, 4) for k, v in weights.items()}
+
+            strat_section["weights"] = weights
+            strat_section["factor_updated_at"] = datetime.now().isoformat()
+            strat_section["version"] = strat_section.get("version", 0) + 1
+            tunable[tunable_key] = strat_section
+
+            all_adjustments.append({
+                "strategy": strat_name, "tunable_key": tunable_key,
+                "adjustments": adjustments,
+            })
+            logger.info("[因子直调] %s: 调整 %d 个因子", strat_name, len(adjustments))
+
+    if all_adjustments:
+        safe_save(_TUNABLE_PATH, tunable)
+        # 演化历史
+        history = safe_load(_EVOLUTION_PATH, default=[])
+        history.append({
+            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "strategy": "factor_weight_update",
+            "action": "factor_importance_update",
+            "reason": "基于因子重要性分析周期性校正",
+            "n_strategies": len(all_adjustments),
+            "details": [{a["strategy"]: len(a["adjustments"])} for a in all_adjustments],
+        })
+        safe_save(_EVOLUTION_PATH, history)
+        logger.info("[因子直调] 完成: %d 个策略调整", len(all_adjustments))
+
+    return all_adjustments
+
+
+# ================================================================
+#  3d. 学习健康监控 — 自检 + 自愈 + 告警
+# ================================================================
+
+def check_learning_health() -> dict:
+    """全链路学习健康检查 — 检测断裂 + 自动修复 + 推送告警
+
+    检查项:
+      1. scorecard 数据新鲜度 (最近交易日有无数据)
+      2. 因子分析是否有结果
+      3. ML 模型最后训练时间
+      4. 在线学习是否活跃
+      5. 信号验证是否运行
+      6. 权重实际变化率
+
+    返回: {"status": "ok"|"warning"|"critical", "checks": [...], "healed": [...]}
+    """
+    checks = []
+    healed = []
+    status = "ok"
+
+    # ---- 1. scorecard 数据新鲜度 ----
+    try:
+        import sqlite3
+        from db_store import _DB_PATH
+        conn = sqlite3.connect(_DB_PATH)
+        cur = conn.cursor()
+
+        cur.execute("""
+            SELECT rec_date, COUNT(*) FROM scorecard
+            WHERE rec_date >= date('now', 'localtime', '-3 days')
+            GROUP BY rec_date ORDER BY rec_date DESC
+        """)
+        recent = cur.fetchall()
+        if recent:
+            latest_date = recent[0][0]
+            latest_count = recent[0][1]
+            checks.append({"check": "scorecard_freshness", "status": "ok",
+                          "detail": f"最新{latest_date}: {latest_count}条"})
+        else:
+            checks.append({"check": "scorecard_freshness", "status": "critical",
+                          "detail": "近3天无新数据 → 学习引擎无输入"})
+            status = "critical"
+
+        # 检查未回填记录比例
+        cur.execute("SELECT COUNT(*) FROM scorecard WHERE net_return_pct = 0")
+        unfilled = cur.fetchone()[0]
+        cur.execute("SELECT COUNT(*) FROM scorecard")
+        total = cur.fetchone()[0]
+        if total > 0 and unfilled / total > 0.1:
+            checks.append({"check": "backfill_ratio", "status": "warning",
+                          "detail": f"{unfilled}/{total} 未回填 ({unfilled/total:.0%})"})
+            if status == "ok":
+                status = "warning"
+
+        conn.close()
+    except Exception as e:
+        checks.append({"check": "scorecard_freshness", "status": "error",
+                      "detail": f"检查失败: {e}"})
+        status = "critical"
+
+    # ---- 2. 因子分析 ----
+    try:
+        total_factors = 0
+        strats_with_data = 0
+        # 健康检查用 90 天宽窗口, 避免周末/节假日误报
+        health_lookback = max(
+            LEARNING_ENGINE_PARAMS.get("lookback_days", 60), 90)
+        for strat in _STRATEGY_TUNABLE_KEYS:
+            f = analyze_factor_importance(strat, lookback_days=health_lookback)
+            if f:
+                total_factors += len(f)
+                strats_with_data += 1
+
+        if total_factors > 0:
+            checks.append({"check": "factor_analysis", "status": "ok",
+                          "detail": f"{strats_with_data}/{len(_STRATEGY_TUNABLE_KEYS)} 策略, {total_factors} 因子"})
+        else:
+            checks.append({"check": "factor_analysis", "status": "critical",
+                          "detail": "0个因子可分析 → 权重调整无数据源"})
+            status = "critical"
+    except Exception as e:
+        checks.append({"check": "factor_analysis", "status": "error",
+                      "detail": f"分析失败: {e}"})
+
+    # ---- 3. ML 模型新鲜度 ----
+    try:
+        import pickle
+        model_dir = os.path.join(_DIR, "models")
+        if os.path.isdir(model_dir):
+            model_files = [f for f in os.listdir(model_dir) if f.endswith(".pkl")]
+            if model_files:
+                latest_mtime = max(
+                    os.path.getmtime(os.path.join(model_dir, f))
+                    for f in model_files
+                )
+                age_hours = (datetime.now().timestamp() - latest_mtime) / 3600
+                if age_hours <= 48:
+                    checks.append({"check": "ml_model", "status": "ok",
+                                  "detail": f"{len(model_files)} 模型, {age_hours:.0f}h前训练"})
+                else:
+                    checks.append({"check": "ml_model", "status": "warning",
+                                  "detail": f"模型已过期 ({age_hours:.0f}h未训练)"})
+                    if status == "ok":
+                        status = "warning"
+                    # 自愈: 触发 ML 重训
+                    try:
+                        from ml_factor_model import train_all_strategies
+                        train_all_strategies()
+                        healed.append("ml_retrain: 触发模型重训")
+                    except Exception as _exc:
+                        logger.debug("Suppressed exception: %s", _exc)
+            else:
+                checks.append({"check": "ml_model", "status": "critical",
+                              "detail": "无模型文件"})
+                status = "critical"
+        else:
+            checks.append({"check": "ml_model", "status": "critical",
+                          "detail": "模型目录不存在"})
+            status = "critical"
+    except Exception as e:
+        checks.append({"check": "ml_model", "status": "error",
+                      "detail": f"检查失败: {e}"})
+
+    # ---- 4. 在线学习活跃度 ----
+    try:
+        tunable = safe_load(_TUNABLE_PATH, default={})
+        online_update = tunable.get("_online_last_update", "")
+        online_adj = tunable.get("_online_daily_adjustments", 0)
+        if online_update:
+            from datetime import datetime as dt
+            last = dt.fromisoformat(online_update)
+            age_hours = (datetime.now() - last).total_seconds() / 3600
+            # 周末/节假日放宽到 96h (无新信号验证 → 不触发在线学习是正常的)
+            threshold_hours = 96 if date.today().weekday() >= 5 else 48
+            if age_hours <= threshold_hours:
+                checks.append({"check": "online_learning", "status": "ok",
+                              "detail": f"最后更新 {online_update} (累计{online_adj}次)"})
+            else:
+                checks.append({"check": "online_learning", "status": "warning",
+                              "detail": f"在线学习 {age_hours:.0f}h 未活跃"})
+                if status == "ok":
+                    status = "warning"
+        else:
+            # 从未运行: 检查是否有可用信号数据
+            signals_path = os.path.join(_DIR, "signals_db.json")
+            has_signals = os.path.exists(signals_path) and os.path.getsize(signals_path) > 10
+            if has_signals:
+                checks.append({"check": "online_learning", "status": "warning",
+                              "detail": "在线学习从未运行 (有信号数据但未触发)"})
+                if status == "ok":
+                    status = "warning"
+            else:
+                checks.append({"check": "online_learning", "status": "info",
+                              "detail": "在线学习待激活 (暂无信号数据)"})
+    except Exception as e:
+        checks.append({"check": "online_learning", "status": "error",
+                      "detail": str(e)})
+
+    # ---- 5. 信号验证 ----
+    try:
+        signals_path = os.path.join(_DIR, "signals_db.json")
+        if os.path.exists(signals_path):
+            sigs = safe_load(signals_path, default=[])
+            pending = sum(1 for s in sigs if s.get("status") == "pending")
+            completed = sum(1 for s in sigs if s.get("status") == "completed")
+            partial = sum(1 for s in sigs if s.get("status") == "partial")
+            total_sigs = len(sigs)
+
+            if completed > 0 or partial > 0:
+                checks.append({"check": "signal_verification", "status": "ok",
+                              "detail": f"总{total_sigs}: 完成{completed} 部分{partial} 待验{pending}"})
+            elif total_sigs > 0:
+                checks.append({"check": "signal_verification", "status": "warning",
+                              "detail": f"{total_sigs}条信号, 0条完成验证"})
+                if status == "ok":
+                    status = "warning"
+            else:
+                checks.append({"check": "signal_verification", "status": "warning",
+                              "detail": "无信号数据"})
+        else:
+            checks.append({"check": "signal_verification", "status": "warning",
+                          "detail": "signals_db.json 不存在"})
+    except Exception as e:
+        checks.append({"check": "signal_verification", "status": "error",
+                      "detail": str(e)})
+
+    # ---- 6. 权重变化率 ----
+    try:
+        evo_history = safe_load(_EVOLUTION_PATH, default=[])
+        recent_evo = [e for e in evo_history
+                      if e.get("date", "") >= (date.today() - timedelta(days=7)).isoformat()]
+        if recent_evo:
+            checks.append({"check": "weight_evolution", "status": "ok",
+                          "detail": f"近7天 {len(recent_evo)} 次权重变更"})
+        else:
+            checks.append({"check": "weight_evolution", "status": "warning",
+                          "detail": "近7天无权重变更 → 学习停滞"})
+            if status == "ok":
+                status = "warning"
+
+            # 自愈: 触发因子直调
+            try:
+                adj = propose_factor_weight_update()
+                if adj:
+                    healed.append(f"factor_weight_update: 调整 {len(adj)} 个策略")
+            except Exception as _exc:
+                logger.warning("Suppressed exception: %s", _exc)
+    except Exception as _exc:
+        logger.warning("Suppressed exception: %s", _exc)
+
+    result = {
+        "status": status,
+        "timestamp": datetime.now().isoformat(),
+        "checks": checks,
+        "healed": healed,
+    }
+
+    # 持久化
+    health_path = os.path.join(_DIR, "learning_health.json")
+    safe_save(health_path, result)
+
+    # 告警: critical 时推送微信
+    if status == "critical":
+        try:
+            from notifier import notify_wechat_raw
+            lines = ["学习系统健康告警\n"]
+            for c in checks:
+                icon = "❌" if c["status"] == "critical" else "⚠️" if c["status"] == "warning" else "✅"
+                lines.append(f"{icon} {c['check']}: {c['detail']}")
+            if healed:
+                lines.append("\n自动修复:")
+                for h in healed:
+                    lines.append(f"  🔧 {h}")
+            notify_wechat_raw("学习健康告警", "\n".join(lines))
+        except Exception as _exc:
+            logger.warning("Suppressed exception: %s", _exc)
+
+    logger.info("[学习健康] 状态=%s, 检查=%d项, 自愈=%d项",
+                status, len(checks), len(healed))
+    return result
+
+
+# ================================================================
+#  5a. 大周期重训 — 全量数据重设初始权重
+# ================================================================
+
+def run_full_retrain():
+    """大周期重训: 一次性吃掉全量 scorecard 数据, 重设因子初始权重.
+
+    与日常 EMA 微调互补:
+    - 大周期: 全量数据 (10万+), 统计显著, 设初始权重 → 周日夜班跑
+    - 日常 EMA: 近期数据, 快速响应, 微调权重 → 每天3轮
+
+    流程:
+    1. 从 DB 全量提取 (lookback_days=None)
+    2. 按策略分组, 每个因子计算胜率贡献
+    3. 将统计结果写入 tunable_params.json 作为初始权重
+    4. 训练 8+1 个 ML 专家模型
+    """
+    logger.info("=== 大周期重训启动 (全量数据) ===")
+    lines = []
+
+    # Step 1: 全量穿透提取
+    joined = _join_scorecard_direct(lookback_days=None)
+    if not joined or len(joined) < 100:
+        msg = f"全量数据不足 ({len(joined) if joined else 0} 条), 跳过重训"
+        logger.warning(msg)
+        return msg
+
+    lines.append(f"📊 全量数据: {len(joined)} 条")
+
+    # Step 2: 用 analyze_factor_importance 的 correlation+spread 定权
+    #   旧逻辑 bug: 每条记录的 win/lose 加给所有因子 → 全因子等权
+    #   新逻辑: 直接用因子相关性分析, 正向因子提权, 负向/废因子压权
+    tunable = safe_load(_TUNABLE_PATH, default={})
+    strategies_updated = 0
+    min_weight = LEARNING_ENGINE_PARAMS.get("min_weight", 0.03)
+    max_retrain_delta = 0.05  # 重训最大偏移量, 保护在线学习成果
+
+    for strat_name, tunable_key in _STRATEGY_TUNABLE_KEYS.items():
+        try:
+            factors = analyze_factor_importance(strat_name, lookback_days=None)
+        except Exception as e:
+            logger.warning("[重训] %s 因子分析失败: %s", strat_name, e)
+            continue
+        if not factors:
+            continue
+
+        strat_section = tunable.get(tunable_key, {})
+        old_weights = dict(strat_section.get("weights", {}))
+        if not old_weights:
+            try:
+                from auto_optimizer import _get_default_weights
+                old_weights = _get_default_weights(tunable_key)
+            except Exception:
+                old_weights = {}
+            if not old_weights:
+                continue
+
+        # 基于因子分析计算目标权重
+        new_weights = dict(old_weights)
+        changed = False
+        for f in factors:
+            fname = f["factor"]
+            if fname not in new_weights:
+                continue
+            corr = f.get("correlation", 0) or 0
+            top25 = f.get("top25_return", 0) or 0
+            bot25 = f.get("bottom25_return", 0) or 0
+            spread = top25 - bot25
+            samples = f.get("samples", 0)
+            if samples < 20:
+                continue
+
+            old_w = old_weights[fname]
+
+            # 废因子 → 压到最低
+            if corr == 0.0 and abs(spread) < 0.001:
+                target = min_weight
+            # 毒因子 → 大幅压权
+            elif corr < -0.05 and spread < 0:
+                target = max(min_weight, old_w - max_retrain_delta * 2)
+            # 负向因子 → 小幅压权
+            elif corr < -0.02:
+                strength = min(abs(corr) * 10, 1.0)
+                target = max(min_weight, old_w - max_retrain_delta * strength)
+            # 正向因子 → 提权
+            elif corr > 0.02:
+                strength = min(abs(corr) * 10 + abs(spread) / 2, 1.0)
+                target = old_w + max_retrain_delta * strength
+            else:
+                continue  # 中性因子不动
+
+            # 限幅: 相对当前权重最多偏移 max_retrain_delta
+            clamped = max(min_weight, min(old_w + max_retrain_delta, max(old_w - max_retrain_delta, target)))
+            if abs(clamped - old_w) > 1e-5:
+                new_weights[fname] = round(clamped, 4)
+                changed = True
+
+        if not changed:
+            continue
+
+        # 归一化
+        total_w = sum(new_weights.values())
+        if total_w > 0:
+            new_weights = {k: round(v / total_w, 4) for k, v in new_weights.items()}
+
+        strat_section["weights"] = new_weights
+        strat_section["full_retrain_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        strat_section["full_retrain_samples"] = len(joined)
+        tunable[tunable_key] = strat_section
+        strategies_updated += 1
+
+        n_factors = len(new_weights)
+        top3 = sorted(new_weights.items(), key=lambda x: x[1], reverse=True)[:3]
+        top_str = ", ".join(f"{k}={v:.3f}" for k, v in top3)
+        lines.append(f"  {strat_name} ({tunable_key}): {n_factors}因子, top: {top_str}")
+
+    safe_save(_TUNABLE_PATH, tunable)
+    lines.append(f"\n✅ {strategies_updated} 个策略权重已重设")
+
+    # Step 4: ML 专家模型全量重训
+    try:
+        from ml_factor_model import train_all_strategies
+        ml_result = train_all_strategies(lookback_days=1500)
+        lines.append(f"🤖 ML: {ml_result['summary']}")
+    except Exception as e:
+        lines.append(f"⚠️ ML重训失败: {e}")
+
+    report = "🔄 大周期重训报告\n" + "\n".join(lines)
+    logger.info("=== 大周期重训完成: %d 策略 ===", strategies_updated)
+
+    # 推送微信
+    try:
+        from notifier import notify_wechat_raw
+        notify_wechat_raw("大周期重训完成", report)
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
+
+    return report
+
+
+# ================================================================
+#  5b. 主循环 — run_learning_cycle
 # ================================================================
 
 def run_learning_cycle():
-    """串联: analyze → propose → apply → auto_adopt → report → push"""
+    """串联: analyze → signal_adjust → factor_adjust → auto_adopt → health_check → push
+
+    学习闭环:
+      1. 生成分析报告
+      2. 信号权重调整 (regime macro)
+      3. 因子权重直调 (stock micro) — 即使信号调整失败也能调权
+      4. 自动采纳回测参数
+      5. 信号追踪反馈
+      6. 健康检查 + 自愈
+    """
     params = LEARNING_ENGINE_PARAMS
     if not params.get("learning_enabled", True):
         logger.info("学习引擎已禁用, 跳过")
@@ -870,7 +1752,7 @@ def run_learning_cycle():
 
     logger.info("=== 学习引擎启动 ===")
 
-    # 生成报告 (内含分析)
+    # 1. 生成报告 (内含分析)
     try:
         report = generate_learning_report()
         logger.info("学习报告已生成")
@@ -878,7 +1760,8 @@ def run_learning_cycle():
         logger.error("学习报告生成失败: %s", e)
         report = f"学习报告生成失败: {e}"
 
-    # 提出并应用信号权重调整
+    # 2. 信号权重调整 (macro: regime signals)
+    proposal = None
     try:
         proposal = propose_signal_weight_update()
         if proposal:
@@ -889,7 +1772,17 @@ def run_learning_cycle():
     except Exception as e:
         logger.error("信号权重调整失败: %s", e)
 
-    # 自动采纳回测最优参数
+    # 3. 因子权重直调 (micro: factor importance → 直接调权)
+    factor_adjusted = 0
+    try:
+        factor_updates = propose_factor_weight_update()
+        factor_adjusted = len(factor_updates)
+        if factor_adjusted > 0:
+            logger.info("因子权重直调: %d 个策略", factor_adjusted)
+    except Exception as e:
+        logger.error("因子权重直调失败: %s", e)
+
+    # 4. 自动采纳回测最优参数
     try:
         adopted = auto_adopt_backtest_results()
         if adopted:
@@ -897,7 +1790,7 @@ def run_learning_cycle():
     except Exception as e:
         logger.debug("回测参数采纳: %s", e)
 
-    # 信号追踪器反馈: 用实际验证结果微调因子权重
+    # 5. 信号追踪器反馈
     try:
         from signal_tracker import get_feedback_for_learning
         feedback = get_feedback_for_learning()
@@ -914,6 +1807,25 @@ def run_learning_cycle():
     except Exception as e:
         logger.debug("信号追踪反馈: %s", e)
 
+    # 6. 学习健康检查 + 自愈
+    health = None
+    try:
+        health = check_learning_health()
+        h_status = health.get("status", "unknown")
+        if h_status == "critical":
+            logger.error("[学习健康] 状态=CRITICAL, 已自动告警")
+            report += f"\n\n⚠️ 学习健康: CRITICAL"
+            for c in health.get("checks", []):
+                if c["status"] in ("critical", "error"):
+                    report += f"\n  ❌ {c['check']}: {c['detail']}"
+        elif h_status == "warning":
+            report += f"\n\n⚠️ 学习健康: WARNING"
+        # 自愈报告
+        for h in health.get("healed", []):
+            report += f"\n  🔧 自愈: {h}"
+    except Exception as e:
+        logger.error("学习健康检查失败: %s", e)
+
     # 学习报告不走微信 (内容已纳入晚报汇总, 节省配额)
     if params.get("wechat_learning_report", False):
         try:
@@ -924,9 +1836,10 @@ def run_learning_cycle():
 
     # 持久化学习状态 (供其他模块查询)
     try:
-        _persist_learning_state(report, proposal)
+        _persist_learning_state(report, proposal, factor_adjusted, health)
     except Exception as e:
-        logger.debug("学习状态持久化失败: %s", e)
+        import traceback
+        logger.error("学习状态持久化失败: %s\n%s", e, traceback.format_exc())
 
     # 终端输出
     print("\n" + "=" * 60)
@@ -954,10 +1867,13 @@ if __name__ == "__main__":
         print(json.dumps(analyze_signal_accuracy(), indent=2, ensure_ascii=False))
         print("\n=== 策略-行情适配 ===")
         print(json.dumps(analyze_strategy_regime_fit(), indent=2, ensure_ascii=False))
+    elif mode in ("full_retrain", "retrain", "full"):
+        print(run_full_retrain())
     else:
         print(f"未知模式: {mode}")
         print("用法:")
-        print("  python3 learning_engine.py           # 运行学习周期")
-        print("  python3 learning_engine.py report    # 仅生成报告")
-        print("  python3 learning_engine.py analyze   # 仅分析")
+        print("  python3 learning_engine.py              # 运行学习周期")
+        print("  python3 learning_engine.py report       # 仅生成报告")
+        print("  python3 learning_engine.py analyze      # 仅分析")
+        print("  python3 learning_engine.py full_retrain # 大周期全量重训")
         sys.exit(1)

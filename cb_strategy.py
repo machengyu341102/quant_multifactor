@@ -85,8 +85,8 @@ def _fetch_cb_comparison() -> pd.DataFrame:
         df = _retry(ak.bond_cov_comparison)
         if df is not None and not df.empty:
             return df
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
     return pd.DataFrame()
 
 

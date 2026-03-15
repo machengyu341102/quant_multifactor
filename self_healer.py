@@ -178,8 +178,8 @@ def repair_json(filepath: str) -> bool:
             safe_save(filepath, data)
             logger.info("从 .bak 恢复 JSON: %s", filepath)
             return True
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
     # .bak 也坏了或不存在, 初始化为空
     # 根据文件名推断默认结构
@@ -370,8 +370,8 @@ def run_smoke_test() -> dict:
                     "message": f"冒烟测试失败: {', '.join(failed_names)}",
                 },
             )
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.warning("Suppressed exception: %s", _exc)
 
     # 更新注册表健康度
     try:
@@ -380,8 +380,8 @@ def run_smoke_test() -> dict:
         health = pass_count / total if total > 0 else 1.0
         registry.report_run("healer", success=passed,
                             error_msg=None if passed else f"{total - pass_count} checks failed")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     return {"passed": passed, "results": results}
 

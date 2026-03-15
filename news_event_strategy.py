@@ -78,8 +78,8 @@ def scan_macro_news() -> list[dict]:
                         "title": str(row[title_col]),
                         "date": str(row[date_col]) if date_col else "",
                     })
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.warning("Suppressed exception: %s", _exc)
 
     print(f"  新闻扫描: 获取 {len(news)} 条新闻标题")
     return news
@@ -368,14 +368,65 @@ def get_news_event_recommendations(top_n=None) -> list[dict]:
     if scored.empty:
         return []
 
-    # 7. 排名 (每板块限选)
-    weights = params["weights"]
+    # 7. 排名 (每板块限选) — 优先使用在线学习调优后的权重
+    try:
+        from auto_optimizer import get_tunable_params
+        tuned = get_tunable_params("news_event")
+        weights = tuned.get("weights", params["weights"])
+    except Exception:
+        weights = params["weights"]
     scored["total_score"] = 0
     for col, w in weights.items():
         if col in scored.columns:
             scored["total_score"] += scored[col].fillna(0) * w
 
+    # ML 融合
+    try:
+        from ml_factor_model import predict_scores, fuse_scores
+        ml_cands = []
+        for _, row in scored.iterrows():
+            fs = {c: float(row[c]) for c in row.index
+                  if c.startswith("s_") and pd.notna(row.get(c))}
+            ml_cands.append({
+                "code": row.get("code", ""),
+                "factor_scores": fs,
+                "total_score": float(row.get("total_score", 0)),
+            })
+        ml_cands = predict_scores(ml_cands, strategy="事件驱动选股")
+        ml_cands = fuse_scores(ml_cands)
+        ml_map = {c["code"]: c for c in ml_cands if c.get("code")}
+        for idx, row in scored.iterrows():
+            info = ml_map.get(row.get("code", ""), {})
+            if info.get("fused_score") is not None:
+                scored.at[idx, "total_score"] = info["fused_score"]
+        ml_active = sum(1 for c in ml_cands if abs(c.get("ml_score", 0)) > 0.001)
+        if ml_active > 0:
+            print(f"  [ML融合] {ml_active}/{len(ml_cands)} 只获得ML预测 (策略: 事件驱动选股)")
+    except ImportError:
+        pass
+    except Exception as e:
+        print(f"  [ML融合跳过] {e}")
+
     scored = scored.sort_values("total_score", ascending=False)
+
+    # 全量候选写入缓冲区 (实盘数据采集)
+    try:
+        import intraday_strategy as _is
+        _is._scored_buffer = []
+        for _, row in scored.iterrows():
+            fs = {c: float(row[c]) for c in row.index
+                  if c.startswith("s_") and pd.notna(row.get(c))}
+            if not fs:
+                continue
+            _is._scored_buffer.append({
+                "code": row.get("code", ""),
+                "name": row.get("name", ""),
+                "price": float(row.get("price", 0)),
+                "score": float(row.get("total_score", 0)),
+                "factor_scores": fs,
+            })
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 每板块限选
     selected_rows = []
@@ -419,9 +470,11 @@ def get_news_event_recommendations(top_n=None) -> list[dict]:
         labels.append(f"个股涨{row.get('pct_chg', 0):+.1f}%")
         try:
             labels.extend(format_enhanced_labels(row))
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
+        # 附带选股因子分数 (供 ML 训练)
+        factor_scores = {c: float(row[c]) for c in row.index if c.startswith("s_") and pd.notna(row.get(c))}
         results.append({
             "code": code,
             "name": name,
@@ -429,6 +482,7 @@ def get_news_event_recommendations(top_n=None) -> list[dict]:
             "score": score,
             "reason": " | ".join(labels),
             "atr": 0,
+            "factor_scores": factor_scores,
         })
 
     print(f"\n  事件驱动推荐: {len(results)} 只")
@@ -597,11 +651,35 @@ def _fallback_concept_movers(top_n: int) -> list[dict]:
     if scored.empty:
         return []
 
-    weights = NEWS_EVENT_PARAMS["weights"]
+    try:
+        from auto_optimizer import get_tunable_params
+        tuned = get_tunable_params("news_event")
+        weights = tuned.get("weights", NEWS_EVENT_PARAMS["weights"])
+    except Exception:
+        weights = NEWS_EVENT_PARAMS["weights"]
     scored["total_score"] = 0
     for col, w in weights.items():
         if col in scored.columns:
             scored["total_score"] += scored[col].fillna(0) * w
+
+    # ML 融合 (备源)
+    try:
+        from ml_factor_model import predict_scores, fuse_scores
+        ml_c2 = []
+        for _, row in scored.iterrows():
+            fs = {c: float(row[c]) for c in row.index
+                  if c.startswith("s_") and pd.notna(row.get(c))}
+            ml_c2.append({"code": row.get("code", ""), "factor_scores": fs,
+                          "total_score": float(row.get("total_score", 0))})
+        ml_c2 = predict_scores(ml_c2, strategy="事件驱动选股")
+        ml_c2 = fuse_scores(ml_c2)
+        ml_m2 = {c["code"]: c for c in ml_c2 if c.get("code")}
+        for idx, row in scored.iterrows():
+            info = ml_m2.get(row.get("code", ""), {})
+            if info.get("fused_score") is not None:
+                scored.at[idx, "total_score"] = info["fused_score"]
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     scored = scored.sort_values("total_score", ascending=False).head(top_n)
 
@@ -609,6 +687,8 @@ def _fallback_concept_movers(top_n: int) -> list[dict]:
     for _, row in scored.iterrows():
         code = row["code"]
         name = row.get("name", global_name_map.get(code, ""))
+        # 附带选股因子分数 (供 ML 训练)
+        factor_scores = {c: float(row[c]) for c in row.index if c.startswith("s_") and pd.notna(row.get(c))}
         results.append({
             "code": code,
             "name": name,
@@ -616,6 +696,7 @@ def _fallback_concept_movers(top_n: int) -> list[dict]:
             "score": float(row.get("total_score", 0)),
             "reason": f"板块异动:{row.get('board_name', '')} | 涨{row.get('board_pct', 0):+.1f}%",
             "atr": 0,
+            "factor_scores": factor_scores,
         })
 
     print(f"\n  备源推荐: {len(results)} 只")

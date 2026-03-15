@@ -376,6 +376,9 @@ def get_broker() -> BrokerBase:
         if broker == "easytrader":
             _broker_instance = EasytraderBroker(
                 STOCK_EXECUTOR_PARAMS.get("broker_type", "universal_client"))
+        elif broker == "ths_web":
+            from ths_broker import ThsWebBroker
+            _broker_instance = ThsWebBroker(mode=mode)
         else:
             logger.warning("[Broker] 不支持的 broker: %s, 回退到纸盘", broker)
             _broker_instance = PaperBroker()

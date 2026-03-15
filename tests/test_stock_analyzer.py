@@ -218,6 +218,17 @@ class TestWeights:
             assert v > 0, f"{k} weight should be positive"
 
 
+class TestDiagnosisTradeMeta:
+    def test_bullish_maps_to_actionable_long(self):
+        from stock_analyzer import _diagnosis_trade_meta
+        assert _diagnosis_trade_meta("bullish") == ("long", True)
+
+    def test_non_bullish_stays_neutral(self):
+        from stock_analyzer import _diagnosis_trade_meta
+        assert _diagnosis_trade_meta("bearish") == ("neutral", False)
+        assert _diagnosis_trade_meta("neutral") == ("neutral", False)
+
+
 # ================================================================
 #  analyze_stock 集成测试 (mock 数据)
 # ================================================================
@@ -261,6 +272,8 @@ class TestAnalyzeStock:
         assert result["name"] == "测试股票"
         assert 0 <= result["total_score"] <= 1
         assert result["direction"] in ("bullish", "bearish", "neutral")
+        assert result["signal_direction"] in ("long", "neutral")
+        assert isinstance(result["actionable"], bool)
         assert result["verdict"] in ("看多", "看空", "中性观望")
         assert "report_text" in result
         assert "scores" in result

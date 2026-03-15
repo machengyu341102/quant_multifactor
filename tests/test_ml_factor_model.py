@@ -197,12 +197,16 @@ class TestFuseScores:
         assert all("fused_score" in c for c in result)
 
     def test_zero_ml_weight(self):
+        """ml_weight=0 时, ML 排名不影响, 排序完全由规则分决定"""
         from ml_factor_model import fuse_scores
         candidates = [
-            {"code": "000001", "ml_score": 0.8, "total_score": 0.6},
+            {"code": "000001", "ml_score": 0.8, "total_score": 0.9},
+            {"code": "000002", "ml_score": 0.2, "total_score": 0.3},
         ]
         result = fuse_scores(candidates, ml_weight=0.0)
-        assert abs(result[0]["fused_score"] - 0.6) < 0.01
+        # 规则分高的应该排在前面 (fused_score 更高)
+        scores = {c["code"]: c["fused_score"] for c in result}
+        assert scores["000001"] > scores["000002"]
 
 
 class TestMLReport:

@@ -218,8 +218,8 @@ def check_daily_circuit_breaker() -> bool:
                 f"今日平均亏损 {avg_pnl:.1f}% 超过熔断线 {daily_loss_limit}%\n\n"
                 f"已退出 {len(today_exits)} 只, 后续策略暂停"
             )
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
         return True
 
     return False
@@ -342,8 +342,8 @@ def get_position_sizing(capital: float, items: list[dict],
             # 3 个策略共享资金, 按比例缩放
             capital = capital * ratio * len(strategy_map)
             logger.info("组合分配: %s → %.0f%% 资金", strategy_name, ratio * 100)
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
     if SMART_TRADE_ENABLED:
         try:

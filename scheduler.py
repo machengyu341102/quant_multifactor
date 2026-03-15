@@ -51,7 +51,10 @@ from config import (
     SCHEDULE_NEWS_EVENT,
     SCHEDULE_FUTURES_DAY, SCHEDULE_FUTURES_NIGHT,
     SCHEDULE_CRYPTO, SCHEDULE_US_STOCK, SCHEDULE_CROSS_MARKET,
-    SCHEDULE_MORNING_PREP,
+    SCHEDULE_MORNING_PREP, SCHEDULE_HK_STOCK,
+    SCHEDULE_CROSS_ASSET, SCHEDULE_REGIME_ROUTER,
+    SCHEDULE_ENSEMBLE_MIDDAY, SCHEDULE_ENSEMBLE_AFTERNOON,
+    SCHEDULE_ATTRIBUTION,
     TOP_N, CN_HOLIDAYS_2026, CN_WORKDAYS_2026,
     SMART_TRADE_ENABLED,
 )
@@ -63,6 +66,60 @@ from notifier import (
 from log_config import get_logger
 
 logger = get_logger("scheduler")
+
+# ================================================================
+#  从 scheduler_jobs 导入所有定时任务
+# ================================================================
+from scheduler_jobs import (
+    # 辅助
+    _check_market_regime, _record_learning, _init_multi_agent,
+    _is_futures_trading_day, _execute_futures_trades,
+    _show_system_status,
+    # 所有 job_* 任务
+    job_futures_monitor, job_cross_market, job_morning_prep,
+    job_reset_api_stats,
+    job_batch_morning, job_batch_midday, job_batch_afternoon,
+    job_learning_progress,
+    job_learning, job_learning_health, job_midday_learning,
+    job_signal_tracker,
+    job_monitor, job_scorecard, job_backfill_returns,
+    job_weekly_report,
+    job_agent_morning, job_agent_evening, job_night_shift,
+    job_smoke_test, job_daily_optimize, job_var_risk,
+    job_weekend_optimize, job_full_retrain,
+    job_verify_optimizations, job_factor_lifecycle, job_factor_forge,
+    job_stock_diagnosis,
+    job_paper_monitor, job_paper_settle, job_broker_monitor,
+    job_ml_train, job_proactive_experiment,
+    job_cross_asset_factor, job_regime_router,
+    job_ensemble_midday, job_ensemble_afternoon,
+    job_attribution, job_global_news,
+)
+
+# ================================================================
+#  全天候学习节流器
+# ================================================================
+
+_last_online_learning_hour = None
+
+
+def _trigger_online_learning():
+    """策略跑完后触发在线学习 (节流: 同一小时最多1次)"""
+    global _last_online_learning_hour
+
+    current_hour = datetime.now().hour
+    if _last_online_learning_hour == current_hour:
+        return
+
+    try:
+        from signal_tracker import verify_outcomes
+        result = verify_outcomes()
+        if result.get("verified", 0) > 0:
+            logger.info("[全天候学习] 验证 %d 条信号, 触发在线学习", result["verified"])
+            _last_online_learning_hour = current_hour
+    except Exception as e:
+        logger.debug("[全天候学习] 异常: %s", e)
+
 
 # ================================================================
 #  Dashboard 实时推送 (HTTP → WebSocket)
@@ -90,9 +147,9 @@ def _push_dashboard_event(event_type: str, payload: dict):
 #  批量推送缓冲区
 # ================================================================
 _batch_buffer = {
-    "morning": [],     # 09:25 集合竞价
-    "midday": [],      # 09:50-10:15 放量突破+低吸+缩量+趋势
-    "afternoon": [],   # 14:00-14:30 尾盘+板块轮动
+    "morning": [],
+    "midday": [],
+    "afternoon": [],
 }
 
 # 持仓监控时间点
@@ -100,7 +157,7 @@ SCHEDULE_MONITOR = ["10:30", "11:15", "13:30", "14:50"]
 
 
 def _notify_zero_result(time_slot: str, strategies: str):
-    """零产出 → 简短心跳, 不发长篇空表格"""
+    """零产出 → 简短心跳"""
     try:
         from notifier import notify_alert, LEVEL_INFO
         notify_alert(LEVEL_INFO, f"{time_slot} 心跳", f"策略正常运行, 本轮无推荐")
@@ -109,7 +166,7 @@ def _notify_zero_result(time_slot: str, strategies: str):
 
 
 def _notify_scheduler_event(event: str, detail: str = ""):
-    """推送调度器关键事件 (启动/重启/异常)"""
+    """推送调度器关键事件"""
     try:
         from notifier import notify_wechat_raw
         now_str = datetime.now().strftime("%H:%M")
@@ -122,11 +179,11 @@ def _notify_scheduler_event(event: str, detail: str = ""):
 #  交易日判断
 # ================================================================
 
-_trading_date_cache = {}  # {date_str: bool}
+_trading_date_cache = {}
 
 
 def _fetch_trading_dates():
-    """通过 akshare API 获取交易日历 (每日缓存一次)"""
+    """通过 akshare API 获取交易日历"""
     today_str = date.today().isoformat()
     if today_str in _trading_date_cache:
         return _trading_date_cache[today_str]
@@ -142,7 +199,7 @@ def _fetch_trading_dates():
         _trading_date_cache[today_str] = is_td
         return is_td
     except Exception:
-        return None  # API 失败, 由 fallback 处理
+        return None
 
 
 def is_trading_day():
@@ -150,28 +207,23 @@ def is_trading_day():
     today = date.today()
     today_str = today.isoformat()
 
-    # 优先用 API
     api_result = _fetch_trading_dates()
     if api_result is not None:
         tag = "交易日" if api_result else "非交易日"
         print(f"  [交易日判断-API] {today_str} → {tag}")
         return api_result
 
-    # Fallback: 硬编码节假日 + 周末
     print("  [交易日判断] API不可用, 使用本地日历")
-    weekday = today.weekday()  # 0=周一, 6=周日
+    weekday = today.weekday()
 
-    # 调休补班日 (周末但需上班)
     if today_str in CN_WORKDAYS_2026:
         print(f"  [交易日判断-本地] {today_str} 调休补班 → 交易日")
         return True
 
-    # 法定节假日
     if today_str in CN_HOLIDAYS_2026:
         print(f"  [交易日判断-本地] {today_str} 法定假日 → 非交易日")
         return False
 
-    # 周末
     if weekday >= 5:
         print(f"  [交易日判断-本地] {today_str} 周末 → 非交易日")
         return False
@@ -188,14 +240,10 @@ MAX_RETRIES = 2
 
 
 def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
-    """运行策略, 最多重试 MAX_RETRIES 次; 成功后自动记录持仓
-
-    Args:
-        skip_wechat: True 时只走终端/macOS/同花顺通知, 不发微信 (由批量推送统一处理)
-    """
+    """运行策略, 最多重试 MAX_RETRIES 次; 成功后自动记录持仓"""
     t0 = time.time()
 
-    # Safe Mode 检查: 降级模式下跳过策略扫描
+    # Safe Mode 检查
     try:
         from api_guard import is_safe_mode
         if is_safe_mode():
@@ -209,6 +257,22 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
     except Exception:
         pass
 
+    # 环境路由
+    try:
+        from regime_router import should_skip_strategy
+        if should_skip_strategy(strategy_name):
+            print(f"[路由跳过] {strategy_name} (当前regime不适配)")
+            try:
+                from watchdog import update_strategy_status
+                update_strategy_status(strategy_name, "skipped_regime")
+            except Exception:
+                pass
+            return
+    except ImportError:
+        pass
+    except Exception:
+        pass
+
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             print(f"\n{'#' * 60}")
@@ -219,28 +283,43 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
             items = strategy_func(top_n=TOP_N)
             elapsed = time.time() - t0
 
-            # 先记录原始推荐到 trade_journal (风控过滤前, 确保不遗漏)
+            try:
+                import pandas as pd
+                if isinstance(items, pd.DataFrame):
+                    items = items.to_dict(orient="records")
+            except Exception:
+                pass
+
             try:
                 from learning_engine import record_trade_context
                 record_trade_context(strategy_name, items or [])
             except Exception:
                 pass
 
-            # 风控过滤
+            try:
+                from intraday_strategy import flush_scored_to_scorecard
+                flush_scored_to_scorecard(strategy_name)
+            except Exception as e:
+                print(f"  [数据管道异常] {strategy_name}: {e}")
+
             try:
                 from risk_manager import filter_recommendations
                 items = filter_recommendations(strategy_name, items)
             except Exception as e:
                 print(f"[风控过滤异常] {e}")
 
-            # 仓位建议 (组合分配 + 动态仓位)
             try:
                 from risk_manager import get_position_sizing
                 items = get_position_sizing(100000, items, strategy_name=strategy_name)
             except Exception as e:
                 print(f"[仓位建议异常] {e}")
 
-            # 通知: 批量模式只走终端/macOS/THS, 微信由 batch 统一发
+            try:
+                from adversarial_engine import apply_game_theory_filter
+                items = apply_game_theory_filter(items)
+            except Exception as e:
+                print(f"[博弈引擎异常] {e}")
+
             if skip_wechat:
                 notify_terminal(strategy_name, items)
                 notify_macos(strategy_name, items)
@@ -248,14 +327,12 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
             else:
                 notify_all(strategy_name, items)
 
-            # 策略成功后自动记录持仓
             try:
                 from position_manager import record_entry
                 record_entry(strategy_name, items)
             except Exception as e:
                 print(f"[持仓记录异常] {e}")
 
-            # 纸盘自动开仓
             try:
                 from paper_trader import on_strategy_picks
                 opened = on_strategy_picks(items, strategy_name)
@@ -264,14 +341,17 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
             except Exception as e:
                 print(f"[纸盘开仓异常] {e}")
 
-            # 更新 watchdog 状态
             try:
                 from watchdog import update_strategy_status
                 update_strategy_status(strategy_name, "success", duration_sec=elapsed)
             except Exception:
                 pass
 
-            # 推送 Dashboard 实时事件
+            try:
+                _trigger_online_learning()
+            except Exception:
+                pass
+
             try:
                 _push_dashboard_event("strategy_complete", {
                     "strategy": strategy_name,
@@ -294,13 +374,11 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
                 print(f"  等待 {wait}s 后重试...")
                 time.sleep(wait)
             else:
-                # 报告失败状态
                 try:
                     from watchdog import update_strategy_status
                     update_strategy_status(strategy_name, "failed", error_msg=str(e))
                 except Exception:
                     pass
-                # 推送 Dashboard 失败事件
                 try:
                     _push_dashboard_event("strategy_failed", {
                         "strategy": strategy_name,
@@ -308,7 +386,6 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
                     })
                 except Exception:
                     pass
-                # 发射失败事件到事件总线
                 try:
                     from event_bus import get_event_bus, Priority
                     bus = get_event_bus()
@@ -325,7 +402,6 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
                     )
                 except Exception:
                     pass
-                # 最终失败通知 (终端+macOS)
                 error_msg = f"{strategy_name} 运行失败: {type(e).__name__}: {e}"
                 error_items = [{
                     "code": "ERROR",
@@ -336,7 +412,6 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
                 }]
                 notify_terminal(strategy_name, error_items)
                 notify_macos(strategy_name, error_items)
-                # 微信通知策略失败 — 失败也必须回响
                 try:
                     from notifier import notify_wechat_raw
                     now_str = datetime.now().strftime("%H:%M")
@@ -350,910 +425,13 @@ def run_with_retry(strategy_func, strategy_name, skip_wechat=False):
 
 
 # ================================================================
-#  各策略入口
+#  调度器设置
 # ================================================================
-
-def _check_market_regime():
-    """策略运行前检查大盘环境 (v2.0 — 8信号评分制)
-
-    返回 (should_run, regime_str, regime_result)
-    regime_result: detect_market_regime() 的完整返回值, 供学习引擎记录
-    """
-    if not SMART_TRADE_ENABLED:
-        return True, "", None
-    try:
-        from smart_trader import detect_market_regime
-        regime = detect_market_regime()
-        regime_str = regime.get("regime", "neutral")
-        score = regime.get("score", 0)
-        rp = regime.get("regime_params", {})
-        scale = rp.get("position_scale", regime.get("position_scale", 1.0))
-
-        logger.info("大盘环境: %s (score=%.2f, scale=%.1f, max_pos=%d)",
-                     regime_str, score, scale, rp.get("max_positions", 9))
-
-        # 打印信号明细
-        signals = regime.get("signals", {})
-        if signals:
-            sig_str = " | ".join(f"{k}={v:.2f}" for k, v in signals.items())
-            logger.info("信号明细: %s", sig_str)
-
-        if regime_str == "bear":
-            return False, regime_str, regime
-        if regime_str == "weak":
-            logger.info("弱势市场, 允许运行 (仓位自动缩放至%.0f%%)", scale * 100)
-        return True, regime_str, regime
-    except Exception as e:
-        logger.warning("大盘检测失败: %s, 默认允许运行", e)
-        return True, "unknown", {"regime": "unknown", "score": 0.5, "signals": {}, "error": str(e)}
-
-
-# ================================================================
-#  A 股策略: 由 strategy_loader 从 strategies.json 动态加载
-#  (8 个策略已移至 strategies.json, 通过 register_strategies 注册)
-# ================================================================
-
-
-# ================================================================
-#  期货趋势策略
-# ================================================================
-
-def _is_futures_trading_day():
-    """期货交易日: 仅跳过周六日 (不受股票节假日限制)"""
-    return datetime.now().weekday() < 5
-
-
-def _execute_futures_trades(items):
-    """调用交易执行器开仓 (信号→交易)"""
-    try:
-        from trade_executor import execute_signals
-        from config import TRADE_EXECUTOR_PARAMS
-        mode = TRADE_EXECUTOR_PARAMS.get("mode", "paper")
-        # 补充完整字段 (run_with_retry 输出的标准格式可能缺少部分字段)
-        from futures_strategy import run_futures_scan
-        # items 已经是标准推荐格式, 直接传给执行器
-        executed = execute_signals(items, mode=mode)
-        if executed:
-            mode_label = {"paper": "模拟", "simnow": "SimNow", "live": "实盘"}.get(mode, mode)
-            logger.info("[交易执行] %s模式 开仓 %d 笔", mode_label, len(executed))
-    except Exception as e:
-        logger.warning("[交易执行异常] %s", e)
-
-
-def job_futures_monitor():
-    """期货持仓监控: 检查止损止盈"""
-    if not _is_futures_trading_day():
-        return
-    try:
-        from trade_executor import check_futures_exits, get_portfolio_status
-        print(f"\n{'─' * 60}")
-        print(f"  期货持仓监控  {datetime.now().strftime('%H:%M:%S')}")
-        print(f"{'─' * 60}")
-        exits = check_futures_exits()
-        if exits:
-            from notifier import notify_wechat_raw
-            lines = ["期货持仓止损/止盈触发:"]
-            for e in exits:
-                dir_l = "多" if e.get("direction") == "long" else "空"
-                lines.append(
-                    f"  {e['code']} {e.get('name','')} {dir_l} "
-                    f"{e['entry_price']:.2f}→{e['exit_price']:.2f} "
-                    f"{e['exit_reason']} {e['pnl_pct']:+.2f}% "
-                    f"¥{e.get('pnl_amount', 0):+.2f}")
-            try:
-                notify_wechat_raw("[期货] 平仓通知", "\n".join(lines))
-            except Exception:
-                pass
-            print("\n".join(lines))
-        else:
-            # 打印当前持仓概况
-            portfolio = get_portfolio_status()
-            if portfolio["count"] > 0:
-                print(f"  持仓 {portfolio['count']}个  浮动盈亏 ¥{portfolio['total_pnl']:.2f}")
-            else:
-                print("  无期货持仓")
-    except Exception as e:
-        print(f"[期货监控异常] {e}")
-
-
-# ================================================================
-#  期货/币圈/美股策略: 由 strategy_loader 从 strategies.json 动态加载
-#  (4 个直推策略已移至 strategies.json, 通过 register_strategies 注册)
-# ================================================================
-
-
-def job_cross_market():
-    """06:00 跨市场信号推演 (美股收盘+夜盘收盘后)"""
-    from cross_market_strategy import get_cross_market_signal
-    from notifier import notify_wechat_raw
-    result = get_cross_market_signal()
-    # 注入事件总线 — 让 Agent Brain 感知跨市场信号
-    if result and result.get("a_stock_impact") in ("bullish", "bearish"):
-        try:
-            from event_bus import get_event_bus, Priority
-            bus = get_event_bus()
-            impact = result["a_stock_impact"]
-            p = Priority.HIGH if abs(result.get("composite_signal", 0)) > 0.5 else Priority.NORMAL
-            bus.emit(
-                source="cross_market",
-                priority=p,
-                event_type="cross_market_signal",
-                category="regime",
-                payload={
-                    "impact": impact,
-                    "composite_signal": result.get("composite_signal", 0),
-                    "suggestion": result.get("suggestion", ""),
-                    "message": f"跨市场信号: {impact} (综合{result.get('composite_signal', 0):+.3f})",
-                },
-            )
-        except Exception:
-            pass
-    if result:
-        impact_map = {"bullish": "利多▲", "bearish": "利空▼", "neutral": "中性─"}
-        lines = [
-            f"综合信号: {result.get('composite_signal', 0):+.3f} → "
-            f"{impact_map.get(result.get('a_stock_impact', ''), '?')}",
-            f"美股{result.get('us_signal', 0):+.3f} | "
-            f"A50{result.get('a50_signal', 0):+.3f} | "
-            f"币圈{result.get('crypto_signal', 0):+.3f}",
-        ]
-        for d in result.get("details", []):
-            lines.append(d)
-        lines.append(f"\n建议: {result.get('suggestion', '')}")
-        try:
-            notify_wechat_raw(f"[{SCHEDULE_CROSS_MARKET}] 跨市场信号推演", "\n".join(lines))
-        except Exception:
-            pass
-
-
-def job_morning_prep():
-    """07:30 开盘前作战计划"""
-    from morning_prep import run_morning_prep
-    from notifier import notify_wechat_raw
-    result = run_morning_prep()
-    if result and result.get("plan_text"):
-        try:
-            notify_wechat_raw(f"[{SCHEDULE_MORNING_PREP}] 开盘作战计划", result["plan_text"])
-        except Exception:
-            pass
-
-
-def job_reset_api_stats():
-    """00:05 每日重置 API 统计"""
-    try:
-        from api_guard import reset_daily_stats, get_api_stats
-        stats = get_api_stats()
-        logger.info("API 日统计: calls=%d cache_hits=%d retries=%d errors=%d rate_limited=%d",
-                     stats["total_calls"], stats["cache_hits"], stats["retries"],
-                     stats["errors"], stats["rate_limited"])
-        reset_daily_stats()
-    except Exception:
-        pass
-
-
-# ================================================================
-#  批量推送任务
-# ================================================================
-
-def job_batch_morning():
-    """09:35 合并发送上午早盘结果 (集合竞价)"""
-    if not is_trading_day():
-        return
-    buf = _batch_buffer["morning"]
-    if buf:
-        notify_batch_wechat("早盘选股汇总", buf)
-    else:
-        _notify_zero_result("09:35 早盘选股", "事件驱动+集合竞价")
-    _batch_buffer["morning"] = []
-
-
-def job_batch_midday():
-    """10:30 合并发送盘中结果 (放量突破+低吸+缩量+趋势)"""
-    if not is_trading_day():
-        return
-    buf = _batch_buffer["midday"]
-    if buf:
-        notify_batch_wechat("盘中选股汇总", buf)
-    else:
-        _notify_zero_result("10:30 盘中选股", "放量突破+低吸回调+缩量整理+趋势跟踪")
-    _batch_buffer["midday"] = []
-
-
-def job_batch_afternoon():
-    """14:50 合并发送午后结果 (尾盘+板块轮动)"""
-    if not is_trading_day():
-        return
-    buf = _batch_buffer["afternoon"]
-    if buf:
-        notify_batch_wechat("午后选股汇总", buf)
-    else:
-        _notify_zero_result("14:50 午后选股", "尾盘短线+板块轮动")
-    _batch_buffer["afternoon"] = []
-
-
-# ================================================================
-#  学习引擎钩子
-# ================================================================
-
-def _record_learning(items, strategy_name, regime_result):
-    """策略运行后记录上下文 (供学习引擎分析)"""
-    try:
-        from learning_engine import record_trade_context
-        record_trade_context(strategy_name, items or [], regime_result)
-    except Exception as e:
-        print(f"[学习记录异常] {e}")
-
-
-def job_learning():
-    """16:30 运行学习引擎"""
-    if not is_trading_day():
-        return
-    try:
-        from learning_engine import run_learning_cycle
-        run_learning_cycle()
-    except Exception as e:
-        print(f"[学习引擎异常] {e}")
-
-
-def job_signal_tracker():
-    """16:15 信号追踪: 入库今日信号 + 回查历史信号 T+1/T+3/T+5 结果"""
-    if not is_trading_day():
-        return
-    try:
-        from signal_tracker import daily_ingest_and_verify
-        result = daily_ingest_and_verify()
-        print(f"[信号追踪] {result['stats_summary']}")
-    except Exception as e:
-        print(f"[信号追踪异常] {e}")
-
-
-# ================================================================
-#  系统状态面板
-# ================================================================
-
-def _show_system_status():
-    """一屏看系统全貌: 进程/策略/持仓/信号/风控/健康"""
-    from datetime import datetime
-
-    print("=" * 60)
-    print("  量化多因子系统 — 状态面板")
-    print(f"  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("=" * 60)
-
-    # 1. 进程状态
-    try:
-        from watchdog import check_health
-        h = check_health()
-        tag = "正常" if h["healthy"] else "异常"
-        print(f"\n[进程] {tag}")
-        if h.get("heartbeat_age_sec") is not None:
-            print(f"  心跳: {h['heartbeat_age_sec']:.0f}s 前")
-        print(f"  进程: {'存活' if h['process_alive'] else '不存在'}")
-        print(f"  今日错误: {h.get('errors_today', 0)}")
-        if h["issues"]:
-            for i in h["issues"]:
-                print(f"  !! {i}")
-    except Exception as e:
-        print(f"\n[进程] 检查失败: {e}")
-
-    # 2. 今日策略运行
-    try:
-        from json_store import safe_load
-        hb_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "heartbeat.json")
-        hb = safe_load(hb_path, default={})
-        status = hb.get("strategy_status", {})
-        if status:
-            print(f"\n[今日策略]")
-            for name, info in status.items():
-                s = info.get("status", "?")
-                t = info.get("last_run", "")[:16]
-                d = info.get("duration_sec", 0)
-                tag = "OK" if s == "success" else "FAIL"
-                err = f" | {info.get('error_msg', '')}" if s == "failed" else ""
-                print(f"  [{tag}] {name}: {t} ({d:.0f}s){err}")
-        else:
-            print("\n[今日策略] 无运行记录")
-    except Exception:
-        pass
-
-    # 3. 持仓 (严格模式: 文件损坏则熔断告警)
-    try:
-        from position_manager import get_positions
-        pos = get_positions()
-        print(f"\n[A股持仓] {len(pos)} 只")
-        for p in pos[:5]:
-            print(f"  {p.get('code', '?')} {p.get('name', '?')}"
-                  f" 入:{p.get('entry_price', 0):.2f}"
-                  f" 分:{p.get('score', 0):.2f}")
-        if len(pos) > 5:
-            print(f"  ... 共 {len(pos)} 只")
-    except ValueError as e:
-        print(f"\n[A股持仓] !! 熔断: positions.json 损坏 — {e}")
-        logger.error("positions.json 严格模式熔断: %s", e)
-    except Exception:
-        print("\n[A股持仓] 无数据")
-
-    # 4. 纸盘
-    try:
-        from paper_trader import get_holdings_summary, calc_statistics
-        holdings = get_holdings_summary()
-        stats = calc_statistics(days=7)
-        print(f"\n[纸盘模拟]")
-        print(f"  持仓: {holdings.get('count', 0)} 笔"
-              f" | 资金: {holdings.get('available_capital', 0):.0f}")
-        if stats.get("total", 0) > 0:
-            print(f"  7天: {stats['total']}笔"
-                  f" | 胜率{stats['win_rate']}%"
-                  f" | 收益{stats['total_pnl']:+.2f}%")
-    except Exception:
-        pass
-
-    # 5. 信号追踪
-    try:
-        from signal_tracker import get_stats
-        sig = get_stats(days=7)
-        if sig.get("total", 0) > 0:
-            o = sig["overall"]
-            print(f"\n[信号追踪 7天] {sig['total']} 条信号")
-            for p in [1, 3, 5]:
-                wr = o.get(f"t{p}_win_rate")
-                avg = o.get(f"avg_t{p}")
-                if wr is not None:
-                    print(f"  T+{p}: 胜率{wr}% 均收{avg:+.2f}%")
-        else:
-            print(f"\n[信号追踪] 暂无数据")
-    except Exception:
-        pass
-
-    # 6. VaR 风控
-    try:
-        from json_store import safe_load as _sl
-        var_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "var_results.json")
-        history = _sl(var_path, default=[])
-        if history:
-            latest = history[-1]
-            rating = latest.get("risk_rating", "?")
-            p = latest.get("portfolio", {})
-            print(f"\n[VaR风控] 评级: {rating}")
-            print(f"  VaR(95%): {p.get('hist_var_95', 0):+.4f}%"
-                  f" | CVaR(99%): {p.get('hist_cvar_99', 0):+.4f}%")
-    except Exception:
-        pass
-
-    # 7. 夜班
-    try:
-        from json_store import safe_load as _sl2
-        nl_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "night_shift_log.json")
-        nl = _sl2(nl_path, default={})
-        if nl.get("date"):
-            status = nl.get("status", "?")
-            tasks = nl.get("tasks", {})
-            ok = sum(1 for t in tasks.values() if isinstance(t, dict) and t.get("status") == "ok")
-            fail = sum(1 for t in tasks.values() if isinstance(t, dict) and t.get("status") in ("error", "timeout"))
-            print(f"\n[夜班] {nl['date']} {status}")
-            print(f"  成功: {ok} | 失败: {fail} | 总: {len(tasks)}")
-    except Exception:
-        pass
-
-    print(f"\n{'=' * 60}")
-
-
-# ================================================================
-#  持仓监控任务
-# ================================================================
-
-def job_monitor():
-    """持仓监控定时任务: 检查止损止盈 + 动态持仓期强制离场
-
-    卖出信号仅走终端+macOS通知, 不消耗微信配额
-    """
-    if not is_trading_day():
-        return
-    try:
-        from position_manager import check_exit_signals
-        from notifier import format_exit_signal
-        print(f"\n{'─' * 60}")
-        print(f"  持仓监控  {datetime.now().strftime('%H:%M:%S')}")
-        print(f"{'─' * 60}")
-        exits = check_exit_signals()
-        if exits:
-            # 终端 + macOS 通知, 不走微信 (节省配额)
-            title, body = format_exit_signal(exits)
-            print(f"\n{'=' * 60}\n  {title}\n{'=' * 60}\n{body}\n{'=' * 60}\n")
-            try:
-                import subprocess
-                short_body = body[:200] if len(body) > 200 else body
-                safe_title = title.replace('"', '\\"')
-                safe_body = short_body.replace('"', '\\"')
-                script = (
-                    f'display notification "{safe_body}" '
-                    f'with title "{safe_title}" '
-                    f'sound name "Sosumi"'
-                )
-                subprocess.run(["osascript", "-e", script], timeout=10, capture_output=True)
-            except Exception:
-                pass
-    except Exception as e:
-        print(f"[持仓监控异常] {e}")
-
-
-# ================================================================
-#  调度器
-# ================================================================
-
-def job_scorecard():
-    """09:20 评分昨日推荐 + 更新黑名单 + 刷新 Agent 策略状态"""
-    if not is_trading_day():
-        return
-    try:
-        from scorecard import score_yesterday
-        score_yesterday()
-    except ValueError as e:
-        print(f"[记分卡熔断] scorecard.json/positions.json 损坏 — {e}")
-        logger.error("scorecard 严格模式熔断: %s", e)
-    except Exception as e:
-        print(f"[记分卡异常] {e}")
-    try:
-        from risk_manager import update_blacklist
-        update_blacklist()
-    except Exception as e:
-        print(f"[黑名单更新异常] {e}")
-    try:
-        from agent_brain import update_strategy_states
-        update_strategy_states()
-    except Exception as e:
-        print(f"[Agent状态更新异常] {e}")
-
-
-def job_weekly_report():
-    """周五 15:30 推送周报 (含健康报告 + 优化建议)"""
-    if not is_trading_day():
-        return
-    try:
-        from scorecard import generate_weekly_report, notify_scorecard
-        report = generate_weekly_report()
-        # 附加健康报告
-        try:
-            from self_healer import generate_health_report
-            report += "\n\n---\n\n" + generate_health_report()
-        except Exception:
-            pass
-        # 附加优化建议
-        try:
-            from auto_optimizer import generate_optimization_summary
-            report += "\n\n---\n\n" + generate_optimization_summary()
-        except Exception:
-            pass
-        notify_scorecard(report)
-    except ValueError as e:
-        print(f"[周报熔断] scorecard.json 损坏 — {e}")
-        logger.error("周报 严格模式熔断: %s", e)
-    except Exception as e:
-        print(f"[周报异常] {e}")
-
-
-# ================================================================
-#  Agent Brain 定时任务
-# ================================================================
-
-def job_agent_morning():
-    """09:15 推送早报"""
-    if not is_trading_day():
-        return
-    try:
-        from agent_brain import push_morning_briefing
-        push_morning_briefing()
-    except Exception as e:
-        print(f"[Agent早报异常] {e}")
-
-
-def job_agent_evening():
-    """16:15 运行 OODA 循环 + 晚间摘要推送"""
-    if not is_trading_day():
-        return
-    try:
-        from agent_brain import run_agent_cycle, generate_evening_summary
-        summary = run_agent_cycle()
-        print(summary)
-        # 推送晚间摘要到微信
-        evening = generate_evening_summary()
-        if evening:
-            from notifier import notify_wechat_raw
-            now_str = datetime.now().strftime("%H:%M")
-            notify_wechat_raw(f"[{now_str}] Agent 晚间摘要", evening)
-    except Exception as e:
-        print(f"[Agent OODA异常] {e}")
-
-
-def job_night_shift():
-    """22:30 夜班: LLM 深度复盘/因子体检/明日预判/认知沉淀"""
-    if not is_trading_day():
-        return
-    run_with_retry(_run_night_shift, "夜班分析")
-
-
-def _run_night_shift(**kwargs):
-    """夜班深度分析 (接受 **kwargs 兼容 run_with_retry 的 top_n 参数)"""
-    from agent_brain import run_night_shift
-    report = run_night_shift()
-    if report:
-        print(f"[夜班] 分析完成, 报告 {len(report)} 字")
-    else:
-        print("[夜班] LLM 不可用或无分析结果")
-    return []  # run_with_retry 期望返回 list
-
-
-# ================================================================
-#  冒烟测试 / 自动优化 / 周末搜索
-# ================================================================
-
-def job_smoke_test():
-    """09:10 开盘前冒烟测试"""
-    if not is_trading_day():
-        return
-    try:
-        from self_healer import run_smoke_test, auto_heal
-        result = run_smoke_test()
-        if not result["passed"]:
-            auto_heal()  # 尝试自动修复
-    except Exception as e:
-        print(f"[冒烟测试异常] {e}")
-
-
-def job_daily_optimize():
-    """16:00 收盘后每日优化"""
-    if not is_trading_day():
-        return
-    try:
-        from auto_optimizer import run_daily_optimization
-        run_daily_optimization()
-    except Exception as e:
-        print(f"[每日优化异常] {e}")
-
-
-def job_var_risk():
-    """16:10 收盘后 VaR/CVaR 风险度量"""
-    if not is_trading_day():
-        return
-    try:
-        from var_risk import calc_comprehensive_var
-        result = calc_comprehensive_var(lookback_days=60)
-        rating = result.get("risk_rating", "unknown")
-        var95 = result.get("portfolio", {}).get("hist_var_95", 0)
-        print(f"[VaR] 风险评级: {rating}, VaR(95%): {var95:+.4f}%")
-
-        # 高风险时推送告警
-        if rating == "high":
-            try:
-                from var_risk import generate_var_report
-                from notifier import notify_alert, LEVEL_CRITICAL
-                report = generate_var_report(result)
-                notify_alert(LEVEL_CRITICAL, "高风险告警", report)
-            except Exception:
-                pass
-    except Exception as e:
-        print(f"[VaR异常] {e}")
-
-
-def job_weekend_optimize():
-    """周六 10:00 深度搜索"""
-    try:
-        from auto_optimizer import run_weekend_broad_search
-        run_weekend_broad_search()
-    except Exception as e:
-        print(f"[周末优化异常] {e}")
-
-
-def job_verify_optimizations():
-    """16:50 验证近期优化效果, 变差则自动回滚"""
-    if not is_trading_day():
-        return
-    try:
-        from auto_optimizer import check_pending_verifications
-        results = check_pending_verifications()
-        for r in results:
-            verdict = r.get("verdict", "")
-            strategy = r.get("strategy", "")
-            pre = r.get("pre_score", 0)
-            post = r.get("post_score", 0)
-            print(f"[优化验证] {strategy}: {verdict} ({pre}→{post})")
-            if verdict == "rolled_back":
-                # 回滚通知仅终端+macOS, 不消耗微信配额 (留给晚报汇总)
-                logger.warning("[优化回滚] %s 验证失败 (%d→%d), 已自动回滚",
-                               strategy, pre, post)
-                try:
-                    import subprocess
-                    msg = f"{strategy} 优化验证失败 ({pre}→{post}), 已自动回滚"
-                    subprocess.run(
-                        ["osascript", "-e",
-                         f'display notification "{msg}" with title "[Agent] 优化回滚" sound name "Basso"'],
-                        timeout=10, capture_output=True,
-                    )
-                except Exception:
-                    pass
-    except Exception as e:
-        print(f"[优化验证异常] {e}")
-
-
-def job_factor_lifecycle():
-    """17:00 检查因子健康, 淘汰衰减因子"""
-    if not is_trading_day():
-        return
-    try:
-        from auto_optimizer import check_factor_lifecycle
-        results = check_factor_lifecycle()
-        for r in results:
-            print(f"[因子生命周期] {r.get('strategy')}: {r.get('factor')} → {r.get('action')}")
-    except Exception as e:
-        print(f"[因子生命周期异常] {e}")
-
-
-def job_stock_diagnosis():
-    """10:00/13:00 盘中自动诊断: 持仓+今日推荐, 异常推送微信"""
-    if not is_trading_day():
-        return
-    try:
-        from position_manager import load_positions
-        from stock_analyzer import analyze_stock
-        from db_store import load_trade_journal
-        from notifier import notify_wechat_raw
-        from datetime import date as _date
-
-        today_str = _date.today().isoformat()
-
-        # 收集需要诊断的代码: 持仓 + 今日推荐
-        codes_to_check = {}  # code -> source
-
-        # 1) 持仓
-        try:
-            positions = load_positions()
-            holding = [p for p in positions if not p.get("exit_date")]
-            for p in holding:
-                codes_to_check[p["code"]] = f"持仓({p.get('strategy', '')})"
-        except Exception:
-            pass
-
-        # 2) 今日推荐 (从 trade_journal)
-        try:
-            journal = load_trade_journal(days=0)
-            for entry in journal:
-                if entry.get("date") == today_str:
-                    for pick in entry.get("picks", []):
-                        code = pick.get("code", "")
-                        if code and len(code) == 6:  # 只诊断A股
-                            codes_to_check.setdefault(code, f"推荐({entry.get('strategy', '')})")
-        except Exception:
-            pass
-
-        # 3) 昨日推荐也跟踪
-        try:
-            journal_2d = load_trade_journal(days=1)
-            for entry in journal_2d:
-                if entry.get("date") != today_str:
-                    for pick in entry.get("picks", []):
-                        code = pick.get("code", "")
-                        if code and len(code) == 6:
-                            codes_to_check.setdefault(code, f"昨推({entry.get('strategy', '')})")
-        except Exception:
-            pass
-
-        if not codes_to_check:
-            print("[诊断] 无持仓/推荐, 跳过")
-            return
-
-        print(f"[诊断] 开始诊断 {len(codes_to_check)} 只...")
-        alerts = []  # 需要告警的
-
-        for code, source in codes_to_check.items():
-            try:
-                result = analyze_stock(code)
-                if "error" in result:
-                    continue
-
-                name = result.get("name", code)
-                price = result.get("price", 0)
-                total = result.get("total_score", 0.5)
-                verdict = result.get("verdict", "")
-                stop_loss = result.get("stop_loss", 0)
-                scores = result.get("scores", {})
-
-                # 告警条件: 看空 / 跌破止损 / 动量极弱
-                alert_reasons = []
-                if total <= 0.40:
-                    alert_reasons.append(f"评分{total:.2f}偏低")
-                if result.get("direction") == "bearish":
-                    alert_reasons.append("信号看空")
-                if scores.get("momentum", 0.5) <= 0.30:
-                    alert_reasons.append(f"动量极弱({scores['momentum']:.2f})")
-                if scores.get("volume", 0.5) <= 0.30:
-                    alert_reasons.append(f"量价异常({scores['volume']:.2f})")
-
-                status = "正常" if not alert_reasons else "⚠告警"
-                print(f"  {code}({name}) [{source}] {total:.2f} {verdict} {status}")
-
-                if alert_reasons:
-                    alerts.append({
-                        "code": code, "name": name, "source": source,
-                        "price": price, "total": total, "verdict": verdict,
-                        "stop_loss": stop_loss, "reasons": alert_reasons,
-                        "report": result.get("report_text", ""),
-                    })
-            except Exception as e:
-                print(f"  {code} 诊断失败: {e}")
-
-        # 有告警就推送微信
-        if alerts:
-            lines = [f"盘中诊断告警 ({len(alerts)}只异常)\n"]
-            for a in alerts:
-                lines.append(
-                    f"⚠ {a['name']}({a['code']}) [{a['source']}]\n"
-                    f"  现价{a['price']:.2f} 评分{a['total']:.2f} {a['verdict']}\n"
-                    f"  止损位: {a['stop_loss']}\n"
-                    f"  原因: {', '.join(a['reasons'])}\n"
-                )
-            from notifier import notify_alert, LEVEL_WARNING
-            notify_alert(LEVEL_WARNING, "盘中诊断告警", "\n".join(lines))
-            print(f"[诊断] {len(alerts)} 只告警已推送微信")
-        else:
-            print(f"[诊断] {len(codes_to_check)} 只全部正常")
-
-    except Exception as e:
-        print(f"[诊断异常] {e}")
-        import traceback
-        traceback.print_exc()
-
-
-def job_paper_monitor():
-    """11:00/14:00 纸盘持仓监控 (止损/止盈检查)"""
-    if not is_trading_day():
-        return
-    try:
-        from paper_trader import check_exits
-        exits = check_exits()
-        if exits:
-            for e in exits:
-                print(f"[纸盘] {e['code']} {e.get('name','')} "
-                      f"{e.get('net_pnl_pct',0):+.2f}% [{e.get('reason','')}]")
-    except Exception as e:
-        print(f"[纸盘监控异常] {e}")
-
-
-def job_paper_settle():
-    """15:30 纸盘日终结算"""
-    if not is_trading_day():
-        return
-    try:
-        from paper_trader import daily_settle, generate_paper_report
-        result = daily_settle()
-        n = result.get("trades_today", 0)
-        if n > 0:
-            print(f"[纸盘结算] {n}笔, PnL {result.get('pnl_today',0):+.2f}%")
-    except Exception as e:
-        print(f"[纸盘结算异常] {e}")
-
-
-def job_broker_monitor():
-    """10:30/13:30/14:45 券商持仓监控 (止损/止盈)"""
-    if not is_trading_day():
-        return
-    try:
-        from broker_executor import check_exit_signals, check_kill_switches
-        can, reason = check_kill_switches()
-        if not can:
-            print(f"[券商] Kill switch: {reason}")
-            return
-        exits = check_exit_signals()
-        for e in exits:
-            print(f"[券商] {e.get('code', '')} {e.get('name', '')} "
-                  f"{e.get('net_pnl_pct', 0):+.2f}% [{e.get('exit_reason', '')}]")
-    except Exception as e:
-        print(f"[券商监控异常] {e}")
-
-
-def job_ml_train():
-    """17:10 ML 因子模型增量训练 (每日)"""
-    if not is_trading_day():
-        return
-    try:
-        from ml_factor_model import train_model
-        result = train_model(lookback_days=180)
-        if "error" in result:
-            print(f"[ML训练] 跳过: {result['error']}")
-        else:
-            samples = result.get("training_samples", 0)
-            features = len(result.get("features", []))
-            print(f"[ML训练] 完成: {samples}条 {features}特征")
-            # 特征重要性 top3
-            fi = result.get("feature_importance", {})
-            top3 = sorted(fi.items(), key=lambda x: x[1], reverse=True)[:3]
-            if top3:
-                print(f"[ML训练] Top特征: {', '.join(f'{k}={v:.3f}' for k, v in top3)}")
-    except Exception as e:
-        print(f"[ML训练异常] {e}")
-
-
-def job_proactive_experiment():
-    """16:45 主动扫描低健康度策略, 触发实验"""
-    if not is_trading_day():
-        return
-    try:
-        from config import EXPERIMENT_PARAMS
-        if not EXPERIMENT_PARAMS.get("enabled", True):
-            return
-        from auto_optimizer import evaluate_strategy_health
-        from experiment_lab import (
-            design_experiment, run_experiment, adopt_experiment_result,
-            _check_cooldown, _count_running, EXPERIMENT_PARAMS as EP,
-        )
-        from experiment_lab import _EXPERIMENTS_PATH
-        from json_store import safe_load, safe_save
-
-        threshold = EP.get("min_health_score_trigger", 50)
-        max_concurrent = EP.get("max_concurrent_experiments", 2)
-        strategy_map = {"breakout": "放量突破选股", "auction": "集合竞价选股",
-                        "afternoon": "尾盘短线选股", "dip_buy": "低吸回调选股",
-                        "consolidation": "缩量整理选股", "trend_follow": "趋势跟踪选股",
-                        "sector_rotation": "板块轮动选股", "news_event": "事件驱动选股",
-                        "futures_trend": "期货趋势选股"}
-
-        for eng, cn in strategy_map.items():
-            if _count_running() >= max_concurrent:
-                break
-            if _check_cooldown(eng):
-                continue
-            health = evaluate_strategy_health(eng)
-            if health.get("score", 100) >= threshold:
-                continue
-            # 构造一个虚拟 finding 触发实验
-            finding = {
-                "severity": "warning",
-                "message": f"{cn}健康度{health.get('score', 0):.0f}分, 主动实验",
-                "suggested_action": "log_insight",
-            }
-            exp = design_experiment(eng, finding)
-            if not exp:
-                continue
-            exp["status"] = "running"
-            history = safe_load(_EXPERIMENTS_PATH, default=[])
-            history.append(exp)
-            safe_save(_EXPERIMENTS_PATH, history)
-
-            exp = run_experiment(exp)
-            if exp.get("conclusion") == "found_better":
-                adopt_experiment_result(exp)
-
-            # 更新历史
-            history = safe_load(_EXPERIMENTS_PATH, default=[])
-            for i, e in enumerate(history):
-                if e.get("experiment_id") == exp.get("experiment_id"):
-                    history[i] = exp
-                    break
-            safe_save(_EXPERIMENTS_PATH, history)
-            print(f"[主动实验] {eng}: {exp.get('conclusion', '?')}")
-    except Exception as e:
-        print(f"[主动实验异常] {e}")
-
-
-def _init_multi_agent():
-    """启动时初始化多智能体基础设施"""
-    try:
-        from agent_registry import get_registry, register_builtin_agents
-        registry = get_registry()
-        register_builtin_agents(registry)
-        registry.persist()
-        logger.info("[多智能体] 注册表初始化完成, %d 个智能体", len(registry.list_agents()))
-    except ImportError:
-        logger.debug("[多智能体] agent_registry 模块不可用")
-    except Exception as e:
-        logger.warning("[多智能体] 初始化异常: %s", e)
-
 
 def setup_schedule():
     """设置定时任务"""
-    # 初始化多智能体
     _init_multi_agent()
 
-    # 动态加载策略 (从 strategies.json)
     import strategy_loader
     sched_mod = sys.modules[__name__]
     n_strategies = strategy_loader.register_strategies(sched_mod, schedule)
@@ -1262,63 +440,65 @@ def setup_schedule():
     # 3 个批量推送
     schedule.every().day.at("09:26").do(job_batch_morning)
     schedule.every().day.at("10:30").do(job_batch_midday)
+    schedule.every().day.at("10:30").do(job_learning_progress)
+    schedule.every().day.at("11:30").do(job_learning_progress)
+    schedule.every().day.at("14:00").do(job_learning_progress)
     schedule.every().day.at("14:50").do(job_batch_afternoon)
 
-    # 持仓监控
     for t in SCHEDULE_MONITOR:
         schedule.every().day.at(t).do(job_monitor)
 
-    # 每日评分 + 黑名单更新
     schedule.every().day.at("15:35").do(job_scorecard)
+    schedule.every().day.at("16:30").do(job_backfill_returns)
 
-    # 每周周报 (周五 15:30)
     schedule.every().friday.at("15:30").do(job_weekly_report)
 
-    # 冒烟测试 + 自动优化 + 学习引擎
     schedule.every().day.at("09:10").do(job_smoke_test)
+    schedule.every().day.at("12:30").do(job_midday_learning)
     schedule.every().day.at("16:00").do(job_daily_optimize)
     schedule.every().day.at("16:05").do(job_signal_tracker)
     schedule.every().day.at("16:10").do(job_var_risk)
     schedule.every().day.at("16:30").do(job_learning)
+    schedule.every().day.at("16:35").do(job_learning_health)
     schedule.every().day.at("17:10").do(job_ml_train)
+    schedule.every().day.at("17:30").do(job_factor_forge)
 
-    # 盘中自动诊断 (持仓+推荐 实时复诊)
-    schedule.every().day.at("10:00").do(job_stock_diagnosis)
-    schedule.every().day.at("13:00").do(job_stock_diagnosis)
-
-    # 纸盘模拟交易
     schedule.every().day.at("11:00").do(job_paper_monitor)
     schedule.every().day.at("14:00").do(job_paper_monitor)
     schedule.every().day.at("15:30").do(job_paper_settle)
 
-    # 券商自动下单 (持仓监控)
     schedule.every().day.at("10:30").do(job_broker_monitor)
     schedule.every().day.at("13:30").do(job_broker_monitor)
     schedule.every().day.at("14:45").do(job_broker_monitor)
     schedule.every().saturday.at("10:00").do(job_weekend_optimize)
+    schedule.every().sunday.at("20:00").do(job_full_retrain)
 
-    # Agent Brain
     schedule.every().day.at("09:15").do(job_agent_morning)
     schedule.every().day.at("16:15").do(job_agent_evening)
     schedule.every().day.at("16:45").do(job_proactive_experiment)
     schedule.every().day.at("16:50").do(job_verify_optimizations)
     schedule.every().day.at("17:00").do(job_factor_lifecycle)
-    schedule.every().day.at("22:30").do(job_night_shift)
+    schedule.every().day.at("18:00").do(job_night_shift)
 
-    # 跨市场信号推演 (夜班期间) — 有事件总线自定义逻辑, 保持硬编码
+    schedule.every().day.at(SCHEDULE_CROSS_ASSET).do(job_cross_asset_factor)
+    schedule.every().day.at(SCHEDULE_REGIME_ROUTER).do(job_regime_router)
+    schedule.every().day.at(SCHEDULE_ENSEMBLE_MIDDAY).do(job_ensemble_midday)
+    schedule.every().day.at(SCHEDULE_ENSEMBLE_AFTERNOON).do(job_ensemble_afternoon)
+    schedule.every().day.at(SCHEDULE_ATTRIBUTION).do(job_attribution)
+
     schedule.every().day.at(SCHEDULE_CROSS_MARKET).do(job_cross_market)
-
-    # 开盘前作战计划 — 有自定义逻辑, 保持硬编码
     schedule.every().day.at(SCHEDULE_MORNING_PREP).do(job_morning_prep)
 
-    # 期货持仓监控 (日盘: 09:30~15:00, 夜盘: 21:30~23:00)
     for ft in ["09:30", "10:30", "11:15", "13:30", "14:30", "21:30", "22:30"]:
         schedule.every().day.at(ft).do(job_futures_monitor)
 
-    # API 统计重置
     schedule.every().day.at("00:05").do(job_reset_api_stats)
 
-    # 打印已注册任务 (策略部分从 JSON 动态读取)
+    schedule.every().saturday.at("10:00").do(job_global_news)
+    schedule.every().sunday.at("18:00").do(job_global_news)
+    schedule.every().day.at("07:00").do(job_global_news)
+    schedule.every().day.at("20:00").do(job_global_news)
+
     print(f"已注册定时任务:")
     for cfg in strategy_loader.load_strategies():
         if cfg.get("enabled", True):
@@ -1330,16 +510,25 @@ def setup_schedule():
     print(f"  10:30  → 批量推送: 盘中汇总 [微信3/5]")
     print(f"  14:50  → 批量推送: 午后汇总 [微信4/5]")
     print(f"  {', '.join(SCHEDULE_MONITOR)}  → 持仓监控(止损止盈, 仅终端)")
-    print(f"  16:00~17:10  → 优化/信号/VaR/学习/ML训练")
+    print(f"  {SCHEDULE_CROSS_ASSET}  → 跨市场因子 (US/BTC/A50/VIX)")
+    print(f"  {SCHEDULE_REGIME_ROUTER}  → 环境路由 (动态策略开关)")
+    print(f"  {SCHEDULE_ENSEMBLE_MIDDAY}/{SCHEDULE_ENSEMBLE_AFTERNOON}  → 多策略共识扫描")
+    print(f"  12:30  → 午盘加速学习 (信号验证/健康检查/WF)")
+    print(f"  16:00~17:30  → 优化/信号/归因/VaR/学习/ML/因子发现")
     print(f"  22:30  → 夜班深度分析 (LLM复盘/预判/认知沉淀)")
     print(f"  {SCHEDULE_CROSS_MARKET}  → 跨市场信号推演 (夜班)")
     print(f"  {SCHEDULE_MORNING_PREP}  → 开盘前作战计划")
     print(f"  09:30~22:30  → 期货持仓监控(止损止盈, 7次/日)")
     print(f"  00:05  → API统计重置")
+    print(f"  07:00/20:00+周末  → 全球新闻雷达 (6源+LLM)")
 
+
+# ================================================================
+#  守护进程基础设施
+# ================================================================
 
 def _start_caffeinate():
-    """启动 caffeinate 防止 macOS 休眠 (自动, 无需手动)"""
+    """启动 caffeinate 防止 macOS 休眠"""
     import subprocess as _sp
     try:
         proc = _sp.Popen(
@@ -1354,19 +543,13 @@ def _start_caffeinate():
 
 
 def _start_self_watchdog(interval: int = 300):
-    """启动自监控线程: 每 5 分钟检查调度器自身健康
-
-    检查项:
-      1. 夜班是否卡死 (night_shift_log 超过 15 分钟无更新)
-      2. 主循环心跳是否在更新
-    如果异常 → 微信告警
-    """
+    """启动自监控线程"""
     import threading
 
     def _watchdog_loop():
-        _last_alert_task = None   # 上次告警的任务名
-        _last_alert_time = 0.0    # 上次告警时间戳
-        _ALERT_COOLDOWN = 3600    # 同一任务1小时内只报一次
+        _last_alert_task = None
+        _last_alert_time = 0.0
+        _ALERT_COOLDOWN = 3600
 
         while True:
             time.sleep(interval)
@@ -1384,8 +567,7 @@ def _start_self_watchdog(interval: int = 300):
                             last = _dt.strptime(hb, "%Y-%m-%d %H:%M:%S")
                             age = (_dt.now() - last).total_seconds()
                             task = night_log.get("_current_task", "?")
-                            if age > 900:  # 15 分钟无心跳
-                                # 冷却: 同一任务1小时内只告警一次
+                            if age > 900:
                                 now_ts = time.time()
                                 if task == _last_alert_task and (now_ts - _last_alert_time) < _ALERT_COOLDOWN:
                                     continue
@@ -1398,12 +580,12 @@ def _start_self_watchdog(interval: int = 300):
                                 try:
                                     from notifier import notify_alert, LEVEL_CRITICAL
                                     notify_alert(LEVEL_CRITICAL, "夜班卡死告警", msg)
-                                except Exception:
-                                    pass
+                                except Exception as _exc:
+                                    logger.debug("Suppressed exception: %s", _exc)
                         except ValueError:
                             pass
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
 
     t = threading.Thread(target=_watchdog_loop, daemon=True, name="self_watchdog")
     t.start()
@@ -1412,25 +594,15 @@ def _start_self_watchdog(interval: int = 300):
 
 
 def run_daemon():
-    """守护进程模式: 常驻运行, 每30秒检查
-
-    自动启动:
-      1. caffeinate 防休眠
-      2. 自监控线程 (夜班卡死检测)
-    """
+    """守护进程模式"""
     start_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print("=" * 60)
     print("  每日定时超短线选股推荐系统")
     print(f"  启动时间: {start_time}")
     print("=" * 60)
 
-    # 自动防休眠
     caff_proc = _start_caffeinate()
-
-    # 自监控线程
     _start_self_watchdog()
-
-    # 启动/重启通知 — 让用户知道系统在线
     _notify_scheduler_event("启动", f"系统已启动: {start_time}\n所有定时任务已注册, 正常运行中。")
 
     setup_schedule()
@@ -1438,14 +610,12 @@ def run_daemon():
     print(f"\n调度器已启动, 每 30 秒检查一次...")
     print("caffeinate 已自动启动, 无需手动加\n")
 
-    # 启动时立即更新心跳 (避免 watchdog 误报)
     try:
         from watchdog import update_heartbeat
         update_heartbeat()
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
-    # 清理遗留的夜班 "running" 状态 (防止重启后自监控误报卡死)
     try:
         from json_store import safe_load, safe_save
         _night_log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "night_shift_log.json")
@@ -1456,10 +626,9 @@ def run_daemon():
             _nl["_current_task"] = ""
             safe_save(_night_log_path, _nl)
             print("  清理遗留夜班状态: running → interrupted")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
-    # 心跳独立线程: 不受策略执行阻塞影响
     import threading
 
     def _heartbeat_loop():
@@ -1467,8 +636,8 @@ def run_daemon():
             try:
                 from watchdog import update_heartbeat
                 update_heartbeat()
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
             time.sleep(30)
 
     hb_thread = threading.Thread(target=_heartbeat_loop, daemon=True, name="heartbeat")
@@ -1485,7 +654,7 @@ def run_daemon():
 
 
 def run_all_test():
-    """测试模式: 立即运行全部策略 (从 strategies.json 动态加载)"""
+    """测试模式: 立即运行全部策略"""
     import strategy_loader
     sched_mod = sys.modules[__name__]
     strategy_loader.run_all_strategies(sched_mod)
@@ -1498,14 +667,11 @@ def run_all_test():
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "daemon"
 
-    # 策略 CLI: 优先从 strategies.json 动态查找
     import strategy_loader
 
     if mode == "test":
         run_all_test()
     elif strategy_loader.get_cli_strategy(mode):
-        # 动态加载策略 (news_event/auction/breakout/afternoon/dip_buy/
-        # consolidation/trend/sector/futures/crypto/us_stock 等)
         mod_name, func_name, strat_name = strategy_loader.get_cli_strategy(mode)
         func = strategy_loader._import_func(mod_name, func_name)
         run_with_retry(func, strat_name)
@@ -1552,6 +718,17 @@ if __name__ == "__main__":
     elif mode == "learning":
         from learning_engine import run_learning_cycle
         run_learning_cycle()
+    elif mode == "learning_health":
+        from learning_engine import check_learning_health
+        health = check_learning_health()
+        for c in health.get("checks", []):
+            icon = {"ok": "✅", "warning": "⚠️", "critical": "❌", "error": "💥"}.get(c["status"], "?")
+            print(f"  {icon} {c['check']}: {c['detail']}")
+        if health.get("healed"):
+            print("\n自愈:")
+            for h in health["healed"]:
+                print(f"  🔧 {h}")
+        print(f"\n总体状态: {health['status'].upper()}")
     elif mode == "agent":
         from agent_brain import run_agent_cycle
         print(run_agent_cycle())
@@ -1560,11 +737,87 @@ if __name__ == "__main__":
     elif mode == "lifecycle":
         job_factor_lifecycle()
     elif mode == "night":
+        from scheduler_jobs import _run_night_shift
         _run_night_shift()
     elif mode == "signals":
         job_signal_tracker()
     elif mode == "status":
         _show_system_status()
+    elif mode == "ensemble":
+        from strategy_ensemble import get_consensus_recommendations
+        consensus = get_consensus_recommendations()
+        if consensus:
+            for c in consensus:
+                print(f"  {c['code']}({c['name']}) 共识={c['consensus_score']:.3f} "
+                      f"策略={c['n_strategies']} 族={c['families']}")
+        else:
+            print("无共识信号")
+    elif mode == "routing":
+        from regime_router import get_routing_status
+        status = get_routing_status()
+        if status.get("status") == "not_calculated":
+            print("路由未计算, 运行: python3 regime_router.py calc")
+        else:
+            print(f"Regime: {status.get('regime')}")
+            for k, v in status.get("strategies", {}).items():
+                tag = "SKIP" if v["skip"] else "OK"
+                print(f"  {v['name']}: ratio={v['ratio']:.3f} scale={v['position_scale']:.2f} [{tag}]")
+    elif mode == "cascade":
+        from cascade_engine import get_cascade_engine
+        engine = get_cascade_engine()
+        sub = sys.argv[2] if len(sys.argv) > 2 else "help"
+        if sub == "help":
+            print("用法:")
+            print("  scheduler.py cascade preview strategy_pause strategy=放量突破")
+            print("  scheduler.py cascade execute strategy_pause strategy=放量突破 reason=连亏5次")
+            print("  scheduler.py cascade execute circuit_breaker reason=单日亏损>5%")
+            print("  scheduler.py cascade execute strategy_resume strategy=放量突破")
+            print("  scheduler.py cascade execute factor_retire factor=mom_5d")
+        elif sub in ("preview", "execute"):
+            trigger = sys.argv[3] if len(sys.argv) > 3 else None
+            if not trigger:
+                print("缺少 trigger 参数")
+                sys.exit(1)
+            params = {}
+            for arg in sys.argv[4:]:
+                if '=' in arg:
+                    k, v = arg.split('=', 1)
+                    params[k] = v
+            if sub == "preview":
+                result = engine.preview(trigger, **params)
+                print(f"触发器: {result['trigger']}  参数: {result['params']}")
+                print(f"影响目标: {result['affected_targets']}")
+                for r in result['rules']:
+                    print(f"  {r['name']}: {r['description']}")
+            else:
+                ctx = engine.execute(trigger, **params)
+                for t in set(ctx.affected):
+                    print(f"  ✓ {t}")
+                if ctx.errors:
+                    for e in ctx.errors:
+                        print(f"  ✗ {e}")
+                else:
+                    print("✅ 级联执行成功")
+        else:
+            print(f"未知子命令: {sub}  (用 cascade help 查看用法)")
+    elif mode == "attribution":
+        from attribution import run_full_attribution, format_attribution_report
+        print(format_attribution_report(run_full_attribution()))
+    elif mode == "timing":
+        from execution_timing import run_timing_analysis, format_timing_report
+        result = run_timing_analysis()
+        if result:
+            print(format_timing_report(result))
+        else:
+            print("数据不足")
+    elif mode == "cross_asset":
+        from cross_asset_factor import calc_all_indicators
+        r = calc_all_indicators()
+        risk = r.get("ca_risk_appetite", 0.5)
+        label = "RiskOn" if risk >= 0.65 else ("RiskOff" if risk <= 0.35 else "中性")
+        print(f"risk={risk:.3f} [{label}] US={r.get('ca_us_momentum',0):.3f} "
+              f"BTC={r.get('ca_btc_trend',0):.3f} A50={r.get('ca_a50_premium',0):.3f} "
+              f"VIX={r.get('ca_vix_level',0):.3f}")
     elif mode == "sources":
         from api_guard import get_source_health, get_api_stats
         health = get_source_health()
@@ -1586,7 +839,6 @@ if __name__ == "__main__":
               f"限流={stats.get('rate_limited',0)} "
               f"错误={stats.get('errors',0)}")
     elif mode.startswith("analyze"):
-        # python3 scheduler.py analyze 002221 [--push] [--journal]
         codes_arg = sys.argv[2] if len(sys.argv) > 2 else ""
         if not codes_arg or codes_arg.startswith("--"):
             print("用法: python3 scheduler.py analyze 002221 [--push] [--journal]")

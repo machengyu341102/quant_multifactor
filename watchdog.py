@@ -183,8 +183,8 @@ def check_health() -> dict:
             ]
             if failed_tasks:
                 issues.append(f"夜班失败任务: {', '.join(failed_tasks[:3])}")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 5. 错误计数检查
     errors_today = data.get("errors_today", 0)
@@ -227,8 +227,8 @@ def alert_if_unhealthy():
             if lock_age < _ALERT_COOLDOWN:
                 logger.info("告警冷却中 (%.0f秒前已报), 跳过", lock_age)
                 return
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
     issues_text = "\n".join(f"- {i}" for i in result["issues"])
     alert_msg = (
@@ -293,8 +293,8 @@ def restart_scheduler():
             f"旧PID: {pid or '无'}\n新PID: {proc.pid}\n"
             f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         )
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
 
 # ================================================================
@@ -382,16 +382,102 @@ def guard():
         else:
             # 有进程无心跳, 可能刚启动, 不管
             logger.debug("[guard] 进程在 (PID=%d), 无心跳记录, 跳过", pid)
+    else:
+        # —— 进程不存活, 需要重启 ——
+        if pid:
+            reason = f"调度器进程已死 (PID={pid})"
+        else:
+            reason = "无 PID 记录, 首次启动调度器"
+        logger.warning("[guard] %s, 自动重启", reason)
+        _guard_restart(reason, old_pid=pid)
+
+    # —— Tunnel 检活 (无论 scheduler 状态如何) ——
+    try:
+        _guard_tunnel()
+    except Exception as e:
+        logger.error("[guard-tunnel] 检查异常: %s", e)
+
+
+def _guard_tunnel():
+    """检查 Cloudflare Tunnel 是否存活, 挂了自动重启 tunnel_manager"""
+    import requests
+
+    state_path = os.path.join(_DIR, "tunnel_state.json")
+    state = safe_load(state_path, default={})
+    url = state.get("url", "")
+    tunnel_pid = state.get("pid")
+
+    if not url:
+        logger.debug("[guard-tunnel] 无 tunnel URL, 跳过")
         return
 
-    # —— 进程不存活, 需要重启 ——
-    if pid:
-        reason = f"调度器进程已死 (PID={pid})"
-    else:
-        reason = "无 PID 记录, 首次启动调度器"
+    # 1. 检查 tunnel URL 是否可达
+    alive = False
+    try:
+        resp = requests.get(url + "/", timeout=8)
+        alive = resp.status_code < 500
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
-    logger.warning("[guard] %s, 自动重启", reason)
-    _guard_restart(reason, old_pid=pid)
+    if alive:
+        logger.debug("[guard-tunnel] tunnel 正常: %s", url)
+        return
+
+    # 2. Tunnel 挂了, 检查 cloudflared 进程
+    logger.warning("[guard-tunnel] tunnel 不可达: %s, 准备重启", url)
+
+    # 杀旧 tunnel_manager + cloudflared
+    if tunnel_pid:
+        try:
+            os.kill(tunnel_pid, signal.SIGKILL)
+        except (OSError, ProcessLookupError):
+            pass
+
+    # 杀所有 tunnel_manager 和 cloudflared
+    try:
+        subprocess.run(["pkill", "-f", "tunnel_manager.py"], timeout=5,
+                       capture_output=True)
+        subprocess.run(["pkill", "-f", "cloudflared tunnel"], timeout=5,
+                       capture_output=True)
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
+
+    time.sleep(2)
+
+    # 3. 重启 tunnel_manager
+    try:
+        tm_path = os.path.join(_DIR, "tunnel_manager.py")
+        proc = subprocess.Popen(
+            [sys.executable, tm_path],
+            cwd=_DIR,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+        logger.info("[guard-tunnel] tunnel_manager 已重启, PID=%d", proc.pid)
+    except Exception as e:
+        logger.error("[guard-tunnel] 重启失败: %s", e)
+        return
+
+    # 4. 等待新 URL 生成 (最多 20 秒)
+    new_url = ""
+    for _ in range(4):
+        time.sleep(5)
+        new_state = safe_load(state_path, default={})
+        new_url = new_state.get("url", "")
+        if new_url and new_url != url:
+            break
+
+    # 5. 微信告警
+    msg = (f"旧URL: {url}\n"
+           f"新URL: {new_url or '等待中...'}\n"
+           f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+           f"{'请到企业微信后台更新回调URL' if new_url != url else ''}")
+    try:
+        from notifier import notify_wechat_raw
+        notify_wechat_raw("隧道自动重启", msg)
+    except Exception as e:
+        logger.error("[guard-tunnel] 告警推送失败: %s", e)
 
 
 def _guard_restart(reason: str, old_pid: int | None = None):
@@ -480,8 +566,8 @@ def install_launchd():
     try:
         subprocess.run(["launchctl", "unload", plist_path],
                         capture_output=True, timeout=10)
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     with open(plist_path, "w") as f:
         f.write(plist_content)

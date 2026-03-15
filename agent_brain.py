@@ -44,7 +44,8 @@ logger = get_logger("agent_brain")
 _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 _MEMORY_PATH = os.path.join(_BASE_DIR, "agent_memory.json")
 _SCORECARD_PATH = os.path.join(_BASE_DIR, "scorecard.json")
-_SCORECARD_DEFAULT = _SCORECARD_PATH  # monkeypatch 检测
+_SCORECARD_DEFAULT = _SCORECARD_PATH
+_DECISION_JOURNAL_PATH = os.path.join(_BASE_DIR, "decision_journal.json")  # monkeypatch 检测
 
 STRATEGY_NAMES = [
     "集合竞价选股", "放量突破选股", "尾盘短线选股",
@@ -140,16 +141,216 @@ def _save_memory(mem: dict):
     global _last_saved_hash
     import hashlib, json
     # 用策略状态+洞察数+meta 做轻量哈希
+    meta = mem.get("meta", {})
     key_data = json.dumps({
         "states": {k: v.get("status") for k, v in mem.get("strategy_states", {}).items()},
         "n_insights": len(mem.get("insights", [])),
-        "cycles": mem.get("meta", {}).get("total_cycles", 0),
+        "cycles": meta.get("total_cycles", 0),
+        "d_acc": meta.get("decision_accuracy"),
+        "d_verified": meta.get("decision_total_verified", 0),
     }, sort_keys=True)
     h = hashlib.md5(key_data.encode()).hexdigest()
     if h == _last_saved_hash:
         return  # 无变化, 跳过写入
     safe_save(_MEMORY_PATH, mem)
     _last_saved_hash = h
+
+
+# ================================================================
+#  0. 决策闭环验证 — Decision Journal
+# ================================================================
+
+def _record_decision(action: str, strategy: str, reason: str,
+                     regime: str = "", context: dict = None,
+                     parent_event_id: str = ""):
+    """记录每个重大决策 (pause/resume/deweight/adopt) 到 decision_journal.json"""
+    journal = safe_load(_DECISION_JOURNAL_PATH, default=[])
+    entry = {
+        "id": f"D{datetime.now().strftime('%Y%m%d%H%M%S')}_{len(journal)}",
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "date": date.today().isoformat(),
+        "action": action,
+        "strategy": strategy,
+        "reason": reason,
+        "regime": regime,
+        "context": context or {},
+        "parent_event_id": parent_event_id,
+        "verified": False,
+        "verify_date": (date.today() + timedelta(
+            days=AGENT_PARAMS.get("decision_verify_after_days", 5)
+        )).isoformat(),
+        "outcome": None,  # T+N 后填入: correct / incorrect / inconclusive
+    }
+    journal.append(entry)
+    # 保留最近 500 条
+    if len(journal) > 500:
+        journal = journal[-500:]
+    safe_save(_DECISION_JOURNAL_PATH, journal)
+    logger.info("[Decision] 记录: %s %s (%s)", action, strategy, reason[:60])
+    return entry["id"]
+
+
+def verify_past_decisions() -> list[dict]:
+    """验证到期的历史决策是否正确
+
+    - pause: 暂停后策略是否继续亏? (继续亏=正确)
+    - resume: 恢复后策略是否赚了? (赚了=正确)
+    - deweight_factor: 降权后因子是否确实无效? (无效=正确)
+
+    Returns:
+        验证结果列表
+    """
+    journal = safe_load(_DECISION_JOURNAL_PATH, default=[])
+    today_str = date.today().isoformat()
+
+    # 加载 scorecard 用于验证
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            raise ImportError("test mode")
+        from db_store import load_scorecard
+        scorecard = load_scorecard(days=30)
+    except Exception:
+        scorecard = safe_load(_SCORECARD_PATH, default=[])
+
+    results = []
+    modified = False
+
+    for entry in journal:
+        if entry.get("verified"):
+            continue
+        if entry.get("verify_date", "9999") > today_str:
+            continue
+
+        action = entry.get("action", "")
+        strategy = entry.get("strategy", "")
+        decision_date = entry.get("date", "")
+
+        if action == "pause_strategy" and strategy:
+            outcome = _verify_pause_decision(
+                strategy, decision_date, scorecard)
+        elif action == "resume_strategy" and strategy:
+            outcome = _verify_resume_decision(
+                strategy, decision_date, scorecard)
+        elif action == "deweight_factor":
+            outcome = "inconclusive"  # 因子降权需要更长时间验证
+        else:
+            outcome = "inconclusive"
+
+        entry["verified"] = True
+        entry["outcome"] = outcome
+        entry["verified_at"] = today_str
+        modified = True
+
+        results.append({
+            "decision_id": entry.get("id", ""),
+            "action": action,
+            "strategy": strategy,
+            "reason": entry.get("reason", ""),
+            "outcome": outcome,
+            "decision_date": decision_date,
+        })
+        logger.info("[Decision] 验证: %s %s → %s", action, strategy, outcome)
+
+    if modified:
+        safe_save(_DECISION_JOURNAL_PATH, journal)
+
+    # 更新决策准确率 (EMA)
+    if results:
+        _update_decision_accuracy(results)
+
+    return results
+
+
+def _verify_pause_decision(strategy: str, decision_date: str,
+                           scorecard: list) -> str:
+    """暂停决策验证: 暂停后策略是否继续亏?
+    如果暂停后的5天内该策略确实表现差 → correct
+    """
+    # 取决策日之后的记录
+    after_records = [
+        r for r in scorecard
+        if r.get("strategy") == strategy
+        and r.get("rec_date", "") > decision_date
+    ]
+    if len(after_records) < 2:
+        return "inconclusive"  # 数据不足
+
+    losses = sum(1 for r in after_records if r.get("result") == "loss")
+    loss_rate = losses / len(after_records) if after_records else 0
+
+    # 暂停后的信号(如果继续跑)多数是亏的 → 决策正确
+    if loss_rate >= 0.5:
+        return "correct"
+    elif loss_rate <= 0.3:
+        return "incorrect"  # 暂停后表现好了, 不该暂停
+    return "inconclusive"
+
+
+def _verify_resume_decision(strategy: str, decision_date: str,
+                            scorecard: list) -> str:
+    """恢复决策验证: 恢复后策略是否赚了?"""
+    after_records = [
+        r for r in scorecard
+        if r.get("strategy") == strategy
+        and r.get("rec_date", "") > decision_date
+    ]
+    if len(after_records) < 2:
+        return "inconclusive"
+
+    wins = sum(1 for r in after_records if r.get("result") == "win")
+    win_rate = wins / len(after_records) if after_records else 0
+
+    if win_rate >= 0.5:
+        return "correct"
+    elif win_rate <= 0.3:
+        return "incorrect"
+    return "inconclusive"
+
+
+def _update_decision_accuracy(results: list):
+    """用 EMA 更新决策准确率, 存入 memory.meta"""
+    memory = _load_memory()
+    meta = memory.setdefault("meta", {})
+    alpha = AGENT_PARAMS.get("decision_accuracy_ema_alpha", 0.2)
+
+    old_accuracy = meta.get("decision_accuracy", 0.5)
+    # 计算本批次准确率
+    valid = [r for r in results if r["outcome"] != "inconclusive"]
+    if not valid:
+        return
+
+    batch_accuracy = sum(1 for r in valid if r["outcome"] == "correct") / len(valid)
+    new_accuracy = (1 - alpha) * old_accuracy + alpha * batch_accuracy
+
+    meta["decision_accuracy"] = round(new_accuracy, 4)
+    meta["decision_total_verified"] = meta.get("decision_total_verified", 0) + len(valid)
+    meta["decision_last_verified"] = date.today().isoformat()
+
+    # 自适应阈值: 准确率高→更果断(降低连亏阈值), 低→更保守(提高)
+    if AGENT_PARAMS.get("adaptive_threshold_enabled", True):
+        base_threshold = 4  # 原始连亏阈值
+        if new_accuracy >= 0.7:
+            meta["adaptive_consecutive_loss_threshold"] = max(3, base_threshold - 1)
+        elif new_accuracy <= 0.4:
+            meta["adaptive_consecutive_loss_threshold"] = min(6, base_threshold + 1)
+        else:
+            meta["adaptive_consecutive_loss_threshold"] = base_threshold
+
+    _save_memory(memory)
+    logger.info("[Decision] 准确率 EMA: %.1f%% (本批 %.1f%%, %d条)",
+                new_accuracy * 100, batch_accuracy * 100, len(valid))
+
+
+def get_adaptive_threshold(param_name: str, default: int) -> int:
+    """获取自适应阈值 (从 memory.meta 读取, 不存在则用默认值)"""
+    if not AGENT_PARAMS.get("adaptive_threshold_enabled", True):
+        return default
+    try:
+        memory = _load_memory()
+        key = f"adaptive_{param_name}"
+        return memory.get("meta", {}).get(key, default)
+    except Exception:
+        return default
 
 
 # ================================================================
@@ -262,6 +463,7 @@ def orient(snapshot: dict, memory: dict) -> list:
         detect_optimization_regression,
         detect_portfolio_risk,
         detect_signal_quality,
+        detect_news_sentiment,
     ]
     for detector in detectors:
         try:
@@ -277,7 +479,10 @@ def orient(snapshot: dict, memory: dict) -> list:
 
 def detect_consecutive_losses(snapshot: dict, memory: dict) -> list:
     """连亏 >= auto_pause_consecutive_losses → critical: pause_strategy"""
-    threshold = AGENT_PARAMS.get("auto_pause_consecutive_losses", 4)
+    threshold = get_adaptive_threshold(
+        "consecutive_loss_threshold",
+        AGENT_PARAMS.get("auto_pause_consecutive_losses", 4)
+    )
     findings = []
     for name, metrics in snapshot.get("strategy_metrics", {}).items():
         consec = metrics.get("consecutive_losses", 0)
@@ -538,8 +743,38 @@ def detect_signal_quality(snapshot: dict, memory: dict) -> list:
                 "details": {"win_rate": overall_wr, "total": stats["total"]},
             })
 
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.warning("Suppressed exception: %s", _exc)
+    return findings
+
+
+def detect_news_sentiment(snapshot: dict, memory: dict) -> list:
+    """全球新闻情绪检测器: 新闻偏空时发warning"""
+    findings = []
+    try:
+        from global_news_monitor import get_latest_digest
+        digest = get_latest_digest()
+        if not digest:
+            return []
+
+        sentiment = digest.get("sentiment", 0)
+        n_events = len(digest.get("events", []))
+
+        if sentiment < -0.3 and n_events >= 2:
+            findings.append({
+                "type": "news_bearish_sentiment",
+                "message": f"全球新闻偏空 (情绪{sentiment:+.2f}, {n_events}条事件)",
+                "severity": "warning" if sentiment < -0.5 else "info",
+                "confidence": min(0.5 + abs(sentiment), 0.8),
+                "suggested_action": "reduce_exposure",
+                "details": {
+                    "sentiment": sentiment,
+                    "n_events": n_events,
+                    "heatmap": digest.get("heatmap", {}),
+                },
+            })
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
     return findings
 
 
@@ -633,10 +868,13 @@ def act(decisions: list, memory: dict):
         message = finding.get("message", "")
 
         if execute:
+            parent_eid = finding.get("_event_id", "")
             if action == "pause_strategy" and strategy:
-                _action_pause_strategy(strategy, memory, message)
+                _action_pause_strategy(strategy, memory, message,
+                                       parent_event_id=parent_eid)
             elif action == "resume_strategy" and strategy:
-                _action_resume_strategy(strategy, memory, message)
+                _action_resume_strategy(strategy, memory, message,
+                                        parent_event_id=parent_eid)
             elif action == "deweight_factor":
                 _action_deweight_factor(finding)
 
@@ -650,11 +888,14 @@ def act(decisions: list, memory: dict):
         _action_log_insight(memory, finding)
 
 
-def _action_pause_strategy(strategy: str, memory: dict, reason: str):
-    """暂停策略"""
+def _action_pause_strategy(strategy: str, memory: dict, reason: str,
+                           parent_event_id: str = ""):
+    """暂停策略 (通过级联引擎统一传播)"""
     state = memory.get("strategy_states", {}).get(strategy)
     if not state:
         return
+    if state.get("status") == "paused":
+        return  # 已暂停则跳过, 避免重复暂停刷屏
     resume_days = AGENT_PARAMS.get("auto_resume_days", 5)
     resume_date = (date.today() + timedelta(days=resume_days)).isoformat()
 
@@ -665,9 +906,25 @@ def _action_pause_strategy(strategy: str, memory: dict, reason: str):
     logger.info("[Agent] 暂停策略: %s | 原因: %s | 自动恢复: %s",
                 strategy, reason, resume_date)
 
+    # 级联引擎: 通知下游模块 (scheduler/batch_push/learning/signal_tracker)
+    try:
+        from cascade_engine import cascade
+        cascade('strategy_pause', strategy=strategy, reason=reason)
+    except Exception as e:
+        logger.debug("[Cascade] 级联通知失败(不影响暂停): %s", e)
 
-def _action_resume_strategy(strategy: str, memory: dict, reason: str):
-    """恢复策略"""
+    # 记录决策到 journal
+    try:
+        regime = memory.get("meta", {}).get("current_regime", "")
+        _record_decision("pause_strategy", strategy, reason,
+                         regime=regime, parent_event_id=parent_event_id)
+    except Exception as e:
+        logger.debug("[Decision] 记录失败: %s", e)
+
+
+def _action_resume_strategy(strategy: str, memory: dict, reason: str,
+                            parent_event_id: str = ""):
+    """恢复策略 (通过级联引擎统一传播)"""
     state = memory.get("strategy_states", {}).get(strategy)
     if not state:
         return
@@ -676,6 +933,21 @@ def _action_resume_strategy(strategy: str, memory: dict, reason: str):
     state["pause_reason"] = None
     state["auto_resume_date"] = None
     logger.info("[Agent] 恢复策略: %s | 原因: %s", strategy, reason)
+
+    # 级联引擎: 通知下游模块
+    try:
+        from cascade_engine import cascade
+        cascade('strategy_resume', strategy=strategy, reason=reason)
+    except Exception as e:
+        logger.debug("[Cascade] 级联通知失败(不影响恢复): %s", e)
+
+    # 记录决策到 journal
+    try:
+        regime = memory.get("meta", {}).get("current_regime", "")
+        _record_decision("resume_strategy", strategy, reason,
+                         regime=regime, parent_event_id=parent_event_id)
+    except Exception as e:
+        logger.debug("[Decision] 记录失败: %s", e)
 
 
 def _action_deweight_factor(finding: dict):
@@ -719,8 +991,8 @@ def _action_escalate(message: str):
              f'display notification "{safe_msg}" with title "[Agent] 策略洞察" sound name "Glass"'],
             timeout=10, capture_output=True,
         )
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
     _proactive_push_count["count"] += 1
 
 
@@ -864,14 +1136,18 @@ _SEVERITY_TO_PRIORITY = {
 
 
 def _emit_findings_to_bus(findings: list):
-    """将 orient() 的 findings 发射到事件总线 (供其他模块观察)"""
+    """将 orient() 的 findings 发射到事件总线 (供其他模块观察)
+
+    同时将生成的 event_id 写回 finding (用于因果链追踪)
+    """
     try:
         from event_bus import get_event_bus, Priority
         bus = get_event_bus()
         for f in findings:
             severity = f.get("severity", "info")
             priority_val = _SEVERITY_TO_PRIORITY.get(severity, Priority.NORMAL)
-            bus.emit(
+            parent_id = f.get("_parent_event_id", "")
+            eid = bus.emit(
                 source="agent_brain",
                 priority=priority_val,
                 event_type=f.get("suggested_action", "log_insight"),
@@ -881,7 +1157,10 @@ def _emit_findings_to_bus(findings: list):
                     "strategy": f.get("strategy"),
                     "severity": severity,
                 },
+                parent_event_id=parent_id,
             )
+            if eid:
+                f["_event_id"] = eid  # 写回, 供后续 act() 链接
     except ImportError:
         pass
     except Exception as e:
@@ -927,6 +1206,7 @@ def process_bus_events() -> list:
                 "confidence": 0.80 if severity == "critical" else 0.60,
                 "source": event.source,
                 "category": event.category,
+                "_parent_event_id": event.event_id,  # 因果链: 总线事件是 finding 的父
             }
             findings.append(finding)
     except ImportError:
@@ -1151,8 +1431,8 @@ def generate_morning_briefing() -> str:
         if event_summary:
             lines.append(f"**今日事件:** {event_summary}")
             lines.append("")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 策略状态
     lines.append("**策略状态:**")
@@ -1198,8 +1478,8 @@ def generate_morning_briefing() -> str:
             if cm.get("suggestion"):
                 lines.append(f"- {cm['suggestion']}")
             lines.append("")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 系统性能
     try:
@@ -1218,8 +1498,8 @@ def generate_morning_briefing() -> str:
                 else:
                     lines.append(f"- {sname}: {dur:.0f}s [{status_icon}]")
             lines.append("")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 待关注
     findings = orient(snapshot, memory)
@@ -1241,8 +1521,8 @@ def generate_morning_briefing() -> str:
         enhanced = enhance_morning_briefing(raw, snapshot, memory)
         if enhanced:
             return enhanced
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     return raw
 
@@ -1291,9 +1571,9 @@ def run_agent_cycle() -> str:
             registry.report_run("market_radar", success=True)
     except Exception as e:
         if registry:
-            registry.report_run("market_radar", success=False, error=str(e))
+            registry.report_run("market_radar", success=False, error_msg=str(e))
 
-    # Orient (10个检测器 + emit 到总线)
+    # Orient (11个检测器 + emit 到总线)
     findings = orient(snapshot, memory)
 
     # 消费总线事件 (来自外部模块)
@@ -1319,7 +1599,7 @@ def run_agent_cycle() -> str:
             registry.report_run("risk_inspector", success=True)
     except Exception as e:
         if registry:
-            registry.report_run("risk_inspector", success=False, error=str(e))
+            registry.report_run("risk_inspector", success=False, error_msg=str(e))
 
     # 执行裁判: 纸盘持仓监控
     try:
@@ -1343,7 +1623,7 @@ def run_agent_cycle() -> str:
             registry.report_run("execution_judge", success=True)
     except Exception as e:
         if registry:
-            registry.report_run("execution_judge", success=False, error=str(e))
+            registry.report_run("execution_judge", success=False, error_msg=str(e))
 
     # 冲突仲裁
     findings = conflict_resolve(findings)
@@ -1355,22 +1635,22 @@ def run_agent_cycle() -> str:
         if new_findings:
             findings.extend(new_findings)
             logger.info("[Agent] LLM深度分析发现 %d 个新信号", len(new_findings))
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # LLM 对 medium-confidence findings 提供建议 (L1)
     try:
         from llm_advisor import advise_on_findings
         findings = advise_on_findings(findings)
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # LLM 辅助决策 (L2: 综合判断是否执行)
     try:
         from llm_advisor import llm_smart_decide
         findings = llm_smart_decide(findings, memory)
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # Decide
     decisions = decide(findings, memory)
@@ -1394,10 +1674,26 @@ def run_agent_cycle() -> str:
             registry.report_run("factor_researcher", success=True)
     except Exception as e:
         if registry:
-            registry.report_run("factor_researcher", success=False, error=str(e))
+            registry.report_run("factor_researcher", success=False, error_msg=str(e))
 
     # Learn
     learn(snapshot, memory)
+
+    # 保存当前行情到 meta (供决策记录使用)
+    memory.setdefault("meta", {})["current_regime"] = snapshot.get("current_regime", "neutral")
+
+    # 决策闭环验证: 检查到期的历史决策
+    try:
+        verify_results = verify_past_decisions()
+        for vr in verify_results:
+            _action_log_insight(memory, {
+                "severity": "info",
+                "message": (f"[决策验证] {vr['action']} {vr['strategy']}: "
+                            f"{vr['outcome']} (决策日{vr['decision_date']})"),
+                "suggested_action": "log_insight",
+            })
+    except Exception as e:
+        logger.debug("[Decision] 验证异常: %s", e)
 
     # 系统自愈: 运行健康检查
     try:
@@ -1416,7 +1712,7 @@ def run_agent_cycle() -> str:
             registry.report_run("healer", success=True)
     except Exception as e:
         if registry:
-            registry.report_run("healer", success=False, error=str(e))
+            registry.report_run("healer", success=False, error_msg=str(e))
 
     # LLM 认知提取 (L2: 沉淀经验)
     try:
@@ -1431,8 +1727,8 @@ def run_agent_cycle() -> str:
                     "suggested_action": "log_insight",
                 })
             logger.info("[Agent] LLM提取 %d 个认知洞察", len(insights))
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 更新 meta
     memory["meta"]["last_cycle"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -1444,13 +1740,13 @@ def run_agent_cycle() -> str:
     try:
         from event_bus import get_event_bus
         get_event_bus().persist()
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
     if registry:
         try:
             registry.persist()
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
     # 生成摘要
     summary_lines = [f"OODA循环完成 (第{memory['meta']['total_cycles']}次)"]
@@ -1499,8 +1795,8 @@ def generate_evening_summary() -> str:
             lines.append("**跨市场收盘:**")
             lines.append(f"- 综合{cm.get('composite_signal', 0):+.3f} → {impact_map.get(cm.get('a_stock_impact', ''), '?')}")
             lines.append(f"- 美股{cm.get('us_signal', 0):+.3f} | A50{cm.get('a50_signal', 0):+.3f} | 币圈{cm.get('crypto_signal', 0):+.3f}")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # VaR 风控摘要
     try:
@@ -1516,8 +1812,8 @@ def generate_evening_summary() -> str:
                          f" | VaR(95%)={portfolio.get('hist_var_95', 0):+.4f}%"
                          f" | CVaR(99%)={portfolio.get('hist_cvar_99', 0):+.4f}%"
                          f" | 年化波动={portfolio.get('annual_vol', 0):.1f}%")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 纸盘模拟交易摘要
     try:
@@ -1530,8 +1826,8 @@ def generate_evening_summary() -> str:
                          f" | 胜率{stats['win_rate']}%"
                          f" | 收益{stats['total_pnl']:+.2f}%"
                          f" | 持仓{holdings.get('count', 0)}笔")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 信号追踪摘要
     try:
@@ -1551,8 +1847,23 @@ def generate_evening_summary() -> str:
                 parts.append(f"T+3胜率{t3wr}%")
             lines.append("")
             lines.append(" | ".join(parts))
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.warning("Suppressed exception: %s", _exc)
+
+    # 决策闭环验证摘要
+    try:
+        meta = memory.get("meta", {})
+        d_acc = meta.get("decision_accuracy")
+        d_total = meta.get("decision_total_verified", 0)
+        adaptive_t = meta.get("adaptive_consecutive_loss_threshold")
+        if d_acc is not None and d_total > 0:
+            parts = [f"**决策自省:** 准确率{d_acc:.0%}({d_total}次验证)"]
+            if adaptive_t is not None:
+                parts.append(f"连亏阈值自适应→{adaptive_t}")
+            lines.append("")
+            lines.append(" | ".join(parts))
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     if not lines or lines == ["## Agent 今日洞察", ""]:
         return ""
@@ -1565,8 +1876,8 @@ def generate_evening_summary() -> str:
         enhanced = enhance_evening_summary(raw, memory=memory)
         if enhanced:
             return enhanced
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     return raw
 
@@ -1579,13 +1890,16 @@ _NIGHT_LOG_PATH = os.path.join(_BASE_DIR, "night_shift_log.json")
 
 
 def run_night_shift() -> str:
-    """22:30+ 夜班: 多任务全流程
+    """夜班: 三阶段并行流程 (v2 — 从129分钟压缩到<20分钟)
 
-    任务链: 绩效考核 → LLM复盘 → 批量回测 → 因子实验 → 策略进化
-            → OODA回放 → 晨报准备
+    阶段1 (串行): 绩效考核 → LLM复盘 (依赖绩效结果)
+    阶段2 (并行): 回测/WF/ML/因子/策略/OODA + 币圈/美股 同时跑
+    阶段3 (串行): 跨市场推演 → 开盘作战计划 (依赖币圈+美股结果)
 
-    每个子任务独立 try/except, 一个失败不影响其他.
-    进度实时写入 night_shift_log.json, 最终推送汇总报告.
+    改进:
+      - 独立任务并行执行 (8个任务同时跑, 取最慢的那个)
+      - 超时任务不重试 (批量回测/WF/策略进化)
+      - 总耗时 = 阶段1(~1s) + max(阶段2) + 阶段3(~5s)
 
     Returns:
         夜班汇总报告 Markdown
@@ -1604,57 +1918,42 @@ def run_night_shift() -> str:
     memory = _load_memory()
     results = {}  # {task_name: {status, duration, output}}
 
-    # ---- Task 1: 绩效考核 ----
+    # ======== 阶段1: 串行 (有依赖) ========
+    logger.info("[夜班] ---- 阶段1: 绩效+LLM ----")
     results["performance_review"] = _night_task(
         "绩效考核", log, _night_performance_review)
 
-    # ---- Task 2: LLM 深度分析 ----
     review = results["performance_review"].get("data", {})
     results["llm_analysis"] = _night_task(
         "LLM深度复盘", log,
         lambda: _night_llm_analysis(memory, review))
 
-    # ---- Task 3: 批量回测 ----
-    results["batch_backtest"] = _night_task(
-        "批量回测验证", log, _night_batch_backtest)
+    # ======== 阶段2: 并行 (独立任务) ========
+    logger.info("[夜班] ---- 阶段2: 并行任务 ----")
+    import concurrent.futures as _cf
 
-    # ---- Task 3b: Walk-Forward 过拟合检测 ----
-    results["walk_forward"] = _night_task(
-        "Walk-Forward检测", log, _night_walk_forward)
+    # 币圈(01:00)/美股(05:30)/跨市场(06:00)/作战计划(07:30) 已有独立定时, 不在此重复
+    parallel_tasks = {
+        "batch_backtest":     ("批量回测验证",  _night_batch_backtest),
+        "walk_forward":       ("Walk-Forward检测", _night_walk_forward),
+        "ml_train":           ("ML模型训练",    _night_ml_train),
+        "factor_discovery":   ("因子发现实验",  lambda: _night_factor_discovery(memory)),
+        "strategy_evolution": ("策略参数进化",  _night_strategy_evolution),
+        "ooda_replay":        ("OODA历史回放",  lambda: _night_ooda_replay(memory)),
+    }
 
-    # ---- Task 3c: ML 模型训练 ----
-    results["ml_train"] = _night_task(
-        "ML模型训练", log, _night_ml_train)
+    with _cf.ThreadPoolExecutor(max_workers=4) as pool:
+        futures = {}
+        for key, (name, func) in parallel_tasks.items():
+            futures[key] = pool.submit(_night_task, name, log, func)
 
-    # ---- Task 4: 因子发现实验 ----
-    results["factor_discovery"] = _night_task(
-        "因子发现实验", log,
-        lambda: _night_factor_discovery(memory))
-
-    # ---- Task 5: 策略参数进化 ----
-    results["strategy_evolution"] = _night_task(
-        "策略参数进化", log, _night_strategy_evolution)
-
-    # ---- Task 6: OODA 历史回放 ----
-    results["ooda_replay"] = _night_task(
-        "OODA历史回放", log,
-        lambda: _night_ooda_replay(memory))
-
-    # ---- Task 7: 币圈趋势扫描 ----
-    results["crypto_scan"] = _night_task(
-        "币圈趋势扫描", log, _night_crypto_scan)
-
-    # ---- Task 8: 美股收盘分析 ----
-    results["us_stock_analysis"] = _night_task(
-        "美股收盘分析", log, _night_us_stock_analysis)
-
-    # ---- Task 9: 跨市场信号推演 ----
-    results["cross_market_signal"] = _night_task(
-        "跨市场信号推演", log, _night_cross_market)
-
-    # ---- Task 10: 开盘作战计划 ----
-    results["morning_prep"] = _night_task(
-        "开盘作战计划", log, _night_morning_prep)
+        for key, future in futures.items():
+            try:
+                results[key] = future.result(timeout=600)  # 整体10分钟兜底
+            except Exception as e:
+                name = parallel_tasks[key][0]
+                logger.error("[夜班] 并行任务 %s 异常: %s", name, e)
+                results[key] = {"status": "error", "error": str(e)}
 
     # ---- 汇总 ----
     end_time = datetime.now()
@@ -1692,11 +1991,16 @@ def run_night_shift() -> str:
 
 
 _NIGHT_TASK_TIMEOUT = {
-    "绩效考核": 120, "LLM深度复盘": 180, "批量回测验证": 600,
-    "Walk-Forward检测": 600, "ML模型训练": 300, "因子发现实验": 300, "策略参数进化": 300,
+    "绩效考核": 120, "LLM深度复盘": 180,
+    "批量回测验证": 300,       # 600→300 (快速模式不需要10分钟)
+    "Walk-Forward检测": 300,   # 600→300
+    "ML模型训练": 300, "因子发现实验": 300,
+    "策略参数进化": 120,       # 180→120
     "OODA历史回放": 120, "币圈趋势扫描": 180, "美股收盘分析": 180,
     "跨市场信号推演": 120, "开盘作战计划": 120,
 }
+# 超时/失败后不重试的任务 (重试也不会更快, 只浪费时间)
+_NO_RETRY_TASKS = {"批量回测验证", "Walk-Forward检测", "策略参数进化", "ML模型训练"}
 
 
 def _night_task(name: str, log: dict, func, retry: int = 2) -> dict:
@@ -1735,9 +2039,13 @@ def _night_task(name: str, log: dict, func, retry: int = 2) -> dict:
         t0 = _time.time()
         try:
             # 硬超时: 用线程池 submit + timeout
-            with ThreadPoolExecutor(max_workers=1) as pool:
-                future = pool.submit(func)
+            # 注意: 不用 with 语句, 避免 shutdown(wait=True) 阻塞
+            pool = ThreadPoolExecutor(max_workers=1)
+            future = pool.submit(func)
+            try:
                 result = future.result(timeout=hard_timeout)
+            finally:
+                pool.shutdown(wait=False, cancel_futures=True)
 
             elapsed = _time.time() - t0
             entry = {
@@ -1761,8 +2069,8 @@ def _night_task(name: str, log: dict, func, retry: int = 2) -> dict:
                         f"任务: {name}\n耗时: {elapsed:.0f}s (阈值 {timeout_sec}s)\n"
                         f"状态: 已完成但耗时过长",
                     )
-                except Exception:
-                    pass
+                except Exception as _exc:
+                    logger.debug("Suppressed exception: %s", _exc)
 
             log["tasks"][name] = entry
             _save_night_log(log)
@@ -1778,16 +2086,16 @@ def _night_task(name: str, log: dict, func, retry: int = 2) -> dict:
                 "attempt": attempt,
                 "error": err_msg,
             }
-            # 超时推送微信
+            # 超时直接放弃, 不重试 (GIL阻塞时超时不可靠, 重试只会更慢)
             try:
                 from notifier import notify_wechat_raw
                 notify_wechat_raw(
-                    "夜班任务卡死",
-                    f"任务: {name}\n状态: 超时被强杀 ({hard_timeout}s)\n"
-                    f"第 {attempt} 次尝试",
+                    "夜班任务超时",
+                    f"任务: {name}\n耗时: {elapsed:.0f}s (阈值{hard_timeout}s)\n已放弃",
                 )
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
+            break  # 超时永不重试
 
         except Exception as e:
             elapsed = _time.time() - t0
@@ -1799,9 +2107,14 @@ def _night_task(name: str, log: dict, func, retry: int = 2) -> dict:
             }
             logger.warning("[夜班] 失败: %s — %s (第%d次)", name, e, attempt)
 
-            # 代码 bug 不重试, 立即退出循环
+            # 代码 bug 不重试
             if isinstance(e, _NO_RETRY_ERRORS):
                 logger.error("[夜班] %s 是代码错误, 不重试", name)
+                break
+
+            # 不重试列表
+            if name in _NO_RETRY_TASKS:
+                logger.info("[夜班] %s 在不重试列表中, 跳过重试", name)
                 break
 
         # 失败了, 如果还有重试机会
@@ -1822,23 +2135,23 @@ def _night_heartbeat(task_name: str):
     try:
         from watchdog import update_heartbeat
         update_heartbeat()
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
     try:
         hb = safe_load(_NIGHT_LOG_PATH, default={})
         hb["_heartbeat"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         hb["_current_task"] = task_name
         safe_save(_NIGHT_LOG_PATH, hb)
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
 
 def _save_night_log(log: dict):
     """保存夜班进度"""
     try:
         safe_save(_NIGHT_LOG_PATH, log)
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.warning("Suppressed exception: %s", _exc)
 
 
 # ---- 夜班子任务实现 ----
@@ -1860,25 +2173,27 @@ def _night_llm_analysis(memory: dict, review: dict) -> str:
 
 
 def _night_batch_backtest() -> dict:
-    """子任务: 批量回测验证"""
+    """子任务: 批量回测验证 (夜班用快速模式, 只测2个活跃策略)"""
     try:
         from batch_backtest import run_batch_backtest
-        return run_batch_backtest()
+        # 夜班只测2个策略 + quick模式 (breakout已禁用, 不浪费时间)
+        core = ["auction", "dip_buy"]
+        return run_batch_backtest(strategies=core, quick=True)
     except ImportError:
         logger.debug("[夜班] batch_backtest 模块尚未构建")
         return {"status": "not_implemented"}
 
 
 def _night_walk_forward() -> dict:
-    """子任务: Walk-Forward 过拟合检测 (核心策略)"""
+    """子任务: Walk-Forward 过拟合检测 (2个活跃策略, 2窗口)"""
     try:
         from walk_forward import walk_forward_test
-        # 只测核心3策略 (全量太慢)
-        core_strategies = ["breakout", "auction", "afternoon"]
+        # 只测2个策略 × 2窗口 (breakout已禁用)
+        core_strategies = ["auction", "dip_buy"]
         results = {}
         for s in core_strategies:
             try:
-                r = walk_forward_test(s, n_windows=3, train_days=90, test_days=20)
+                r = walk_forward_test(s, n_windows=2, train_days=60, test_days=15)
                 risk = r.get("summary", {}).get("overfitting_risk", "unknown")
                 results[s] = risk
                 if risk == "high":
@@ -2198,6 +2513,29 @@ def _cli_events():
         print("event_bus 模块不可用")
 
 
+def _cli_decisions():
+    """显示决策日志"""
+    journal = safe_load(_DECISION_JOURNAL_PATH, default=[])
+    print(f"\n=== 决策日志 (最近20条, 共{len(journal)}条) ===")
+    for entry in journal[-20:]:
+        v = "Y" if entry.get("verified") else "N"
+        outcome = entry.get("outcome", "-")
+        print(f"  [{entry.get('date','')}] {entry.get('action','')} "
+              f"{entry.get('strategy','')} → 验证:{v} 结果:{outcome}")
+        print(f"    原因: {entry.get('reason', '')[:80]}")
+
+    # 准确率
+    memory = _load_memory()
+    meta = memory.get("meta", {})
+    d_acc = meta.get("decision_accuracy")
+    if d_acc is not None:
+        print(f"\n  决策准确率 (EMA): {d_acc:.1%}")
+        print(f"  累计验证: {meta.get('decision_total_verified', 0)} 次")
+        adaptive_t = meta.get("adaptive_consecutive_loss_threshold")
+        if adaptive_t is not None:
+            print(f"  自适应连亏阈值: {adaptive_t}")
+
+
 def _cli_pause(strategy_keyword: str):
     """手动暂停策略"""
     memory = _load_memory()
@@ -2240,6 +2578,8 @@ if __name__ == "__main__":
         _cli_agents()
     elif cmd == "events":
         _cli_events()
+    elif cmd == "decisions":
+        _cli_decisions()
     elif cmd == "pause" and arg:
         _cli_pause(arg)
     elif cmd == "resume" and arg:
@@ -2272,6 +2612,7 @@ if __name__ == "__main__":
         print("  python3 agent_brain.py insights      # 查看历史洞察")
         print("  python3 agent_brain.py agents        # 查看注册智能体")
         print("  python3 agent_brain.py events        # 查看事件总线")
+        print("  python3 agent_brain.py decisions     # 查看决策日志+准确率")
         print("  python3 agent_brain.py morning       # 推送早报")
         print("  python3 agent_brain.py night         # 手动运行夜班分析")
         print('  python3 agent_brain.py chat "问题"    # LLM 对话')

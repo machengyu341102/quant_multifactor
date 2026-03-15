@@ -138,8 +138,8 @@ def get_money_flow(code: str, days: int = 5) -> dict | None:
                     "buy_lg_amount": 0,
                     "sell_lg_amount": 0,
                 }
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     return None
 
@@ -251,8 +251,8 @@ def get_financials(code: str) -> dict | None:
                 "profit_growth": float(row[profit_col]) if profit_col else 0,
                 "roe": float(row[roe_col]) if roe_col else 0,
             }
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     return None
 
@@ -332,8 +332,8 @@ def get_daily_kline(code: str, days: int = 60):
         )
         if df is not None and not df.empty:
             return df
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # Tushare 备用
     df = _ts_call(

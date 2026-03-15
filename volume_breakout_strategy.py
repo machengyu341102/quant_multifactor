@@ -69,6 +69,13 @@ def _fetch_one_breakout(code, name_map, start_date, end_date):
         except ImportError:
             pass
 
+        # forge 因子缓存
+        try:
+            from factor_forge import cache_klines_for_forge
+            cache_klines_for_forge(code, df)
+        except ImportError:
+            pass
+
         rsi_vals = calc_rsi(closes, 14)
         rsi_now = rsi_vals[-1] if not np.isnan(rsi_vals[-1]) else 50
 
@@ -228,14 +235,12 @@ def calc_breakout_scores(df, hot_names, hot_leaders):
                 df.at[idx, "s_hot"] = 0.5
     df["s_hot"] = _zscore(df["s_hot"])
 
-    # --- s_turnover (5%): 换手率 2%-8% 最优 ---
+    # --- s_turnover (5%): 连续换手率zscore (旧版离散分箱导致全0) ---
     if "turnover" in df.columns:
-        df["s_turnover"] = df["turnover"].apply(
-            lambda x: 1.0 if 2 <= x <= 8 else (0.5 if 1 <= x < 2 or 8 < x <= 15 else 0.0)
-        )
+        _tr = pd.to_numeric(df["turnover"], errors="coerce").fillna(0).clip(0, 30)
+        df["s_turnover"] = _zscore(_tr) if _tr.std() > 0.01 else 0
     else:
-        df["s_turnover"] = 0.5
-    df["s_turnover"] = _zscore(df["s_turnover"])
+        df["s_turnover"] = 0
 
     # --- s_resistance_break (5%): 接近/突破20日新高 ---
     df["s_resistance_break"] = df["resistance_ratio"].apply(
@@ -250,7 +255,7 @@ def calc_breakout_scores(df, hot_names, hot_leaders):
 #  主策略流程
 # ================================================================
 
-def run_breakout(top_n=None):
+def run_breakout(top_n=None, backtest_date=None):
     """放量突破策略主流程"""
     if top_n is None:
         top_n = TOP_N
@@ -259,7 +264,8 @@ def run_breakout(top_n=None):
     t0 = time.time()
     print("=" * 65)
     print("  盘中策略: 10:00 放量突破选股")
-    print(f"  运行时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    run_dt = backtest_date if backtest_date else datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    print(f"  运行时间: {run_dt}")
     print("=" * 65)
 
     # ---- 第1步: 获取数据 ----
@@ -297,10 +303,10 @@ def run_breakout(top_n=None):
         print("\n  初筛后无满足条件的标的, 策略结束")
         return None
 
-    # 取量比最高的 TOP 50 进入精选
-    if len(df) > 50:
-        df = df.nlargest(50, "volume_ratio")
-        print(f"  取量比 TOP 50 进入精选")
+    # 取量比最高的 TOP 150 进入精选 (50→150, 增加学习样本)
+    if len(df) > 150:
+        df = df.nlargest(150, "volume_ratio")
+        print(f"  取量比 TOP 150 进入精选")
     else:
         print(f"  全部 {len(df)} 只进入精选")
 
@@ -362,7 +368,7 @@ def run_breakout(top_n=None):
         weights = tuned.get("weights", params["weights"])
     except Exception:
         weights = params["weights"]
-    selected, full_df = score_and_rank(tech_df, weights, top_n=top_n)
+    selected, full_df = score_and_rank(tech_df, weights, top_n=top_n, strategy="放量突破选股")
 
     if selected.empty:
         print("  打分排名后无标的, 策略结束")

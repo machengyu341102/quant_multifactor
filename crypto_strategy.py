@@ -40,34 +40,12 @@ except ImportError:
     TOP_N = 3
 
 # ================================================================
-#  币种池 (20+主流币, USDT交易对)
+#  币种池 (仅2个核心币种, 用于A股情绪参考)
 # ================================================================
 
 CRYPTO_POOL = {
     "BTCUSDT":  {"name": "比特币",     "symbol": "BTC"},
     "ETHUSDT":  {"name": "以太坊",     "symbol": "ETH"},
-    "SOLUSDT":  {"name": "Solana",     "symbol": "SOL"},
-    "BNBUSDT":  {"name": "BNB",        "symbol": "BNB"},
-    "XRPUSDT":  {"name": "瑞波币",     "symbol": "XRP"},
-    "ADAUSDT":  {"name": "Cardano",    "symbol": "ADA"},
-    "DOGEUSDT": {"name": "狗狗币",     "symbol": "DOGE"},
-    "AVAXUSDT": {"name": "Avalanche",  "symbol": "AVAX"},
-    "DOTUSDT":  {"name": "波卡",       "symbol": "DOT"},
-    "LINKUSDT": {"name": "Chainlink",  "symbol": "LINK"},
-    "MATICUSDT":{"name": "Polygon",    "symbol": "MATIC"},
-    "UNIUSDT":  {"name": "Uniswap",    "symbol": "UNI"},
-    "ATOMUSDT": {"name": "Cosmos",     "symbol": "ATOM"},
-    "LTCUSDT":  {"name": "莱特币",     "symbol": "LTC"},
-    "ETCUSDT":  {"name": "以太经典",   "symbol": "ETC"},
-    "NEARUSDT": {"name": "NEAR",       "symbol": "NEAR"},
-    "APTUSDT":  {"name": "Aptos",      "symbol": "APT"},
-    "FILUSDT":  {"name": "Filecoin",   "symbol": "FIL"},
-    "ARUSDT":   {"name": "Arweave",    "symbol": "AR"},
-    "OPUSDT":   {"name": "Optimism",   "symbol": "OP"},
-    "ARBUSDT":  {"name": "Arbitrum",   "symbol": "ARB"},
-    "SUIUSDT":  {"name": "Sui",        "symbol": "SUI"},
-    "SEIUSDT":  {"name": "Sei",        "symbol": "SEI"},
-    "TIAUSDT":  {"name": "Celestia",   "symbol": "TIA"},
 }
 
 BINANCE_KLINE_URL = "https://api.binance.com/api/v3/klines"

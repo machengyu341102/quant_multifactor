@@ -9,7 +9,8 @@ ML 因子选股模型
   - 输出: 预测得分, 可与规则打分融合
 
 工作流:
-  1. 从 trade_journal + scorecard 构建训练数据
+  1. V4.0 穿透式提取: 直接从 SQLite scorecard DB 读取 (支持10万+)
+     回退: trade_journal + scorecard JSON 关联
   2. 特征工程 (从 factor_scores 提取)
   3. Walk-Forward 分窗训练+验证
   4. 实盘: 对候选股打分, 输出预测收益/概率
@@ -69,7 +70,7 @@ try:
 except ImportError:
     pass
 
-# 特征列 (从 factor_scores + 上下文中提取)
+# 基础特征列 (硬编码的原始数值特征)
 FEATURE_COLUMNS = [
     "rsi", "volatility",
     "vol_ratio", "consecutive_vol", "pullback_5d", "pullback_20d",
@@ -82,6 +83,17 @@ EXTRA_FEATURES = [
     "s_rsi", "s_volatility",
 ]
 
+# 特征工程 (交互特征)
+try:
+    from feature_engineer import (
+        expand_features as _fe_expand,
+        apply_saved_features as _fe_apply,
+        update_feature_importance as _fe_update_importance,
+    )
+    _HAS_FE = True
+except ImportError:
+    _HAS_FE = False
+
 
 # ================================================================
 #  数据构建
@@ -89,15 +101,113 @@ EXTRA_FEATURES = [
 
 def build_training_data(lookback_days: int = 180,
                         strategy: str = None) -> pd.DataFrame:
-    """从 trade_journal + scorecard 构建训练数据
+    """V4.0 穿透式提取: 直接从 scorecard DB 构建训练数据
 
-    关联键: (date, code, strategy)
-    特征: factor_scores 中的各因子
-    标签: net_return_pct (次日收益率)
+    优先从 SQLite scorecard 表读取 (10万+量级),
+    解析 factor_scores JSON 展开为特征列.
+    回退: 如 DB 不可用, 走旧的 journal+scorecard 关联路径.
 
     Returns:
         DataFrame with columns: [features..., target, date, strategy]
     """
+    # === V4.0 穿透式提取: 直接从 DB scorecard 读取 ===
+    df = _build_from_db(lookback_days, strategy)
+    if df is not None and len(df) >= 20:
+        logger.info("[ML] V4穿透提取: %d 条 (%d 个策略)",
+                    len(df), df["strategy"].nunique())
+        return df
+
+    # === 回退: 旧路径 (journal + scorecard 关联) ===
+    logger.info("[ML] DB穿透数据不足, 回退 journal+scorecard 关联路径")
+    return _build_from_journal(lookback_days, strategy)
+
+
+def _build_from_db(lookback_days: int, strategy: str = None) -> pd.DataFrame | None:
+    """V4.0 穿透式: 直接从 SQLite scorecard 表提取训练数据"""
+    import sqlite3, json as _json
+    try:
+        if _SCORECARD_PATH != _SCORECARD_DEFAULT:
+            return None  # test mode, 不走 DB
+        from db_store import _DB_PATH
+    except Exception:
+        _db = os.path.join(_DIR, "quant_data.db")
+        if not os.path.exists(_db):
+            return None
+        _DB_PATH = _db
+
+    # 噪声过滤阈值: |return| < 此值视为噪声, 不参与训练
+    noise_threshold = ML_PARAMS.get("noise_filter_pct", 0.05)
+
+    try:
+        conn = sqlite3.connect(_DB_PATH)
+        where_parts = ["net_return_pct != 0",
+                       f"abs(net_return_pct) > {noise_threshold}"]
+        params = []
+        if strategy:
+            where_parts.append("strategy = ?")
+            params.append(strategy)
+        if lookback_days:
+            cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
+            where_parts.append("rec_date >= ?")
+            params.append(cutoff)
+
+        where = "WHERE " + " AND ".join(where_parts)
+        sql = f"SELECT rec_date, code, strategy, factor_scores, net_return_pct, score FROM scorecard {where}"
+        raw = pd.read_sql(sql, conn, params=params)
+        conn.close()
+    except Exception as e:
+        logger.warning("[ML] DB穿透读取失败: %s", e)
+        return None
+
+    if raw.empty:
+        return None
+
+    logger.info("[ML] 噪声过滤: %d → %d 条 (阈值 %.2f%%)",
+                len(raw) + int(len(raw) * 0.5), len(raw), noise_threshold)
+
+    rows = []
+    for _, rec in raw.iterrows():
+        try:
+            fs_raw = rec["factor_scores"]
+            if not fs_raw:
+                continue
+            fs = _json.loads(fs_raw) if isinstance(fs_raw, str) else fs_raw
+            if not isinstance(fs, dict) or not fs:
+                continue
+
+            row = {
+                "date": rec["rec_date"],
+                "code": rec["code"],
+                "strategy": rec["strategy"],
+                "target": float(rec["net_return_pct"]),
+                "rule_score": float(rec["score"]) if rec.get("score") else 0,
+            }
+            # 展开所有因子分数为特征列
+            for col in FEATURE_COLUMNS + EXTRA_FEATURES:
+                row[col] = fs.get(col, np.nan)
+            for col, val in fs.items():
+                if col not in row:
+                    row[col] = val
+            rows.append(row)
+        except Exception:
+            continue
+
+    if not rows:
+        return None
+
+    df = pd.DataFrame(rows)
+
+    # 编码布尔特征
+    for col in ["above_ma60", "ma_aligned", "consecutive_vol"]:
+        if col in df.columns:
+            df[col] = df[col].astype(float)
+
+    return df
+
+
+def _build_from_journal(lookback_days: int,
+                        strategy: str = None) -> pd.DataFrame:
+    """旧路径: 从 trade_journal + scorecard 关联构建 (回退用)"""
     cutoff = (date.today() - timedelta(days=lookback_days)).isoformat()
 
     journal = safe_load(_JOURNAL_PATH, default=[])
@@ -110,7 +220,6 @@ def build_training_data(lookback_days: int = 180,
         scorecard = safe_load(_SCORECARD_PATH, default=[])
         scorecard = [r for r in scorecard if r.get("rec_date", "") >= cutoff]
 
-    # 建 scorecard 索引
     sc_index = {}
     for rec in scorecard:
         key = (rec.get("rec_date", ""), rec.get("code", ""), rec.get("strategy", ""))
@@ -127,7 +236,6 @@ def build_training_data(lookback_days: int = 180,
 
         regime = entry.get("regime", {})
         regime_score = regime.get("score", 0)
-        regime_type = regime.get("regime", "unknown")
 
         for pick in entry.get("picks", []):
             code = pick.get("code", "")
@@ -148,9 +256,11 @@ def build_training_data(lookback_days: int = 180,
                 "regime_score": regime_score,
             }
 
-            # 从 factor_scores 提取特征
             for col in FEATURE_COLUMNS + EXTRA_FEATURES:
                 row[col] = factor_scores.get(col, np.nan)
+            for col, val in factor_scores.items():
+                if col not in row:
+                    row[col] = val
 
             rows.append(row)
 
@@ -159,23 +269,35 @@ def build_training_data(lookback_days: int = 180,
 
     df = pd.DataFrame(rows)
 
-    # 编码布尔特征
     for col in ["above_ma60", "ma_aligned", "consecutive_vol"]:
         if col in df.columns:
             df[col] = df[col].astype(float)
 
-    # 编码 regime
     regime_map = {"bear": -1, "neutral": 0, "bull": 1}
     if "regime_type" in df.columns:
         df["regime_encoded"] = df["regime_type"].map(regime_map).fillna(0)
 
-    logger.info("[ML] 训练数据: %d 条 (%d 个策略)",
+    logger.info("[ML] Journal关联路径: %d 条 (%d 个策略)",
                 len(df), df["strategy"].nunique())
     return df
 
 
-def _get_feature_columns(df: pd.DataFrame) -> list[str]:
-    """获取可用的特征列"""
+def _get_feature_columns(df: pd.DataFrame,
+                         use_fe: bool | None = None) -> list[str]:
+    """获取可用的特征列
+
+    如果启用特征工程, 自动发现所有 s_* 因子 + 生成交互特征.
+    否则回退到静态列表.
+    """
+    if use_fe is None:
+        use_fe = ML_PARAMS.get("use_feature_engineering", False) and _HAS_FE
+
+    if use_fe:
+        # 使用 feature_engineer 动态发现 + 交互
+        from feature_engineer import discover_factor_columns
+        return discover_factor_columns(df)
+
+    # 静态回退
     available = []
     all_possible = FEATURE_COLUMNS + EXTRA_FEATURES + ["total_score", "regime_score"]
     for col in all_possible:
@@ -277,7 +399,17 @@ def train_model(strategy: str = None,
         logger.warning("[ML] 训练数据不足: %d 条 (需要 %d)", len(df), min_samples)
         return {"error": "insufficient_data", "samples": len(df)}
 
-    feature_cols = _get_feature_columns(df)
+    use_fe = ML_PARAMS.get("use_feature_engineering", False) and _HAS_FE
+
+    # 特征工程: 自动交互特征
+    feature_config = None
+    if use_fe:
+        df, feature_cols = _fe_expand(df, save_config=True)
+        feature_config_path = os.path.join(_DIR, "feature_config.json")
+        feature_config = safe_load(feature_config_path, default={})
+    else:
+        feature_cols = _get_feature_columns(df, use_fe=False)
+
     if len(feature_cols) < 3:
         return {"error": "insufficient_features", "features": len(feature_cols)}
 
@@ -310,25 +442,47 @@ def train_model(strategy: str = None,
         for col, imp in zip(feature_cols, model.feature_importances_):
             importance[col] = round(float(imp), 4)
 
-    # 保存模型
+    # 持久化特征重要性趋势
+    if use_fe and importance:
+        try:
+            _fe_update_importance(importance)
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
+
+    # 保存模型 (含特征配置, 预测时可复现交互特征)
     os.makedirs(_MODEL_DIR, exist_ok=True)
     model_name = strategy or "all"
     model_path = os.path.join(_MODEL_DIR, f"ml_{model_name}.pkl")
     with open(model_path, "wb") as f:
-        pickle.dump({"model": model, "features": feature_cols, "task": task}, f)
+        pickle.dump({
+            "model": model,
+            "features": feature_cols,
+            "task": task,
+            "feature_config": feature_config,
+            "metrics": metrics,
+            "training_samples": len(df),
+            "importance": importance,
+            "trained_at": datetime.now().isoformat(),
+        }, f)
+
+    # 统计交互特征数量
+    n_interaction = sum(1 for c in feature_cols if c.startswith("ix_"))
+    n_raw = len(feature_cols) - n_interaction
 
     result = {
         "strategy": strategy or "all",
         "timestamp": datetime.now().isoformat(),
         "training_samples": len(df),
         "features": feature_cols,
+        "n_raw_features": n_raw,
+        "n_interaction_features": n_interaction,
         "metrics": metrics,
         "feature_importance": importance,
         "model_path": model_path,
     }
 
-    logger.info("[ML] 训练完成: %d 条, %d 特征, %s",
-                len(df), len(feature_cols), metrics)
+    logger.info("[ML] 训练完成: %d 条, %d 特征 (%d原始+%d交互), %s",
+                len(df), len(feature_cols), n_raw, n_interaction, metrics)
 
     return result
 
@@ -353,7 +507,11 @@ def evaluate_walk_forward(strategy: str = None,
     if len(df) < min_samples:
         return {"error": "insufficient_data", "samples": len(df)}
 
-    feature_cols = _get_feature_columns(df)
+    use_fe = ML_PARAMS.get("use_feature_engineering", False) and _HAS_FE
+    if use_fe:
+        df, feature_cols = _fe_expand(df, save_config=False)
+    else:
+        feature_cols = _get_feature_columns(df, use_fe=False)
     if len(feature_cols) < 3:
         return {"error": "insufficient_features"}
 
@@ -503,11 +661,21 @@ def predict_scores(candidates: list[dict],
     Returns:
         candidates 列表, 每项新增 ml_score 字段
     """
+    _MIN_TRAINING_FOR_PREDICT = 100  # 训练样本 < 此值的模型不可信, 回退全局
     model_name = strategy or "all"
     model_path = os.path.join(_MODEL_DIR, f"ml_{model_name}.pkl")
 
-    if not os.path.exists(model_path):
-        # 没有模型, 返回原始数据
+    # 优先使用策略专属模型, 回退到全局模型
+    if not os.path.exists(model_path) and strategy:
+        fallback_path = os.path.join(_MODEL_DIR, "ml_all.pkl")
+        if os.path.exists(fallback_path):
+            model_path = fallback_path
+            logger.info("[ML] 策略 %s 无专属模型, 回退全局模型", strategy)
+        else:
+            for c in candidates:
+                c["ml_score"] = 0
+            return candidates
+    elif not os.path.exists(model_path):
         for c in candidates:
             c["ml_score"] = 0
         return candidates
@@ -515,13 +683,59 @@ def predict_scores(candidates: list[dict],
     with open(model_path, "rb") as f:
         saved = pickle.load(f)
 
+    # 样本量守卫: 训练不足的模型不可信 → 回退全局
+    n_train = saved.get("training_samples", 0)
+    if n_train and n_train < _MIN_TRAINING_FOR_PREDICT and strategy:
+        fallback_path = os.path.join(_MODEL_DIR, "ml_all.pkl")
+        if os.path.exists(fallback_path) and model_path != fallback_path:
+            logger.info("[ML] %s 训练仅 %d 条, 回退全局模型", strategy, n_train)
+            with open(fallback_path, "rb") as f:
+                saved = pickle.load(f)
+        else:
+            logger.info("[ML] %s 训练仅 %d 条, 跳过预测", strategy, n_train)
+            for c in candidates:
+                c["ml_score"] = 0
+            return candidates
+
     model = saved["model"]
     feature_cols = saved["features"]
     task = saved.get("task", "regression")
+    feature_config = saved.get("feature_config")
 
+    # 如果模型包含交互特征, 用 feature_engineer 复现
+    has_interactions = any(c.startswith("ix_") for c in feature_cols)
+    if has_interactions and _HAS_FE and feature_config:
+        try:
+            fe_df, _ = _fe_apply(candidates, feature_config)
+            for i, c in enumerate(candidates):
+                features = []
+                for col in feature_cols:
+                    if col in fe_df.columns and i < len(fe_df):
+                        val = fe_df.iloc[i].get(col, 0)
+                    else:
+                        fs = c.get("factor_scores", {})
+                        val = fs.get(col, c.get(col, 0))
+                    if isinstance(val, bool):
+                        val = float(val)
+                    features.append(float(val) if val is not None else 0.0)
+
+                x = np.array([features])
+                try:
+                    if task == "classification":
+                        proba = model.predict_proba(x)[0]
+                        c["ml_score"] = round(float(proba[1]) if len(proba) > 1 else 0.5, 4)
+                    else:
+                        pred = model.predict(x)[0]
+                        c["ml_score"] = round(float(pred), 4)
+                except Exception:
+                    c["ml_score"] = 0
+            return candidates
+        except Exception:
+            logger.warning("[ML] 交互特征复现失败, 回退到原始特征")
+
+    # 原始路径 (无交互特征)
     for c in candidates:
         fs = c.get("factor_scores", {})
-        # 构建特征向量
         features = []
         for col in feature_cols:
             val = fs.get(col, c.get(col, 0))
@@ -546,33 +760,64 @@ def predict_scores(candidates: list[dict],
 
 def fuse_scores(candidates: list[dict],
                 ml_weight: float = None) -> list[dict]:
-    """融合 ML 分数和规则分数
+    """融合 ML 分数和规则分数 (rank-percentile 归一化)
 
-    最终分数 = ml_weight * ml_score + (1 - ml_weight) * rule_score
-
-    Args:
-        candidates: predict_scores() 的输出
-        ml_weight: ML 权重 (0-1)
+    1. rule_score 和 ml_score 各自做 batch 内 rank 百分位 → [0,1]
+    2. 置信度门控: ML 预测不够自信时降低 ML 权重
+    3. fused = eff_w * ml_rank + (1 - eff_w) * rule_rank
 
     Returns:
-        candidates, 每项新增 fused_score 字段
+        candidates, 每项新增 fused_score / ml_confidence 字段
     """
     if ml_weight is None:
         ml_weight = ML_PARAMS.get("ml_weight", 0.4)
 
-    for c in candidates:
-        ml_s = c.get("ml_score", 0)
-        rule_s = c.get("total_score", c.get("score", 0))
+    confidence_threshold = ML_PARAMS.get("confidence_threshold", 0.55)
+    n = len(candidates)
 
-        # 归一化 ML 分数到 [0, 1] 区间 (如果是回归预测值)
-        # 简单映射: 预测收益 > 0 → 正分
+    if n == 0:
+        return candidates
+
+    # 1. 提取 ml_score 和 rule_score
+    for c in candidates:
+        c["_ml_raw"] = c.get("ml_score", 0)
+        c["_rule_raw"] = c.get("total_score", c.get("score", 0))
+
+    # 2. Rank 百分位归一化 — 消除尺度差异
+    def _rank_pct(vals):
+        """返回每个值的 rank 百分位 [0, 1]"""
+        if len(vals) <= 1:
+            return [0.5] * len(vals)
+        sorted_idx = sorted(range(len(vals)), key=lambda i: vals[i])
+        ranks = [0.0] * len(vals)
+        for rank, idx in enumerate(sorted_idx):
+            ranks[idx] = rank / (len(vals) - 1)
+        return ranks
+
+    ml_ranks = _rank_pct([c["_ml_raw"] for c in candidates])
+    rule_ranks = _rank_pct([c["_rule_raw"] for c in candidates])
+
+    # 3. ML 原始概率 → 置信度 (分类: 远离0.5=自信)
+    for i, c in enumerate(candidates):
+        ml_s = c["_ml_raw"]
+
         if ML_PARAMS.get("task") == "regression":
-            ml_normalized = max(0, min(1, (ml_s + 5) / 10))  # [-5, 5] → [0, 1]
+            ml_normalized = max(0, min(1, (ml_s + 5) / 10))
         else:
-            ml_normalized = ml_s  # 分类概率已经是 [0, 1]
+            ml_normalized = ml_s
+
+        confidence = abs(ml_normalized - 0.5) * 2  # [0, 1]
+        # 降低门控阈值: 0.55 → 门控线 = (0.55-0.5)*2 = 0.10
+        gate = (confidence_threshold - 0.5) * 2
+        effective_ml_weight = ml_weight * min(confidence / 0.5, 1.0) if confidence >= gate else ml_weight * 0.1
 
         c["fused_score"] = round(
-            ml_weight * ml_normalized + (1 - ml_weight) * rule_s, 4)
+            effective_ml_weight * ml_ranks[i] + (1 - effective_ml_weight) * rule_ranks[i], 4)
+        c["ml_confidence"] = round(confidence, 4)
+
+        # 清理临时字段
+        del c["_ml_raw"]
+        del c["_rule_raw"]
 
     return candidates
 
@@ -648,6 +893,62 @@ def generate_ml_report(eval_result: dict = None) -> str:
 
 
 # ================================================================
+#  策略级专属模型训练
+# ================================================================
+
+# 策略名称映射 (strategy_loader 注册名 → journal 中的中文名)
+STRATEGY_NAMES = [
+    "隔夜选股",
+    "集合竞价选股", "尾盘短线选股",
+    "低吸回调选股", "缩量整理选股",
+    "放量突破选股", "趋势跟踪选股",
+    "板块轮动选股", "事件驱动选股",
+    "均值回归选股",
+]
+
+
+def train_all_strategies(lookback_days: int = 1500,
+                         min_samples: int = None) -> dict:
+    """为全量 8 大策略训练 L5 级专家模型 (支持 10万+ 样本)"""
+    print(f"🚀 启动 V4.0 全维度专家重训 (回顾: {lookback_days}天)...")
+    
+    if min_samples is None:
+        min_samples = 50
+
+    strategy_results = {}
+    trained = 0
+    skipped = 0
+
+    # 包含除了放量突破以外的所有策略，或者强制全部跑一遍
+    for strat_name in STRATEGY_NAMES:
+        print(f"\n--- 正在攻克专家模型: {strat_name} ---")
+        result = train_model(strategy=strat_name, lookback_days=lookback_days)
+        strategy_results[strat_name] = result
+        
+        if "error" in result:
+            skipped += 1
+            print(f"  ⚠️ {strat_name} 暂无足够样本")
+        else:
+            trained += 1
+            print(f"  ✅ {strat_name}: {result['training_samples']}条样本, 准确率 {result['metrics']['accuracy']:.2%}")
+
+    # 全局模型
+    print("\n--- 训练全局 Fallback 模型 ---")
+    global_result = train_model(strategy=None, lookback_days=lookback_days)
+    
+    summary = f"专家模式: 已激活 {trained} 个策略模型, 跳过 {skipped} 个."
+    print(f"\n🏆 {summary}")
+    
+    return {
+        "strategy_results": strategy_results, 
+        "global_result": global_result, 
+        "trained": trained,
+        "skipped": skipped,
+        "summary": summary
+    }
+
+
+# ================================================================
 #  持久化
 # ================================================================
 
@@ -673,14 +974,26 @@ if __name__ == "__main__":
         if "error" in result:
             print(f"训练失败: {result['error']}")
         else:
+            n_raw = result.get("n_raw_features", len(result["features"]))
+            n_ix = result.get("n_interaction_features", 0)
             print(f"训练完成: {result['training_samples']} 条")
-            print(f"特征: {result['features']}")
+            print(f"特征: {len(result['features'])} 个 ({n_raw}原始 + {n_ix}交互)")
             print(f"指标: {result['metrics']}")
-            print(f"\n特征重要性:")
-            for f, imp in sorted(result.get("feature_importance", {}).items(),
-                                  key=lambda x: x[1], reverse=True):
+            print(f"\n特征重要性 (TOP 20):")
+            sorted_imp = sorted(result.get("feature_importance", {}).items(),
+                                key=lambda x: x[1], reverse=True)
+            for f, imp in sorted_imp[:20]:
                 bar = "█" * int(imp * 50)
-                print(f"  {f:>20}: {imp:.4f} {bar}")
+                tag = " [交互]" if f.startswith("ix_") else ""
+                print(f"  {f:>30}: {imp:.4f} {bar}{tag}")
+
+    elif mode == "train_all":
+        result = train_all_strategies()
+        print(result["summary"])
+        for strat, sr in result.get("strategy_results", {}).items():
+            status = "OK" if "error" not in sr else sr["error"]
+            n = sr.get("training_samples", 0)
+            print(f"  {strat:　<12}: {status} ({n}条)")
 
     elif mode == "evaluate":
         result = evaluate_walk_forward()

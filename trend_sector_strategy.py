@@ -18,9 +18,12 @@ import numpy as np
 from datetime import datetime, timedelta
 from concurrent.futures import as_completed
 from resource_manager import get_pool
+import logging
 import warnings
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -136,6 +139,13 @@ def _fetch_one_trend_kline(code, name_map, start_date, end_date):
         lows = df["low"].values.astype(float)
         vol_col = next((c for c in ["成交量", "volume", "amount"] if c in df.columns), "amount")
         volumes = df[vol_col].values.astype(float)
+
+        # forge 因子缓存
+        try:
+            from factor_forge import cache_klines_for_forge
+            cache_klines_for_forge(code, df)
+        except ImportError:
+            pass
 
         # MA系列
         ma5 = calc_ma(closes, 5)
@@ -340,7 +350,7 @@ def get_trend_follow_recommendations(top_n=None):
 
     # 取成交额 TOP 100
     if "amount" in df.columns:
-        df = df.nlargest(100, "amount")
+        df = df.nlargest(200, "amount")
 
     # 2. 拉日K计算趋势指标
     tech_records = _fetch_trend_data(df["code"].tolist(), name_map)
@@ -358,9 +368,14 @@ def get_trend_follow_recommendations(top_n=None):
         print("  评分后无候选")
         return []
 
-    # 4. 排名
-    weights = TREND_FOLLOW_PARAMS["weights"]
-    selected, _ = score_and_rank(scored_df, weights, top_n=top_n * 2)
+    # 4. 排名 — 优先使用在线学习调优后的权重
+    try:
+        from auto_optimizer import get_tunable_params
+        tuned = get_tunable_params("trend_follow")
+        weights = tuned.get("weights", TREND_FOLLOW_PARAMS["weights"])
+    except Exception:
+        weights = TREND_FOLLOW_PARAMS["weights"]
+    selected, _ = score_and_rank(scored_df, weights, top_n=top_n * 2, strategy="趋势跟踪选股")
 
     # 5. 新闻排雷
     try:
@@ -391,9 +406,11 @@ def get_trend_follow_recommendations(top_n=None):
         labels.append(f"持仓T+{holding_days}")
         try:
             labels.extend(format_enhanced_labels(row))
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
+        # 附带选股因子分数 (供 ML 训练)
+        factor_scores = {c: float(row[c]) for c in row.index if c.startswith("s_") and pd.notna(row.get(c))}
         results.append({
             "code": code,
             "name": name,
@@ -402,6 +419,7 @@ def get_trend_follow_recommendations(top_n=None):
             "reason": " | ".join(labels),
             "atr": float(row.get("atr", 0)),
             "holding_days": holding_days,
+            "factor_scores": factor_scores,
         })
 
     print(f"\n  趋势跟踪推荐: {len(results)} 只 (持仓T+{holding_days})")
@@ -526,19 +544,23 @@ def get_sector_rotation_recommendations(top_n=None):
         for _, row in spot_df.iterrows():
             name_map[row["code"]] = row["name"]
 
-        # 基础过滤 (不限股池)
+        # 基础过滤
         df = spot_df.copy()
         df["pct_chg"] = (df["price"] - df["prev_close"]) / df["prev_close"] * 100
         df = df[df["price"] > 0].copy()
         df = df[~df["name"].str.contains("ST|\\*ST", na=False)].copy()
-        df = df[df["pct_chg"].abs() < 9.8].copy()
+        # 跟涨过滤: 排除涨停/跌的, 只要 0 < 涨幅 < 板块涨幅*0.8
+        sector_pct = sector_info["pct"]
+        df = df[df["pct_chg"] > 0].copy()
+        df = df[df["pct_chg"] < 9.8].copy()
+        if sector_pct > 0:
+            df = df[df["pct_chg"] < sector_pct * 0.8].copy()
 
         if df.empty:
             continue
 
-        # 评分: 涨幅 + 量比 + 成交额
         df["sector_name"] = sector_name
-        df["sector_pct"] = sector_info["pct"]
+        df["sector_pct"] = sector_pct
         df["sector_rank"] = sector_info["rank"]
 
         # 量比估算
@@ -553,16 +575,36 @@ def get_sector_rotation_recommendations(top_n=None):
         df["s_sector_momentum"] = (1 - sector_info["rank"] / max_rank) if max_rank > 0 else 0.5
 
         # s_sector_flow: 板块资金 (简化: 用板块涨幅代替)
-        df["s_sector_flow"] = (sector_info["pct"] / 5).clip(0, 1) if sector_info["pct"] > 0 else 0
+        df["s_sector_flow"] = (sector_pct / 5).clip(0, 1) if sector_pct > 0 else 0
 
         # s_sector_breadth: 板块广度 (上涨占比)
         up_ratio = (df["pct_chg"] > 0).mean()
         df["s_sector_breadth"] = float(up_ratio)
 
-        # s_leader_score: 龙头评分 (个股涨幅 + 量比)
-        pct_rank = df["pct_chg"].rank(pct=True)
+        # s_follow_potential: 跟涨潜力评分 (替代 s_leader_score)
+        # gap_score: 补涨空间 = (板块涨幅 - 个股涨幅) / 板块涨幅
+        gap_score = ((sector_pct - df["pct_chg"]) / sector_pct).clip(0, 1) if sector_pct > 0 else 0.5
+        # vol_rank: 成交额排名百分位
         vol_rank = df["volume_ratio"].rank(pct=True)
-        df["s_leader_score"] = pct_rank * 0.6 + vol_rank * 0.4
+        # position_score: 盘中位置偏强 (price - low) / (high - low)
+        rng = df["high"] - df["low"] if "high" in df.columns and "low" in df.columns else None
+        if rng is not None:
+            position_score = ((df["price"] - df["low"]) / rng.replace(0, np.nan)).fillna(0.5).clip(0, 1)
+        else:
+            position_score = 0.5
+        # turnover_score: 换手 3~8% 最优
+        if "turnover" in df.columns:
+            turnover_score = df["turnover"].apply(
+                lambda t: 1.0 if 3 <= t <= 8 else (0.6 if (1 <= t < 3 or 8 < t <= 12) else 0.2)
+            )
+        else:
+            turnover_score = 0.5
+        df["s_follow_potential"] = (
+            gap_score * 0.35
+            + vol_rank * 0.30
+            + position_score * 0.20
+            + turnover_score * 0.15
+        )
 
         # s_relative_strength: 相对大盘强度 (用个股涨幅)
         df["s_relative_strength"] = (df["pct_chg"] / 5).clip(0, 1)
@@ -580,14 +622,65 @@ def get_sector_rotation_recommendations(top_n=None):
     combined = pd.concat(all_candidates, ignore_index=True)
     print(f"  合并候选: {len(combined)} 只 (来自 {len(all_candidates)} 个板块)")
 
-    # 3. 打分排名 (每板块选 picks_per_sector 只)
-    weights = SECTOR_ROTATION_PARAMS["weights"]
+    # 3. 打分排名 (每板块选 picks_per_sector 只) — 优先使用在线学习调优后的权重
+    try:
+        from auto_optimizer import get_tunable_params
+        tuned = get_tunable_params("sector_rotation")
+        weights = tuned.get("weights", SECTOR_ROTATION_PARAMS["weights"])
+    except Exception:
+        weights = SECTOR_ROTATION_PARAMS["weights"]
     combined["total_score"] = 0
     for col, w in weights.items():
         if col in combined.columns:
             combined["total_score"] += combined[col].fillna(0) * w
 
+    # ML 融合: 规则分 + ML预测 → fused_score
+    try:
+        from ml_factor_model import predict_scores, fuse_scores
+        ml_cands = []
+        for _, row in combined.iterrows():
+            fs = {c: float(row[c]) for c in row.index
+                  if c.startswith("s_") and pd.notna(row.get(c))}
+            ml_cands.append({
+                "code": row.get("code", ""),
+                "factor_scores": fs,
+                "total_score": float(row.get("total_score", 0)),
+            })
+        ml_cands = predict_scores(ml_cands, strategy="板块轮动选股")
+        ml_cands = fuse_scores(ml_cands)
+        ml_map = {c["code"]: c for c in ml_cands if c.get("code")}
+        for idx, row in combined.iterrows():
+            info = ml_map.get(row.get("code", ""), {})
+            if info.get("fused_score") is not None:
+                combined.at[idx, "total_score"] = info["fused_score"]
+        ml_active = sum(1 for c in ml_cands if abs(c.get("ml_score", 0)) > 0.001)
+        if ml_active > 0:
+            print(f"  [ML融合] {ml_active}/{len(ml_cands)} 只获得ML预测 (策略: 板块轮动选股)")
+    except ImportError:
+        pass
+    except Exception as e:
+        print(f"  [ML融合跳过] {e}")
+
     combined = combined.sort_values("total_score", ascending=False)
+
+    # 全量候选写入缓冲区 (实盘数据采集)
+    try:
+        import intraday_strategy as _is
+        _is._scored_buffer = []
+        for _, row in combined.iterrows():
+            fs = {c: float(row[c]) for c in row.index
+                  if c.startswith("s_") and pd.notna(row.get(c))}
+            if not fs:
+                continue
+            _is._scored_buffer.append({
+                "code": row.get("code", ""),
+                "name": row.get("name", name_map.get(row.get("code", ""), "")),
+                "price": float(row.get("price", 0)),
+                "score": float(row.get("total_score", 0)),
+                "factor_scores": fs,
+            })
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 每板块限选
     selected_rows = []
@@ -625,7 +718,12 @@ def get_sector_rotation_recommendations(top_n=None):
         labels = [f"板块:{row.get('sector_name', '')}"]
         labels.append(f"板块涨{row.get('sector_pct', 0):+.1f}%")
         labels.append(f"个股涨{row.get('pct_chg', 0):+.1f}%")
+        gap = row.get('sector_pct', 0) - row.get('pct_chg', 0)
+        if gap > 0:
+            labels.append(f"补涨空间{gap:.1f}%")
 
+        # 附带选股因子分数 (供 ML 训练)
+        factor_scores = {c: float(row[c]) for c in row.index if c.startswith("s_") and pd.notna(row.get(c))}
         results.append({
             "code": code,
             "name": name,
@@ -633,6 +731,7 @@ def get_sector_rotation_recommendations(top_n=None):
             "score": score,
             "reason": " | ".join(labels),
             "atr": 0,
+            "factor_scores": factor_scores,
         })
 
     print(f"\n  板块轮动推荐: {len(results)} 只")

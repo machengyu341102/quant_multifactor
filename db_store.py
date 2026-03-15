@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import sqlite3
 import threading
 from datetime import datetime
@@ -36,20 +37,116 @@ _init_done = set()  # 已初始化的线程ID
 def _get_conn() -> sqlite3.Connection:
     """获取线程局部 SQLite 连接 (WAL 模式)"""
     if not hasattr(_local, "conn") or _local.conn is None:
-        conn = sqlite3.connect(_DB_PATH, timeout=10)
+        # 增加 timeout 到 30s，防止深夜高频写入时锁定崩溃
+        conn = sqlite3.connect(_DB_PATH, timeout=30)
         conn.execute("PRAGMA journal_mode=WAL")
         conn.execute("PRAGMA synchronous=NORMAL")
-        conn.execute("PRAGMA busy_timeout=5000")
+        conn.execute("PRAGMA busy_timeout=30000")
         conn.row_factory = sqlite3.Row
         _local.conn = conn
     return _local.conn
 
 
+def _check_integrity() -> bool:
+    """PRAGMA integrity_check — 返回 True 表示数据库完好"""
+    try:
+        conn = sqlite3.connect(_DB_PATH, timeout=5)
+        rows = conn.execute("PRAGMA integrity_check").fetchall()
+        conn.close()
+        return len(rows) == 1 and rows[0][0] == "ok"
+    except Exception:
+        return False
+
+
+def _restore_from_backup() -> bool:
+    """从 .db.bak 恢复损坏的数据库, 返回是否成功"""
+    bak_path = _DB_PATH + ".bak"
+    if not os.path.exists(bak_path):
+        logger.error("数据库损坏且无备份可恢复: %s", bak_path)
+        return False
+
+    # 验证备份本身是否完好
+    try:
+        conn = sqlite3.connect(bak_path, timeout=5)
+        rows = conn.execute("PRAGMA integrity_check").fetchall()
+        conn.close()
+        bak_ok = len(rows) == 1 and rows[0][0] == "ok"
+    except Exception:
+        bak_ok = False
+
+    if not bak_ok:
+        logger.error("备份文件也已损坏, 无法自动恢复: %s", bak_path)
+        return False
+
+    # 保留损坏文件用于事后分析
+    corrupt_path = _DB_PATH + ".corrupt"
+    try:
+        # 移走损坏文件 (含 WAL/SHM)
+        shutil.move(_DB_PATH, corrupt_path)
+        for suffix in ("-wal", "-shm"):
+            wal = _DB_PATH + suffix
+            if os.path.exists(wal):
+                shutil.move(wal, corrupt_path + suffix)
+        # 复制备份为主库
+        shutil.copy2(bak_path, _DB_PATH)
+        logger.warning("数据库已从备份恢复: %s → %s (损坏文件保留为 %s)",
+                       bak_path, _DB_PATH, corrupt_path)
+        return True
+    except Exception as e:
+        logger.error("备份恢复失败: %s", e)
+        return False
+
+
+def _create_daily_backup():
+    """每日创建一次 .db.bak (同一天内不重复)"""
+    bak_path = _DB_PATH + ".bak"
+    try:
+        # 如果备份已存在且是今天创建的, 跳过
+        if os.path.exists(bak_path):
+            mtime = datetime.fromtimestamp(os.path.getmtime(bak_path))
+            if mtime.date() == datetime.now().date():
+                return
+        # 用 SQLite backup API 创建一致性备份
+        src = sqlite3.connect(_DB_PATH, timeout=5)
+        dst = sqlite3.connect(bak_path)
+        src.backup(dst)
+        dst.close()
+        src.close()
+        logger.info("每日数据库备份完成: %s", bak_path)
+    except Exception as e:
+        logger.warning("每日备份失败 (非致命): %s", e)
+
+
 def init_db():
-    """初始化数据库表 (幂等)"""
+    """初始化数据库表 (幂等, 含完整性检查 + 自动恢复)"""
     tid = threading.get_ident()
     if tid in _init_done:
         return
+
+    # --- 完整性检查 (仅数据库文件已存在时) ---
+    if os.path.exists(_DB_PATH):
+        if not _check_integrity():
+            logger.error("数据库完整性检查失败, 尝试从备份恢复...")
+            # 关闭当前线程可能持有的连接
+            if hasattr(_local, "conn") and _local.conn is not None:
+                try:
+                    _local.conn.close()
+                except Exception as _exc:
+                    logger.debug("Suppressed exception: %s", _exc)
+                _local.conn = None
+
+            if not _restore_from_backup():
+                # 备份也坏了, 最后手段: 重建空库
+                logger.error("备份恢复失败, 将重建空数据库 (历史数据丢失)")
+                try:
+                    os.rename(_DB_PATH, _DB_PATH + ".corrupt")
+                except Exception:
+                    os.remove(_DB_PATH)
+                for suffix in ("-wal", "-shm"):
+                    wal = _DB_PATH + suffix
+                    if os.path.exists(wal):
+                        os.remove(wal)
+
     conn = _get_conn()
 
     conn.executescript("""
@@ -90,6 +187,7 @@ def init_db():
             strategy TEXT NOT NULL,
             regime_score REAL,
             regime_label TEXT,
+            regime_signals TEXT,
             picks TEXT,
             created_at TEXT DEFAULT (datetime('now', 'localtime')),
             UNIQUE (trade_date, strategy)
@@ -141,7 +239,22 @@ def init_db():
         CREATE INDEX IF NOT EXISTS idx_pos_date ON positions(entry_date);
     """)
     conn.commit()
+
+    # --- ALTER TABLE 迁移: trade_journal 增加 regime_signals 列 ---
+    try:
+        cols = [r[1] for r in conn.execute("PRAGMA table_info(trade_journal)").fetchall()]
+        if "regime_signals" not in cols:
+            conn.execute("ALTER TABLE trade_journal ADD COLUMN regime_signals TEXT")
+            conn.commit()
+            logger.info("trade_journal 迁移: 新增 regime_signals 列")
+    except Exception as e:
+        logger.warning("trade_journal ALTER TABLE 跳过: %s", e)
+
     _init_done.add(tid)
+
+    # 每日备份 (初始化成功后)
+    _create_daily_backup()
+
     logger.info("数据库初始化完成: %s", _DB_PATH)
 
 
@@ -253,6 +366,52 @@ def scorecard_count() -> int:
     return row[0] if row else 0
 
 
+def get_pending_scorecard_dates() -> list[tuple]:
+    """获取所有 net_return_pct=0 且 rec_date < 今天的记录 (待回填 T+1)"""
+    init_db()
+    conn = _get_conn()
+    from datetime import date
+    today = date.today().isoformat()
+    rows = conn.execute("""
+        SELECT DISTINCT rec_date FROM scorecard
+        WHERE (net_return_pct = 0 OR net_return_pct IS NULL)
+          AND win IS NULL
+          AND rec_date < ?
+        ORDER BY rec_date
+    """, (today,)).fetchall()
+    return [r[0] for r in rows]
+
+
+def get_pending_scorecard_codes(rec_date: str) -> list[tuple]:
+    """获取指定日期所有待回填 T+1 的 (code, strategy, rec_price) 列表"""
+    init_db()
+    conn = _get_conn()
+    rows = conn.execute("""
+        SELECT code, strategy, rec_price FROM scorecard
+        WHERE rec_date = ?
+          AND (net_return_pct = 0 OR net_return_pct IS NULL)
+          AND win IS NULL
+    """, (rec_date,)).fetchall()
+    return [(r[0], r[1], r[2]) for r in rows]
+
+
+def update_scorecard_return(rec_date: str, code: str, strategy: str,
+                            net_return_pct: float, next_close: float,
+                            result: str, win: int):
+    """回填单条 scorecard 的 T+1 收益率"""
+    init_db()
+    conn = _get_conn()
+    conn.execute("""
+        UPDATE scorecard SET
+            net_return_pct = ?, next_close = ?,
+            result = ?, win = ?
+        WHERE rec_date = ? AND code = ? AND strategy = ?
+          AND (net_return_pct = 0 OR net_return_pct IS NULL)
+          AND win IS NULL
+    """, (net_return_pct, next_close, result, win, rec_date, code, strategy))
+    conn.commit()
+
+
 # ================================================================
 #  Conflict Audit CRUD
 # ================================================================
@@ -350,20 +509,38 @@ def load_trade_journal(days: int | None = None, strategy: str | None = None) -> 
 
     rows = conn.execute(sql, params).fetchall()
     result = []
+    row_keys = None
     for r in rows:
+        if row_keys is None:
+            row_keys = r.keys()
         picks = r["picks"]
         if isinstance(picks, str):
             try:
                 picks = json.loads(picks)
             except (json.JSONDecodeError, TypeError):
                 picks = []
+
+        regime_info = {
+            "score": r["regime_score"] or 0,
+            "regime": r["regime_label"] or "neutral",
+        }
+
+        # 读取 regime_signals (signals + signal_weights)
+        if "regime_signals" in row_keys:
+            rs_raw = r["regime_signals"]
+            if rs_raw:
+                try:
+                    rs = json.loads(rs_raw)
+                    if isinstance(rs, dict):
+                        regime_info["signals"] = rs.get("signals", {})
+                        regime_info["signal_weights"] = rs.get("signal_weights", {})
+                except (json.JSONDecodeError, TypeError):
+                    pass
+
         result.append({
             "date": r["trade_date"],
             "strategy": r["strategy"],
-            "regime": {
-                "score": r["regime_score"] or 0,
-                "regime": r["regime_label"] or "neutral",
-            },
+            "regime": regime_info,
             "picks": picks or [],
         })
     return result
@@ -379,16 +556,25 @@ def save_trade_journal_entry(entry: dict) -> bool:
     if isinstance(picks, list):
         picks = json.dumps(picks, ensure_ascii=False)
 
+    # 序列化 regime signals (signals + signal_weights)
+    regime_signals_data = {}
+    if regime.get("signals"):
+        regime_signals_data["signals"] = regime["signals"]
+    if regime.get("signal_weights"):
+        regime_signals_data["signal_weights"] = regime["signal_weights"]
+    regime_signals_json = json.dumps(regime_signals_data, ensure_ascii=False) if regime_signals_data else None
+
     try:
         conn.execute("""
             INSERT OR IGNORE INTO trade_journal
-            (trade_date, strategy, regime_score, regime_label, picks)
-            VALUES (?, ?, ?, ?, ?)
+            (trade_date, strategy, regime_score, regime_label, regime_signals, picks)
+            VALUES (?, ?, ?, ?, ?, ?)
         """, (
             entry.get("date", ""),
             entry.get("strategy", ""),
             regime.get("score", 0),
             regime.get("regime", "neutral"),
+            regime_signals_json,
             picks,
         ))
         conn.commit()

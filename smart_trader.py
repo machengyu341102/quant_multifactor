@@ -18,7 +18,10 @@ import time
 import numpy as np
 from datetime import datetime, date
 
+import logging
 import os
+
+logger = logging.getLogger(__name__)
 
 from config import (
     SMART_TRADE_ENABLED,
@@ -352,8 +355,8 @@ def detect_market_regime() -> dict:
                 "message": f"行情检测: {regime_str} (评分{result.get('score', 0):.2f})",
             },
         )
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     return result
 

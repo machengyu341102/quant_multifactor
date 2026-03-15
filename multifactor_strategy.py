@@ -384,10 +384,11 @@ def simple_backtest(selected_codes, hold_days=20):
 #  5. 主流程
 # ================================================================
 
-def run_strategy(pool_size=50, top_n=10):
+def run_strategy(pool_size=50, top_n=10, backtest_date=None):
     print("=" * 60)
     print("    A股多因子选股量化策略 v2 (含四层防护)")
-    print(f"    运行日期: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    run_dt = backtest_date if backtest_date else datetime.now().strftime('%Y-%m-%d %H:%M')
+    print(f"    运行日期: {run_dt}")
     print("=" * 60)
 
     # ---- 数据获取 ----

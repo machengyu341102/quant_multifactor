@@ -176,8 +176,8 @@ def backfill(days: int = 60, max_stocks: int = 100):
                     df = df.rename(columns={"日期": "date"})
                 kline_cache[code] = df
                 success += 1
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
         if (i + 1) % 20 == 0:
             print(f"  进度: {i+1}/{len(sample_codes)} (成功: {success})")
@@ -266,6 +266,7 @@ def backfill(days: int = 60, max_stocks: int = 100):
                 "next_close": close_tomorrow,
                 "net_return_pct": round(ret_t1, 4),
                 "win": 1 if ret_t1 > 0 else 0,
+                "result": "win" if ret_t1 > 0 else "loss",
             })
             new_scorecard += 1
 

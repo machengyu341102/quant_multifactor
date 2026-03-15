@@ -230,8 +230,8 @@ def run_performance_review() -> dict:
     try:
         heartbeat = safe_load(
             os.path.join(_BASE_DIR, "heartbeat.json"), default={})
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
     strategy_status = heartbeat.get("strategy_status", {})
 
     # 2. scorecard: 产出质量 (胜率/收益)
@@ -240,8 +240,8 @@ def run_performance_review() -> dict:
         from scorecard import calc_cumulative_stats
         stats_7d = calc_cumulative_stats(7)
         strategy_scores = stats_7d.get("by_strategy", {})
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # --- 智能体逐个评分 ---
     # 映射: 智能体 → 关联策略
@@ -317,8 +317,8 @@ def run_performance_review() -> dict:
                 else:
                     score -= 15
                     details.append("今日OODA未执行 (-15)")
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
 
         # 分数边界
         score = max(0, min(100, score))

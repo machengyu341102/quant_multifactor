@@ -44,8 +44,8 @@ def _get_stock_name(code: str) -> str:
         row = df[df["code"] == code]
         if not row.empty:
             return str(row.iloc[0]["name"])
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
     return code
 
 
@@ -120,8 +120,8 @@ def _fetch_klines(code: str, days: int = 120) -> list[dict]:
 
 
 def _fetch_realtime(code: str) -> dict | None:
-    """获取实时行情快照 (东财优先, 新浪备选, 独立断路器)"""
-    from api_guard import smart_source, SOURCE_EM_SPOT, SOURCE_SINA_HTTP
+    """获取实时行情快照 (东财优先, 腾讯备选, 新浪第三, 独立断路器)"""
+    from api_guard import smart_source, SOURCE_EM_SPOT, SOURCE_TENCENT_SPOT, SOURCE_SINA_HTTP
 
     def _em():
         import akshare as ak
@@ -155,6 +155,35 @@ def _fetch_realtime(code: str) -> dict | None:
             "amount": float(r.get("成交额", 0)),
         }
 
+    def _tencent():
+        import requests, re
+        prefix = "sh" if code.startswith("6") else "sz"
+        url = f"https://web.sqt.gtimg.cn/q={prefix}{code}"
+        resp = requests.get(url, timeout=10)
+        m = re.search(r'"(.+)"', resp.text)
+        if not m:
+            raise ValueError("腾讯行情解析失败")
+        f = m.group(1).split("~")
+        if len(f) < 45:
+            raise ValueError("腾讯行情字段不足")
+        pre_close = float(f[4]) if float(f[4]) > 0 else 1
+        return {
+            "price": float(f[3]),
+            "pct_change": round((float(f[3]) - pre_close) / pre_close * 100, 2),
+            "volume_ratio": float(f[49]) if len(f) > 49 and f[49] else 0,
+            "turnover_rate": float(f[38]) if len(f) > 38 and f[38] else 0,
+            "name": f[1],
+            "total_mv": float(f[45]) if len(f) > 45 and f[45] else 0,
+            "circ_mv": float(f[44]) if len(f) > 44 and f[44] else 0,
+            "pe": float(f[39]) if len(f) > 39 and f[39] else 0,
+            "pb": float(f[46]) if len(f) > 46 and f[46] else 0,
+            "high": float(f[33]) if len(f) > 33 and f[33] else 0,
+            "low": float(f[34]) if len(f) > 34 and f[34] else 0,
+            "open": float(f[5]),
+            "pre_close": pre_close,
+            "amount": float(f[37]) if len(f) > 37 and f[37] else 0,
+        }
+
     def _sina():
         import requests, re
         prefix = "sh" if code.startswith("6") else "sz"
@@ -186,10 +215,11 @@ def _fetch_realtime(code: str) -> dict | None:
     try:
         return smart_source([
             (SOURCE_EM_SPOT, _em),
+            (SOURCE_TENCENT_SPOT, _tencent),
             (SOURCE_SINA_HTTP, _sina),
         ])
     except Exception as e:
-        logger.warning("行情双源均失败 %s: %s", code, e)
+        logger.warning("行情三源均失败 %s: %s", code, e)
         return None
 
 
@@ -209,8 +239,8 @@ def _fetch_fund_flow(code: str) -> dict:
                 total = buy_lg + sell_lg
                 result["main_pct"] = (d["net_mf_amount"] / total * 100) if total > 0 else 0
                 return result
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # fallback: akshare
     try:
@@ -564,6 +594,18 @@ WEIGHTS = {
 }
 
 
+def _diagnosis_trade_meta(direction: str) -> tuple[str, bool]:
+    """把诊断方向映射成可入闭环的交易方向。
+
+    个股诊断面向 A 股单票体检，"看空" 更接近回避/减仓提示，
+    不是可直接做空的交易指令。因此只有看多诊断进入多头闭环，
+    其他情况都按观察类诊断处理。
+    """
+    if direction == "bullish":
+        return "long", True
+    return "neutral", False
+
+
 def analyze_stock(code: str, push: bool = False, journal: bool = False) -> dict:
     """分析单只股票, 返回完整诊断报告
 
@@ -647,6 +689,8 @@ def analyze_stock(code: str, push: bool = False, journal: bool = False) -> dict:
         direction = "neutral"
         verdict = "中性观望"
 
+    signal_direction, actionable = _diagnosis_trade_meta(direction)
+
     # 4. 详细建议
     advice_parts = []
     if s_mom < 0.35:
@@ -705,6 +749,8 @@ def analyze_stock(code: str, push: bool = False, journal: bool = False) -> dict:
         "scores": scores,
         "total_score": total,
         "direction": direction,
+        "signal_direction": signal_direction,
+        "actionable": actionable,
         "verdict": verdict,
         "advice": advice,
         "stop_loss": stop_loss,
@@ -743,8 +789,8 @@ def _write_journal(result: dict):
         try:
             from smart_trader import detect_market_regime
             regime = detect_market_regime()
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
         entry = {
             "date": result["date"],
@@ -756,6 +802,10 @@ def _write_journal(result: dict):
                 "price": result["price"],
                 "total_score": result["total_score"],
                 "factor_scores": result["scores"],
+                "direction": result.get("signal_direction", "neutral"),
+                "actionable": result.get("actionable", False),
+                "diagnosis_direction": result.get("direction", "neutral"),
+                "verdict": result.get("verdict", ""),
                 "reason": f"{result['verdict']}: {result['advice']}",
             }],
         }
@@ -808,8 +858,8 @@ def analyze_batch(codes: list[str], push: bool = False, journal: bool = False) -
                     f"¥{r['price']:.2f}"
                 )
             notify_wechat_raw("批量个股诊断", "\n".join(lines))
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
     return results
 

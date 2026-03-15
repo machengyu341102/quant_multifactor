@@ -209,12 +209,14 @@ def backtest_strategy_grid(strategy: str, lookback_days: int = 90,
 #  全量批量回测
 # ================================================================
 
-def run_batch_backtest(strategies: list = None, quick: bool = False) -> dict:
+def run_batch_backtest(strategies: list = None, quick: bool = False,
+                       max_total_sec: int = 0) -> dict:
     """运行批量回测 (夜班调用入口)
 
     Args:
         strategies: 要回测的策略列表, None=全部
         quick: True=快速模式 (更小网格+更短回测)
+        max_total_sec: 总时间预算 (秒), 0=不限制, 超时后跳过剩余策略
 
     Returns:
         {
@@ -239,6 +241,10 @@ def run_batch_backtest(strategies: list = None, quick: bool = False) -> dict:
     recommendations = []
 
     for strategy in strategies:
+        # 总时间预算检查
+        if max_total_sec > 0 and (time.time() - t0) > max_total_sec:
+            logger.warning("[批量回测] 总时间预算 %ds 耗尽, 跳过剩余策略", max_total_sec)
+            break
         try:
             result = backtest_strategy_grid(
                 strategy, lookback_days=lookback, grid_size=grid_size)

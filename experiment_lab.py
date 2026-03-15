@@ -330,8 +330,8 @@ def run_auto_experiment_cycle(findings: list, memory: dict) -> list:
             health = evaluate_strategy_health(strategy_en)
             if health.get("score", 100) >= EXPERIMENT_PARAMS.get("min_health_score_trigger", 50):
                 continue
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
         experimentable.append((strategy_en, f))
 

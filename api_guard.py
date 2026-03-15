@@ -121,8 +121,8 @@ class RateLimiter:
                         # 拿不到文件锁, 短暂等待后重试
                         try:
                             os.close(fd)
-                        except Exception:
-                            pass
+                        except Exception as _exc:
+                            logging.getLogger(__name__).debug("Suppressed exception: %s", _exc)
                         time.sleep(0.05)
                         continue
                     return True
@@ -268,11 +268,17 @@ class SafeMode:
         return self._active
 
     def check_and_enter(self):
-        """检查是否应进入安全模式 (在 record_failure 后调用)"""
+        """检查是否应进入安全模式 (在 record_failure 后调用)
+        触发条件: OPEN源 >= threshold 且 OPEN占比 > 50%
+        防止少量非A股源失败误触发 SafeMode
+        """
         if self._active:
             return
         open_n, total = _global_breaker.open_count()
-        if total >= 2 and open_n >= min(self._threshold, total):
+        if total < 2:
+            return
+        # 必须同时满足: 绝对数量 >= threshold 且 比例 > 50%
+        if open_n >= min(self._threshold, total) and open_n > total * 0.5:
             self._enter(open_n, total)
 
     def check_and_exit(self):
@@ -300,6 +306,13 @@ class SafeMode:
             f"断路器状态: {_global_breaker.get_all_states()}\n"
             f"自动心跳探测中, 网络恢复后自动退出"
         )
+
+        # 级联引擎: 全局暂停所有策略
+        try:
+            from cascade_engine import cascade
+            cascade('circuit_breaker', reason=f'{open_n}/{total} API源熔断')
+        except Exception as e:
+            self._logger.debug("级联引擎通知失败: %s", e)
 
         # 启动心跳探测线程
         self._stop_event.clear()
@@ -329,13 +342,29 @@ class SafeMode:
             f"断路器状态: {_global_breaker.get_all_states()}"
         )
 
+    def force_exit(self):
+        """手动强制退出安全模式 (供 CLI / 脚本调用)"""
+        if not self._active:
+            return
+        # 重置所有断路器状态
+        with _global_breaker._lock:
+            for src, c in _global_breaker._circuits.items():
+                c["state"] = CircuitState.CLOSED
+                c["failures"] = 0
+        self._active = False
+        self._exit_time = time.time()
+        self._stop_event.set()
+        self._logger.info("Safe Mode 手动强制退出")
+        self._notify("Safe Mode 已手动退出, 所有断路器已重置")
+
     def _heartbeat_loop(self):
         """低功耗心跳: 定期探测一个源, 恢复则退出 Safe Mode"""
         import requests
 
         probes = [
-            ("sina_http", "https://hq.sinajs.cn/list=sh000001"),
-            ("em_spot", "https://push2.eastmoney.com/api/qt/ulist.np/get?fields=f12&secids=1.000001"),
+            ("tencent_spot", "https://web.sqt.gtimg.cn/q=sh000001"),
+            ("tencent_kline", "https://web.sqt.gtimg.cn/q=sh000001"),
+            ("tushare", "https://api.tushare.pro"),
         ]
 
         while not self._stop_event.is_set():
@@ -360,8 +389,8 @@ class SafeMode:
         try:
             from notifier import send_wechat
             send_wechat("Safe Mode", msg)
-        except Exception:
-            pass
+        except Exception as _exc:
+            logging.getLogger(__name__).debug("Suppressed exception: %s", _exc)
 
     def status(self) -> dict:
         """获取 Safe Mode 状态 (供 dashboard / CLI)"""
@@ -392,6 +421,11 @@ def is_safe_mode() -> bool:
 def get_safe_mode_status() -> dict:
     """获取安全模式详情 (供 dashboard / CLI)"""
     return _safe_mode.status()
+
+
+def reset_safe_mode():
+    """强制退出安全模式并重置所有断路器 (供 CLI / 脚本调用)"""
+    _safe_mode.force_exit()
 
 
 # ================================================================
@@ -490,8 +524,8 @@ class DataCache:
                 with self._lock:
                     self._store[key] = (val, time.monotonic() + remain)
                 return val
-        except Exception:
-            pass
+        except Exception as _exc:
+            logging.getLogger(__name__).debug("Suppressed exception: %s", _exc)
         return None
 
     def _disk_set(self, key: str, value, ttl_sec: float):
@@ -560,8 +594,8 @@ class DataCache:
                 finally:
                     fcntl.flock(f.fileno(), fcntl.LOCK_UN)
             os.replace(tmp, self._disk_path)
-        except Exception:
-            pass
+        except Exception as _exc:
+            logging.getLogger(__name__).debug("Suppressed exception: %s", _exc)
   # 磁盘缓存是优化, 失败不影响主流程
 
 
@@ -577,6 +611,7 @@ SOURCE_TENCENT_KLINE = "tencent_kline"   # ak.stock_zh_a_hist_tx
 SOURCE_EM_KLINE = "em_kline"             # ak.stock_zh_a_hist
 SOURCE_EM_SPOT = "em_spot"               # ak.stock_zh_a_spot_em
 SOURCE_EM_MISC = "em_misc"               # fund_flow, lhb, financials
+SOURCE_TENCENT_SPOT = "tencent_spot"     # web.sqt.gtimg.cn 实时行情
 SOURCE_SINA_HTTP = "sina_http"           # hq.sinajs.cn batch quotes
 SOURCE_SINA_FUTURES = "sina_futures"     # ak.futures_main_sina
 SOURCE_SINA_CALENDAR = "sina_calendar"   # ak.tool_trade_date_hist_sina

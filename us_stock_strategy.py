@@ -38,46 +38,13 @@ except ImportError:
     TOP_N = 3
 
 # ================================================================
-#  美股标的池 (30+主要标的: 科技+金融+消费+ETF)
+#  美股标的池 (仅3个核心指数, 用于A股情绪参考)
 # ================================================================
 
 US_STOCK_POOL = {
-    # 科技巨头
-    "AAPL":  {"name": "苹果",       "sector": "科技"},
-    "MSFT":  {"name": "微软",       "sector": "科技"},
-    "GOOGL": {"name": "谷歌",       "sector": "科技"},
-    "AMZN":  {"name": "亚马逊",     "sector": "科技"},
-    "META":  {"name": "Meta",       "sector": "科技"},
-    "NVDA":  {"name": "英伟达",     "sector": "科技"},
-    "TSLA":  {"name": "特斯拉",     "sector": "科技"},
-    "AMD":   {"name": "AMD",        "sector": "科技"},
-    "AVGO":  {"name": "博通",       "sector": "科技"},
-    "CRM":   {"name": "Salesforce", "sector": "科技"},
-    # AI / 半导体
-    "ARM":   {"name": "ARM",        "sector": "半导体"},
-    "SMCI":  {"name": "超微电脑",   "sector": "半导体"},
-    "MU":    {"name": "美光",       "sector": "半导体"},
-    "INTC":  {"name": "英特尔",     "sector": "半导体"},
-    "QCOM":  {"name": "高通",       "sector": "半导体"},
-    # 金融
-    "JPM":   {"name": "摩根大通",   "sector": "金融"},
-    "V":     {"name": "Visa",       "sector": "金融"},
-    "MA":    {"name": "万事达",     "sector": "金融"},
-    "GS":    {"name": "高盛",       "sector": "金融"},
-    # 消费 / 医药
-    "JNJ":   {"name": "强生",       "sector": "医药"},
-    "UNH":   {"name": "联合健康",   "sector": "医药"},
-    "LLY":   {"name": "礼来",       "sector": "医药"},
-    "PG":    {"name": "宝洁",       "sector": "消费"},
-    "KO":    {"name": "可口可乐",   "sector": "消费"},
-    "WMT":   {"name": "沃尔玛",     "sector": "消费"},
-    # ETF 指数
     "SPY":   {"name": "标普500ETF", "sector": "ETF"},
     "QQQ":   {"name": "纳斯达克ETF","sector": "ETF"},
-    "IWM":   {"name": "罗素2000ETF","sector": "ETF"},
-    "XLF":   {"name": "金融ETF",    "sector": "ETF"},
-    "SOXX":  {"name": "半导体ETF",  "sector": "ETF"},
-    "XLE":   {"name": "能源ETF",    "sector": "ETF"},
+    "^VIX":  {"name": "恐慌指数",   "sector": "ETF"},
 }
 
 

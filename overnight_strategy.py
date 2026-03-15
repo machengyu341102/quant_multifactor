@@ -27,9 +27,12 @@ import pandas as pd
 import numpy as np
 import time
 from datetime import datetime, timedelta
+import logging
 import warnings
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 RETRY_TIMES = 3
 REQUEST_DELAY = 0.2  # 全量扫描, 略微加快
@@ -142,24 +145,69 @@ def get_small_cap_pool():
 
 
 def get_hot_concepts():
-    """获取今日热点概念板块 (新浪源, 按资金净流入排名)"""
+    """获取今日热点概念板块 (新浪源, 按资金净流入排名)
+
+    缓存1小时避免API不稳定导致全0; 扩大领涨股范围到top30
+    """
     print("[2/5] 获取今日热点概念...")
+
+    # 缓存: 1小时内复用
+    from api_guard import _global_cache
+    cache_key = "hot_concepts_snapshot"
+    cached = _global_cache.get(cache_key)
+    if cached is not None:
+        hot_names = set(cached.get("hot_names", []))
+        hot_leaders = cached.get("hot_leaders", {})
+        top_inflow = pd.DataFrame(cached.get("top_inflow", []))
+        top_chg = pd.DataFrame(cached.get("top_chg", []))
+        print(f"  热点概念: 缓存命中 ({len(hot_names)} 个, {len(hot_leaders)} 领涨股)")
+        return hot_names, hot_leaders, top_inflow, top_chg
+
     try:
         df = _retry(ak.stock_fund_flow_concept)
         df["净额"] = pd.to_numeric(df["净额"], errors="coerce")
         df = df.sort_values("净额", ascending=False)
-        top_inflow = df.head(15)
+        top_inflow = df.head(30)  # 扩大到30
         df_by_chg = df.sort_values("行业-涨跌幅", ascending=False)
-        top_chg = df_by_chg.head(15)
+        top_chg = df_by_chg.head(30)  # 扩大到30
         hot_names = set(top_inflow["行业"].tolist() + top_chg["行业"].tolist())
         hot_leaders = {}
         for _, row in pd.concat([top_inflow, top_chg]).drop_duplicates("行业").iterrows():
             leader = str(row.get("领涨股", ""))
-            if leader:
+            if leader and leader != "nan":
                 hot_leaders[leader] = row["行业"]
-        print(f"  热点概念: {len(hot_names)} 个")
+
+        # 补充: 行业资金流领涨股
+        try:
+            ind_df = _retry(ak.stock_fund_flow_industry)
+            if ind_df is not None and not ind_df.empty:
+                ind_df["净额"] = pd.to_numeric(ind_df["净额"], errors="coerce")
+                top_ind = ind_df.nlargest(20, "净额")
+                for _, row in top_ind.iterrows():
+                    leader = str(row.get("领涨股", ""))
+                    sector = str(row.get("行业", ""))
+                    if leader and leader != "nan":
+                        hot_leaders[leader] = sector
+                        hot_names.add(sector)
+                print(f"  行业资金流补充: {len(top_ind)} 个行业领涨股")
+        except Exception:
+            pass  # 行业补充是可选的
+
+        print(f"  热点概念: {len(hot_names)} 个, {len(hot_leaders)} 领涨股")
         print(f"  资金净流入TOP5: {', '.join(top_inflow['行业'].head(5).tolist())}")
         print(f"  涨幅TOP5: {', '.join(top_chg['行业'].head(5).tolist())}")
+
+        # 写入缓存 (1小时)
+        try:
+            _global_cache.set(cache_key, {
+                "hot_names": list(hot_names),
+                "hot_leaders": hot_leaders,
+                "top_inflow": top_inflow.to_dict(orient="records"),
+                "top_chg": top_chg.to_dict(orient="records"),
+            }, 3600)
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
+
         return hot_names, hot_leaders, top_inflow, top_chg
     except Exception as e:
         print(f"  获取失败: {e}")
@@ -180,6 +228,13 @@ def _scan_one_signal(code, start_date, end_date):
         closes = df["close"].values.astype(float)
         highs = df["high"].values.astype(float)
         volumes = df["amount"].values.astype(float)
+
+        # forge 因子缓存
+        try:
+            from factor_forge import cache_klines_for_forge
+            cache_klines_for_forge(code, df)
+        except ImportError:
+            pass
 
         rsi_vals = calc_rsi(closes, 14)
         rsi_now = rsi_vals[-1] if not np.isnan(rsi_vals[-1]) else 50
@@ -333,9 +388,29 @@ def fetch_fundamental_batch():
     print("\n[v5] 获取基本面数据...")
     fund_df = pd.DataFrame()
 
+    # 自动选最新报告期: 依次尝试最近几个季度
+    from datetime import datetime as _dt
+    _now = _dt.now()
+    _quarters = []
+    for _y in range(_now.year, _now.year - 2, -1):
+        for _q in ["1231", "0930", "0630", "0331"]:
+            _quarters.append(f"{_y}{_q}")
+    _quarters = [q for q in _quarters if q <= _now.strftime("%Y%m%d")][:4]
+
     # 业绩报表 (EPS, 营收增长, 利润增长, ROE等)
     try:
-        yjbb = _retry(ak.stock_yjbb_em, date="20250930")
+        yjbb = None
+        for _qdate in _quarters:
+            try:
+                yjbb = _retry(ak.stock_yjbb_em, date=_qdate)
+                if yjbb is not None and len(yjbb) > 500:
+                    print(f"  业绩报表: 使用报告期 {_qdate}")
+                    break
+                yjbb = None
+            except Exception:
+                continue
+        if yjbb is None:
+            raise ValueError("所有报告期均无数据")
         yjbb = yjbb.rename(columns={
             "股票代码": "code",
             "每股收益": "eps",
@@ -357,7 +432,19 @@ def fetch_fundamental_batch():
 
     # 业绩预告 (预增/首亏/续亏等)
     try:
-        yjyg = _retry(ak.stock_yjyg_em, date="20250930")
+        yjyg = None
+        for _qdate in _quarters:
+            try:
+                yjyg = _retry(ak.stock_yjyg_em, date=_qdate)
+                if yjyg is not None and len(yjyg) > 100:
+                    print(f"  业绩预告: 使用报告期 {_qdate}")
+                    break
+                yjyg = None
+            except Exception:
+                continue
+        if yjyg is None:
+            raise ValueError("所有报告期均无业绩预告")
+        yjyg = yjyg
         yjyg = yjyg.rename(columns={
             "股票代码": "code",
             "预告类型": "forecast_type",
@@ -373,6 +460,11 @@ def fetch_fundamental_batch():
 
     if fund_df.empty:
         print("  警告: 基本面数据全部获取失败, 将跳过基本面过滤和评分")
+        # 负缓存: 失败后5分钟不重试, 避免频繁请求
+        try:
+            _global_cache.set(cache_key, [], 300)
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
     else:
         print(f"  基本面数据合并完成: {len(fund_df)} 条记录")
         # 写入持久化缓存 (TTL 6小时 = 21600s, 覆盖全天所有策略)
@@ -449,17 +541,19 @@ def calc_fundamental_scores(df, fund_df):
         df = df.merge(fund_df[["code"] + [c for c in ["profit_growth", "roe", "forecast_type"] if c in fund_df.columns]],
                       on="code", how="left", suffixes=("", "_fund"))
 
-    # 利润增长得分
+    # 利润增长得分 — 仅对有数据的股票zscore, 无数据给中性0
+    s_profit = pd.Series(0.0, index=df.index)
     if "profit_growth" in df.columns:
-        s_profit = zscore(df["profit_growth"].fillna(0).clip(-100, 500))
-    else:
-        s_profit = 0
+        _mask = df["profit_growth"].notna()
+        if _mask.sum() > 5:
+            s_profit[_mask] = zscore(df.loc[_mask, "profit_growth"].clip(-100, 500))
 
-    # ROE得分
+    # ROE得分 — 同上
+    s_roe = pd.Series(0.0, index=df.index)
     if "roe" in df.columns:
-        s_roe = zscore(df["roe"].fillna(0).clip(-50, 100))
-    else:
-        s_roe = 0
+        _mask = df["roe"].notna()
+        if _mask.sum() > 5:
+            s_roe[_mask] = zscore(df.loc[_mask, "roe"].clip(-50, 100))
 
     # 业绩预告得分
     if "forecast_type" in df.columns:
@@ -510,8 +604,8 @@ def _screen_one_news(code, name_map):
                 if count > 0:
                     positive_score += weight * count
                     positive_kws.append(f"{kw}({count}次)")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.warning("Suppressed exception: %s", _exc)
 
     return {
         "code": code,
@@ -597,16 +691,16 @@ def score_and_select(df, fund_df=None, top_n=10):
 
     # --- 硬性过滤 ---
     before = len(df)
-    df = df[df["volatility"] < 0.45].copy()  # 收紧: 60%→45%
-    print(f"  过滤高波动(>45%): 剔除 {before - len(df)} 只")
+    df = df[df["volatility"] < 0.60].copy()  # 放宽: 45%→60% (学习需要更多数据)
+    print(f"  过滤高波动(>60%): 剔除 {before - len(df)} 只")
 
     before = len(df)
-    df = df[df["pullback_20d"] > -0.25].copy()
-    print(f"  过滤暴跌股(20日回撤>25%): 剔除 {before - len(df)} 只")
+    df = df[df["pullback_20d"] > -0.35].copy()  # 放宽: -25%→-35%
+    print(f"  过滤暴跌股(20日回撤>35%): 剔除 {before - len(df)} 只")
 
     before = len(df)
-    df = df[df["ret_3d"] < 0.08].copy()
-    print(f"  过滤近3日已大涨(>8%): 剔除 {before - len(df)} 只")
+    df = df[df["ret_3d"] < 0.12].copy()  # 放宽: 8%→12%
+    print(f"  过滤近3日已大涨(>12%): 剔除 {before - len(df)} 只")
 
     # --- 阴跌过滤 (慢性失血) ---
     before = len(df)
@@ -675,21 +769,31 @@ def score_and_select(df, fund_df=None, top_n=10):
     else:
         df["s_fundamental"] = 0
 
-    # ---- 加权合成 (v6权重: 有效因子主导, 空因子降权) ----
-    w_rsi = 0.10          # 0.06→0.10 (有效因子加权)
-    w_boll = 0.10         # 0.06→0.10
-    w_vol = 0.12          # 0.07→0.12 (量价区分度大)
-    w_volatility = 0.15   # 0.13→0.15
-    w_trend = 0.25        # 0.17→0.25 (区分度最大, 核心因子)
-    w_overnight = 0.10    # 0.06→0.10 (隔夜胜率有信息量)
-    w_hot = 0.03          # 0.05→0.03 (经常为0)
-    w_fundamental = 0.03  # 0.10→0.03 (经常缺失)
-    w_news = 0.0
+    # ---- 加权合成 (v7: 从tunable_params读取, 支持学习引擎在线调权) ----
+    try:
+        from auto_optimizer import get_tunable_params
+        tp = get_tunable_params("overnight")
+        weights = tp.get("weights", {})
+    except Exception:
+        weights = {}
 
-    # 资金流缺失时再分配 (更温和, 因为基础权重已调高)
+    if not weights:
+        from config import OVERNIGHT_PARAMS
+        weights = OVERNIGHT_PARAMS["weights"].copy()
+
+    w_rsi = weights.get("s_rsi", 0.08)
+    w_boll = weights.get("s_boll", 0.15)
+    w_vol = weights.get("s_vol", 0.18)
+    w_volatility = weights.get("s_volatility", 0.10)
+    w_trend = weights.get("s_trend", 0.10)
+    w_overnight = weights.get("s_overnight", 0.15)
+    w_hot = weights.get("s_hot", 0.02)
+    w_fundamental = weights.get("s_fundamental", 0.02)
+
+    # 资金流缺失时再分配给有效因子 (vol+boll)
     if not has_flow:
-        w_trend += 0.06
-        w_volatility += 0.06
+        w_vol += 0.10
+        w_boll += 0.10
 
     df["total_score"] = (
         df["s_rsi"] * w_rsi +
@@ -704,6 +808,28 @@ def score_and_select(df, fund_df=None, top_n=10):
         df["s_fundamental"] * w_fundamental
     )
 
+    # forge 因子钩子: 注入 s_forge_* 列 + 叠加得分
+    try:
+        from factor_forge import compute_forge_factors, get_forge_weights
+        df = compute_forge_factors(df)
+        forge_w = get_forge_weights()
+        for col, w in forge_w.items():
+            if col in df.columns:
+                df["total_score"] += df[col].fillna(0) * w
+    except ImportError:
+        pass
+
+    # 跨市场 regime 调整: Risk Off 降权, Risk On 略加分
+    try:
+        from cross_asset_factor import get_risk_multiplier
+        risk_mult = get_risk_multiplier()
+        if abs(risk_mult - 1.0) > 0.001:
+            df["total_score"] *= risk_mult
+            label = "RiskOn加分" if risk_mult > 1.0 else "RiskOff降权"
+            print(f"  跨市场regime调整(x{risk_mult:.2f}): {label}")
+    except ImportError:
+        pass
+
     # ---- MA60下方整体降权 ----
     # 不在MA60上方的, 总分打8折
     below_ma60_mask = ~df["above_ma60"]
@@ -712,7 +838,42 @@ def score_and_select(df, fund_df=None, top_n=10):
     if below_count > 0:
         print(f"  MA60下方降权(×0.8): 影响 {below_count} 只")
 
+    # ML 融合: 规则分 + ML预测 → fused_score
+    try:
+        from ml_factor_model import predict_scores, fuse_scores
+        candidates = []
+        for _, row in df.iterrows():
+            fs = {c: float(row[c]) for c in row.index
+                  if c.startswith("s_") and pd.notna(row.get(c))}
+            candidates.append({
+                "code": row.get("code", ""),
+                "factor_scores": fs,
+                "total_score": float(row.get("total_score", 0)),
+            })
+        candidates = predict_scores(candidates, strategy="隔夜选股")
+        candidates = fuse_scores(candidates)
+        ml_scores = {c["code"]: c for c in candidates if c.get("code")}
+        for idx, row in df.iterrows():
+            info = ml_scores.get(row.get("code", ""), {})
+            if info.get("fused_score") is not None:
+                df.at[idx, "total_score"] = info["fused_score"]
+        ml_active = sum(1 for c in candidates if abs(c.get("ml_score", 0)) > 0.001)
+        if ml_active > 0:
+            print(f"  [ML融合] {ml_active}/{len(candidates)} 只获得ML预测 (策略: 隔夜选股)")
+    except ImportError:
+        pass
+    except Exception as e:
+        print(f"  [ML融合跳过] {e}")
+
     df = df.sort_values("total_score", ascending=False)
+
+    # ---- 得分阈值过滤: 剔除低分垃圾信号 ----
+    min_score_threshold = 0.30  # 数据分析显示: <0.2得分的信号胜率仅40.9%, -0.47%均收益
+    df = df[df["total_score"] >= min_score_threshold]
+    if len(df) == 0:
+        print(f"  ⚠️ 得分阈值{min_score_threshold}过滤后无候选, 返回空")
+        return pd.DataFrame(), pd.DataFrame()
+    print(f"  得分阈值过滤: ≥{min_score_threshold} 保留 {len(df)} 只")
 
     # ---- 行业分散约束: 同行业最多2只 ----
     df["sector"] = df["name"].apply(classify_sector)
@@ -735,6 +896,25 @@ def score_and_select(df, fund_df=None, top_n=10):
         print(f"    跳过样例: {', '.join(skipped_sector[:5])}")
     sec_dist = selected["sector"].value_counts()
     print(f"  最终行业分布: {dict(sec_dist)}")
+
+    # 全量候选写入缓冲区 (实盘数据采集, 同 score_and_rank)
+    try:
+        import intraday_strategy as _is
+        _is._scored_buffer = []
+        for _, row in df.iterrows():
+            fs = {c: float(row[c]) for c in row.index
+                  if c.startswith("s_") and pd.notna(row.get(c))}
+            if not fs:
+                continue
+            _is._scored_buffer.append({
+                "code": row.get("code", ""),
+                "name": row.get("name", ""),
+                "price": float(row.get("close", row.get("price", 0))),
+                "score": float(row.get("total_score", 0)),
+                "factor_scores": fs,
+            })
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     return selected, df
 
@@ -803,7 +983,7 @@ def backtest_overnight(selected_codes, name_map, lookback=10):
 #  主流程
 # ================================================================
 
-def run(top_n=10, fund_flow_top=40):
+def run(top_n=10, fund_flow_top=100):
     print("=" * 65)
     print("  小盘短线隔夜策略 v5 (基本面+新闻风控+全量扫描+行业分散)")
     print(f"  运行日期: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
@@ -826,9 +1006,9 @@ def run(top_n=10, fund_flow_top=40):
 
     # 第4步: 两阶段 — 先粗筛再精扫资金流
     temp_df = signals_df.copy()
-    temp_df = temp_df[temp_df["volatility"] < 0.45]
-    temp_df = temp_df[temp_df["pullback_20d"] > -0.25]
-    temp_df = temp_df[temp_df["ret_3d"] < 0.08]
+    temp_df = temp_df[temp_df["volatility"] < 0.60]
+    temp_df = temp_df[temp_df["pullback_20d"] > -0.35]
+    temp_df = temp_df[temp_df["ret_3d"] < 0.12]
     temp_df["_rough"] = (
         -temp_df["rsi"] * 0.3 +
         temp_df["above_ma60"].astype(float) * 30 +

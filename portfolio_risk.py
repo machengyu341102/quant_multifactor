@@ -617,8 +617,8 @@ def check_portfolio_risk(emit_events: bool = False) -> dict:
                         "strategy": f.get("strategy"),
                     },
                 )
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
     # 更新注册表健康度
     try:
@@ -627,8 +627,8 @@ def check_portfolio_risk(emit_events: bool = False) -> dict:
         has_critical = any(f.get("severity") == "critical" for f in findings)
         registry.report_run("risk_inspector", success=not has_critical,
                             error_msg="组合回撤超限" if has_critical else None)
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     return result
 

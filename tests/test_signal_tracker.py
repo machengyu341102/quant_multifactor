@@ -156,6 +156,50 @@ class TestIngest:
         db = json.load(open(db_path))
         assert db[0]["direction"] == "short"
 
+    def test_explicit_direction_respected(self, db_path, journal_path):
+        """显式 direction 优先于 reason 推断"""
+        from json_store import safe_save
+        import signal_tracker
+
+        entries = [_make_journal_entry("2026-03-01", "期货", [
+            {"code": "IM", "name": "中证1000", "price": 8500,
+             "total_score": 0.7, "direction": "short", "actionable": True},
+        ])]
+        safe_save(journal_path, entries)
+        signal_tracker.ingest_from_journal("2026-03-01")
+        db = json.load(open(db_path))
+        assert db[0]["direction"] == "short"
+
+    def test_non_actionable_pick_skipped(self, db_path, journal_path):
+        """显式标记为不可交易的诊断不进入闭环"""
+        from json_store import safe_save
+        import signal_tracker
+
+        entries = [_make_journal_entry("2026-03-01", "个股诊断", [
+            {"code": "000001", "name": "平安银行", "price": 10.5,
+             "total_score": 0.58, "direction": "neutral", "actionable": False},
+        ])]
+        safe_save(journal_path, entries)
+        n = signal_tracker.ingest_from_journal("2026-03-01")
+        assert n == 0
+        assert not os.path.exists(db_path) or json.load(open(db_path)) == []
+
+    def test_stock_diagnosis_low_score_skipped_without_direction(self, db_path, journal_path):
+        """兼容旧版个股诊断 journal: 低分观察单不再误入信号库"""
+        from json_store import safe_save
+        import signal_tracker
+
+        entries = [_make_journal_entry("2026-03-01", "个股诊断", [
+            {"code": "000001", "name": "平安银行", "price": 10.5, "total_score": 0.58},
+            {"code": "000002", "name": "万科A", "price": 8.8, "total_score": 0.66},
+        ])]
+        safe_save(journal_path, entries)
+        n = signal_tracker.ingest_from_journal("2026-03-01")
+        assert n == 1
+        db = json.load(open(db_path))
+        assert len(db) == 1
+        assert db[0]["code"] == "000002"
+
 
 # ================================================================
 #  结果验证
@@ -244,6 +288,21 @@ class TestVerify:
 
         signal_tracker.verify_outcomes()
         assert call_count[0] == 0  # 不应该调用任何价格获取
+
+    def test_invalid_direction_marked_ignored(self, db_path, monkeypatch):
+        """不支持的方向不进入验证，直接标记 ignored"""
+        from json_store import safe_save
+        import signal_tracker
+
+        sig = _make_signal("2026-01-01", "个股诊断", "000001")
+        sig["direction"] = "neutral"
+        safe_save(db_path, [sig])
+
+        result = signal_tracker.verify_outcomes()
+        assert result["verified"] == 0
+
+        db = json.load(open(db_path))
+        assert db[0]["status"] == "ignored"
 
 
 # ================================================================

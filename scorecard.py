@@ -164,6 +164,87 @@ def _fetch_next_day_ohlc(code: str, rec_date: str) -> dict | None:
 
 
 # ================================================================
+#  T+1 收益率回填 (实盘全量候选)
+# ================================================================
+
+def backfill_pending_returns() -> int:
+    """回填所有 net_return_pct=0 的 scorecard 记录的 T+1 收益率
+
+    流程: 找到 rec_date < 今天 且 win IS NULL 的记录,
+          拉取 rec_date 的收盘价 和 下一个交易日的收盘价,
+          计算 T+1 收益率并 UPDATE.
+    """
+    try:
+        from db_store import (get_pending_scorecard_dates,
+                              get_pending_scorecard_codes,
+                              update_scorecard_return)
+    except ImportError:
+        logger.warning("db_store 不可用, 跳过回填")
+        return 0
+
+    pending_dates = get_pending_scorecard_dates()
+    if not pending_dates:
+        logger.info("无待回填记录")
+        return 0
+
+    logger.info("待回填日期: %d 个 (%s ~ %s)",
+                len(pending_dates), pending_dates[0], pending_dates[-1])
+
+    total_filled = 0
+    for rec_date in pending_dates:
+        # 找下一个交易日
+        next_td = _next_trading_day(rec_date)
+        if not next_td:
+            continue
+        # 确保下一个交易日已收盘 (16:30运行时当天数据已可用)
+        if next_td > date.today().isoformat():
+            continue
+
+        codes_info = get_pending_scorecard_codes(rec_date)
+        if not codes_info:
+            continue
+
+        # 按 code 去重, 批量拉 K 线
+        unique_codes = list({c[0] for c in codes_info})
+        close_map = {}  # code -> (rec_date_close, next_close)
+
+        for code in unique_codes:
+            try:
+                ohlc = _fetch_next_day_ohlc(code, rec_date)
+                if ohlc is None:
+                    continue
+                close_map[code] = (
+                    ohlc.get("open", 0),  # 用开盘价做 fallback
+                    ohlc["close"],
+                )
+                time.sleep(0.1)
+            except Exception:
+                continue
+
+        # 更新记录
+        for code, strategy, rec_price in codes_info:
+            if code not in close_map:
+                continue
+            prev_c, next_c = close_map[code]
+            # 用 rec_price 计算收益 (更准), 回退到 prev_close
+            base = rec_price if rec_price and rec_price > 0 else prev_c
+            if base <= 0:
+                continue
+            ret_pct = round((next_c / base - 1) * 100, 4)
+            result = "win" if ret_pct > 0 else "loss"
+            win = 1 if ret_pct > 0 else 0
+            update_scorecard_return(rec_date, code, strategy,
+                                   ret_pct, next_c, result, win)
+            total_filled += 1
+
+        if total_filled > 0:
+            logger.info("回填 %s: %d/%d 条", rec_date, total_filled, len(codes_info))
+
+    logger.info("回填完成: 共 %d 条", total_filled)
+    return total_filled
+
+
+# ================================================================
 #  核心评分逻辑
 # ================================================================
 
@@ -234,6 +315,8 @@ def score_yesterday() -> list[dict]:
                 "strategy": strategy,
                 "code": code,
                 "name": p.get("name", ""),
+                "score": p.get("score"),
+                "rec_price": entry_price,
                 "entry_price": entry_price,
                 "next_open": exit_price,
                 "next_close": exit_price,
@@ -244,6 +327,7 @@ def score_yesterday() -> list[dict]:
                 "hit_stop_loss": hit_sl,
                 "hit_take_profit": hit_tp,
                 "result": "win" if net_return_pct > 0 else "loss",
+                "win": 1 if net_return_pct > 0 else 0,
             }
         else:
             ohlc = _fetch_next_day_ohlc(code, score_date)
@@ -271,6 +355,8 @@ def score_yesterday() -> list[dict]:
                 "strategy": strategy,
                 "code": code,
                 "name": p.get("name", ""),
+                "score": p.get("score"),
+                "rec_price": entry_price,
                 "entry_price": entry_price,
                 "next_open": next_open,
                 "next_close": next_close,
@@ -281,6 +367,7 @@ def score_yesterday() -> list[dict]:
                 "hit_stop_loss": hit_sl,
                 "hit_take_profit": hit_tp,
                 "result": "win" if net_return_pct > 0 else "loss",
+                "win": 1 if net_return_pct > 0 else 0,
             }
 
         new_scores.append(record)
@@ -577,8 +664,8 @@ def generate_weekly_report() -> str:
                     t1wr = info.get("t1_win_rate")
                     if t1wr is not None:
                         lines.append(f"- {name}: {t1wr}% ({info['total']}条)")
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     # 系统健康摘要
     try:
@@ -587,8 +674,8 @@ def generate_weekly_report() -> str:
         if health:
             lines.append("")
             lines.append(health)
-    except Exception:
-        pass
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
 
     return "\n".join(lines)
 
@@ -674,6 +761,9 @@ if __name__ == "__main__":
             print(f"\n日期          净值")
             for d, n in eq["nav_series"]:
                 print(f"  {d}  {n:.4f}")
+    elif mode == "backfill":
+        n = backfill_pending_returns()
+        print(f"回填完成: {n} 条")
     else:
         print("用法:")
         print("  python3 scorecard.py score       # 对昨日推荐打分")
@@ -682,4 +772,5 @@ if __name__ == "__main__":
         print("  python3 scorecard.py weekly       # 生成并推送周报")
         print("  python3 scorecard.py curve        # 查看资金曲线")
         print("  python3 scorecard.py curve 30     # 最近30天资金曲线")
+        print("  python3 scorecard.py backfill     # 回填待定T+1收益")
         sys.exit(1)

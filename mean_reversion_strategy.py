@@ -20,9 +20,12 @@ import numpy as np
 from datetime import datetime, timedelta
 from concurrent.futures import as_completed
 from resource_manager import get_pool
+import logging
 import warnings
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -66,6 +69,13 @@ def _fetch_one_mr_kline(code, name_map, start_date, end_date):
         opens = df["open"].values.astype(float)
         vol_col = next((c for c in ["成交量", "volume", "amount"] if c in df.columns), "amount")
         volumes = df[vol_col].values.astype(float)
+
+        # forge 因子缓存
+        try:
+            from factor_forge import cache_klines_for_forge
+            cache_klines_for_forge(code, df)
+        except ImportError:
+            pass
 
         # RSI
         rsi_vals = calc_rsi(closes, 14)
@@ -294,8 +304,8 @@ def _cached_enhance(df, name_map):
                     cached[r["code"]] = {col: r.get(col, 0.5) for col in enhanced_cols}
                     for col in enhanced_cols:
                         df.loc[df["code"] == r["code"], col] = r.get(col, 0.5)
-            except Exception:
-                pass
+            except Exception as _exc:
+                logger.debug("Suppressed exception: %s", _exc)
         print(f"  [增强因子缓存] 命中{hit} 新增{len(miss_codes)}")
         return df
 
@@ -402,9 +412,14 @@ def get_dip_buy_recommendations(top_n=None):
         print("  评分后无候选")
         return []
 
-    # 打分排名
-    weights = DIP_BUY_PARAMS["weights"]
-    selected, _ = score_and_rank(df, weights, top_n=top_n * 2)
+    # 打分排名 — 优先使用在线学习调优后的权重
+    try:
+        from auto_optimizer import get_tunable_params
+        tuned = get_tunable_params("dip_buy")
+        weights = tuned.get("weights", DIP_BUY_PARAMS["weights"])
+    except Exception:
+        weights = DIP_BUY_PARAMS["weights"]
+    selected, _ = score_and_rank(df, weights, top_n=top_n * 2, strategy="低吸回调选股")
 
     # 新闻排雷
     codes_to_check = selected["code"].tolist()
@@ -432,9 +447,11 @@ def get_dip_buy_recommendations(top_n=None):
             labels.append("长下影线")
         try:
             labels.extend(format_enhanced_labels(row))
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
+        # 附带选股因子分数 (供 ML 训练)
+        factor_scores = {c: float(row[c]) for c in row.index if c.startswith("s_") and pd.notna(row.get(c))}
         results.append({
             "code": code,
             "name": name,
@@ -442,6 +459,7 @@ def get_dip_buy_recommendations(top_n=None):
             "score": float(score),
             "reason": " | ".join(labels),
             "atr": float(row.get("atr", 0)),
+            "factor_scores": factor_scores,
         })
 
     print(f"\n  低吸回调推荐: {len(results)} 只")
@@ -547,9 +565,14 @@ def get_consolidation_recommendations(top_n=None):
         print("  评分后无候选")
         return []
 
-    # 打分排名
-    weights = CONSOLIDATION_PARAMS["weights"]
-    selected, _ = score_and_rank(df, weights, top_n=top_n * 2)
+    # 打分排名 — 优先使用在线学习调优后的权重
+    try:
+        from auto_optimizer import get_tunable_params
+        tuned = get_tunable_params("consolidation")
+        weights = tuned.get("weights", CONSOLIDATION_PARAMS["weights"])
+    except Exception:
+        weights = CONSOLIDATION_PARAMS["weights"]
+    selected, _ = score_and_rank(df, weights, top_n=top_n * 2, strategy="缩量整理选股")
 
     # 新闻排雷
     codes_to_check = selected["code"].tolist()
@@ -577,9 +600,11 @@ def get_consolidation_recommendations(top_n=None):
             labels.append("今日强放量")
         try:
             labels.extend(format_enhanced_labels(row))
-        except Exception:
-            pass
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
 
+        # 附带选股因子分数 (供 ML 训练)
+        factor_scores = {c: float(row[c]) for c in row.index if c.startswith("s_") and pd.notna(row.get(c))}
         results.append({
             "code": code,
             "name": name,
@@ -587,6 +612,7 @@ def get_consolidation_recommendations(top_n=None):
             "score": float(score),
             "reason": " | ".join(labels),
             "atr": float(row.get("atr", 0)),
+            "factor_scores": factor_scores,
         })
 
     print(f"\n  缩量整理推荐: {len(results)} 只")
