@@ -10,7 +10,7 @@
     <array>
         <string>/usr/bin/python3</string>
         <string>/Users/zchtech002/machengyu/quant_multifactor/watchdog.py</string>
-        <string>check</string>
+        <string>guard</string>
     </array>
 
     <key>WorkingDirectory</key>

@@ -1,0 +1,254 @@
+.learning-page {
+  padding: 16px;
+  padding-bottom: 70px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.learning-header {
+  margin-bottom: 16px;
+}
+
+.learning-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.overview-card,
+.accuracy-card,
+.factor-card,
+.lab-card,
+.timeline-card {
+  margin-bottom: 16px;
+}
+
+.learning-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.stat-icon {
+  font-size: 32px;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #999;
+}
+
+.accuracy-display {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.accuracy-value {
+  font-size: 48px;
+  font-weight: 600;
+  color: #1677ff;
+  margin-bottom: 8px;
+}
+
+.accuracy-trend {
+  font-size: 14px;
+  color: #52c41a;
+}
+
+.accuracy-hint {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+}
+
+.factor-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.factor-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.factor-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.factor-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.factor-value.highlight {
+  color: #1677ff;
+}
+
+.factor-value.success {
+  color: #52c41a;
+}
+
+.new-factors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.experiments {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.experiment-item {
+  padding: 16px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.experiment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.experiment-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.experiment-detail {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.experiment-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-label {
+  font-size: 12px;
+  color: #999;
+  min-width: 60px;
+}
+
+.progress-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1677ff;
+  min-width: 40px;
+  text-align: right;
+}
+
+.empty-lab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.empty-lab .empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.empty-lab .empty-text {
+  font-size: 14px;
+  color: #999;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 12px;
+  position: relative;
+}
+
+.timeline-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 24px;
+  bottom: -20px;
+  width: 2px;
+  background: #e8e8e8;
+}
+
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e8e8e8;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.timeline-dot.active {
+  background: #1677ff;
+  box-shadow: 0 0 0 4px rgba(22, 119, 255, 0.2);
+}
+
+.timeline-dot.completed {
+  background: #52c41a;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-time {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.timeline-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.timeline-desc {
+  font-size: 12px;
+  color: #666;
+}

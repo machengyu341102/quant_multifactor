@@ -1,0 +1,280 @@
+.dashboard {
+  padding: 20px;
+  padding-bottom: 80px;
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+}
+
+.dashboard-hero {
+  display: flex;
+  justify-content: space-between;
+  background: #0b1c3b;
+  color: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.hero-copy h1 {
+  font-size: 26px;
+  margin: 8px 0;
+  font-weight: 700;
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: #9ec3ff;
+  margin: 0;
+}
+
+.hero-tagline {
+  font-size: 14px;
+  margin: 8px 0 16px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.badge-pill {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.badge-label {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.badge-value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.hero-card {
+  flex: 0 0 220px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.hero-card-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-card-score {
+  font-size: 42px;
+  font-weight: 700;
+  margin: 12px 0 8px;
+}
+
+.hero-card-bar {
+  margin: 12px 0;
+  height: 6px;
+}
+
+.hero-card-foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.snapshot-card {
+  border-radius: 14px;
+  background: #0f172a;
+  color: white;
+}
+
+.snapshot-title {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.snapshot-value {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.snapshot-detail {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.pipeline-card {
+  margin-bottom: 16px;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.pipeline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.pipeline-step {
+  background: #f5f7fa;
+  border-radius: 12px;
+  padding: 12px;
+  min-height: 110px;
+}
+
+.pipeline-title {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.pipeline-value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.pipeline-detail {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.strategy-card {
+  margin-bottom: 16px;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.strategy-meta {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.strategy-meta-label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.strategy-meta-value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.strategy-highlight {
+  text-align: right;
+}
+
+.strategy-highlight-label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.strategy-highlight-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.strategy-highlight-stats {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.strategy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.strategy-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.strategy-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.strategy-detail {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.strategy-return {
+  font-weight: 600;
+}
+
+.strategy-return.positive {
+  color: #10b981;
+}
+
+.strategy-return.negative {
+  color: #ef4444;
+}
+
+.action-card {
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.action-tile {
+  background: #0b1c3b;
+  color: white;
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.action-tile:active {
+  transform: translateY(2px);
+}
+
+.action-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.action-detail {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 16px;
+  color: #6b7280;
+}

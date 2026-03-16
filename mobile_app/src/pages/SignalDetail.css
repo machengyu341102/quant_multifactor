@@ -1,0 +1,328 @@
+.signal-detail {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 70px;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: white;
+  border-bottom: 1px solid #f0f0f0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-title .code {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.header-title .name {
+  font-size: 14px;
+  color: #666;
+}
+
+.quote-card {
+  margin: 12px 16px;
+}
+
+.quote-price {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.quote-price .price {
+  font-size: 32px;
+  font-weight: 600;
+  color: #333;
+}
+
+.quote-price .change {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.quote-price .change.positive {
+  color: #ff4d4f;
+}
+
+.quote-price .change.negative {
+  color: #52c41a;
+}
+
+.quote-stats .stat-label {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.quote-stats .stat-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.trade-card {
+  margin: 12px 16px;
+}
+
+.trade-item {
+  text-align: center;
+  padding: 12px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.trade-label {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.trade-value {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.trade-value.primary {
+  color: #1677ff;
+}
+
+.trade-value.danger {
+  color: #ff4d4f;
+}
+
+.trade-value.success {
+  color: #52c41a;
+}
+
+.trade-value.highlight {
+  color: #fa8c16;
+}
+
+.trade-hint {
+  font-size: 12px;
+  color: #999;
+}
+
+.position-suggest {
+  margin-top: 16px;
+  padding: 12px;
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 8px;
+}
+
+.suggest-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1677ff;
+  margin-bottom: 4px;
+}
+
+.suggest-detail {
+  font-size: 12px;
+  color: #666;
+}
+
+.analysis-card {
+  margin: 12px 16px;
+}
+
+.score-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.score-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1677ff;
+}
+
+.consensus-section {
+  margin-top: 16px;
+  padding: 12px;
+  background: #fff5f5;
+  border: 2px solid #ff4d4f;
+  border-radius: 8px;
+}
+
+.consensus-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ff4d4f;
+  margin-bottom: 8px;
+}
+
+.strategy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.strategy-item-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background: white;
+  border-radius: 4px;
+}
+
+.strategy-name-detail {
+  font-size: 14px;
+  color: #333;
+}
+
+.strategy-score {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ff4d4f;
+}
+
+.strategy-reason {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.factors-section {
+  margin-top: 16px;
+}
+
+.factor-group {
+  margin-bottom: 16px;
+}
+
+.factor-group-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.factor-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.factor-item:last-child {
+  border-bottom: none;
+}
+
+.factor-name {
+  font-size: 14px;
+  color: #666;
+}
+
+.factor-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 150px;
+}
+
+.factor-score {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  min-width: 40px;
+  text-align: right;
+}
+
+.regime-card {
+  margin: 12px 16px;
+}
+
+.regime-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.regime-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.regime-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.regime-fit {
+  font-size: 12px;
+  color: #52c41a;
+}
+
+.market-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.market-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.market-item .label {
+  color: #666;
+}
+
+.market-item .value {
+  font-weight: 600;
+  color: #333;
+}
+
+.market-item .value.positive {
+  color: #ff4d4f;
+}
+
+.market-item .value.negative {
+  color: #52c41a;
+}
+
+.action-buttons {
+  position: fixed;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  padding: 12px 16px;
+  background: white;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  gap: 12px;
+}
+
+.action-buttons .adm-button {
+  flex: 1;
+}

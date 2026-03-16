@@ -21,6 +21,10 @@
 | **OP-11** | `Resilience` | **动态 API 源负载均衡** | 在 `api_guard.py` 中引入源优先级与自动切换机制。当默认源（新浪/东财）连接失败时，自动降级至备用源（腾讯/网易），提升系统在极端行情下的稳健性。 | 💎 已核准 | Gemini |
 | **OP-12** | `APP-Backend` | **SaaS 化 API 底座改造** | 【暂缓】将 `dashboard.py` 升级为具备 JWT 鉴权和 WebSocket 推送的标准服务。 | ⏸ 暂停 | Gemini |
 | **OP-13** | `Notification` | **企业微信应用消息集成** | 企业微信应用消息双向通信: 系统→用户推送(Markdown/文本) + 用户→系统命令(查询/操作/AI对话)。替换ServerChan为主通道。 | 💎 已核准 | Gemini |
+| **OP-23** | `ML-Data` | **隔夜策略因子得分补全** | 【P0】修改 `overnight_strategy.py`，确保选股结果同步 `factor_scores` 到 SQLite。目标：使 ML 训练样本量翻倍，消除最大的数据盲区。 | 💎 已核准 | Gemini |
+| **OP-24** | `ML-Intelligence` | **策略级 ML 专属模型重构** | 【P1】建立独立模型管道。为每个策略训练专属的梯度提升决策树 (GBDT)，允许不同策略拥有完全不同的因子权重。 | 💎 已核准 | Gemini |
+| **OP-25** | `ML-Context` | **Regime-Aware 特征交叉集成** | 【P2】将大盘 regime_score 作为核心特征输入模型。让模型具备“看大盘脸色”调整选股逻辑的能力，实现环境自适应。 | 💎 已核准 | Gemini |
+
 
 
 ---

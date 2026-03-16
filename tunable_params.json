@@ -1,0 +1,250 @@
+{
+  "_online_ema": {
+    "s_trend": 2.392737,
+    "s_momentum": 0.374168,
+    "s_volume": 0.902904,
+    "s_risk": 0.163659,
+    "s_fund_flow": 3.741281,
+    "s_chip": 0.957764,
+    "s_rsi": 0.747675,
+    "s_fundamental": -0.3225,
+    "s_turnover": 1.2285,
+    "s_lhb": 3.495187,
+    "s_gap": 2.9082,
+    "s_volume_ratio": 2.9082
+  },
+  "_online_last_update": "2026-03-16 01:00:44",
+  "_online_daily_adjustments": 110,
+  "auction": {
+    "weights": {
+      "s_gap": 0.0193,
+      "s_volume_ratio": 0.0214,
+      "s_auction": 0.0287,
+      "s_trend": 0.2079,
+      "s_rsi": 0.4321,
+      "s_turnover": 0.0287,
+      "s_fundamental": 0.005,
+      "s_hot": 0.0287,
+      "s_fund_flow": 0.0387,
+      "s_chip": 0.2097
+    },
+    "updated_at": "2026-03-13",
+    "version": 31,
+    "previous_weights": {
+      "s_gap": 0.0297,
+      "s_volume_ratio": 0.0325,
+      "s_auction": 0.029,
+      "s_trend": 0.2198,
+      "s_rsi": 0.5167,
+      "s_turnover": 0.029,
+      "s_fundamental": 0.0074,
+      "s_hot": 0.0098,
+      "s_fund_flow": 0.029,
+      "s_chip": 0.0972
+    },
+    "factor_updated_at": "2026-03-15T19:20:42.605297",
+    "online_updated_at": "2026-03-16 01:00:44",
+    "full_retrain_at": "2026-03-15 20:00:18",
+    "full_retrain_samples": 44482
+  },
+  "breakout": {
+    "weights": {
+      "s_rsi_oversold": 0.0024,
+      "s_volume_shrink": 0.0024,
+      "s_ma_distance": 0.0024,
+      "s_fundamental": 0.1349,
+      "s_fund_flow": 0.0254,
+      "s_momentum": 0.024,
+      "s_volatility": 0.0024,
+      "s_volume_breakout": 0.0254,
+      "s_ma_alignment": 0.0254,
+      "s_rsi": 0.2109,
+      "s_turnover": 0.2378,
+      "s_resistance_break": 0.0254,
+      "s_hot": 0.2559,
+      "s_chip": 0.0254
+    },
+    "updated_at": "2026-03-13",
+    "version": 37,
+    "previous_weights": {
+      "s_rsi_oversold": 0.0114,
+      "s_volume_shrink": 0.0114,
+      "s_ma_distance": 0.0114,
+      "s_fundamental": 0.1058,
+      "s_fund_flow": 0.0248,
+      "s_momentum": 0.0397,
+      "s_volatility": 0.0114,
+      "s_volume_breakout": 0.0248,
+      "s_ma_alignment": 0.0248,
+      "s_rsi": 0.2228,
+      "s_turnover": 0.2376,
+      "s_resistance_break": 0.0248,
+      "s_hot": 0.2242,
+      "s_chip": 0.0248
+    },
+    "factor_updated_at": "2026-03-15T19:20:42.817237",
+    "full_retrain_at": "2026-03-15 20:00:18",
+    "full_retrain_samples": 44482
+  },
+  "afternoon": {
+    "weights": {
+      "s_pm_gain": 0.2242,
+      "s_pct": 0.0272,
+      "s_vol_turn": 0.0272,
+      "s_trend": 0.0272,
+      "s_rsi": 0.2383,
+      "s_5m_speed": 0.0883,
+      "s_fundamental": 0.0224,
+      "s_hot": 0.0272,
+      "s_fund_flow": 0.008,
+      "s_chip": 0.31
+    },
+    "updated_at": "2026-03-13",
+    "version": 31,
+    "previous_weights": {
+      "s_pm_gain": 0.1842,
+      "s_pct": 0.0296,
+      "s_vol_turn": 0.0296,
+      "s_trend": 0.0296,
+      "s_rsi": 0.3823,
+      "s_5m_speed": 0.0296,
+      "s_fundamental": 0.036,
+      "s_hot": 0.0297,
+      "s_fund_flow": 0.0127,
+      "s_chip": 0.2367
+    },
+    "factor_updated_at": "2026-03-15T19:20:42.717602",
+    "full_retrain_at": "2026-03-15 20:00:18",
+    "full_retrain_samples": 44482
+  },
+  "trend_follow": {
+    "weights": {
+      "s_trend_score": 0.0274,
+      "s_ma_alignment": 0.0235,
+      "s_momentum": 0.0374,
+      "s_volume_confirm": 0.1524,
+      "s_sector_trend": 0.3726,
+      "s_fundamental": 0.3671,
+      "s_fund_flow": 0.0374,
+      "s_chip": 0.0023
+    },
+    "updated_at": "2026-03-13",
+    "version": 37,
+    "previous_weights": {
+      "s_trend_score": 0.0273,
+      "s_ma_alignment": 0.0484,
+      "s_momentum": 0.0273,
+      "s_volume_confirm": 0.3151,
+      "s_sector_trend": 0.281,
+      "s_fundamental": 0.2693,
+      "s_fund_flow": 0.0273,
+      "s_chip": 0.0045
+    },
+    "factor_updated_at": "2026-03-15T19:20:43.108578",
+    "online_updated_at": "2026-03-16 01:00:44",
+    "full_retrain_at": "2026-03-15 20:00:18",
+    "full_retrain_samples": 44482
+  },
+  "dip_buy": {
+    "weights": {
+      "s_rsi_oversold": 0.5101,
+      "s_volume_shrink": 0.2592,
+      "s_support": 0.0737,
+      "s_rebound_signal": 0.028,
+      "s_ma_distance": 0.0737,
+      "s_fundamental": 0.0047,
+      "s_fund_flow": 0.0459,
+      "s_chip": 0.0047
+    },
+    "updated_at": "2026-03-16",
+    "version": 40,
+    "previous_weights": {
+      "s_rsi_oversold": 0.5479,
+      "s_volume_shrink": 0.2551,
+      "s_support": 0.0365,
+      "s_rebound_signal": 0.0273,
+      "s_ma_distance": 0.0365,
+      "s_fundamental": 0.0023,
+      "s_fund_flow": 0.0771,
+      "s_chip": 0.0273
+    }
+  },
+  "consolidation": {
+    "weights": {
+      "s_volume_contract": 0.4408,
+      "s_price_range": 0.4079,
+      "s_breakout_ready": 0.0252,
+      "s_ma_support": 0.0252,
+      "s_trend_strength": 0.0252,
+      "s_fundamental": 0.0252,
+      "s_fund_flow": 0.0252,
+      "s_chip": 0.0252
+    },
+    "updated_at": "2026-03-13",
+    "version": 32,
+    "previous_weights": {
+      "s_volume_contract": 0.4727,
+      "s_price_range": 0.4338,
+      "s_breakout_ready": 0.0272,
+      "s_ma_support": 0.0272,
+      "s_trend_strength": 0.0272,
+      "s_fundamental": 0.004,
+      "s_fund_flow": 0.004,
+      "s_chip": 0.004
+    },
+    "factor_updated_at": "2026-03-15T19:20:43.011536",
+    "full_retrain_at": "2026-03-15 20:00:18",
+    "full_retrain_samples": 44482
+  },
+  "sector_rotation": {
+    "weights": {
+      "s_follow_potential": 0.3898,
+      "s_sector_momentum": 0.0286,
+      "s_sector_flow": 0.0286,
+      "s_sector_breadth": 0.4673,
+      "s_relative_strength": 0.0286,
+      "s_chip": 0.0286,
+      "s_fundamental": 0.0286
+    },
+    "full_retrain_at": "2026-03-15 20:00:18",
+    "full_retrain_samples": 44482,
+    "factor_updated_at": "2026-03-15T19:20:43.206535",
+    "version": 16,
+    "weights_reset_reason": "factor_name_mismatch_fix_20260308"
+  },
+  "news_event": {
+    "weights": {
+      "s_event_relevance": 0.25,
+      "s_concept_momentum": 0.2,
+      "s_leader_score": 0.15,
+      "s_trend": 0.1,
+      "s_fundamental": 0.08,
+      "s_fund_flow": 0.1,
+      "s_chip": 0.07,
+      "s_volume_confirm": 0.05
+    },
+    "version": 1,
+    "weights_reset_reason": "initial_from_config_20260308"
+  },
+  "overnight": {
+    "weights": {
+      "s_rsi": 0.0277,
+      "s_boll": 0.0277,
+      "s_vol": 0.1336,
+      "s_volatility": 0.3086,
+      "s_trend": 0.0202,
+      "s_flow_1d": 0.003,
+      "s_flow_trend": 0.003,
+      "s_overnight": 0.2998,
+      "s_hot": 0.1489,
+      "s_fundamental": 0.0277
+    },
+    "full_retrain_at": "2026-03-15 20:00:18",
+    "full_retrain_samples": 44482,
+    "factor_updated_at": "2026-03-15T19:20:43.406558",
+    "version": 23,
+    "calibrated_at": "2026-03-09T19:00:00",
+    "calibration": "v7: Spearman IC校准",
+    "last_update": "2026-03-11 (深度改造)"
+  }
+}

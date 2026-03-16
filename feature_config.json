@@ -1,0 +1,313 @@
+{
+  "raw_factors": [
+    "rsi",
+    "volatility",
+    "vol_ratio",
+    "pullback_5d",
+    "ret_3d",
+    "pct_chg",
+    "total_score",
+    "regime_score"
+  ],
+  "interactions": [
+    {
+      "type": "multiply",
+      "a": "rsi",
+      "b": "volatility",
+      "name": "ix_rsi_volatility_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "rsi",
+      "b": "volatility",
+      "name": "ix_rsi_volatility_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "rsi",
+      "b": "vol_ratio",
+      "name": "ix_rsi_vol_ratio_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "rsi",
+      "b": "vol_ratio",
+      "name": "ix_rsi_vol_ratio_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "rsi",
+      "b": "pullback_5d",
+      "name": "ix_rsi_pullback_5d_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "rsi",
+      "b": "pullback_5d",
+      "name": "ix_rsi_pullback_5d_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "rsi",
+      "b": "ret_3d",
+      "name": "ix_rsi_ret_3d_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "rsi",
+      "b": "ret_3d",
+      "name": "ix_rsi_ret_3d_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "rsi",
+      "b": "pct_chg",
+      "name": "ix_rsi_pct_chg_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "rsi",
+      "b": "pct_chg",
+      "name": "ix_rsi_pct_chg_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "rsi",
+      "b": "total_score",
+      "name": "ix_rsi_total_score_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "rsi",
+      "b": "total_score",
+      "name": "ix_rsi_total_score_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "rsi",
+      "b": "regime_score",
+      "name": "ix_rsi_regime_score_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "rsi",
+      "b": "regime_score",
+      "name": "ix_rsi_regime_score_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "volatility",
+      "b": "vol_ratio",
+      "name": "ix_volatility_vol_ratio_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "volatility",
+      "b": "vol_ratio",
+      "name": "ix_volatility_vol_ratio_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "volatility",
+      "b": "pullback_5d",
+      "name": "ix_volatility_pullback_5d_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "volatility",
+      "b": "pullback_5d",
+      "name": "ix_volatility_pullback_5d_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "volatility",
+      "b": "ret_3d",
+      "name": "ix_volatility_ret_3d_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "volatility",
+      "b": "ret_3d",
+      "name": "ix_volatility_ret_3d_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "volatility",
+      "b": "pct_chg",
+      "name": "ix_volatility_pct_chg_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "volatility",
+      "b": "pct_chg",
+      "name": "ix_volatility_pct_chg_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "volatility",
+      "b": "total_score",
+      "name": "ix_volatility_total_score_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "volatility",
+      "b": "total_score",
+      "name": "ix_volatility_total_score_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "volatility",
+      "b": "regime_score",
+      "name": "ix_volatility_regime_score_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "volatility",
+      "b": "regime_score",
+      "name": "ix_volatility_regime_score_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "vol_ratio",
+      "b": "pullback_5d",
+      "name": "ix_vol_ratio_pullback_5d_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "vol_ratio",
+      "b": "pullback_5d",
+      "name": "ix_vol_ratio_pullback_5d_rat"
+    },
+    {
+      "type": "multiply",
+      "a": "vol_ratio",
+      "b": "ret_3d",
+      "name": "ix_vol_ratio_ret_3d_mul"
+    },
+    {
+      "type": "ratio",
+      "a": "vol_ratio",
+      "b": "ret_3d",
+      "name": "ix_vol_ratio_ret_3d_rat"
+    },
+    {
+      "type": "regime_cross",
+      "a": "rsi",
+      "b": "regime_score",
+      "name": "rx_rsi_regime"
+    },
+    {
+      "type": "regime_cross",
+      "a": "volatility",
+      "b": "regime_score",
+      "name": "rx_volatility_regime"
+    },
+    {
+      "type": "regime_cross",
+      "a": "vol_ratio",
+      "b": "regime_score",
+      "name": "rx_vol_ratio_regime"
+    },
+    {
+      "type": "regime_cross",
+      "a": "pullback_5d",
+      "b": "regime_score",
+      "name": "rx_pullback_5d_regime"
+    },
+    {
+      "type": "regime_cross",
+      "a": "ret_3d",
+      "b": "regime_score",
+      "name": "rx_ret_3d_regime"
+    },
+    {
+      "type": "regime_cross",
+      "a": "pct_chg",
+      "b": "regime_score",
+      "name": "rx_pct_chg_regime"
+    }
+  ],
+  "final_features": [
+    "rsi",
+    "volatility",
+    "vol_ratio",
+    "pullback_5d",
+    "ret_3d",
+    "pct_chg",
+    "total_score",
+    "regime_score",
+    "ix_rsi_volatility_mul",
+    "ix_rsi_volatility_rat",
+    "ix_rsi_vol_ratio_mul",
+    "ix_rsi_vol_ratio_rat",
+    "ix_rsi_pullback_5d_mul",
+    "ix_rsi_pullback_5d_rat",
+    "ix_rsi_ret_3d_rat",
+    "ix_rsi_pct_chg_rat",
+    "ix_rsi_total_score_mul",
+    "ix_rsi_total_score_rat",
+    "ix_volatility_vol_ratio_mul",
+    "ix_volatility_vol_ratio_rat",
+    "ix_volatility_pullback_5d_mul",
+    "ix_volatility_pullback_5d_rat",
+    "ix_volatility_ret_3d_mul",
+    "ix_volatility_ret_3d_rat",
+    "ix_volatility_pct_chg_mul",
+    "ix_volatility_pct_chg_rat",
+    "ix_volatility_total_score_mul",
+    "ix_volatility_total_score_rat",
+    "ix_vol_ratio_pullback_5d_mul",
+    "ix_vol_ratio_pullback_5d_rat",
+    "ix_vol_ratio_ret_3d_mul",
+    "ix_vol_ratio_ret_3d_rat"
+  ],
+  "top_factors_used": [
+    "rsi",
+    "volatility",
+    "vol_ratio",
+    "pullback_5d",
+    "ret_3d",
+    "pct_chg",
+    "total_score",
+    "regime_score"
+  ],
+  "importance_history": [
+    {
+      "date": "2026-03-15",
+      "importance": {
+        "rsi": 0.1421,
+        "volatility": 0.0168,
+        "vol_ratio": 0.0384,
+        "pullback_5d": 0.0198,
+        "ret_3d": 0.0185,
+        "pct_chg": 0.0196,
+        "total_score": 0.0183,
+        "regime_score": 0.0,
+        "ix_rsi_volatility_mul": 0.034,
+        "ix_rsi_volatility_rat": 0.0,
+        "ix_rsi_vol_ratio_mul": 0.0791,
+        "ix_rsi_vol_ratio_rat": 0.0,
+        "ix_rsi_pullback_5d_mul": 0.1081,
+        "ix_rsi_pullback_5d_rat": 0.0,
+        "ix_rsi_ret_3d_rat": 0.0,
+        "ix_rsi_pct_chg_rat": 0.0,
+        "ix_rsi_total_score_mul": 0.0149,
+        "ix_rsi_total_score_rat": 0.0,
+        "ix_volatility_vol_ratio_mul": 0.0422,
+        "ix_volatility_vol_ratio_rat": 0.0595,
+        "ix_volatility_pullback_5d_mul": 0.1545,
+        "ix_volatility_pullback_5d_rat": 0.0176,
+        "ix_volatility_ret_3d_mul": 0.0,
+        "ix_volatility_ret_3d_rat": 0.0058,
+        "ix_volatility_pct_chg_mul": 0.0117,
+        "ix_volatility_pct_chg_rat": 0.0381,
+        "ix_volatility_total_score_mul": 0.0529,
+        "ix_volatility_total_score_rat": 0.0343,
+        "ix_vol_ratio_pullback_5d_mul": 0.0725,
+        "ix_vol_ratio_pullback_5d_rat": 0.0,
+        "ix_vol_ratio_ret_3d_mul": 0.0013,
+        "ix_vol_ratio_ret_3d_rat": 0.0
+      }
+    }
+  ]
+}

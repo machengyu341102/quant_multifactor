@@ -56,7 +56,7 @@
     "schedule": "10:00",
     "type": "astock",
     "batch_slot": "midday",
-    "enabled": true,
+    "enabled": false,
     "gates": {
       "trading_day": true,
       "agent_check": true,
@@ -229,12 +229,40 @@
     }
   },
   {
+    "id": "overnight",
+    "name": "隔夜选股",
+    "module": "overnight_strategy",
+    "function": "run",
+    "schedule": "15:10",
+    "type": "astock",
+    "batch_slot": "afternoon",
+    "enabled": true,
+    "gates": {
+      "trading_day": true,
+      "agent_check": true,
+      "regime_check": true,
+      "circuit_breaker": true
+    }
+  },
+  {
+    "id": "hk_stock",
+    "name": "港股指数分析",
+    "module": "hk_stock_strategy",
+    "function": "run_hk_stock_strategy",
+    "schedule": "09:05",
+    "type": "direct_push",
+    "enabled": true,
+    "gates": {
+      "trading_day": false
+    }
+  },
+  {
     "id": "sector_alert",
     "cli_aliases": ["sector_alert", "板块"],
-    "name": "板块异动监控",
+    "name": "板块异动 → 跟涨潜力股",
     "module": "sector_monitor",
     "function": "scan_sector_anomaly",
-    "schedule": "5min",
+    "schedule": "3min",
     "type": "interval",
     "enabled": true,
     "gates": {
