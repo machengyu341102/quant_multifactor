@@ -31,6 +31,7 @@ import { SymbolSummaryBar } from './SymbolSummaryBar';
 import { TerminalHeader } from './TerminalHeader';
 import { TimeSalesCard } from './TimeSalesCard';
 import { WatchlistSidebar } from './WatchlistSidebar';
+import { getHoverState } from './pressable-state';
 
 type MobilePane = 'watchlist' | 'trade' | 'book' | 'data';
 type TradeSide = 'buy' | 'sell';
@@ -257,12 +258,16 @@ export function TradingViewStyleTerminalPage() {
                     <Pressable
                       key={pane.key}
                       onPress={() => setMobilePane(pane.key)}
-                      style={({ hovered, pressed }) => [
-                        styles.mobileTab,
-                        active && styles.mobileTabActive,
-                        hovered && !active && styles.mobileTabHover,
-                        pressed && styles.mobileTabPressed,
-                      ]}>
+                      style={(state) => {
+                        const hovered = getHoverState(state);
+                        const { pressed } = state;
+                        return [
+                          styles.mobileTab,
+                          active && styles.mobileTabActive,
+                          hovered && !active && styles.mobileTabHover,
+                          pressed && styles.mobileTabPressed,
+                        ];
+                      }}>
                       <Text style={[styles.mobileTabText, active && styles.mobileTabTextActive]}>{pane.label}</Text>
                     </Pressable>
                   );

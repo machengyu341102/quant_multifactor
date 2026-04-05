@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { terminalTheme } from '@/constants/terminal-theme';
+import { getHoverState } from './pressable-state';
 
 type TradeSide = 'buy' | 'sell';
 type TradeOrderType = 'limit' | 'market' | 'stop';
@@ -63,12 +64,19 @@ export function QuickTradeCard({
             <Pressable
               key={item}
               onPress={() => onChangeOrderSide(item)}
-              style={({ hovered, pressed }) => [
-                styles.segmentButton,
-                active && { backgroundColor: item === 'buy' ? terminalTheme.colors.buySoft : terminalTheme.colors.sellSoft, borderColor: primaryColor },
-                hovered && !active && styles.segmentButtonHover,
-                pressed && styles.segmentButtonPressed,
-              ]}>
+              style={(state) => {
+                const hovered = getHoverState(state);
+                const { pressed } = state;
+                return [
+                  styles.segmentButton,
+                  active && {
+                    backgroundColor: item === 'buy' ? terminalTheme.colors.buySoft : terminalTheme.colors.sellSoft,
+                    borderColor: primaryColor,
+                  },
+                  hovered && !active && styles.segmentButtonHover,
+                  pressed && styles.segmentButtonPressed,
+                ];
+              }}>
               <Text
                 style={[
                   styles.segmentText,
@@ -88,12 +96,16 @@ export function QuickTradeCard({
             <Pressable
               key={item}
               onPress={() => onChangeOrderType(item)}
-              style={({ hovered, pressed }) => [
-                styles.modeButton,
-                active && styles.modeButtonActive,
-                hovered && !active && styles.segmentButtonHover,
-                pressed && styles.segmentButtonPressed,
-              ]}>
+              style={(state) => {
+                const hovered = getHoverState(state);
+                const { pressed } = state;
+                return [
+                  styles.modeButton,
+                  active && styles.modeButtonActive,
+                  hovered && !active && styles.segmentButtonHover,
+                  pressed && styles.segmentButtonPressed,
+                ];
+              }}>
               <Text style={[styles.modeText, active && styles.modeTextActive]}>{ORDER_TYPE_LABELS[item]}</Text>
             </Pressable>
           );
@@ -127,12 +139,16 @@ export function QuickTradeCard({
             <Pressable
               key={value}
               onPress={() => onChangeAllocation(value)}
-              style={({ hovered, pressed }) => [
-                styles.allocationButton,
-                active && styles.modeButtonActive,
-                hovered && !active && styles.segmentButtonHover,
-                pressed && styles.segmentButtonPressed,
-              ]}>
+              style={(state) => {
+                const hovered = getHoverState(state);
+                const { pressed } = state;
+                return [
+                  styles.allocationButton,
+                  active && styles.modeButtonActive,
+                  hovered && !active && styles.segmentButtonHover,
+                  pressed && styles.segmentButtonPressed,
+                ];
+              }}>
               <Text style={[styles.allocationText, active && styles.modeTextActive]}>{value}%</Text>
             </Pressable>
           );

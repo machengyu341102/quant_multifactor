@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { terminalTheme } from '@/constants/terminal-theme';
 import type { TerminalMiniMarket, TerminalSymbol, WatchlistMode } from '@/mocks/terminal-data';
 import { MarketMiniStrip } from './MarketMiniStrip';
+import { getHoverState } from './pressable-state';
 
 const WATCHLIST_TABS: { key: WatchlistMode; label: string }[] = [
   { key: 'watchlist', label: '自选' },
@@ -49,12 +50,16 @@ export function WatchlistSidebar({
                 accessibilityRole="tab"
                 accessibilityState={{ selected: active }}
                 onPress={() => onChangeWatchlistMode(tab.key)}
-                style={({ hovered, pressed }) => [
-                  styles.tabButton,
-                  active && styles.tabButtonActive,
+                style={(state) => {
+                  const hovered = getHoverState(state);
+                  const { pressed } = state;
+                  return [
+                    styles.tabButton,
+                    active && styles.tabButtonActive,
                     hovered && !active && styles.tabButtonHover,
                     pressed && styles.tabButtonPressed,
-                  ]}>
+                  ];
+                }}>
                 <Text style={[styles.tabButtonText, active && styles.tabButtonTextActive]}>{tab.label}</Text>
               </Pressable>
             );
@@ -93,12 +98,16 @@ export function WatchlistSidebar({
                   accessibilityRole="button"
                   accessibilityState={{ selected: active }}
                   onPress={() => onSelectSymbol(symbol.id)}
-                  style={({ hovered, pressed }) => [
-                    styles.row,
-                    active && styles.rowActive,
-                    hovered && !active && styles.rowHover,
-                    pressed && styles.rowPressed,
-                  ]}>
+                  style={(state) => {
+                    const hovered = getHoverState(state);
+                    const { pressed } = state;
+                    return [
+                      styles.row,
+                      active && styles.rowActive,
+                      hovered && !active && styles.rowHover,
+                      pressed && styles.rowPressed,
+                    ];
+                  }}>
                   <Text style={[styles.cellCode, styles.codeCol]}>{symbol.code}</Text>
                   <View style={styles.nameCol}>
                     <Text numberOfLines={1} style={styles.cellName}>

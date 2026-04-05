@@ -2,6 +2,7 @@ import { ActivityIndicator, ScrollView, StyleSheet, Text, View, Pressable } from
 
 import { terminalTheme } from '@/constants/terminal-theme';
 import type { BottomTabKey, TerminalPanelDataset, TerminalStateMap } from '@/mocks/terminal-data';
+import { getHoverState } from './pressable-state';
 
 const TAB_LABELS: Record<BottomTabKey, string> = {
   positions: '持仓',
@@ -52,12 +53,16 @@ export function BottomDataTabs({
               accessibilityRole="tab"
               accessibilityState={{ selected: active }}
               onPress={() => onChangeTab(tab)}
-              style={({ hovered, pressed }) => [
-                styles.tabButton,
-                active && styles.tabButtonActive,
-                hovered && !active && styles.tabButtonHover,
-                pressed && styles.tabButtonPressed,
-              ]}>
+              style={(state) => {
+                const hovered = getHoverState(state);
+                const { pressed } = state;
+                return [
+                  styles.tabButton,
+                  active && styles.tabButtonActive,
+                  hovered && !active && styles.tabButtonHover,
+                  pressed && styles.tabButtonPressed,
+                ];
+              }}>
               <Text style={[styles.tabText, active && styles.tabTextActive]}>{TAB_LABELS[tab]}</Text>
             </Pressable>
           );

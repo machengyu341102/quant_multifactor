@@ -9,6 +9,7 @@ import type {
   IndicatorKey,
   UtilityToolKey,
 } from '@/mocks/terminal-data';
+import { getHoverState } from './pressable-state';
 
 const INTERVALS: ChartInterval[] = ['1m', '5m', '15m', '1h', '4h', '1D', '1W'];
 const TYPES: { key: ChartType; label: string; icon: keyof typeof Ionicons.glyphMap }[] = [
@@ -68,12 +69,16 @@ export function ChartToolbar({
               <Pressable
                 key={item}
                 onPress={() => onChangeInterval(item)}
-                style={({ hovered, pressed }) => [
-                  styles.textButton,
-                  active && styles.buttonActive,
-                  hovered && !active && styles.buttonHover,
-                  pressed && styles.buttonPressed,
-                ]}>
+                style={(state) => {
+                  const hovered = getHoverState(state);
+                  const { pressed } = state;
+                  return [
+                    styles.textButton,
+                    active && styles.buttonActive,
+                    hovered && !active && styles.buttonHover,
+                    pressed && styles.buttonPressed,
+                  ];
+                }}>
                 <Text style={[styles.textButtonText, active && styles.buttonTextActive]}>{item}</Text>
               </Pressable>
             );
@@ -104,12 +109,16 @@ export function ChartToolbar({
             <Pressable
               key={item}
               onPress={() => onToggleIndicator(item)}
-              style={({ hovered, pressed }) => [
-                styles.textButton,
-                indicators.includes(item) && styles.buttonActive,
-                hovered && !indicators.includes(item) && styles.buttonHover,
-                pressed && styles.buttonPressed,
-              ]}>
+              style={(state) => {
+                const hovered = getHoverState(state);
+                const { pressed } = state;
+                return [
+                  styles.textButton,
+                  indicators.includes(item) && styles.buttonActive,
+                  hovered && !indicators.includes(item) && styles.buttonHover,
+                  pressed && styles.buttonPressed,
+                ];
+              }}>
               <Text style={[styles.textButtonText, indicators.includes(item) && styles.buttonTextActive]}>
                 {item}
               </Text>
@@ -166,12 +175,16 @@ function ToolButton({
   return (
     <Pressable
       onPress={onPress}
-      style={({ hovered, pressed }) => [
-        styles.toolButton,
-        active && styles.buttonActive,
-        hovered && !active && styles.buttonHover,
-        pressed && styles.buttonPressed,
-      ]}>
+      style={(state) => {
+        const hovered = getHoverState(state);
+        const { pressed } = state;
+        return [
+          styles.toolButton,
+          active && styles.buttonActive,
+          hovered && !active && styles.buttonHover,
+          pressed && styles.buttonPressed,
+        ];
+      }}>
       <Ionicons
         name={icon}
         size={14}

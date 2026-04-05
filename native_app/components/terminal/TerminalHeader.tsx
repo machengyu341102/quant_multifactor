@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { terminalTheme } from '@/constants/terminal-theme';
 import type { TerminalMarketCategory } from '@/mocks/terminal-data';
+import { getHoverState } from './pressable-state';
 
 const MARKET_OPTIONS: { key: TerminalMarketCategory; label: string }[] = [
   { key: 'stocks', label: '股票' },
@@ -45,12 +46,16 @@ export function TerminalHeader({
                   accessibilityRole="tab"
                   accessibilityState={{ selected: active }}
                   onPress={() => onChangeMarketCategory(option.key)}
-                  style={({ hovered, pressed }) => [
-                    styles.marketButton,
-                    active && styles.marketButtonActive,
-                  hovered && !active && styles.marketButtonHover,
-                  pressed && styles.marketButtonPressed,
-                ]}>
+                  style={(state) => {
+                    const hovered = getHoverState(state);
+                    const { pressed } = state;
+                    return [
+                      styles.marketButton,
+                      active && styles.marketButtonActive,
+                      hovered && !active && styles.marketButtonHover,
+                      pressed && styles.marketButtonPressed,
+                    ];
+                  }}>
                   <Text style={[styles.marketButtonText, active && styles.marketButtonTextActive]}>
                     {option.label}
                   </Text>
@@ -83,21 +88,29 @@ export function TerminalHeader({
         <Text style={styles.timeText}>{currentTimeLabel}</Text>
         <Pressable
           accessibilityRole="button"
-          style={({ hovered, pressed }) => [
-            styles.actionButton,
-            hovered && styles.actionButtonHover,
-            pressed && styles.actionButtonPressed,
-          ]}>
+          style={(state) => {
+            const hovered = getHoverState(state);
+            const { pressed } = state;
+            return [
+              styles.actionButton,
+              hovered && styles.actionButtonHover,
+              pressed && styles.actionButtonPressed,
+            ];
+          }}>
           <Ionicons name="wallet-outline" size={15} color={terminalTheme.colors.text} />
           <Text style={styles.actionButtonText}>账户</Text>
         </Pressable>
         <Pressable
           accessibilityRole="button"
-          style={({ hovered, pressed }) => [
-            styles.iconButton,
-            hovered && styles.actionButtonHover,
-            pressed && styles.actionButtonPressed,
-          ]}>
+          style={(state) => {
+            const hovered = getHoverState(state);
+            const { pressed } = state;
+            return [
+              styles.iconButton,
+              hovered && styles.actionButtonHover,
+              pressed && styles.actionButtonPressed,
+            ];
+          }}>
           <Ionicons name="person-circle-outline" size={20} color={terminalTheme.colors.text} />
         </Pressable>
       </View>
