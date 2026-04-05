@@ -28,7 +28,6 @@ jobs:
   build-android-release:
     runs-on: ubuntu-latest
     env:
-      NODE_ENV: production
       APK_PATH: native_app/android/app/build/outputs/apk/release/app-release.apk
       BUNDLE_DIR: release_bundle
       HAS_ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
@@ -54,7 +53,7 @@ jobs:
 
       - name: Install native app dependencies
         working-directory: native_app
-        run: npm ci
+        run: npm ci --include=dev
 
       - name: Typecheck
         working-directory: native_app
