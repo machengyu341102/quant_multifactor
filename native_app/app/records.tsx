@@ -2,13 +2,10 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
 import { AppScreen } from '@/components/app/app-screen';
-import { ExecutiveSummaryGrid } from '@/components/app/executive-summary-grid';
-import { MetricCard } from '@/components/app/metric-card';
 import { SectionHeading } from '@/components/app/section-heading';
 import { StateBanner } from '@/components/app/state-banner';
-import { StatusPill } from '@/components/app/status-pill';
 import { SurfaceCard } from '@/components/app/surface-card';
-import { Colors, Spacing } from '@/constants/theme';
+import { Colors } from '@/constants/theme';
 import { getPortfolioHistory } from '@/lib/api';
 import { formatCurrency, formatPercent, formatTimestamp } from '@/lib/format';
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -31,13 +28,6 @@ function tradeTypeLabel(type: string) {
 
 function statusLabel(status: string) {
   return status === 'closed' ? '已平仓' : '持仓中';
-}
-
-function statusTone(status: string): 'neutral' | 'info' | 'success' {
-  if (status === 'closed') {
-    return 'neutral';
-  }
-  return 'info';
 }
 
 export default function RecordsScreen() {
@@ -64,10 +54,6 @@ export default function RecordsScreen() {
   const closedPositions = [...history.closedPositions].sort(
     (a, b) => Number(b.code === focusedCode) - Number(a.code === focusedCode)
   );
-  const highlightedClosedPosition = focusedCode
-    ? closedPositions.find((position) => position.code === focusedCode)
-    : null;
-
   return (
     <AppScreen refreshing={refreshing} onRefresh={refresh}>
       <Pressable
@@ -78,106 +64,29 @@ export default function RecordsScreen() {
         <Text style={[styles.backText, { color: palette.tint }]}>返回持仓页</Text>
       </Pressable>
 
-      <SectionHeading
-        eyebrow="Execution Ledger"
-        title="交易记录"
-        subtitle="这里统一看最近动作、已平仓结果和已实现盈亏。"
-      />
+      <SectionHeading title="交易记录" />
 
-      <View style={[styles.hero, { backgroundColor: palette.hero }]}>
-        <Text style={styles.heroEyebrow}>EXECUTION LEDGER</Text>
-        <Text style={styles.heroTitle}>
-          {focusedCode ? `围绕 ${focusedCode} 的动作记录` : '最近动作与已平仓结果'}
-        </Text>
-        <Text style={styles.heroCopy}>
-          {focusedCode
-            ? '这页已经把相关动作和已平仓记录提上来，方便直接复盘。'
-            : '先看整体交易动作、已平仓结果和已实现盈亏，再进入具体记录。'}
-        </Text>
-      </View>
-
-      <SectionHeading
-        title="一页台账判断"
-        subtitle="先把最近动作、平仓结果和当前焦点压成一页，再往下看完整流水。"
-      />
       <SurfaceCard style={styles.summaryCard}>
-        <ExecutiveSummaryGrid
-          items={[
-            {
-              key: 'records-trades',
-              step: '01 最近动作',
-              title: history.recentTrades.length > 0 ? `${history.recentTrades.length} 条动作` : '当前还没有动作流水',
-              meta: history.recentTrades[0]
-                ? `${history.recentTrades[0].code} / ${tradeTypeLabel(history.recentTrades[0].type)}`
-                : '等待首次真实操作',
-              body: '这里统一回放开仓、减仓、风控调整和平仓动作，不用再分散到多个页面找。',
-            },
-            {
-              key: 'records-closed',
-              step: '02 已平仓结果',
-              title: `${history.closedPositions.length} 笔归档`,
-              meta: `已实现盈亏 ${formatCurrency(history.realizedProfitLoss)}`,
-              body: '平仓记录独立归档，方便回看结果，不和当前持仓混在一起。',
-            },
-            {
-              key: 'records-focus',
-              step: '03 当前焦点',
-              title: highlightedClosedPosition
-                ? `${highlightedClosedPosition.code} ${highlightedClosedPosition.name}`
-                : focusedCode
-                  ? `${focusedCode} 暂无平仓归档`
-                  : '当前没有指定焦点票',
-              meta: highlightedClosedPosition
-                ? `平仓 ${highlightedClosedPosition.closePrice.toFixed(2)} / 持有 ${highlightedClosedPosition.holdDays} 天`
-                : '可从持仓页带着代码跳进来复盘',
-              body: highlightedClosedPosition?.closeReason || '如果当前没有指定焦点票，这页默认按时间顺序展示。',
-            },
-          ]}
-        />
+        <Text style={[styles.summaryTitle, { color: palette.text }]}>
+          {focusedCode ? `${focusedCode} 交易台账` : '最近动作与已平仓结果'}
+        </Text>
+        <Text style={[styles.meta, { color: history.realizedProfitLoss >= 0 ? palette.success : palette.danger }]}>
+          已实现 {formatCurrency(history.realizedProfitLoss)}
+        </Text>
       </SurfaceCard>
-
-      <View style={styles.grid}>
-        <MetricCard label="最近动作" value={`${history.recentTrades.length}`} tone="neutral" />
-        <MetricCard label="已平仓" value={`${history.closedPositions.length}`} tone="info" />
-        <MetricCard
-          label="已实现盈亏"
-          value={formatCurrency(history.realizedProfitLoss)}
-          tone={history.realizedProfitLoss >= 0 ? 'success' : 'danger'}
-        />
-      </View>
 
       <StateBanner error={error} isPending={isPending && !data} loadingLabel="正在同步交易记录" />
 
-      {highlightedClosedPosition ? (
-        <SurfaceCard
-          style={[
-            styles.focusCard,
-            {
-              backgroundColor: palette.accentSoft,
-              borderColor: palette.tint,
-            },
-          ]}>
-          <Text style={[styles.focusTitle, { color: palette.text }]}>
-            已定位到 {highlightedClosedPosition.code} 最近平仓记录
-          </Text>
-          <Text style={[styles.focusCopy, { color: palette.subtext }]}>
-            {highlightedClosedPosition.closeReason || '本次平仓未写入额外说明'}，成交价{' '}
-            {highlightedClosedPosition.closePrice.toFixed(2)}，已实现{' '}
-            {formatCurrency(highlightedClosedPosition.realizedProfitLoss)}。
-          </Text>
-        </SurfaceCard>
-      ) : null}
-
-      <SectionHeading title="最近动作" subtitle="开仓、调风控、减仓、平仓都按时间倒序放在这里。" />
+      <SectionHeading title="最近动作" />
       {recentTrades.length === 0 && !error ? (
         <SurfaceCard>
           <Text style={[styles.emptyText, { color: palette.subtext }]}>
-            当前还没有可展示的动作流水。等你第一次从 App 里开仓或调整风控，这里会自动出现。
+            当前还没有动作流水。
           </Text>
         </SurfaceCard>
       ) : null}
 
-      {recentTrades.map((trade) => {
+      {recentTrades.slice(0, 1).map((trade) => {
         const canOpenPosition = trade.status !== 'closed';
         return (
           <Pressable
@@ -207,15 +116,19 @@ export default function RecordsScreen() {
                   <Text style={[styles.meta, { color: palette.subtext }]}>
                     {trade.strategy || '未标记策略'} · {formatTimestamp(trade.time.replace(' ', 'T'))}
                   </Text>
+                  <Text style={[styles.meta, { color: palette.subtext }]}>
+                    {statusLabel(trade.status)}
+                  </Text>
                 </View>
-                <StatusPill label={statusLabel(trade.status)} tone={statusTone(trade.status)} />
               </View>
               <View style={styles.rowBetween}>
                 <View style={styles.tradeInfo}>
                   <Text style={[styles.tradeType, { color: palette.text }]}>
                     {tradeTypeLabel(trade.type)}
                   </Text>
-                  <Text style={[styles.tradeReason, { color: palette.subtext }]}>{trade.reason}</Text>
+                  <Text style={[styles.tradeReason, { color: palette.subtext }]} numberOfLines={1}>
+                    {trade.reason}
+                  </Text>
                 </View>
                 <View style={styles.tradeMeta}>
                   <Text style={[styles.tradePrice, { color: palette.text }]}>
@@ -231,16 +144,16 @@ export default function RecordsScreen() {
         );
       })}
 
-      <SectionHeading title="已平仓" subtitle="完整结束的仓位放这里，专门看结果，不跟当前持仓混在一起。" />
+      <SectionHeading title="已平仓" />
       {closedPositions.length === 0 && !error ? (
         <SurfaceCard>
           <Text style={[styles.emptyText, { color: palette.subtext }]}>
-            当前还没有已平仓记录。等你第一次完整平仓后，这里会自动归档。
+            当前还没有已平仓记录。
           </Text>
         </SurfaceCard>
       ) : null}
 
-      {closedPositions.map((position) => (
+      {closedPositions.slice(0, 1).map((position) => (
         <SurfaceCard
           key={`${position.code}-${position.closedAt}`}
           style={[
@@ -288,7 +201,7 @@ export default function RecordsScreen() {
               {formatPercent(position.realizedProfitLossPct / 100)}
             </Text>
           </View>
-          <Text style={[styles.tradeReason, { color: palette.subtext }]}>
+          <Text style={[styles.tradeReason, { color: palette.subtext }]} numberOfLines={1}>
             {position.closeReason || '未写入平仓原因'}
           </Text>
           <Text style={[styles.tradeHint, { color: palette.subtext }]}>
@@ -311,46 +224,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
   },
-  hero: {
-    borderRadius: 28,
-    padding: 24,
-    gap: 12,
-  },
-  heroEyebrow: {
-    color: '#8CC7FF',
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 1.4,
-  },
-  heroTitle: {
-    color: '#F7FBFF',
-    fontSize: 28,
-    fontWeight: '800',
-    lineHeight: 34,
-  },
-  heroCopy: {
-    color: '#C8D8EB',
-    fontSize: 15,
-    lineHeight: 22,
-  },
   summaryCard: {
-    gap: 14,
+    gap: 10,
   },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: Spacing.gap,
-  },
-  focusCard: {
-    gap: 6,
-  },
-  focusTitle: {
-    fontSize: 15,
+  summaryTitle: {
+    fontSize: 20,
     fontWeight: '800',
-  },
-  focusCopy: {
-    fontSize: 13,
-    lineHeight: 20,
   },
   emptyText: {
     fontSize: 14,

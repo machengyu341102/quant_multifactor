@@ -108,6 +108,27 @@ export interface StrongMoveCandidate {
   reasons: string[];
 }
 
+export interface HiddenAccumulationOpportunity {
+  id: string;
+  code: string;
+  name: string;
+  marketPhase: string;
+  marketPhaseLabel: string;
+  floatMvYi: number;
+  streakDays: number;
+  consolidationWidthPct: number;
+  streakGainPct: number;
+  setupLabel: string;
+  tradabilityLabel: string;
+  accumulationScore: number;
+  holdingWindow: string;
+  action: string;
+  thesis: string;
+  reasons: string[];
+  recentCloses: number[];
+  tailPcts: number[];
+}
+
 export interface ThemeFollower {
   code: string;
   name: string;
@@ -605,6 +626,9 @@ export interface HomeSnapshot {
   system: SystemStatus;
   learning: LearningProgress;
   dailyAdvance: LearningAdvanceStatus;
+  worldState: WorldStateSnapshot | null;
+  hiddenAccumulationOpportunities: HiddenAccumulationOpportunity[];
+  productionGuard: ProductionGuardSnapshot | null;
   positioningPlan: PositioningPlan;
   positions: Position[];
   strategies: StrategyPerformance[];
@@ -748,6 +772,268 @@ export interface OpsRecommendation {
   message: string;
 }
 
+export interface ExecutionPolicyExportStatus {
+  period: string;
+  latestExportAt: string | null;
+  latestExportId: string | null;
+  latestManifestRoute: string | null;
+  latestReportRoute: string | null;
+  latestBundleRoute: string | null;
+  latestAssetCount: number;
+  historyCount: number;
+  stale: boolean;
+}
+
+export interface WorldStateExportStatus {
+  period: string;
+  latestExportAt: string | null;
+  latestExportId: string | null;
+  latestManifestRoute: string | null;
+  latestReportRoute: string | null;
+  latestBundleRoute: string | null;
+  latestAssetCount: number;
+  historyCount: number;
+  stale: boolean;
+}
+
+export interface ProductionGuardSnapshot {
+  marketPhase: string;
+  marketPhaseLabel: string;
+  hardRiskGate: boolean;
+  blockedAdditions: boolean;
+  autoReducePositions: boolean;
+  autoExitLosers: boolean;
+  currentDrawdownPct: number;
+  maxDrawdownPct: number;
+  drawdownDays: number;
+  walkForwardRisk: string;
+  walkForwardEfficiency: number | null;
+  walkForwardDegradation: number | null;
+  unstableStrategies: string[];
+  summary: string;
+  actions: string[];
+}
+
+export interface WorldStateComponent {
+  key: string;
+  label: string;
+  score: number;
+  bias: string;
+  summary: string;
+  drivers: string[];
+}
+
+export interface WorldEventCascade {
+  themeKey: string;
+  eventId: string;
+  title: string;
+  triggerType: string;
+  severity: string;
+  peakSeverity: string;
+  tradeBias: string;
+  immediateAction: string;
+  continuityFocus: string;
+  transportFocus: string;
+  followUpSignal: string;
+  confidenceScore: number;
+  restrictionScope: string;
+  estimatedFlowImpactPct: number;
+  affectedCountries: string[];
+  affectedRoutes: string[];
+  directBeneficiaries: string[];
+  directLosers: string[];
+  exposedIndustries: string[];
+  secondOrderImpacts: string[];
+  commodityLinks: string[];
+  evidenceCount: number;
+  sourceTimestamp: string | null;
+}
+
+export interface OperatingProfile {
+  companyName: string;
+  primaryIndustries: string[];
+  operatingMode: string;
+  orderVisibilityMonths: number;
+  capacityUtilizationPct: number;
+  inventoryDays: number;
+  supplierConcentrationPct: number;
+  customerConcentrationPct: number;
+  overseasRevenuePct: number;
+  sensitiveRegionExposurePct: number;
+  cashBufferMonths: number;
+  capexFlexibility: string;
+  inventoryStrategy: string;
+  keyInputs: string[];
+  keyRoutes: string[];
+  strategicProjects: string[];
+  completenessScore: number;
+  completenessLabel: string;
+  profileStatus: string;
+  freshnessLabel: string;
+  stale: boolean;
+  missingFields: string[];
+  recommendedActions: string[];
+  summary: string | null;
+  updatedAt: string | null;
+}
+
+export interface OperatingProfileUpdatePayload {
+  companyName?: string;
+  primaryIndustries?: string[];
+  operatingMode?: string;
+  orderVisibilityMonths?: number;
+  capacityUtilizationPct?: number;
+  inventoryDays?: number;
+  supplierConcentrationPct?: number;
+  customerConcentrationPct?: number;
+  overseasRevenuePct?: number;
+  sensitiveRegionExposurePct?: number;
+  cashBufferMonths?: number;
+  capexFlexibility?: string;
+  inventoryStrategy?: string;
+  keyInputs?: string[];
+  keyRoutes?: string[];
+  strategicProjects?: string[];
+}
+
+export interface WorldStateSnapshot {
+  regime: string;
+  regimeScore: number;
+  marketPhase: string;
+  marketPhaseLabel: string;
+  valuationRegime: string;
+  capitalStyle: string;
+  strategicDirection: string | null;
+  technologyFocus: string | null;
+  geopoliticsBias: string;
+  supplyChainMode: string;
+  technologyBreakthroughScore: number;
+  technologyBreakthroughSummary: string | null;
+  phaseConfidence: number;
+  styleBias: string;
+  horizonHint: string;
+  limitUpMode: string;
+  limitUpAllowed: boolean;
+  shouldTrade: boolean;
+  summary: string;
+  structuralSummary: string | null;
+  dominantComponent: string | null;
+  components: WorldStateComponent[];
+  sourceStatuses: Array<{
+    key: string;
+    label: string;
+    updatedAt: string | null;
+    freshnessScore: number;
+    freshnessLabel: string;
+    reliabilityScore: number;
+    authorityScore: number;
+    timelinessScore: number;
+    signalCount: number;
+    summary: string;
+    category: string;
+    external: boolean;
+    required: boolean;
+    fetchMode: string;
+    remoteConfigured: boolean;
+    degradedToDerived: boolean;
+    originMode: string;
+    available: boolean;
+    stale: boolean;
+    dataQualityScore: number;
+    blockReason?: string | null;
+    liveProbeSummary?: string | null;
+  }>;
+  topDirections: Array<{
+    directionId: string;
+    direction: string;
+    focusSector: string | null;
+    policyBucket: string | null;
+    totalScore: number;
+    eventScore: number;
+    officialScore: number;
+    chainControlScore: number;
+    researchScore: number;
+    timelineScore: number;
+    hardSourceScore: number;
+    technologyBreakthroughScore: number;
+    technologyFocus: string | null;
+    summary: string;
+  }>;
+  crossAssetSignals: Array<{
+    key: string;
+    label: string;
+    level: string;
+    score: number;
+    bias: string;
+    summary: string;
+    actionType: string;
+    targets: string[];
+    sourceKeys: string[];
+  }>;
+  regionalPressures: Array<{
+    region: string;
+    level: string;
+    score: number;
+    summary: string;
+    affectedCountries: string[];
+    affectedRoutes: string[];
+    exposedIndustries: string[];
+  }>;
+  eventCascades: WorldEventCascade[];
+  refreshPlan: {
+    mode: string;
+    modeLabel: string;
+    activeWindow: string;
+    activeWindowLabel: string;
+    escalationActive: boolean;
+    topTrigger: string | null;
+    triggerType: string | null;
+    newsIntervalMinutes: number;
+    feedsIntervalMinutes: number;
+    hardSourceIntervalMinutes: number;
+    policyIntervalMinutes: number;
+    overnightWatch: boolean;
+    summary: string;
+    nextFocus: string[];
+    nextNewsDueAt: string | null;
+    nextFeedsDueAt: string | null;
+    nextHardSourcesDueAt: string | null;
+    nextPolicyDueAt: string | null;
+    overdueSources: string[];
+    generatedAt: string | null;
+  } | null;
+  actions: Array<{
+    key: string;
+    level: string;
+    actionType: string;
+    priority: number;
+    title: string;
+    summary: string;
+    horizon: string;
+    sourceKeys: string[];
+    targets: string[];
+  }>;
+  operatingActions: Array<{
+    key: string;
+    level: string;
+    actionType: string;
+    priority: number;
+    title: string;
+    summary: string;
+    horizon: string;
+    targets: string[];
+  }>;
+  operatingProfile: OperatingProfile | null;
+  checks: Array<{
+    key: string;
+    level: string;
+    title: string;
+    message: string;
+    suggestion: string | null;
+    sourceKeys: string[];
+  }>;
+}
+
 export interface OpsSummary {
   service: string;
   version: string;
@@ -770,6 +1056,10 @@ export interface OpsSummary {
   activeStrategies: number;
   dataStatus: OpsDataStatus;
   routes: OpsRouteStat[];
+  worldState: WorldStateSnapshot | null;
+  worldStateExport: WorldStateExportStatus | null;
+  executionPolicyExport: ExecutionPolicyExportStatus | null;
+  productionGuard: ProductionGuardSnapshot | null;
   recommendations: OpsRecommendation[];
 }
 

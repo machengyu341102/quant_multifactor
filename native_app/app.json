@@ -2,18 +2,18 @@
   "expo": {
     "name": "Alpha AI Trading",
     "slug": "alpha-ai-trading",
-    "version": "1.0.76",
+    "version": "1.0.142",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "alphaai",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "notification": {
       "icon": "./assets/images/android-icon-monochrome.png",
-      "color": "#155EEF"
+      "color": "#14804A"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -28,17 +28,16 @@
     },
     "android": {
       "package": "com.zchtech.alphaai",
-      "versionCode": 77,
+      "versionCode": 142,
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#E6F4EA",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "permissions": ["POST_NOTIFICATIONS"]
+      "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",
@@ -52,13 +51,12 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#07111F",
+          "backgroundColor": "#0B2015",
           "dark": {
-            "backgroundColor": "#07111F"
+            "backgroundColor": "#0B2015"
           }
         }
       ],
-      "expo-notifications",
       "expo-secure-store"
     ],
     "experiments": {
@@ -66,7 +64,7 @@
       "reactCompiler": true
     },
     "extra": {
-      "apiBaseUrl": "http://127.0.0.1:8000",
+      "apiBaseUrl": "http://127.0.0.1:18000",
       "buildChannel": "preview"
     }
   }

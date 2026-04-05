@@ -24,21 +24,21 @@ export function SectionHeading({ eyebrow, title, subtitle }: SectionHeadingProps
 
 const styles = StyleSheet.create({
   wrap: {
-    gap: 4,
+    gap: 0,
   },
   eyebrow: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
-    letterSpacing: 1.2,
+    letterSpacing: 1,
     textTransform: 'uppercase',
   },
   title: {
-    fontSize: 24,
+    fontSize: 15,
     fontWeight: '800',
-    lineHeight: 30,
+    lineHeight: 19,
   },
   subtitle: {
-    fontSize: 14,
-    lineHeight: 21,
+    fontSize: 9,
+    lineHeight: 13,
   },
 });

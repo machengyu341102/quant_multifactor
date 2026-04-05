@@ -1,0 +1,186 @@
+name: Android Release Distribution
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_target:
+        description: Publish target
+        required: true
+        default: artifact
+        type: choice
+        options:
+          - artifact
+          - github_release
+          - object_storage
+          - all
+      release_notes:
+        description: Release notes, one line or multiple lines
+        required: false
+        default: ""
+  push:
+    tags:
+      - "android-v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-android-release:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+      APK_PATH: native_app/android/app/build/outputs/apk/release/app-release.apk
+      BUNDLE_DIR: release_bundle
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: native_app/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Install native app dependencies
+        working-directory: native_app
+        run: npm ci
+
+      - name: Typecheck
+        working-directory: native_app
+        run: npm run typecheck
+
+      - name: Lint
+        working-directory: native_app
+        run: npm run lint
+
+      - name: Restore Android signing keystore
+        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        shell: bash
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > native_app/android/ci-release.keystore
+
+      - name: Build Android release APK
+        working-directory: native_app/android
+        env:
+          ALPHA_RELEASE_STORE_FILE: ${{ github.workspace }}/native_app/android/ci-release.keystore
+          ALPHA_RELEASE_STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ALPHA_RELEASE_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ALPHA_RELEASE_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: ./gradlew assembleRelease
+
+      - name: Write release notes
+        shell: bash
+        run: |
+          mkdir -p .github/.tmp
+          printf '%s\n' "${{ github.event.inputs.release_notes || '' }}" > .github/.tmp/release-notes.txt
+
+      - name: Create release bundle
+        env:
+          RELEASE_PUBLIC_BASE_URL: ${{ secrets.RELEASE_PUBLIC_BASE_URL }}
+        shell: bash
+        run: |
+          EXTRA_ARGS=()
+          if [[ -n "${RELEASE_PUBLIC_BASE_URL:-}" ]]; then
+            EXTRA_ARGS+=(--public-base-url "${RELEASE_PUBLIC_BASE_URL%/}/app")
+          fi
+          python3 scripts/create_android_release_bundle.py \
+            --apk "$APK_PATH" \
+            --output-dir "$BUNDLE_DIR" \
+            --app-json native_app/app.json \
+            --build-gradle native_app/android/app/build.gradle \
+            --notes-file .github/.tmp/release-notes.txt \
+            "${EXTRA_ARGS[@]}"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-release-bundle
+          path: |
+            ${{ env.BUNDLE_DIR }}/alpha-ai-latest.apk
+            ${{ env.BUNDLE_DIR }}/alpha-ai-latest.apk.sha256
+            ${{ env.BUNDLE_DIR }}/releases/*
+          if-no-files-found: error
+
+      - name: Verify local release bundle
+        run: |
+          python3 scripts/verify_android_release_bundle.py \
+            --bundle-dir "$BUNDLE_DIR"
+
+      - name: Publish to GitHub Release
+        if: ${{ startsWith(github.ref, 'refs/tags/') || github.event.inputs.publish_target == 'github_release' || github.event.inputs.publish_target == 'all' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ env.BUNDLE_DIR }}/alpha-ai-latest.apk
+            ${{ env.BUNDLE_DIR }}/alpha-ai-latest.apk.sha256
+            ${{ env.BUNDLE_DIR }}/releases/*
+          body_path: .github/.tmp/release-notes.txt
+          generate_release_notes: true
+
+      - name: Install AWS CLI if needed
+        if: ${{ (github.event.inputs.publish_target == 'object_storage' || github.event.inputs.publish_target == 'all' || startsWith(github.ref, 'refs/tags/')) && secrets.RELEASE_BUCKET != '' && secrets.RELEASE_PUBLIC_BASE_URL != '' }}
+        shell: bash
+        run: |
+          if ! command -v aws >/dev/null 2>&1; then
+            pip3 install awscli
+          fi
+
+      - name: Publish to object storage
+        if: ${{ (github.event.inputs.publish_target == 'object_storage' || github.event.inputs.publish_target == 'all' || startsWith(github.ref, 'refs/tags/')) && secrets.RELEASE_BUCKET != '' && secrets.RELEASE_PUBLIC_BASE_URL != '' }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.RELEASE_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.RELEASE_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.RELEASE_REGION }}
+          RELEASE_REGION: ${{ secrets.RELEASE_REGION }}
+          RELEASE_BUCKET: ${{ secrets.RELEASE_BUCKET }}
+          RELEASE_PREFIX: ${{ secrets.RELEASE_PREFIX }}
+          RELEASE_PUBLIC_BASE_URL: ${{ secrets.RELEASE_PUBLIC_BASE_URL }}
+          RELEASE_ENDPOINT_URL: ${{ secrets.RELEASE_ENDPOINT_URL }}
+        run: bash scripts/upload_android_release_bundle.sh "$BUNDLE_DIR"
+
+      - name: Verify public latest APK
+        if: ${{ (github.event.inputs.publish_target == 'object_storage' || github.event.inputs.publish_target == 'all' || startsWith(github.ref, 'refs/tags/')) && secrets.RELEASE_PUBLIC_BASE_URL != '' }}
+        shell: bash
+        env:
+          RELEASE_PUBLIC_BASE_URL: ${{ secrets.RELEASE_PUBLIC_BASE_URL }}
+          RELEASE_PREFIX: ${{ secrets.RELEASE_PREFIX }}
+        run: |
+          PUBLIC_BASE="${RELEASE_PUBLIC_BASE_URL%/}/${RELEASE_PREFIX:-app}"
+          python3 scripts/verify_android_release_bundle.py \
+            --bundle-dir "$BUNDLE_DIR" \
+            --public-base-url "$PUBLIC_BASE"
+
+      - name: Build release summary
+        shell: bash
+        run: |
+          python3 - <<'PY'
+import json
+from pathlib import Path
+payload = json.loads(Path("release_bundle/releases/release.json").read_text())
+lines = [
+    "## Android Release Bundle",
+    "",
+    f"- Version: `{payload['version']}`",
+    f"- versionCode: `{payload['versionCode']}`",
+    f"- Size: `{payload['size']}` bytes",
+    f"- SHA-256: `{payload['sha256']}`",
+    f"- Latest: `{payload['url']}`",
+    f"- Direct: `{payload['directUrl']}`",
+    f"- release.json: `{payload['releaseJsonUrl']}`",
+]
+notes = payload.get("notes") or []
+if notes:
+    lines.append("")
+    lines.append("### Notes")
+    lines.extend([f"- {note}" for note in notes])
+Path(Path.cwd() / "release-summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+PY
+          cat release-summary.md >> "$GITHUB_STEP_SUMMARY"

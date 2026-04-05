@@ -263,13 +263,26 @@ def job_learning_progress():
         from learning_engine import check_learning_health, analyze_factor_importance
         from json_store import safe_load
         from db_store import load_scorecard
+        from api_server import (
+            _build_learning_advance_status,
+            _build_learning_progress,
+            _build_signals,
+            _build_system_status,
+        )
 
         health = check_learning_health()
         h_ok = sum(1 for c in health.get("checks", []) if c["status"] == "ok")
         h_total = len(health.get("checks", []))
 
         sc = load_scorecard(days=1)
-        today_count = len(sc)
+        backfilled_count = len(sc)
+        live_signals = _build_signals()
+        visible_candidates = len(live_signals)
+        system = _build_system_status()
+        learning_progress = _build_learning_progress()
+        daily_advance = _build_learning_advance_status()
+        official_signals = int(system.today_signals or 0)
+        ingested_signals = int(daily_advance.ingested_signals or 0)
 
         pos = neg = dead = total = 0
         for strat in ["隔夜选股", "板块轮动选股", "趋势跟踪选股", "尾盘短线选股",
@@ -299,33 +312,25 @@ def job_learning_progress():
 
         import collections as _coll
         by_strat = _coll.Counter()
-        for r in sc:
-            by_strat[r.get("strategy", "?")] += 1
+        for signal in live_signals:
+            by_strat[getattr(signal, "strategy", "?")] += 1
         strat_lines = [f"  {ss}: {cc}" for ss, cc in by_strat.most_common()]
-
-        hour = datetime.now().hour
-        if hour <= 10:
-            expected = 50
-        elif hour <= 12:
-            expected = 200
-        elif hour <= 14:
-            expected = 300
-        else:
-            expected = 400
-        on_track = "✅ 进度正常" if today_count >= expected * 0.7 else "⚠️ 数据不足!"
-
-        ran_strats = set(by_strat.keys())
-        all_strats = ["集合竞价选股", "隔夜选股", "趋势跟踪选股", "板块轮动选股",
-                      "低吸回调选股", "缩量整理选股", "尾盘短线选股"]
-        not_ran = [ss for ss in all_strats if ss not in ran_strats]
+        on_track = (
+            "✅ 有数据流入"
+            if visible_candidates > 0 or official_signals > 0 or ingested_signals > 0 or backfilled_count > 0
+            else "⚠️ 当前暂无新增输入"
+        )
+        advance_label = "已完成" if daily_advance.today_completed else "待收口"
 
         lines = [
             f"📊 学习数据监控 ({datetime.now().strftime('%H:%M')})",
             f"",
-            f"今日数据: {today_count} 条 (目标{expected}) {on_track}",
+            f"盘中候选: {visible_candidates} 条 / 正式信号: {official_signals} 条 / 正式入库: {ingested_signals} 条 / 回填验证: {backfilled_count} 条 {on_track}",
         ] + strat_lines + [
             f"",
-            f"未跑: {', '.join(not_ran) if not_ran else '全部完成'}",
+            f"候选分布: {', '.join(f'{k}{v}条' for k, v in by_strat.most_common(4)) if by_strat else '当前暂无盘中候选'}",
+            f"日日精进: {daily_advance.status} / {advance_label}",
+            f"学习轮次: {learning_progress.today_cycles} / 准确率 {round(learning_progress.decision_accuracy * 100, 1)}%",
             f"健康: {h_ok}/{h_total} 通过",
             f"因子: {total}个 (正{pos} 负{neg} 废{dead})",
             f"权重: {strats_shifted}/6 策略已优化",
@@ -334,7 +339,9 @@ def job_learning_progress():
 
         from notifier import notify_wechat_raw
         notify_wechat_raw("学习数据监控", "\n".join(lines))
-        print(f"[学习监控] 已推送: {today_count}条 {on_track}")
+        print(
+            f"[学习监控] 已推送: 候选{visible_candidates}/正式{official_signals}/入库{ingested_signals}/验证{backfilled_count} {on_track}"
+        )
     except Exception as e:
         print(f"[学习监控] 推送失败: {e}")
 
@@ -653,6 +660,8 @@ def job_weekly_report():
     if not s.is_trading_day():
         return
     try:
+        job_execution_policy_export("weekly")
+        job_world_state_export("weekly")
         from scorecard import generate_weekly_report, notify_scorecard
         report = generate_weekly_report()
         try:
@@ -671,6 +680,46 @@ def job_weekly_report():
         logger.error("周报 严格模式熔断: %s", e)
     except Exception as e:
         print(f"[周报异常] {e}")
+
+
+def job_execution_policy_export(period: str = "daily"):
+    """导出执行策略快照 (daily / weekly)"""
+    normalized_period = str(period or "daily").strip().lower()
+    if normalized_period not in {"daily", "weekly"}:
+        normalized_period = "daily"
+    try:
+        from api_server import _write_execution_policy_export
+
+        manifest = _write_execution_policy_export(normalized_period)
+        print(
+            f"[执行策略导出] {normalized_period} 导出完成: "
+            f"{manifest.export_id} / phase={manifest.market_phase_label} / "
+            f"budget={manifest.risk_budget_pct:.1f}%"
+        )
+        return manifest
+    except Exception as e:
+        print(f"[执行策略导出异常] {e}")
+        return None
+
+
+def job_world_state_export(period: str = "daily"):
+    """导出顶层世界状态快照 (daily / weekly)"""
+    normalized_period = str(period or "daily").strip().lower()
+    if normalized_period not in {"daily", "weekly"}:
+        normalized_period = "daily"
+    try:
+        from api_server import _write_world_state_export
+
+        manifest = _write_world_state_export(normalized_period)
+        print(
+            f"[顶层世界导出] {normalized_period} 导出完成: "
+            f"{manifest.export_id} / phase={manifest.market_phase_label} / "
+            f"dominant={manifest.dominant_component or 'n/a'}"
+        )
+        return manifest
+    except Exception as e:
+        print(f"[顶层世界导出异常] {e}")
+        return None
 
 
 # ================================================================
@@ -1242,12 +1291,102 @@ def job_global_news():
     """全球新闻雷达"""
     try:
         from global_news_monitor import scan_global_news
+        from world_refresh_planner import load_world_refresh_runtime_state, save_world_refresh_runtime_state
         result = scan_global_news()
         n = result.get("n_events", 0)
         ss = result.get("sentiment", 0)
+        state = load_world_refresh_runtime_state()
+        state["last_global_news_at"] = datetime.now().isoformat(timespec="seconds")
+        save_world_refresh_runtime_state(state)
         if n > 0:
             print(f"[新闻雷达] {n} 条重大新闻, 情绪 {ss:+.2f}")
         else:
             print("[新闻雷达] 无重大新闻")
+        return result
     except Exception as e:
         print(f"[新闻雷达异常] {e}")
+        raise
+
+
+def job_world_state_feeds():
+    """顶层世界模型自动源刷新"""
+    try:
+        from world_state_feeds import refresh_world_state_feeds
+        from world_refresh_planner import load_world_refresh_runtime_state, save_world_refresh_runtime_state
+
+        result = refresh_world_state_feeds()
+        state = load_world_refresh_runtime_state()
+        state["last_world_state_feeds_at"] = datetime.now().isoformat(timespec="seconds")
+        state["last_policy_refresh_at"] = state["last_world_state_feeds_at"]
+        save_world_refresh_runtime_state(state)
+        print(
+            "[世界模型源] official=%d timeline=%d research=%d"
+            % (
+                result.get("official_ingest_count", 0),
+                result.get("execution_timeline_count", 0),
+                result.get("research_item_count", 0),
+            )
+        )
+        return result
+    except Exception as e:
+        print(f"[世界模型源异常] {e}")
+        raise
+
+
+def job_world_hard_sources():
+    """更硬的外网/衍生世界模型源刷新"""
+    try:
+        from world_hard_source_feeds import refresh_world_hard_sources
+        from world_refresh_planner import load_world_refresh_runtime_state, save_world_refresh_runtime_state
+
+        result = refresh_world_hard_sources()
+        state = load_world_refresh_runtime_state()
+        state["last_world_hard_sources_at"] = datetime.now().isoformat(timespec="seconds")
+        save_world_refresh_runtime_state(state)
+        print(
+            "[世界硬源] official=%d shipping=%d freight=%d commodity=%d macro=%d"
+            % (
+                result.get("official_fulltext_count", 0),
+                result.get("shipping_ais_count", 0),
+                result.get("freight_rates_count", 0),
+                result.get("commodity_terminal_count", 0),
+                result.get("macro_rates_fx_count", 0),
+            )
+        )
+        return result
+    except Exception as e:
+        print(f"[世界硬源异常] {e}")
+        raise
+
+
+def job_world_refresh_tick(force: bool = False):
+    """动态世界事件抓取 tick: 基础轮询 + 事件升级 + 隔夜补扫"""
+    try:
+        from world_refresh_planner import run_world_refresh_tick
+
+        result = run_world_refresh_tick(
+            force=force,
+            run_global_news=job_global_news,
+            run_world_state_feeds=job_world_state_feeds,
+            run_world_hard_sources=job_world_hard_sources,
+        )
+        plan = result.get("plan", {}) if isinstance(result, dict) else {}
+        print(
+            "[世界抓取节奏] %s / %s / 新闻%sm / 世界%sm / 硬源%sm / 官方%sm / news=%s / feeds=%s / hard=%s / policy=%s"
+            % (
+                plan.get("mode_label", "基础轮询"),
+                plan.get("active_window_label", "观察"),
+                plan.get("news_interval_minutes", "-"),
+                plan.get("feeds_interval_minutes", "-"),
+                plan.get("hard_source_interval_minutes", "-"),
+                plan.get("policy_interval_minutes", "-"),
+                "Y" if result.get("ran_global_news") else "N",
+                "Y" if result.get("ran_world_state_feeds") else "N",
+                "Y" if result.get("ran_world_hard_sources") else "N",
+                "Y" if result.get("ran_policy_refresh") else "N",
+            )
+        )
+        return result
+    except Exception as e:
+        print(f"[世界抓取节奏异常] {e}")
+        raise

@@ -25,7 +25,12 @@ export async function getStoredValue(key: string) {
     return memoryStorage.get(key) ?? null;
   }
 
-  return SecureStore.getItemAsync(key);
+  try {
+    return await SecureStore.getItemAsync(key);
+  } catch (error) {
+    console.error('alphaai.storage_get_failed', key, error);
+    return memoryStorage.get(key) ?? null;
+  }
 }
 
 export async function setStoredValue(key: string, value: string) {
@@ -40,7 +45,12 @@ export async function setStoredValue(key: string, value: string) {
     return;
   }
 
-  await SecureStore.setItemAsync(key, value);
+  try {
+    await SecureStore.setItemAsync(key, value);
+  } catch (error) {
+    console.error('alphaai.storage_set_failed', key, error);
+    memoryStorage.set(key, value);
+  }
 }
 
 export async function deleteStoredValue(key: string) {
@@ -55,5 +65,11 @@ export async function deleteStoredValue(key: string) {
     return;
   }
 
-  await SecureStore.deleteItemAsync(key);
+  try {
+    await SecureStore.deleteItemAsync(key);
+  } catch (error) {
+    console.error('alphaai.storage_delete_failed', key, error);
+  } finally {
+    memoryStorage.delete(key);
+  }
 }

@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: Spacing.screen,
-    paddingTop: 10,
-    paddingBottom: 120,
-    gap: Spacing.gap,
+    paddingTop: 2,
+    paddingBottom: 32,
+    gap: 2,
   },
 });

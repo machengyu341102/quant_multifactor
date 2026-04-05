@@ -14,6 +14,7 @@
 
 import json
 import os
+import sqlite3
 import sys
 
 import pytest
@@ -747,3 +748,111 @@ class TestRunLearningCycle:
         result = run_learning_cycle()
         assert result is not None
         assert "# 自学习引擎报告" in result
+
+
+class TestLearningHealth:
+    def test_scorecard_freshness_uses_input_side_activity_before_critical(self, tmp_dir, monkeypatch):
+        import learning_engine
+        import db_store
+
+        db_path = tmp_dir / "quant_data.db"
+        monkeypatch.setattr(db_store, "_DB_PATH", str(db_path))
+        monkeypatch.setattr(learning_engine, "_DIR", str(tmp_dir))
+        monkeypatch.setattr(learning_engine, "_TUNABLE_PATH", str(tmp_dir / "tunable_params.json"))
+        monkeypatch.setattr(learning_engine, "_EVOLUTION_PATH", str(tmp_dir / "evolution_history.json"))
+        monkeypatch.setattr(learning_engine, "_STRATEGY_TUNABLE_KEYS", ["趋势跟踪选股"])
+        monkeypatch.setattr(learning_engine, "analyze_factor_importance", lambda *args, **kwargs: [{"correlation": 0.05}])
+
+        conn = sqlite3.connect(str(db_path))
+        conn.executescript(
+            """
+            CREATE TABLE scorecard (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                rec_date TEXT,
+                code TEXT,
+                strategy TEXT,
+                net_return_pct REAL,
+                result TEXT
+            );
+            CREATE TABLE trade_journal (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                trade_date TEXT NOT NULL,
+                strategy TEXT NOT NULL,
+                regime_score REAL,
+                regime_label TEXT,
+                regime_signals TEXT,
+                picks TEXT,
+                created_at TEXT
+            );
+            """
+        )
+        conn.execute(
+            "INSERT INTO trade_journal (trade_date, strategy, picks, created_at) VALUES (date('now','localtime'), ?, '[]', datetime('now','localtime'))",
+            ("趋势跟踪选股",),
+        )
+        conn.commit()
+        conn.close()
+
+        _write_json(tmp_dir / "tunable_params.json", {"_online_last_update": "2026-03-31T09:30:00"})
+        _write_json(tmp_dir / "evolution_history.json", [{"date": "2026-03-31", "strategy": "趋势跟踪选股"}])
+        _write_json(tmp_dir / "signals_db.json", [{"status": "partial"}])
+        models_dir = tmp_dir / "models"
+        models_dir.mkdir(exist_ok=True)
+        (models_dir / "demo.pkl").write_bytes(b"demo")
+
+        health = learning_engine.check_learning_health()
+
+        scorecard_check = next(item for item in health["checks"] if item["check"] == "scorecard_freshness")
+        assert scorecard_check["status"] == "warning"
+        assert "近3天无新回填，但输入侧仍有" in scorecard_check["detail"]
+
+    def test_scorecard_freshness_uses_signals_db_before_critical(self, tmp_dir, monkeypatch):
+        import learning_engine
+        import db_store
+
+        db_path = tmp_dir / "quant_data.db"
+        monkeypatch.setattr(db_store, "_DB_PATH", str(db_path))
+        monkeypatch.setattr(learning_engine, "_DIR", str(tmp_dir))
+        monkeypatch.setattr(learning_engine, "_TUNABLE_PATH", str(tmp_dir / "tunable_params.json"))
+        monkeypatch.setattr(learning_engine, "_EVOLUTION_PATH", str(tmp_dir / "evolution_history.json"))
+        monkeypatch.setattr(learning_engine, "_STRATEGY_TUNABLE_KEYS", ["趋势跟踪选股"])
+        monkeypatch.setattr(learning_engine, "analyze_factor_importance", lambda *args, **kwargs: [{"correlation": 0.05}])
+
+        conn = sqlite3.connect(str(db_path))
+        conn.executescript(
+            """
+            CREATE TABLE scorecard (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                rec_date TEXT,
+                code TEXT,
+                strategy TEXT,
+                net_return_pct REAL,
+                result TEXT
+            );
+            CREATE TABLE trade_journal (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                trade_date TEXT NOT NULL,
+                strategy TEXT NOT NULL,
+                regime_score REAL,
+                regime_label TEXT,
+                regime_signals TEXT,
+                picks TEXT,
+                created_at TEXT
+            );
+            """
+        )
+        conn.commit()
+        conn.close()
+
+        _write_json(tmp_dir / "tunable_params.json", {"_online_last_update": "2026-03-31T09:30:00"})
+        _write_json(tmp_dir / "evolution_history.json", [{"date": "2026-03-31", "strategy": "趋势跟踪选股"}])
+        _write_json(tmp_dir / "signals_db.json", [{"status": "pending"}, {"status": "partial"}])
+        models_dir = tmp_dir / "models"
+        models_dir.mkdir(exist_ok=True)
+        (models_dir / "demo.pkl").write_bytes(b"demo")
+
+        health = learning_engine.check_learning_health()
+
+        scorecard_check = next(item for item in health["checks"] if item["check"] == "scorecard_freshness")
+        assert scorecard_check["status"] == "warning"
+        assert "signals_db 仍有 2 条待验证/存量信号" in scorecard_check["detail"]

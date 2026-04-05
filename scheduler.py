@@ -16,6 +16,11 @@
   python3 scheduler.py sector      # 单独运行板块轮动
   python3 scheduler.py scorecard   # 对昨日推荐打分
   python3 scheduler.py weekly      # 生成并推送周报
+  python3 scheduler.py execution_policy_export [daily|weekly]  # 导出执行策略快照
+  python3 scheduler.py world_state_export [daily|weekly]  # 导出顶层世界状态快照
+  python3 scheduler.py world_state_feeds  # 刷新顶层世界模型自动源
+  python3 scheduler.py world_hard_sources  # 刷新更硬的世界模型源
+  python3 scheduler.py world_refresh_tick [--force]  # 动态世界抓取节奏
   python3 scheduler.py learning    # 手动触发学习引擎
   python3 scheduler.py agent       # 手动触发 Agent OODA 循环
   python3 scheduler.py verify      # 手动触发优化验证
@@ -83,7 +88,9 @@ from scheduler_jobs import (
     job_learning, job_learning_health, job_midday_learning,
     job_signal_tracker,
     job_monitor, job_scorecard, job_backfill_returns,
-    job_weekly_report,
+    job_weekly_report, job_execution_policy_export,
+    job_world_state_export,
+    job_world_state_feeds, job_world_hard_sources, job_world_refresh_tick,
     job_agent_morning, job_agent_evening, job_night_shift,
     job_smoke_test, job_daily_optimize, job_var_risk,
     job_weekend_optimize, job_full_retrain,
@@ -449,9 +456,13 @@ def setup_schedule():
         schedule.every().day.at(t).do(job_monitor)
 
     schedule.every().day.at("15:35").do(job_scorecard)
+    schedule.every().day.at("15:40").do(job_execution_policy_export, "daily")
+    schedule.every().day.at("15:41").do(job_world_state_export, "daily")
     schedule.every().day.at("16:30").do(job_backfill_returns)
 
     schedule.every().friday.at("15:30").do(job_weekly_report)
+    schedule.every().friday.at("15:40").do(job_execution_policy_export, "weekly")
+    schedule.every().friday.at("15:41").do(job_world_state_export, "weekly")
 
     schedule.every().day.at("09:10").do(job_smoke_test)
     schedule.every().day.at("12:30").do(job_midday_learning)
@@ -494,10 +505,7 @@ def setup_schedule():
 
     schedule.every().day.at("00:05").do(job_reset_api_stats)
 
-    schedule.every().saturday.at("10:00").do(job_global_news)
-    schedule.every().sunday.at("18:00").do(job_global_news)
-    schedule.every().day.at("07:00").do(job_global_news)
-    schedule.every().day.at("20:00").do(job_global_news)
+    schedule.every(5).minutes.do(job_world_refresh_tick)
 
     print(f"已注册定时任务:")
     for cfg in strategy_loader.load_strategies():
@@ -508,19 +516,23 @@ def setup_schedule():
     print(f"  09:20  → 昨日推荐评分 + 黑名单更新")
     print(f"  09:35  → 批量推送: 早盘汇总 [微信2/5]")
     print(f"  10:30  → 批量推送: 盘中汇总 [微信3/5]")
+    print(f"  每5分钟 → 世界抓取节奏 tick (基础轮询 + 事件升级 + 隔夜补扫)")
     print(f"  14:50  → 批量推送: 午后汇总 [微信4/5]")
     print(f"  {', '.join(SCHEDULE_MONITOR)}  → 持仓监控(止损止盈, 仅终端)")
+    print(f"  15:40  → execution policy 日级导出")
     print(f"  {SCHEDULE_CROSS_ASSET}  → 跨市场因子 (US/BTC/A50/VIX)")
     print(f"  {SCHEDULE_REGIME_ROUTER}  → 环境路由 (动态策略开关)")
     print(f"  {SCHEDULE_ENSEMBLE_MIDDAY}/{SCHEDULE_ENSEMBLE_AFTERNOON}  → 多策略共识扫描")
     print(f"  12:30  → 午盘加速学习 (信号验证/健康检查/WF)")
     print(f"  16:00~17:30  → 优化/信号/归因/VaR/学习/ML/因子发现")
     print(f"  22:30  → 夜班深度分析 (LLM复盘/预判/认知沉淀)")
+    print(f"  周五 15:40  → execution policy 周级导出")
     print(f"  {SCHEDULE_CROSS_MARKET}  → 跨市场信号推演 (夜班)")
     print(f"  {SCHEDULE_MORNING_PREP}  → 开盘前作战计划")
     print(f"  09:30~22:30  → 期货持仓监控(止损止盈, 7次/日)")
     print(f"  00:05  → API统计重置")
     print(f"  07:00/20:00+周末  → 全球新闻雷达 (6源+LLM)")
+    print(f"  每 5 分钟 tick  → 顶层世界模型动态抓取/自适应提频")
 
 
 # ================================================================
@@ -545,6 +557,7 @@ def _start_caffeinate():
 def _start_self_watchdog(interval: int = 300):
     """启动自监控线程"""
     import threading
+    from datetime import timedelta
 
     def _watchdog_loop():
         _last_alert_task = None
@@ -560,10 +573,15 @@ def _start_self_watchdog(interval: int = 300):
                 from json_store import safe_load as _sl
                 night_log = _sl(night_log_path, default={})
                 if night_log.get("status") == "running":
+                    date_str = night_log.get("date", "")
                     hb = night_log.get("_heartbeat", "")
-                    if hb:
+                    if hb and date_str:
                         from datetime import datetime as _dt
                         try:
+                            today = _dt.now().date()
+                            valid_dates = {today.isoformat(), (today - timedelta(days=1)).isoformat()}
+                            if date_str not in valid_dates:
+                                continue
                             last = _dt.strptime(hb, "%Y-%m-%d %H:%M:%S")
                             age = (_dt.now() - last).total_seconds()
                             task = night_log.get("_current_task", "?")
@@ -602,19 +620,6 @@ def run_daemon():
     print("=" * 60)
 
     caff_proc = _start_caffeinate()
-    _start_self_watchdog()
-    _notify_scheduler_event("启动", f"系统已启动: {start_time}\n所有定时任务已注册, 正常运行中。")
-
-    setup_schedule()
-
-    print(f"\n调度器已启动, 每 30 秒检查一次...")
-    print("caffeinate 已自动启动, 无需手动加\n")
-
-    try:
-        from watchdog import update_heartbeat
-        update_heartbeat()
-    except Exception as _exc:
-        logger.debug("Suppressed exception: %s", _exc)
 
     try:
         from json_store import safe_load, safe_save
@@ -626,6 +631,20 @@ def run_daemon():
             _nl["_current_task"] = ""
             safe_save(_night_log_path, _nl)
             print("  清理遗留夜班状态: running → interrupted")
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
+
+    _start_self_watchdog()
+    _notify_scheduler_event("启动", f"系统已启动: {start_time}\n所有定时任务已注册, 正常运行中。")
+
+    setup_schedule()
+
+    print(f"\n调度器已启动, 每 30 秒检查一次...")
+    print("caffeinate 已自动启动, 无需手动加\n")
+
+    try:
+        from watchdog import update_heartbeat
+        update_heartbeat()
     except Exception as _exc:
         logger.debug("Suppressed exception: %s", _exc)
 
@@ -705,6 +724,19 @@ if __name__ == "__main__":
     elif mode == "weekly":
         from scorecard import generate_weekly_report, notify_scorecard
         notify_scorecard(generate_weekly_report())
+    elif mode == "execution_policy_export":
+        period = sys.argv[2] if len(sys.argv) > 2 else "daily"
+        job_execution_policy_export(period)
+    elif mode == "world_state_export":
+        period = sys.argv[2] if len(sys.argv) > 2 else "daily"
+        job_world_state_export(period)
+    elif mode == "world_state_feeds":
+        job_world_state_feeds()
+    elif mode == "world_hard_sources":
+        job_world_hard_sources()
+    elif mode == "world_refresh_tick":
+        force = "--force" in sys.argv[2:]
+        job_world_refresh_tick(force=force)
     elif mode == "smoke":
         from self_healer import run_smoke_test
         result = run_smoke_test()
@@ -878,6 +910,11 @@ if __name__ == "__main__":
         print("  python3 scheduler.py monitor     # 立即运行持仓监控")
         print("  python3 scheduler.py scorecard   # 对昨日推荐打分")
         print("  python3 scheduler.py weekly      # 生成并推送周报")
+        print("  python3 scheduler.py execution_policy_export [daily|weekly]  # 导出执行策略快照")
+        print("  python3 scheduler.py world_state_export [daily|weekly]  # 导出顶层世界状态快照")
+        print("  python3 scheduler.py world_state_feeds  # 刷新顶层世界模型自动源")
+        print("  python3 scheduler.py world_hard_sources  # 刷新更硬的世界模型源")
+        print("  python3 scheduler.py world_refresh_tick [--force]  # 动态世界抓取节奏")
         print("  python3 scheduler.py smoke       # 冒烟测试")
         print("  python3 scheduler.py optimize    # 策略优化")
         print("  python3 scheduler.py heal        # 自动修复")

@@ -3,28 +3,24 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 
 import { useRouter } from 'expo-router';
 
 import { AppScreen } from '@/components/app/app-screen';
-import { MetricCard } from '@/components/app/metric-card';
 import { SectionHeading } from '@/components/app/section-heading';
 import { StateBanner } from '@/components/app/state-banner';
-import { StatusPill } from '@/components/app/status-pill';
 import { SurfaceCard } from '@/components/app/surface-card';
-import { Colors, Spacing } from '@/constants/theme';
+import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useRemoteResource } from '@/hooks/use-remote-resource';
 import { resolveAppHref } from '@/lib/app-routes';
 import { formatPercent, formatTimestamp } from '@/lib/format';
-import { getBrainSnapshot, getStockDiagnosis, runLearningAdvance } from '@/lib/api';
+import { getBrainSnapshot, getStockDiagnosis } from '@/lib/api';
 import { useAuth } from '@/providers/auth-provider';
 import { useRuntimeConfig } from '@/providers/runtime-config-provider';
 import type {
   BrainSnapshot,
   CompositePick,
-  IndustryCapitalDirection,
   PolicyWatchItem,
   RecommendationCompareSnapshot,
   Signal,
   StockDiagnosis,
-  ThemeStageItem,
 } from '@/types/trading';
 
 const SCORE_LABELS: Record<string, string> = {
@@ -36,121 +32,6 @@ const SCORE_LABELS: Record<string, string> = {
 };
 
 type Tone = 'success' | 'warning' | 'danger' | 'info' | 'neutral';
-
-function toneFromLevel(level: string): Tone {
-  if (level === 'critical') {
-    return 'danger';
-  }
-  if (level === 'warning') {
-    return 'warning';
-  }
-  if (level === 'success') {
-    return 'success';
-  }
-  if (level === 'info') {
-    return 'info';
-  }
-  return 'neutral';
-}
-
-function getDiagnosisTone(diagnosis: StockDiagnosis): Tone {
-  if (diagnosis.actionable && diagnosis.regimeScore >= 0.7) {
-    return 'success';
-  }
-  if (diagnosis.actionable) {
-    return 'info';
-  }
-  if (diagnosis.riskFlags.length > 0) {
-    return 'warning';
-  }
-  return 'neutral';
-}
-
-function getThemeTone(intensity: string): Tone {
-  if (intensity.includes('高热')) {
-    return 'warning';
-  }
-  if (intensity.includes('升温')) {
-    return 'info';
-  }
-  return 'neutral';
-}
-
-function getReadinessTone(status: string): Tone {
-  if (status === 'ready') {
-    return 'success';
-  }
-  if (status === 'pilot') {
-    return 'info';
-  }
-  if (status === 'hold') {
-    return 'danger';
-  }
-  return 'warning';
-}
-
-function getCompositeSourceTone(category: string): Tone {
-  if (category === 'theme_seed' || category === 'resonance') {
-    return 'success';
-  }
-  if (category === 'strong_move') {
-    return 'info';
-  }
-  return 'neutral';
-}
-
-function getThemeStageTone(item: ThemeStageItem): Tone {
-  if (item.participationLabel === '后排回避') {
-    return 'danger';
-  }
-  if (item.stageLabel === '主升波段') {
-    return 'success';
-  }
-  if (item.stageLabel === '中期扩散') {
-    return 'info';
-  }
-  return 'warning';
-}
-
-function getPolicyWatchTone(item: PolicyWatchItem): Tone {
-  if (item.stageLabel === '承压观察') {
-    return 'warning';
-  }
-  if (item.stageLabel === '兑现扩散') {
-    return 'success';
-  }
-  if (item.stageLabel === '催化升温') {
-    return 'info';
-  }
-  return 'neutral';
-}
-
-function getIndustryCapitalTone(item: IndustryCapitalDirection): Tone {
-  if (item.strategicLabel === '逆风跟踪') {
-    return 'warning';
-  }
-  if (item.participationLabel === '中期波段' || item.participationLabel === '连涨接力') {
-    return 'success';
-  }
-  return 'info';
-}
-
-function getIndustryResearchTone(label: string): Tone {
-  if (label === '验证增强') {
-    return 'success';
-  }
-  if (label === '出现阻力') {
-    return 'warning';
-  }
-  if (label === '继续验证') {
-    return 'info';
-  }
-  return 'neutral';
-}
-
-function canOpenCompositeDetail(pick: CompositePick | null): boolean {
-  return Boolean(pick && pick.sourceCategory !== 'theme_seed' && !pick.signalId.startsWith('theme-seed-'));
-}
 
 function buildTakeoverSummary(
   compare: RecommendationCompareSnapshot | null | undefined,
@@ -291,7 +172,6 @@ export default function BrainScreen() {
   const [diagnosisCode, setDiagnosisCode] = useState('');
   const [diagnosisError, setDiagnosisError] = useState<string | null>(null);
   const [diagnosing, setDiagnosing] = useState(false);
-  const [learningSubmitting, setLearningSubmitting] = useState(false);
   const [diagnosis, setDiagnosis] = useState<StockDiagnosis | null>(null);
 
   const compositePicks = data?.compositePicks ?? [];
@@ -300,16 +180,13 @@ export default function BrainScreen() {
   const topThemeSeedPick = compositePicks.find((item) => item.sourceCategory === 'theme_seed') ?? null;
   const topSwingCompositePick =
     compositePicks.find((item) => item.horizonLabel === '中期波段' || item.horizonLabel === '连涨接力') ?? null;
-  const topStrategyCompositePick =
-    compositePicks.find((item) => item.sourceCategory !== 'theme_seed') ?? null;
   const policyWatch = data?.policyWatch ?? [];
   const industryCapital = data?.industryCapital ?? [];
   const themeStages = data?.themeStages ?? [];
   const topPolicyWatch = policyWatch[0] ?? null;
   const topIndustryCapital = industryCapital[0] ?? null;
   const topThemeStage = themeStages[0] ?? null;
-  const latestCandidates = (data?.signals ?? []).slice(0, 4);
-  const topStrategies = (data?.strategies ?? []).slice(0, 5);
+  const latestCandidates = (data?.signals ?? []).slice(0, 1);
   const brainHeadline = buildBrainHeadline(data);
   const openPolicyWatchDetail = (item: PolicyWatchItem) => {
     const expectedDetailId = `industry-capital-${item.id}`;
@@ -356,993 +233,131 @@ export default function BrainScreen() {
     }
   }
 
-  async function handleRunLearningAdvance() {
-    if (!token) {
-      return;
-    }
-
-    setLearningSubmitting(true);
-    try {
-      await runLearningAdvance(token);
-      await refresh();
-    } catch (err) {
-      setDiagnosisError(err instanceof Error ? err.message : '启动日日精进失败');
-    } finally {
-      setLearningSubmitting(false);
-    }
-  }
-
   return (
     <AppScreen refreshing={refreshing} onRefresh={refresh}>
-      <SectionHeading
-        eyebrow="Brain Console"
-        title="AI 决策台"
-        subtitle="这页现在只做三件事：给今天一句判断、现场诊股、推进学习闭环。"
-      />
-
-      <View style={[styles.hero, { backgroundColor: palette.hero }]}>
-        <Text style={styles.heroEyebrow}>TODAY&apos;S BRAIN</Text>
-        <Text style={styles.heroTitle}>{brainHeadline.title}</Text>
-        <Text style={styles.heroCopy}>{brainHeadline.summary}</Text>
-        <View style={styles.heroPills}>
-          <StatusPill label={`健康分 ${data?.system.healthScore ?? '--'}`} tone={brainHeadline.tone} />
-          <StatusPill
-            label={`准确率 ${formatPercent(data?.learning.decisionAccuracy ?? 0, 0)}`}
-            tone="success"
-          />
-          <StatusPill
-            label={`接管 ${compositeCompare?.readiness.label ?? '继续影子'}`}
-            tone={getReadinessTone(compositeCompare?.readiness.status ?? 'shadow')}
-          />
-          <StatusPill
-            label={data?.dailyAdvance.todayCompleted ? '日日精进已完成' : '日日精进待执行'}
-            tone={data?.dailyAdvance.todayCompleted ? 'success' : 'warning'}
-          />
-          <StatusPill label={`今日推荐 ${data?.system.todaySignals ?? 0}`} tone="info" />
-        </View>
-      </View>
+      <SectionHeading title="决策" />
 
       <StateBanner error={error} isPending={isPending && !data} loadingLabel="正在同步脑子状态" />
-
-      <SectionHeading
-        title="一页判断"
-        subtitle="先把今天的大逻辑、主线、方向和学习状态压成一页，再往下看详细证据。"
-      />
       <SurfaceCard style={styles.cardGap}>
-        <View style={styles.snapshotGrid}>
-          <View style={[styles.snapshotCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-            <Text style={[styles.snapshotStep, { color: palette.tint }]}>01 今日判断</Text>
-            <Text style={[styles.snapshotTitle, { color: palette.text }]}>{brainHeadline.title}</Text>
-            <Text style={[styles.snapshotCopy, { color: palette.subtext }]}>
-              健康分 {data?.system.healthScore ?? '--'} / 今日推荐 {data?.system.todaySignals ?? 0}
-            </Text>
-            <Text style={[styles.snapshotBody, { color: palette.text }]}>{brainHeadline.summary}</Text>
-          </View>
-
-          <Pressable
-            onPress={() => {
-              router.push('/(tabs)/brain');
-            }}>
-            <View style={[styles.snapshotCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-              <Text style={[styles.snapshotStep, { color: palette.tint }]}>02 政策方向</Text>
-              <Text style={[styles.snapshotTitle, { color: palette.text }]}>
-                {topPolicyWatch ? topPolicyWatch.direction : '正在归纳政策大方向'}
-              </Text>
-              <Text style={[styles.snapshotCopy, { color: palette.subtext }]}>
-                {topPolicyWatch
-                  ? `${topPolicyWatch.policyBucket} / ${topPolicyWatch.industryPhase} / ${topPolicyWatch.stageLabel}`
-                  : '先判断政策、地缘和需求从哪里开始传导。'}
-              </Text>
-              <Text style={[styles.snapshotBody, { color: palette.text }]}>
-                {topPolicyWatch?.action ?? '继续等待政策方向雷达同步。'}
-              </Text>
-            </View>
-          </Pressable>
-
-          <Pressable
-            onPress={() => {
-              if (topIndustryCapital) {
-                router.push(resolveAppHref(`/industry-capital/${topIndustryCapital.id}`));
-                return;
-              }
-              router.push('/(tabs)/brain');
-            }}>
-            <View style={[styles.snapshotCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-              <Text style={[styles.snapshotStep, { color: palette.tint }]}>03 产业动作</Text>
-              <Text style={[styles.snapshotTitle, { color: palette.text }]}>
-                {topIndustryCapital ? topIndustryCapital.direction : '正在翻译成产业资本动作'}
-              </Text>
-              <Text style={[styles.snapshotCopy, { color: palette.subtext }]}>
-                {topIndustryCapital
-                  ? `${topIndustryCapital.strategicLabel} / ${topIndustryCapital.capitalHorizon} / ${topIndustryCapital.participationLabel}`
-                  : '把政策方向落成事业动作、资本动作和公司清单。'}
-              </Text>
-              <Text style={[styles.snapshotBody, { color: palette.text }]}>
-                {topIndustryCapital?.capitalAction ?? '继续等待产业方向深页同步。'}
-              </Text>
-            </View>
-          </Pressable>
-
-          <View style={[styles.snapshotCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-            <Text style={[styles.snapshotStep, { color: palette.tint }]}>04 主线与接管</Text>
-            <Text style={[styles.snapshotTitle, { color: palette.text }]}>
-              {topThemeStage ? topThemeStage.sector : compositeCompare?.readiness.label ?? '继续影子'}
-            </Text>
-            <Text style={[styles.snapshotCopy, { color: palette.subtext }]}>
-              {topThemeStage
-                ? `${topThemeStage.stageLabel} / ${topThemeStage.participationLabel}`
-                : `接管 ${compositeCompare?.readiness.label ?? '继续影子'}`}
-            </Text>
-            <Text style={[styles.snapshotBody, { color: palette.text }]}>
-              {topThemeStage?.action ?? compositeCompare?.readiness.recommendedAction ?? '继续观察主线与综合榜。'}
-            </Text>
-          </View>
-
-          <View style={[styles.snapshotCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-            <Text style={[styles.snapshotStep, { color: palette.tint }]}>05 学习状态</Text>
-            <Text style={[styles.snapshotTitle, { color: palette.text }]}>
-              {data?.dailyAdvance.todayCompleted ? '今日学习已完成' : '今日学习待执行'}
-            </Text>
-            <Text style={[styles.snapshotCopy, { color: palette.subtext }]}>
-              准确率 {formatPercent(data?.learning.decisionAccuracy ?? 0, 0)} / 在线更新 {data?.learning.onlineUpdates ?? '--'}
-            </Text>
-            <Text style={[styles.snapshotBody, { color: palette.text }]}>
-              {data?.dailyAdvance.summary ?? '继续把学习链补齐，让后面的判断更硬。'}
-            </Text>
-          </View>
-        </View>
+        <Text style={[styles.cardTitle, { color: palette.text }]}>{brainHeadline.title}</Text>
+        <Text style={[styles.cardBody, { color: palette.subtext }]}>{brainHeadline.summary}</Text>
+        <Text style={[styles.bodyText, { color: palette.text }]}>健康分 {data?.system.healthScore ?? '--'}</Text>
       </SurfaceCard>
 
-      <SectionHeading title="今日脑子结论" subtitle="先给一句判断，再把今天最该做的事列出来。" />
+      <SectionHeading title="今日脑子结论" />
       <SurfaceCard style={styles.cardGap}>
-        {brainHeadline.tasks.map((item) => (
+        {brainHeadline.tasks.slice(0, 1).map((item) => (
           <View key={item} style={styles.rowWithDot}>
             <View style={[styles.dot, { backgroundColor: palette.tint }]} />
             <Text style={[styles.bodyText, { color: palette.text }]}>{item}</Text>
           </View>
         ))}
-
-        <View style={styles.metricGrid}>
-          <MetricCard label="在线更新" value={`${data?.learning.onlineUpdates ?? '--'}`} tone="success" />
-          <MetricCard label="因子调整" value={`${data?.learning.factorAdjustments ?? '--'}`} tone="info" />
-          <MetricCard label="新因子" value={`${data?.learning.newFactorsDeployed ?? '--'}`} tone="warning" />
-          <MetricCard label="运行实验" value={`${data?.learning.experimentsRunning ?? '--'}`} tone="neutral" />
-        </View>
       </SurfaceCard>
 
-      <SectionHeading
-        title="综合榜接管判断"
-        subtitle="这块不是展示比分，而是明确告诉你综合榜为什么还在影子期、什么时候能往主排序上走。"
-      />
+      <SectionHeading title="方向快照" />
       <SurfaceCard style={styles.cardGap}>
-        <View style={styles.headlineRow}>
-          <View style={styles.headlineMain}>
+        {topCompositePick ? (
+          <View style={[styles.themeCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
             <Text style={[styles.headlineTitle, { color: palette.text }]}>
-              {compositeCompare?.readiness.label ?? '继续影子'}
+              {topCompositePick.code} {topCompositePick.name}
             </Text>
             <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
-              置信 {compositeCompare?.readiness.confidenceScore.toFixed(0) ?? '--'} / 最近观察{' '}
-              {compositeCompare?.composite.sampleDays ?? 0} 天
+              {topCompositePick.sourceLabel} / 建议首仓 {topCompositePick.firstPositionPct}% / {compositeCompare?.readiness.label ?? '继续影子'}
             </Text>
-          </View>
-          <StatusPill
-            label={compositeCompare?.readiness.status ?? 'shadow'}
-            tone={getReadinessTone(compositeCompare?.readiness.status ?? 'shadow')}
-          />
-        </View>
-
-        <Text style={[styles.bodyText, { color: palette.text }]}>
-          {buildTakeoverSummary(compositeCompare, topCompositePick)}
-        </Text>
-
-        <View style={styles.metricGrid}>
-          <MetricCard
-            label="综合榜 T+1"
-            value={
-              compositeCompare?.composite.avgT1ReturnPct !== null &&
-              compositeCompare?.composite.avgT1ReturnPct !== undefined
-                ? `${compositeCompare.composite.avgT1ReturnPct.toFixed(2)}%`
-                : '--'
-            }
-            tone="info"
-          />
-          <MetricCard
-            label="原推荐 T+1"
-            value={
-              compositeCompare?.baseline.avgT1ReturnPct !== null &&
-              compositeCompare?.baseline.avgT1ReturnPct !== undefined
-                ? `${compositeCompare.baseline.avgT1ReturnPct.toFixed(2)}%`
-                : '--'
-            }
-            tone="neutral"
-          />
-          <MetricCard
-            label="综合头部票"
-            value={topCompositePick ? topCompositePick.code : '--'}
-            tone="success"
-          />
-          <MetricCard
-            label="建议首仓"
-            value={topCompositePick ? `${topCompositePick.firstPositionPct}%` : '--'}
-            tone="warning"
-          />
-        </View>
-
-        {topCompositePick ? (
-          <View style={styles.heroPills}>
-            <StatusPill
-              label={topCompositePick.sourceLabel}
-              tone={getCompositeSourceTone(topCompositePick.sourceCategory)}
-            />
-            <StatusPill label={topCompositePick.horizonLabel} tone="neutral" />
-            {topCompositePick.themeSector ? (
-              <StatusPill label={topCompositePick.themeSector} tone="info" />
-            ) : null}
-          </View>
-        ) : null}
-
-        <View style={styles.listGroup}>
-          <Text style={[styles.subTitle, { color: palette.text }]}>为什么还没切</Text>
-          {(compositeCompare?.readiness.conditions ?? ['正在等待更多影子样本。']).map((item) => (
-            <View key={item} style={styles.rowWithDot}>
-              <View style={[styles.dot, { backgroundColor: palette.warning }]} />
-              <Text style={[styles.bodyText, { color: palette.text }]}>{item}</Text>
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.listGroup}>
-          <Text style={[styles.subTitle, { color: palette.text }]}>下一步</Text>
-          <View style={styles.rowWithDot}>
-            <View style={[styles.dot, { backgroundColor: palette.success }]} />
             <Text style={[styles.bodyText, { color: palette.text }]}>
-              {compositeCompare?.readiness.recommendedAction ?? '继续观察推荐页的影子对比。'}
+              {buildTakeoverSummary(compositeCompare, topCompositePick)}
             </Text>
-          </View>
-          {topCompositePick ? (
-            <View style={styles.rowWithDot}>
-              <View style={[styles.dot, { backgroundColor: palette.tint }]} />
-              <Text style={[styles.bodyText, { color: palette.text }]}>
-                当前先复核 {topCompositePick.code} {topCompositePick.name}，看它能不能继续证明综合榜的判断。
-              </Text>
+            <Text style={[styles.bodyText, { color: palette.subtext }]}>
+              下一步：{compositeCompare?.readiness.recommendedAction ?? topCompositePick.action}
+            </Text>
+            <View style={styles.actionRow}>
+              <Pressable
+                onPress={() => {
+                  router.push('/(tabs)/signals');
+                }}
+                style={[styles.secondaryAction, { backgroundColor: palette.tint }]}>
+                <Text style={styles.secondaryActionText}>看推荐页</Text>
+              </Pressable>
             </View>
-          ) : null}
-        </View>
+          </View>
+        ) : null}
 
-        <View style={styles.actionRow}>
-          <Pressable
-            onPress={() => {
-              router.push('/(tabs)/signals');
-            }}
-            style={[styles.secondaryAction, { backgroundColor: palette.tint }]}>
-            <Text style={styles.secondaryActionText}>看接管对比</Text>
-          </Pressable>
-          {topCompositePick ? (
-            <Pressable
-              onPress={() => {
-                if (canOpenCompositeDetail(topCompositePick)) {
-                  router.push({ pathname: '/signal/[id]', params: { id: topCompositePick.signalId } });
-                  return;
-                }
-                void handleDiagnose(topCompositePick.code);
-              }}
-              style={[styles.ghostAction, { borderColor: palette.border }]}>
-              <Text style={[styles.ghostActionText, { color: palette.text }]}>
-                {canOpenCompositeDetail(topCompositePick) ? '看综合头部票' : '直接诊断头部票'}
-              </Text>
-            </Pressable>
-          ) : null}
-        </View>
-      </SurfaceCard>
+        {!topCompositePick && topPolicyWatch ? (
+          <View style={[styles.themeCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
+            <View style={styles.headlineRow}>
+              <View style={styles.headlineMain}>
+                <Text style={[styles.headlineTitle, { color: palette.text }]}>{topPolicyWatch.direction}</Text>
+                <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
+                  {topPolicyWatch.policyBucket} / {topPolicyWatch.focusSector} / {topPolicyWatch.stageLabel} / {topPolicyWatch.participationLabel}
+                </Text>
+              </View>
+            </View>
+            <Text style={[styles.bodyText, { color: palette.text }]}>{topPolicyWatch.summary}</Text>
+            <Text style={[styles.bodyText, { color: palette.subtext }]}>{topPolicyWatch.action}</Text>
+            <View style={styles.actionRow}>
+              <Pressable
+                onPress={() => {
+                  openPolicyWatchDetail(topPolicyWatch);
+                }}
+                style={[styles.secondaryAction, { backgroundColor: palette.tint }]}>
+                <Text style={styles.secondaryActionText}>看方向深页</Text>
+              </Pressable>
+            </View>
+          </View>
+        ) : null}
 
-      <SectionHeading
-        title="综合候选分层"
-        subtitle="把主线孵化、中期波段和普通策略候选拆开看，脑子先告诉你今天该先盯哪一类。"
-      />
-      <SurfaceCard style={styles.cardGap}>
-        {topThemeSeedPick ? (
+        {!topCompositePick && (topIndustryCapital || topThemeStage || topThemeSeedPick || topSwingCompositePick) ? (
           <View style={[styles.themeCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
             <View style={styles.headlineRow}>
               <View style={styles.headlineMain}>
                 <Text style={[styles.headlineTitle, { color: palette.text }]}>
-                  {topThemeSeedPick.code} {topThemeSeedPick.name}
+                  {topIndustryCapital?.direction ?? topThemeStage?.sector ?? topThemeSeedPick?.name ?? topSwingCompositePick?.name ?? '继续观察'}
                 </Text>
                 <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
-                  {topThemeSeedPick.sourceLabel} / {topThemeSeedPick.horizonLabel} / {topThemeSeedPick.themeSector ?? '主线观察'}
+                  {topIndustryCapital
+                    ? `${topIndustryCapital.strategicLabel} / ${topIndustryCapital.capitalHorizon} / ${topIndustryCapital.participationLabel}`
+                    : topThemeStage
+                      ? `${topThemeStage.stageLabel} / ${topThemeStage.participationLabel} / ${topThemeStage.intensity}`
+                      : `${topThemeSeedPick?.horizonLabel ?? topSwingCompositePick?.horizonLabel ?? '观察单'}`}
                 </Text>
               </View>
-              <StatusPill label="先看主线" tone="success" />
             </View>
-            <Text style={[styles.bodyText, { color: palette.text }]}>{topThemeSeedPick.action}</Text>
+            <Text style={[styles.bodyText, { color: palette.text }]}>
+              {topIndustryCapital?.businessAction ??
+                topThemeStage?.summary ??
+                topThemeSeedPick?.action ??
+                topSwingCompositePick?.action ??
+                '当前先盯主线、方向和候选的相互验证。'}
+            </Text>
+            <Text style={[styles.bodyText, { color: palette.subtext }]}>
+              {topIndustryCapital?.capitalAction ??
+                topThemeStage?.action ??
+                topIndustryCapital?.riskNote ??
+                topThemeStage?.riskNote ??
+                '没有明确催化前，先按观察单处理。'}
+            </Text>
+            <View style={styles.actionRow}>
+              {topIndustryCapital ? (
+                <Pressable
+                  onPress={() => {
+                    router.push(resolveAppHref(`/industry-capital/${topIndustryCapital.id}`));
+                  }}
+                  style={[styles.secondaryAction, { backgroundColor: palette.tint }]}>
+                  <Text style={styles.secondaryActionText}>看产业深页</Text>
+                </Pressable>
+              ) : null}
+            </View>
           </View>
         ) : null}
 
-        {topSwingCompositePick ? (
-          <View style={[styles.themeCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-            <View style={styles.headlineRow}>
-              <View style={styles.headlineMain}>
-                <Text style={[styles.headlineTitle, { color: palette.text }]}>
-                  {topSwingCompositePick.code} {topSwingCompositePick.name}
-                </Text>
-                <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
-                  {topSwingCompositePick.sourceLabel} / {topSwingCompositePick.horizonLabel} / 综合分 {topSwingCompositePick.compositeScore.toFixed(1)}
-                </Text>
-              </View>
-              <StatusPill label="中期候选" tone="warning" />
-            </View>
-            <Text style={[styles.bodyText, { color: palette.text }]}>{topSwingCompositePick.action}</Text>
-          </View>
-        ) : null}
-
-        {topStrategyCompositePick ? (
-          <View style={[styles.themeCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-            <View style={styles.headlineRow}>
-              <View style={styles.headlineMain}>
-                <Text style={[styles.headlineTitle, { color: palette.text }]}>
-                  {topStrategyCompositePick.code} {topStrategyCompositePick.name}
-                </Text>
-                <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
-                  {topStrategyCompositePick.sourceLabel} / {topStrategyCompositePick.horizonLabel} / 事件{topStrategyCompositePick.eventBias}
-                </Text>
-              </View>
-              <StatusPill label="策略重排" tone={getCompositeSourceTone(topStrategyCompositePick.sourceCategory)} />
-            </View>
-            <Text style={[styles.bodyText, { color: palette.text }]}>{topStrategyCompositePick.action}</Text>
-          </View>
-        ) : null}
-
-        {!topThemeSeedPick && !topSwingCompositePick && !topStrategyCompositePick ? (
+        {!topCompositePick && !topPolicyWatch && !topIndustryCapital && !topThemeStage ? (
           <Text style={[styles.bodyText, { color: palette.subtext }]}>
-            当前还没有足够清晰的综合候选分层，先看主线资金迁移和手动诊股。
+            当前方向还没收敛，先用下面的诊股和学习推进做当天主轴。
           </Text>
         ) : null}
       </SurfaceCard>
 
-      <SectionHeading
-        title="政策方向雷达"
-        subtitle="先判断政策、需求、地缘政治和产业链线索落在哪些方向，再决定今天看哪条主线。"
-      />
-      <SurfaceCard style={styles.cardGap}>
-        {policyWatch.length > 0 ? (
-          policyWatch.map((item) => (
-            <View
-              key={item.id}
-              style={[
-                styles.themeCard,
-                {
-                  backgroundColor: palette.surfaceMuted,
-                  borderColor: palette.border,
-                },
-              ]}>
-              <View style={styles.headlineRow}>
-                <View style={styles.headlineMain}>
-                  <Text style={[styles.headlineTitle, { color: palette.text }]}>{item.direction}</Text>
-                  <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
-                    {item.policyBucket} / {item.focusSector} / {item.industryPhase} / {item.participationLabel}
-                  </Text>
-                </View>
-                <StatusPill label={item.stageLabel} tone={getPolicyWatchTone(item)} />
-              </View>
-
-              <Text style={[styles.bodyText, { color: palette.text }]}>{item.summary}</Text>
-              <Text style={[styles.bodyText, { color: palette.subtext }]}>{item.action}</Text>
-              <Text style={[styles.bodyText, { color: palette.text }]}>{item.phaseSummary}</Text>
-
-              <View style={styles.metricGrid}>
-                <MetricCard label="方向" value={item.directionScore.toFixed(1)} tone="info" />
-                <MetricCard label="政策" value={item.policyScore.toFixed(1)} tone="neutral" />
-                <MetricCard label="趋势" value={item.trendScore.toFixed(1)} tone="success" />
-                <MetricCard label="关注度" value={item.attentionScore.toFixed(1)} tone="warning" />
-                <MetricCard label="资金偏好" value={item.capitalPreferenceScore.toFixed(1)} tone="info" />
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>驱动因子</Text>
-                {item.drivers.map((driver) => (
-                  <View key={`${item.id}-${driver}`} style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.tint }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>{driver}</Text>
-                  </View>
-                ))}
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>产业链位置</Text>
-                {item.upstream.length > 0 ? (
-                  <View style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.tint }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>上游：{item.upstream.join('、')}</Text>
-                  </View>
-                ) : null}
-                {item.midstream.length > 0 ? (
-                  <View style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.success }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>中游：{item.midstream.join('、')}</Text>
-                  </View>
-                ) : null}
-                {item.downstream.length > 0 ? (
-                  <View style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.warning }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>下游：{item.downstream.join('、')}</Text>
-                  </View>
-                ) : null}
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>供需与兑现链</Text>
-                {item.demandDrivers.length > 0 ? (
-                  <View style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.tint }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>需求侧：{item.demandDrivers.join('、')}</Text>
-                  </View>
-                ) : null}
-                {item.supplyDrivers.length > 0 ? (
-                  <View style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.success }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>供给侧：{item.supplyDrivers.join('、')}</Text>
-                  </View>
-                ) : null}
-                {item.milestones.length > 0 ? (
-                  <View style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.warning }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>兑现链：{item.milestones.join(' -> ')}</Text>
-                  </View>
-                ) : null}
-                {item.transmissionPaths.length > 0 ? (
-                  <View style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.danger }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>
-                      传导链：{item.transmissionPaths.join(' / ')}
-                    </Text>
-                  </View>
-                ) : null}
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>风险与动作</Text>
-                <View style={styles.rowWithDot}>
-                  <View style={[styles.dot, { backgroundColor: palette.warning }]} />
-                  <Text style={[styles.bodyText, { color: palette.text }]}>{item.riskNote}</Text>
-                </View>
-              </View>
-
-              {(item.linkedSignalId || item.linkedCode) ? (
-                <View style={styles.actionRow}>
-                  {item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-') ? (
-                    <Pressable
-                      onPress={() => {
-                        router.push({ pathname: '/signal/[id]', params: { id: item.linkedSignalId ?? '' } });
-                      }}
-                      style={[styles.secondaryAction, { backgroundColor: palette.tint }]}>
-                      <Text style={styles.secondaryActionText}>看焦点票</Text>
-                    </Pressable>
-                  ) : null}
-                  {item.linkedCode ? (
-                    <Pressable
-                      onPress={() => {
-                        void handleDiagnose(item.linkedCode ?? undefined);
-                      }}
-                      style={[
-                        item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                          ? styles.ghostAction
-                          : styles.secondaryAction,
-                        item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                          ? { borderColor: palette.border }
-                          : { backgroundColor: palette.tint },
-                      ]}>
-                      <Text
-                        style={
-                          item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                            ? [styles.ghostActionText, { color: palette.text }]
-                            : styles.secondaryActionText
-                        }>
-                        {item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                          ? '直接诊股'
-                          : '诊断方向焦点'}
-                      </Text>
-                    </Pressable>
-                  ) : null}
-                  <Pressable
-                    onPress={() => {
-                      openPolicyWatchDetail(item);
-                    }}
-                    style={[
-                      item.linkedSignalId || item.linkedCode ? styles.ghostAction : styles.secondaryAction,
-                      item.linkedSignalId || item.linkedCode
-                        ? { borderColor: palette.border }
-                        : { backgroundColor: palette.tint },
-                    ]}>
-                    <Text
-                      style={
-                        item.linkedSignalId || item.linkedCode
-                          ? [styles.ghostActionText, { color: palette.text }]
-                          : styles.secondaryActionText
-                      }>
-                      看方向深页
-                    </Text>
-                  </Pressable>
-                </View>
-              ) : (
-                <View style={styles.actionRow}>
-                  <Pressable
-                    onPress={() => {
-                      openPolicyWatchDetail(item);
-                    }}
-                    style={[styles.secondaryAction, { backgroundColor: palette.tint }]}>
-                    <Text style={styles.secondaryActionText}>看方向深页</Text>
-                  </Pressable>
-                </View>
-              )}
-            </View>
-          ))
-        ) : (
-          <Text style={[styles.bodyText, { color: palette.subtext }]}>
-            当前还没有足够集中的政策方向，先看主线阶段引擎和综合候选分层。
-          </Text>
-        )}
-      </SurfaceCard>
-
-      <SectionHeading
-        title="产业资本方向"
-        subtitle="把政策、供需、产业链和资金偏好翻译成事业动作与资本动作。"
-      />
-      <SurfaceCard style={styles.cardGap}>
-        {industryCapital.length > 0 ? (
-          industryCapital.map((item) => (
-            <View
-              key={item.id}
-              style={[
-                styles.themeCard,
-                {
-                  backgroundColor: palette.surfaceMuted,
-                  borderColor: palette.border,
-                },
-              ]}>
-              <View style={styles.headlineRow}>
-                <View style={styles.headlineMain}>
-                  <Text style={[styles.headlineTitle, { color: palette.text }]}>{item.direction}</Text>
-                  <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
-                    {item.policyBucket} / {item.focusSector} / {item.strategicLabel} / {item.participationLabel}
-                  </Text>
-                </View>
-                <StatusPill label={item.capitalHorizon} tone={getIndustryCapitalTone(item)} />
-              </View>
-
-              <Text style={[styles.bodyText, { color: palette.text }]}>{item.summary}</Text>
-              <Text style={[styles.bodyText, { color: palette.text }]}>{item.businessAction}</Text>
-              <Text style={[styles.bodyText, { color: palette.subtext }]}>{item.capitalAction}</Text>
-              <Text style={[styles.bodyText, { color: palette.text }]}>{item.researchSummary}</Text>
-              <Text style={[styles.bodyText, { color: palette.tint }]}>{item.researchNextAction}</Text>
-              <Text style={[styles.bodyText, { color: palette.text }]}>
-                最新催化：{item.latestCatalystTitle} / {item.currentTimelineStage}
-              </Text>
-              <Text style={[styles.bodyText, { color: palette.subtext }]}>{item.latestCatalystSummary}</Text>
-              {item.officialSourceEntries[0] ? (
-                <Text style={[styles.bodyText, { color: palette.subtext }]}>
-                  官方原文：{item.officialSourceEntries[0].issuer}
-                  {item.officialSourceEntries[0].publishedAt ? ` / ${item.officialSourceEntries[0].publishedAt}` : ''}
-                </Text>
-              ) : null}
-              {item.companyWatchlist[0] ? (
-                <Text style={[styles.bodyText, { color: palette.text }]}>
-                  重点跟踪：{item.companyWatchlist[0].code ? `${item.companyWatchlist[0].code} ` : ''}
-                  {item.companyWatchlist[0].name} / {item.companyWatchlist[0].priorityLabel} /{' '}
-                  {item.companyWatchlist[0].marketAlignment} / {item.companyWatchlist[0].timelineAlignment}
-                </Text>
-              ) : null}
-              {item.companyWatchlist[0]?.recentResearchNote ? (
-                <Text style={[styles.bodyText, { color: palette.tint }]}>
-                  最近调研：{item.companyWatchlist[0].recentResearchNote}
-                </Text>
-              ) : null}
-
-              <View style={styles.metricGrid}>
-                <MetricCard label="优先级" value={item.priorityScore.toFixed(1)} tone="info" />
-                <MetricCard label="战略" value={item.strategicScore.toFixed(1)} tone="info" />
-                <MetricCard label="政策" value={item.policyScore.toFixed(1)} tone="neutral" />
-                <MetricCard label="需求" value={item.demandScore.toFixed(1)} tone="success" />
-                <MetricCard label="供给" value={item.supplyScore.toFixed(1)} tone="warning" />
-                <MetricCard label="资金偏好" value={item.capitalPreferenceScore.toFixed(1)} tone="info" />
-              </View>
-
-              <View style={styles.heroPills}>
-                <StatusPill label={`事业 ${item.businessHorizon}`} tone="neutral" />
-                <StatusPill label={`资本 ${item.capitalHorizon}`} tone="info" />
-                <StatusPill label={item.industryPhase} tone="success" />
-                <StatusPill label={`阶段 ${item.currentTimelineStage}`} tone="neutral" />
-                <StatusPill label={item.officialFreshnessLabel} tone="warning" />
-                <StatusPill label={item.researchSignalLabel} tone={getIndustryResearchTone(item.researchSignalLabel)} />
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>机会落点</Text>
-                {item.opportunities.map((opportunity) => (
-                  <View key={`${item.id}-${opportunity}`} style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.tint }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>{opportunity}</Text>
-                  </View>
-                ))}
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>官方观察点</Text>
-                {item.officialDocuments.map((doc) => (
-                  <View key={`${item.id}-${doc}`} style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.tint }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>原文线索：{doc}</Text>
-                  </View>
-                ))}
-                {item.officialSources.length > 0 ? (
-                  <View style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.tint }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>
-                      官方来源：{item.officialSources.join('、')}
-                    </Text>
-                  </View>
-                ) : null}
-                {item.officialWatchpoints.map((watchpoint) => (
-                  <View key={`${item.id}-${watchpoint}`} style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.success }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>{watchpoint}</Text>
-                  </View>
-                ))}
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>兑现时间轴</Text>
-                {item.timelineCheckpoints.map((checkpoint) => (
-                  <View key={`${item.id}-${checkpoint}`} style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.success }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>{checkpoint}</Text>
-                  </View>
-                ))}
-              </View>
-
-              {item.timelineEvents.length > 0 ? (
-                <View style={styles.listGroup}>
-                  <Text style={[styles.subTitle, { color: palette.text }]}>方向时间轴</Text>
-                  {item.timelineEvents.slice(0, 3).map((event) => (
-                    <View key={event.id} style={styles.rowWithDot}>
-                      <View
-                        style={[
-                          styles.dot,
-                          {
-                            backgroundColor:
-                              event.emphasis === 'success'
-                                ? palette.success
-                                : event.emphasis === 'warning'
-                                  ? palette.warning
-                                  : palette.tint,
-                          },
-                        ]}
-                      />
-                      <Text style={[styles.bodyText, { color: palette.text }]}>
-                        {event.title} / {event.stage}
-                        {event.timestamp ? ` / ${formatTimestamp(event.timestamp)}` : ''}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              ) : null}
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>事业调研清单</Text>
-                {item.businessChecklist.map((check) => (
-                  <View key={`${item.id}-${check}`} style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.warning }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>{check}</Text>
-                  </View>
-                ))}
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>资本验证清单</Text>
-                {item.capitalChecklist.map((check) => (
-                  <View key={`${item.id}-${check}`} style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.danger }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>{check}</Text>
-                  </View>
-                ))}
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>合作对象与方式</Text>
-                {item.cooperationTargets.map((target) => (
-                  <View key={`${item.id}-${target}`} style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.success }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>对象：{target}</Text>
-                  </View>
-                ))}
-                {item.cooperationModes.map((mode) => (
-                  <View key={`${item.id}-${mode}`} style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.danger }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>方式：{mode}</Text>
-                  </View>
-                ))}
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>风险与约束</Text>
-                <View style={styles.rowWithDot}>
-                  <View style={[styles.dot, { backgroundColor: palette.warning }]} />
-                  <Text style={[styles.bodyText, { color: palette.text }]}>{item.riskNote}</Text>
-                </View>
-              </View>
-
-              {(item.linkedSignalId || item.linkedCode) ? (
-                <View style={styles.actionRow}>
-                  {item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-') ? (
-                    <Pressable
-                      onPress={() => {
-                        router.push({ pathname: '/signal/[id]', params: { id: item.linkedSignalId ?? '' } });
-                      }}
-                      style={[styles.secondaryAction, { backgroundColor: palette.tint }]}>
-                      <Text style={styles.secondaryActionText}>看交易焦点</Text>
-                    </Pressable>
-                  ) : null}
-                  {item.linkedCode ? (
-                    <Pressable
-                      onPress={() => {
-                        void handleDiagnose(item.linkedCode ?? undefined);
-                      }}
-                      style={[
-                        item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                          ? styles.ghostAction
-                          : styles.secondaryAction,
-                        item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                          ? { borderColor: palette.border }
-                          : { backgroundColor: palette.tint },
-                      ]}>
-                      <Text
-                        style={
-                          item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                            ? [styles.ghostActionText, { color: palette.text }]
-                            : styles.secondaryActionText
-                        }>
-                        {item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                          ? '直接诊断'
-                          : '诊断焦点票'}
-                      </Text>
-                    </Pressable>
-                  ) : null}
-                </View>
-              ) : null}
-            </View>
-          ))
-        ) : (
-          <Text style={[styles.bodyText, { color: palette.subtext }]}>
-            当前还没有足够清晰的产业资本方向，先看政策方向雷达和主线阶段引擎。
-          </Text>
-        )}
-      </SurfaceCard>
-
-      <SectionHeading
-        title="主线发现与阶段引擎"
-        subtitle="先看大方向，再决定今天该打主线种子、中期波段，还是只做观察。"
-      />
-      <SurfaceCard style={styles.cardGap}>
-        {themeStages.length > 0 ? (
-          themeStages.map((item) => (
-            <View
-              key={item.id}
-              style={[
-                styles.themeCard,
-                {
-                  backgroundColor: palette.surfaceMuted,
-                  borderColor: palette.border,
-                },
-              ]}>
-              <View style={styles.headlineRow}>
-                <View style={styles.headlineMain}>
-                  <Text style={[styles.headlineTitle, { color: palette.text }]}>{item.sector}</Text>
-                  <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
-                    {item.themeType} / {item.stageLabel} / {item.participationLabel}
-                  </Text>
-                </View>
-                <StatusPill label={item.intensity} tone={getThemeStageTone(item)} />
-              </View>
-
-              <Text style={[styles.bodyText, { color: palette.text }]}>{item.summary}</Text>
-              <Text style={[styles.bodyText, { color: palette.subtext }]}>{item.action}</Text>
-
-              <View style={styles.metricGrid}>
-                <MetricCard label="方向" value={item.directionScore.toFixed(1)} tone="info" />
-                <MetricCard label="政策/事件" value={item.policyEventScore.toFixed(1)} tone="neutral" />
-                <MetricCard label="趋势" value={item.trendScore.toFixed(1)} tone="success" />
-                <MetricCard label="关注度" value={item.attentionScore.toFixed(1)} tone="warning" />
-                <MetricCard label="资金偏好" value={item.capitalPreferenceScore.toFixed(1)} tone="info" />
-                <MetricCard label="阶段" value={item.stageScore.toFixed(1)} tone={getThemeStageTone(item)} />
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>驱动因子</Text>
-                {item.drivers.map((driver) => (
-                  <View key={`${item.id}-${driver}`} style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.tint }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>{driver}</Text>
-                  </View>
-                ))}
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>风险与动作</Text>
-                <View style={styles.rowWithDot}>
-                  <View style={[styles.dot, { backgroundColor: palette.warning }]} />
-                  <Text style={[styles.bodyText, { color: palette.text }]}>{item.riskNote}</Text>
-                </View>
-              </View>
-
-              {(item.linkedSignalId || item.linkedCode) ? (
-                <View style={styles.actionRow}>
-                  {item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-') ? (
-                    <Pressable
-                      onPress={() => {
-                        router.push({ pathname: '/signal/[id]', params: { id: item.linkedSignalId ?? '' } });
-                      }}
-                      style={[styles.secondaryAction, { backgroundColor: palette.tint }]}>
-                      <Text style={styles.secondaryActionText}>看焦点票</Text>
-                    </Pressable>
-                  ) : null}
-                  {item.linkedCode ? (
-                    <Pressable
-                      onPress={() => {
-                        void handleDiagnose(item.linkedCode ?? undefined);
-                      }}
-                      style={[
-                        item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                          ? styles.ghostAction
-                          : styles.secondaryAction,
-                        item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                          ? { borderColor: palette.border }
-                          : { backgroundColor: palette.tint },
-                      ]}>
-                      <Text
-                        style={
-                          item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                            ? [styles.ghostActionText, { color: palette.text }]
-                            : styles.secondaryActionText
-                        }>
-                        {item.linkedSignalId && !item.linkedSignalId.startsWith('theme-seed-')
-                          ? '直接诊股'
-                          : '诊断主线焦点'}
-                      </Text>
-                    </Pressable>
-                  ) : null}
-                </View>
-              ) : null}
-            </View>
-          ))
-        ) : (
-          <Text style={[styles.bodyText, { color: palette.subtext }]}>
-            主线阶段引擎还没形成清晰结果，先看主题雷达和综合候选。
-          </Text>
-        )}
-      </SurfaceCard>
-
-      <SectionHeading
-        title="主线资金迁移"
-        subtitle="把事件、板块和强势跟随票放在一起，看今天的大钱正在往哪里走。"
-      />
-      <SurfaceCard style={styles.cardGap}>
-        {(data?.themeRadar ?? []).length > 0 ? (
-          (data?.themeRadar ?? []).map((item) => (
-            <View
-              key={item.id}
-              style={[
-                styles.themeCard,
-                {
-                  backgroundColor: palette.surfaceMuted,
-                  borderColor: palette.border,
-                },
-              ]}>
-              <View style={styles.headlineRow}>
-                <View style={styles.headlineMain}>
-                  <Text style={[styles.headlineTitle, { color: palette.text }]}>
-                    {item.sector}
-                  </Text>
-                  <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
-                    {item.themeType} / {formatPercent(item.changePct / 100)} / 热度 {item.score.toFixed(1)} /{' '}
-                    {formatTimestamp(item.timestamp)}
-                  </Text>
-                </View>
-                <StatusPill label={item.intensity} tone={getThemeTone(item.intensity)} />
-              </View>
-
-              <Text style={[styles.bodyText, { color: palette.text }]}>{item.narrative}</Text>
-              <Text style={[styles.bodyText, { color: palette.subtext }]}>{item.action}</Text>
-
-              {item.messageHint ? (
-                <View style={[styles.insightBox, { backgroundColor: palette.surface }]}>
-                  <Text style={[styles.insightTitle, { color: palette.text }]}>微信镜像摘要</Text>
-                  <Text style={[styles.insightText, { color: palette.subtext }]}>{item.messageHint}</Text>
-                </View>
-              ) : null}
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>跟随票</Text>
-                {item.followers.map((follower) => (
-                  <View key={`${item.id}-${follower.code}`} style={styles.themeFollowerRow}>
-                    <View style={styles.themeFollowerMain}>
-                      <Text style={[styles.themeFollowerCode, { color: palette.text }]}>
-                        {follower.code} {follower.name}
-                      </Text>
-                      <Text style={[styles.themeFollowerMeta, { color: palette.subtext }]}>
-                        {follower.label}
-                      </Text>
-                    </View>
-                    <View style={styles.themeFollowerRight}>
-                      <Text style={[styles.themeFollowerChange, { color: palette.text }]}>
-                        {formatPercent(follower.changePct / 100)}
-                      </Text>
-                      <Text style={[styles.themeFollowerMeta, { color: palette.subtext }]}>
-                        盈亏比 {follower.riskReward.toFixed(1)}
-                      </Text>
-                    </View>
-                  </View>
-                ))}
-              </View>
-
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>风险与动作</Text>
-                <View style={styles.rowWithDot}>
-                  <View style={[styles.dot, { backgroundColor: palette.warning }]} />
-                  <Text style={[styles.bodyText, { color: palette.text }]}>{item.riskNote}</Text>
-                </View>
-                {item.linkedCode ? (
-                  <View style={styles.rowWithDot}>
-                    <View style={[styles.dot, { backgroundColor: palette.success }]} />
-                    <Text style={[styles.bodyText, { color: palette.text }]}>
-                      当前已关联强势候选 {item.linkedCode} {item.linkedName ?? ''}{' '}
-                      {item.linkedSetupLabel ? `(${item.linkedSetupLabel})` : ''}
-                    </Text>
-                  </View>
-                ) : null}
-              </View>
-
-              {item.linkedSignalId || item.linkedCode || item.followers[0]?.code ? (
-                <View style={styles.actionRow}>
-                  {item.linkedSignalId ? (
-                    <Pressable
-                      onPress={() => {
-                        router.push({ pathname: '/signal/[id]', params: { id: item.linkedSignalId ?? '' } });
-                      }}
-                      style={[styles.secondaryAction, { backgroundColor: palette.tint }]}>
-                      <Text style={styles.secondaryActionText}>看主线强票</Text>
-                    </Pressable>
-                  ) : null}
-                  {item.linkedCode || item.followers[0]?.code ? (
-                    <Pressable
-                      onPress={() => {
-                        void handleDiagnose(item.linkedCode ?? item.followers[0]?.code);
-                      }}
-                      style={[
-                        item.linkedSignalId ? styles.ghostAction : styles.secondaryAction,
-                        item.linkedSignalId
-                          ? { borderColor: palette.border }
-                          : { backgroundColor: palette.tint },
-                      ]}>
-                      <Text
-                        style={
-                          item.linkedSignalId
-                            ? [styles.ghostActionText, { color: palette.text }]
-                            : styles.secondaryActionText
-                        }>
-                        {item.linkedSignalId ? '直接诊股' : '诊断主线跟随票'}
-                      </Text>
-                    </Pressable>
-                  ) : null}
-                </View>
-              ) : null}
-            </View>
-          ))
-        ) : (
-          <Text style={[styles.bodyText, { color: palette.subtext }]}>
-            今天还没有形成清晰主线，先看强势收益引擎和手动诊股。
-          </Text>
-        )}
-      </SurfaceCard>
-
-      <SectionHeading title="交互诊股" subtitle="输入代码、点候选票、现场出判断。这个区域就是现场演示的主轴。" />
+      <SectionHeading title="交互诊股" />
       <SurfaceCard style={styles.cardGap}>
         <Text style={[styles.label, { color: palette.subtext }]}>股票代码</Text>
         <TextInput
@@ -1369,7 +384,7 @@ export default function BrainScreen() {
 
         {latestCandidates.length > 0 ? (
           <View style={styles.candidateWrap}>
-            {latestCandidates.map((item) => (
+              {latestCandidates.map((item) => (
               <Pressable
                 key={item.id}
                 onPress={() => {
@@ -1378,7 +393,7 @@ export default function BrainScreen() {
                 style={[styles.candidateCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
                 <View style={styles.candidateHead}>
                   <Text style={[styles.candidateCode, { color: palette.text }]}>{item.code}</Text>
-                  <StatusPill label={item.strategy} tone="neutral" />
+                  <Text style={[styles.candidateMini, { color: palette.subtext }]}>{item.strategy}</Text>
                 </View>
                 <Text style={[styles.candidateName, { color: palette.text }]}>{item.name}</Text>
                 <Text style={[styles.candidateReason, { color: palette.subtext }]}>
@@ -1413,13 +428,9 @@ export default function BrainScreen() {
                 </Text>
                 <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
                   {diagnosis.verdict} / {diagnosis.confidenceLabel} / {diagnosis.price.toFixed(2)} /{' '}
-                  {formatTimestamp(diagnosis.asOf)}
+                  {formatTimestamp(diagnosis.asOf)} / {diagnosis.actionable ? '可交易' : '观察单'}
                 </Text>
               </View>
-              <StatusPill
-                label={diagnosis.actionable ? '可交易' : '观察单'}
-                tone={getDiagnosisTone(diagnosis)}
-              />
             </View>
 
             <View style={[styles.insightBox, { backgroundColor: palette.surfaceMuted }]}>
@@ -1429,20 +440,9 @@ export default function BrainScreen() {
               </Text>
             </View>
 
-            <View style={styles.metricGrid}>
-              <MetricCard label="综合评分" value={`${Math.round(diagnosis.totalScore * 100)}`} tone="info" />
-              <MetricCard label="环境分" value={`${Math.round(diagnosis.regimeScore * 100)}`} tone="success" />
-              <MetricCard
-                label="持仓状态"
-                value={diagnosis.inPortfolio ? `${diagnosis.positionQuantity} 股` : '未持有'}
-                tone={diagnosis.inPortfolio ? 'warning' : 'neutral'}
-              />
-              <MetricCard
-                label="信号板"
-                value={diagnosis.inSignalBoard ? '已在池中' : '未入推荐'}
-                tone={diagnosis.inSignalBoard ? 'success' : 'neutral'}
-              />
-            </View>
+            <Text style={[styles.bodyText, { color: palette.subtext }]}>
+              综合 {Math.round(diagnosis.totalScore * 100)} / 环境 {Math.round(diagnosis.regimeScore * 100)}
+            </Text>
 
             <Text style={[styles.bodyText, { color: palette.text }]}>{diagnosis.regimeSummary}</Text>
             <Text style={[styles.bodyText, { color: palette.subtext }]}>{diagnosis.healthBias}</Text>
@@ -1460,21 +460,18 @@ export default function BrainScreen() {
               </Text>
             ) : null}
 
-            <View style={styles.scoreGrid}>
-              {scoreEntries.map((item) => (
-                <SurfaceCard key={item.key} style={styles.scoreCard}>
-                  <Text style={[styles.scoreLabel, { color: palette.subtext }]}>{item.label}</Text>
-                  <Text style={[styles.scoreValue, { color: palette.text }]}>{Math.round(item.value * 100)}</Text>
-                  <Text style={[styles.scoreMeta, { color: palette.subtext }]}>
-                    {item.details[0] ?? '暂无细节'}
-                  </Text>
-                </SurfaceCard>
-              ))}
-            </View>
+            {scoreEntries.length ? (
+              <Text style={[styles.bodyText, { color: palette.subtext }]}>
+                {scoreEntries
+                  .slice(0, 2)
+                  .map((item) => `${item.label} ${Math.round(item.value * 100)}`)
+                  .join(' / ')}
+              </Text>
+            ) : null}
 
             <View style={styles.listGroup}>
               <Text style={[styles.subTitle, { color: palette.text }]}>风险提示</Text>
-              {(diagnosis.riskFlags.length > 0 ? diagnosis.riskFlags : ['当前没有额外风险旗标。']).map((item) => (
+              {(diagnosis.riskFlags.length > 0 ? diagnosis.riskFlags : ['当前没有额外风险旗标。']).slice(0, 1).map((item) => (
                 <View key={item} style={styles.rowWithDot}>
                   <View style={[styles.dot, { backgroundColor: palette.warning }]} />
                   <Text style={[styles.bodyText, { color: palette.text }]}>{item}</Text>
@@ -1484,7 +481,7 @@ export default function BrainScreen() {
 
             <View style={styles.listGroup}>
               <Text style={[styles.subTitle, { color: palette.text }]}>下一步</Text>
-              {diagnosis.nextActions.map((item) => (
+            {diagnosis.nextActions.slice(0, 1).map((item) => (
                 <View key={item} style={styles.rowWithDot}>
                   <View style={[styles.dot, { backgroundColor: palette.success }]} />
                   <Text style={[styles.bodyText, { color: palette.text }]}>{item}</Text>
@@ -1516,158 +513,22 @@ export default function BrainScreen() {
         ) : null}
       </SurfaceCard>
 
-      <SectionHeading title="今日学习推进" subtitle="把学习链讲成一条明确的任务，不再像系统日志。" />
-      <SurfaceCard style={styles.cardGap}>
-        <Text style={[styles.headlineTitle, { color: palette.text }]}>
-          {data?.dailyAdvance.summary ?? '正在读取日日精进状态'}
-        </Text>
-        <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
-          最近完成 {data?.dailyAdvance.lastCompletedAt ? formatTimestamp(data.dailyAdvance.lastCompletedAt) : '暂无'} /
-          健康状态 {data?.dailyAdvance.healthStatus ?? '--'}
-        </Text>
-
-        <View style={styles.metricGrid}>
-          <MetricCard label="入库信号" value={`${data?.dailyAdvance.ingestedSignals ?? '--'}`} tone="info" />
-          <MetricCard label="完成验证" value={`${data?.dailyAdvance.verifiedSignals ?? '--'}`} tone="success" />
-          <MetricCard label="回查决策" value={`${data?.dailyAdvance.reviewedDecisions ?? '--'}`} tone="warning" />
-          <MetricCard
-            label="状态"
-            value={data?.dailyAdvance.inProgress ? '运行中' : data?.dailyAdvance.todayCompleted ? '已完成' : '待执行'}
-            tone={data?.dailyAdvance.inProgress ? 'info' : data?.dailyAdvance.todayCompleted ? 'success' : 'warning'}
-          />
-        </View>
-
-        {(data?.dailyAdvance.recommendations ?? []).slice(0, 3).map((item) => (
-          <View key={item} style={styles.rowWithDot}>
-            <View style={[styles.dot, { backgroundColor: palette.tint }]} />
-            <Text style={[styles.bodyText, { color: palette.text }]}>{item}</Text>
-          </View>
-        ))}
-
-        {(data?.dailyAdvance.checks ?? []).slice(0, 3).map((item) => (
-          <View key={`${item.name}-${item.detail}`} style={styles.checkRow}>
-            <StatusPill label={item.name} tone={toneFromLevel(item.status)} />
-            <Text style={[styles.bodyText, { color: palette.text }]}>{item.detail}</Text>
-          </View>
-        ))}
-
-        <Pressable
-          disabled={learningSubmitting || data?.dailyAdvance.inProgress}
-          onPress={() => {
-            void handleRunLearningAdvance();
-          }}
-          style={[
-            styles.primaryButton,
-            {
-              backgroundColor:
-                learningSubmitting || data?.dailyAdvance.inProgress ? palette.icon : palette.tint,
-            },
-          ]}>
-          {learningSubmitting ? (
-            <ActivityIndicator color="#FFFFFF" />
-          ) : (
-            <Text style={styles.primaryButtonText}>
-              {data?.dailyAdvance.inProgress ? '日日精进运行中' : '立即推进今日学习'}
-            </Text>
-          )}
-        </Pressable>
-      </SurfaceCard>
-
-      <SectionHeading title="系统建议" subtitle="只保留最该盯的建议和最热的策略，不把你拖回后台视角。" />
-      <SurfaceCard style={styles.cardGap}>
-        {(data?.ops.recommendations ?? []).slice(0, 3).map((item) => (
-          <View key={`${item.level}-${item.title}`} style={styles.recommendationRow}>
-            <StatusPill label={item.title} tone={toneFromLevel(item.level)} />
-            <Text style={[styles.bodyText, { color: palette.text }]}>{item.message}</Text>
-          </View>
-        ))}
-
-        {topStrategies.map((strategy) => (
-          <View key={strategy.id} style={styles.strategyRow}>
-            <View style={styles.strategyMain}>
-              <Text style={[styles.strategyName, { color: palette.text }]}>{strategy.name}</Text>
-              <Text style={[styles.strategyMeta, { color: palette.subtext }]}>
-                {strategy.signalCount} 条 / 最近 {strategy.lastSignalTime ?? '暂无'}
-              </Text>
-            </View>
-            <View style={styles.strategyRight}>
-              <Text style={[styles.strategyValue, { color: palette.text }]}>
-                {formatPercent(strategy.winRate / 100, 0)}
-              </Text>
-              <Text style={[styles.strategyMeta, { color: palette.subtext }]}>
-                均收 {formatPercent(strategy.avgReturn / 100)}
-              </Text>
-            </View>
-          </View>
-        ))}
-      </SurfaceCard>
     </AppScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  hero: {
-    borderRadius: 28,
-    padding: 24,
-    gap: 12,
-  },
-  heroEyebrow: {
-    color: '#8CC7FF',
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 1.4,
-  },
-  heroTitle: {
-    color: '#F7FBFF',
-    fontSize: 28,
-    fontWeight: '800',
-    lineHeight: 34,
-  },
-  heroCopy: {
-    color: '#C8D8EB',
-    fontSize: 15,
-    lineHeight: 22,
-  },
-  heroPills: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
   cardGap: {
     gap: 14,
   },
-  snapshotGrid: {
-    gap: 12,
-  },
-  snapshotCard: {
-    borderWidth: 1,
-    borderRadius: 22,
-    padding: 16,
-    gap: 8,
-  },
-  snapshotStep: {
-    fontSize: 12,
+  cardTitle: {
+    fontSize: 20,
     fontWeight: '800',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
+    lineHeight: 26,
   },
-  snapshotTitle: {
-    fontSize: 18,
-    fontWeight: '800',
-    lineHeight: 24,
-  },
-  snapshotCopy: {
-    fontSize: 13,
-    lineHeight: 20,
-  },
-  snapshotBody: {
+  cardBody: {
     fontSize: 14,
     lineHeight: 22,
-  },
-  metricGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: Spacing.gap,
   },
   label: {
     fontSize: 13,
@@ -1698,6 +559,10 @@ const styles = StyleSheet.create({
   candidateCode: {
     fontSize: 17,
     fontWeight: '800',
+  },
+  candidateMini: {
+    fontSize: 12,
+    lineHeight: 16,
   },
   candidateName: {
     fontSize: 15,
@@ -1756,27 +621,6 @@ const styles = StyleSheet.create({
   insightText: {
     fontSize: 14,
     lineHeight: 22,
-  },
-  scoreGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  scoreCard: {
-    width: '48%',
-    gap: 4,
-  },
-  scoreLabel: {
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  scoreValue: {
-    fontSize: 24,
-    fontWeight: '800',
-  },
-  scoreMeta: {
-    fontSize: 12,
-    lineHeight: 18,
   },
   listGroup: {
     gap: 8,

@@ -33,6 +33,7 @@ from smart_trader import (
     _fetch_market_breadth,
     _compute_regime_score,
     _score_to_regime,
+    _classify_market_phase,
     get_regime_params,
 )
 
@@ -693,6 +694,47 @@ class TestDetectMarketRegimeFull:
         assert result["regime"] == "neutral"
         assert result["should_trade"] is True
         assert "error" in result
+
+
+class TestMarketPhaseClassification:
+    def test_prefers_breakout_expansion_when_breadth_and_limit_ratio_are_strong(self):
+        result = _classify_market_phase(
+            {
+                "s1_ma_trend": 0.82,
+                "s2_momentum": 0.76,
+                "s3_volatility": 0.48,
+                "s4_advance_decline": 0.72,
+                "s5_limit_ratio": 0.81,
+                "s6_northbound": 0.63,
+                "s7_margin_trend": 0.59,
+                "s8_index_rsi": 0.67,
+            },
+            "bull",
+            0.76,
+        )
+
+        assert result["market_phase"] == "breakout_expansion"
+        assert result["market_phase_label"] == "连板扩散"
+        assert result["limit_up_allowed"] is True
+
+    def test_marks_risk_off_when_bear_and_unstable(self):
+        result = _classify_market_phase(
+            {
+                "s1_ma_trend": 0.22,
+                "s2_momentum": 0.18,
+                "s3_volatility": 0.12,
+                "s4_advance_decline": 0.2,
+                "s5_limit_ratio": 0.24,
+                "s6_northbound": 0.26,
+                "s7_margin_trend": 0.22,
+                "s8_index_rsi": 0.2,
+            },
+            "bear",
+            0.18,
+        )
+
+        assert result["market_phase"] == "risk_off"
+        assert result["limit_up_allowed"] is False
 
 
 if __name__ == "__main__":

@@ -77,7 +77,9 @@ export const wsManager = new WebSocketManager()
 
 // 在应用启动时连接
 const WS_URL = import.meta.env.DEV
-  ? 'ws://localhost:8000/ws'
+  ? (window.location.hostname === 'localhost'
+      ? 'ws://localhost:18000/ws'
+      : `ws://${window.location.hostname}:18000/ws`)
   : `wss://${window.location.host}/ws`
 
 wsManager.connect(WS_URL)

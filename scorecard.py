@@ -586,6 +586,88 @@ def generate_weekly_report() -> str:
         "",
     ]
 
+    try:
+        from api_server import (
+            _build_execution_policy_export_status,
+            _build_world_state_export_status,
+            _latest_execution_policy_export_manifest,
+            _latest_world_state_export_manifest,
+        )
+
+        export_status = _build_execution_policy_export_status("weekly", ensure_fresh=True)
+        manifest = _latest_execution_policy_export_manifest("weekly", ensure_fresh=False)
+        lines.extend([
+            "### 执行策略矩阵",
+            f"- 最新导出: {export_status.latest_export_id or '暂无'}",
+            f"- 导出时间: {export_status.latest_export_at or '暂无'}",
+            f"- 市场阶段: {manifest.market_phase_label}",
+            f"- 风险预算: {manifest.risk_budget_pct:.1f}% / 现金缓冲 {manifest.cash_buffer_pct:.1f}%",
+            f"- 导出资产: {export_status.latest_asset_count} 个",
+            f"- 优先风格: {', '.join(manifest.allowed_styles[:3]) if manifest.allowed_styles else '暂无'}",
+            f"- 压缩风格: {', '.join(manifest.blocked_styles[:3]) if manifest.blocked_styles else '暂无'}",
+            f"- 生产策略: {', '.join(manifest.allowed_strategies[:4]) if manifest.allowed_strategies else '暂无'}",
+            f"- 观察策略: {', '.join(manifest.observation_strategies[:4]) if manifest.observation_strategies else '暂无'}",
+            f"- 停用策略: {', '.join(manifest.blocked_strategies[:4]) if manifest.blocked_strategies else '暂无'}",
+            f"- 优先持有窗: {', '.join(manifest.preferred_holding_windows[:3]) if manifest.preferred_holding_windows else '暂无'}",
+            f"- 导出报告: {export_status.latest_report_route or '暂无'}",
+            f"- 导出 bundle: {export_status.latest_bundle_route or '暂无'}",
+            "",
+        ])
+        world_state_export_status = _build_world_state_export_status("weekly", ensure_fresh=True)
+        world_state_export_manifest = _latest_world_state_export_manifest("weekly", ensure_fresh=False)
+        lines.extend([
+            "### 顶层世界状态归档",
+            f"- 最新导出: {world_state_export_status.latest_export_id or '暂无'}",
+            f"- 导出时间: {world_state_export_status.latest_export_at or '暂无'}",
+            f"- 市场阶段: {world_state_export_manifest.market_phase_label}",
+            f"- 主导组件: {world_state_export_manifest.dominant_component or '暂无'}",
+            f"- 估值/资金: {world_state_export_manifest.valuation_regime} / {world_state_export_manifest.capital_style}",
+            f"- 地缘/供应链: {world_state_export_manifest.geopolitics_bias} / {world_state_export_manifest.supply_chain_mode}",
+            f"- 科技突破分: {world_state_export_manifest.technology_breakthrough_score:.1f}",
+            f"- 报告: {world_state_export_status.latest_report_route or '暂无'}",
+            f"- Bundle: {world_state_export_status.latest_bundle_route or '暂无'}",
+            "",
+        ])
+        try:
+            from api_server import _build_world_state_snapshot
+
+            world_state = _build_world_state_snapshot()
+            lines.append("### 顶层经营动作")
+            if world_state.operating_actions:
+                for action in world_state.operating_actions[:3]:
+                    lines.append(f"- {action.title}: {action.summary}")
+            else:
+                lines.append("- 当前没有新增经营动作。")
+            if world_state.operating_profile is not None:
+                profile = world_state.operating_profile
+                lines.append(
+                    f"- 经营画像: {profile.company_name} / 订单 {profile.order_visibility_months:.1f} 月 / "
+                    f"产能 {profile.capacity_utilization_pct:.0f}% / 库存 {profile.inventory_days} 天 / "
+                    f"现金 {profile.cash_buffer_months:.1f} 月"
+                )
+            lines.append("")
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
+        try:
+            from api_server import _build_production_guard_actions
+
+            guard_actions = _build_production_guard_actions(limit=3)
+            lines.append("### 生产风控动作")
+            if guard_actions:
+                for action in guard_actions:
+                    lines.append(
+                        f"- {action.code} {action.name}: {action.mode} / "
+                        f"建议减仓 {action.suggested_reduce_pct}% ({action.suggested_reduce_quantity} 股) / "
+                        f"{action.summary}"
+                    )
+            else:
+                lines.append("- 当前没有新增的生产风控动作。")
+            lines.append("")
+        except Exception as _exc:
+            logger.debug("Suppressed exception: %s", _exc)
+    except Exception as _exc:
+        logger.debug("Suppressed exception: %s", _exc)
+
     # 资金曲线指标
     eq = calc_equity_curve()
     if eq["nav_series"]:

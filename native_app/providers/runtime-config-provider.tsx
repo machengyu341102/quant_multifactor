@@ -46,23 +46,18 @@ export function RuntimeConfigProvider({ children }: PropsWithChildren) {
   async function saveApiBaseUrl(value: string) {
     const trimmed = value.trim();
     const nextUrl = setApiBaseUrl(trimmed);
+    setApiBaseUrlState(nextUrl);
 
     if (!trimmed || nextUrl === DEFAULT_API_BASE_URL) {
       await deleteStoredValue(API_BASE_URL_KEY);
     } else {
       await setStoredValue(API_BASE_URL_KEY, nextUrl);
     }
-
-    setApiBaseUrlState(nextUrl);
   }
 
   async function resetApiBaseUrl() {
     await deleteStoredValue(API_BASE_URL_KEY);
     setApiBaseUrlState(setApiBaseUrl(DEFAULT_API_BASE_URL));
-  }
-
-  if (isBooting) {
-    return null;
   }
 
   return (

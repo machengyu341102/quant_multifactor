@@ -223,6 +223,37 @@ class TestGuard:
         assert "首次" in restart_args[0][0]
 
 
+class TestTunnelGuard:
+    def test_is_valid_tunnel_url_accepts_random_subdomain(self):
+        import watchdog
+
+        assert watchdog._is_valid_tunnel_url("https://alpha-signal-desk.trycloudflare.com")
+
+    def test_is_valid_tunnel_url_rejects_generic_api_host(self):
+        import watchdog
+
+        assert not watchdog._is_valid_tunnel_url("https://api.trycloudflare.com")
+
+    def test_guard_tunnel_skips_restart_while_connecting(self, monkeypatch):
+        import watchdog
+
+        monkeypatch.setattr(
+            watchdog,
+            "safe_load",
+            lambda *args, **kwargs: {
+                "url": "",
+                "status": "connecting",
+                "manager_pid": 12345,
+            },
+        )
+        monkeypatch.setattr(watchdog, "_pid_exists", lambda pid: pid == 12345)
+
+        restarted = []
+        monkeypatch.setattr(watchdog, "_restart_tunnel_manager", lambda: restarted.append(True))
+        watchdog._guard_tunnel()
+        assert restarted == []
+
+
 # ================================================================
 #  _night_task 重试逻辑
 # ================================================================

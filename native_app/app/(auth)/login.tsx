@@ -10,7 +10,6 @@ import {
 import { Redirect } from 'expo-router';
 
 import { AppScreen } from '@/components/app/app-screen';
-import { ExecutiveSummaryGrid } from '@/components/app/executive-summary-grid';
 import { SurfaceCard } from '@/components/app/surface-card';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -26,6 +25,7 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('SyHG!F1eK4*Y!5Re');
   const [draftBaseUrl, setDraftBaseUrl] = useState(apiBaseUrl);
   const [error, setError] = useState<string | null>(null);
+  const selectedRole = username.trim().toLowerCase() === 'pilot' ? 'pilot' : 'admin';
 
   useEffect(() => {
     setDraftBaseUrl(apiBaseUrl);
@@ -55,61 +55,55 @@ export default function LoginScreen() {
 
   return (
     <AppScreen contentStyle={styles.content}>
-      <View style={[styles.hero, { backgroundColor: palette.hero }]}>
-        <Text style={styles.eyebrow}>ALPHA AI / ACCESS</Text>
-        <Text style={styles.title}>先进入系统，再讲能力链路</Text>
-        <Text style={styles.copy}>
-          这一页是演示入口。登录后直接看推荐、诊股、持仓、学习和消息镜像，不用先解释技术细节。
-        </Text>
-        <View style={styles.heroPills}>
-          <Text style={styles.heroPill}>原生 App</Text>
-          <Text style={styles.heroPill}>交易闭环</Text>
-          <Text style={styles.heroPill}>学习系统</Text>
-        </View>
-      </View>
-
-      <SurfaceCard style={styles.summaryCard}>
-        <Text style={[styles.summaryTitle, { color: palette.text }]}>入口说明</Text>
-        <ExecutiveSummaryGrid
-          items={[
-            {
-              key: 'login-role',
-              step: '01 账号视角',
-              title: '决策 or 实验',
-              body: '决策视角看主链路，实验视角看灰度能力和验证过程。',
-            },
-            {
-              key: 'login-api',
-              step: '02 接口地址',
-              title: apiBaseUrl.includes('192.168.') ? '当前为局域网地址' : '当前为正式地址',
-              body: '登录前先确认地址对不对，地址错了，账号密码对也进不去。',
-            },
-            {
-              key: 'login-password',
-              step: '03 密码兼容',
-              title: '新旧口径都可用',
-              body: '当前使用新密码，也兼容旧口径 `Alpha123456 / Pilot123456 / admin123 / pilot123`。',
-            },
+      <View style={styles.decorWrap} pointerEvents="none">
+        <View style={[styles.decorBlob, styles.decorBlobLeft, { backgroundColor: palette.accentSoft }]} />
+        <View
+          style={[
+            styles.decorBlob,
+            styles.decorBlobRight,
+            { backgroundColor: colorScheme === 'dark' ? '#173624' : '#DFF1E7' },
           ]}
         />
-      </SurfaceCard>
+      </View>
 
       <SurfaceCard style={styles.formCard}>
-        <Text style={[styles.label, { color: palette.subtext }]}>演示账号</Text>
+        <Text style={[styles.eyebrow, { color: palette.subtext }]}>演示账号</Text>
         <View style={styles.quickRow}>
           <Pressable
             onPress={() => {
               fillAccount('admin', 'SyHG!F1eK4*Y!5Re');
             }}
-            style={[styles.quickButton, { backgroundColor: palette.accentSoft, borderColor: palette.tint }]}>
-            <Text style={[styles.quickButtonText, { color: palette.tint }]}>决策视角</Text>
+            style={[
+              styles.quickButton,
+              selectedRole === 'admin'
+                ? { backgroundColor: palette.accentSoft, borderColor: palette.tint }
+                : { backgroundColor: palette.surface, borderColor: palette.border },
+            ]}>
+            <Text
+              style={[
+                styles.quickButtonText,
+                { color: selectedRole === 'admin' ? palette.tint : palette.text },
+              ]}>
+              决策视角
+            </Text>
           </Pressable>
           <Pressable
             onPress={() => {
               fillAccount('pilot', 'jlCOyZM#GwUPWSH4');
             }}
-            style={[styles.quickButton, { backgroundColor: palette.surface, borderColor: palette.border }]}>
-            <Text style={[styles.quickButtonText, { color: palette.text }]}>实验视角</Text>
+            style={[
+              styles.quickButton,
+              selectedRole === 'pilot'
+                ? { backgroundColor: palette.accentSoft, borderColor: palette.tint }
+                : { backgroundColor: palette.surface, borderColor: palette.border },
+            ]}>
+            <Text
+              style={[
+                styles.quickButtonText,
+                { color: selectedRole === 'pilot' ? palette.tint : palette.text },
+              ]}>
+              实验视角
+            </Text>
           </Pressable>
         </View>
 
@@ -179,7 +173,7 @@ export default function LoginScreen() {
           autoCorrect={false}
           keyboardType="url"
           onChangeText={setDraftBaseUrl}
-          placeholder="http://192.168.x.x:8000"
+          placeholder="http://192.168.x.x:18000"
           placeholderTextColor={palette.icon}
           style={[
             styles.input,
@@ -226,63 +220,49 @@ const styles = StyleSheet.create({
   content: {
     justifyContent: 'center',
     flexGrow: 1,
+    paddingTop: 24,
+    paddingBottom: 56,
+    position: 'relative',
   },
-  hero: {
-    borderRadius: 28,
-    padding: 24,
-    gap: 12,
+  decorWrap: {
+    ...StyleSheet.absoluteFillObject,
   },
-  eyebrow: {
-    color: '#8CC7FF',
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 1.4,
+  decorBlob: {
+    position: 'absolute',
+    borderRadius: 999,
+    opacity: 0.7,
   },
-  title: {
-    color: '#F7FBFF',
-    fontSize: 28,
-    fontWeight: '800',
-    lineHeight: 34,
+  decorBlobLeft: {
+    width: 180,
+    height: 180,
+    top: -24,
+    left: -52,
   },
-  copy: {
-    color: '#C8D8EB',
-    fontSize: 15,
-    lineHeight: 22,
+  decorBlobRight: {
+    width: 220,
+    height: 220,
+    top: -54,
+    right: -84,
   },
   formCard: {
     gap: 10,
+    borderRadius: 28,
+    paddingTop: 18,
+    paddingBottom: 18,
   },
-  summaryCard: {
-    gap: 12,
-  },
-  heroPills: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  heroPill: {
-    color: '#07111F',
-    backgroundColor: '#DCE8FF',
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    fontSize: 12,
-    fontWeight: '800',
-  },
-  summaryTitle: {
-    fontSize: 18,
-    fontWeight: '800',
-    lineHeight: 24,
+  eyebrow: {
+    fontSize: 13,
+    fontWeight: '700',
   },
   quickRow: {
     flexDirection: 'row',
     gap: 10,
-    marginBottom: 4,
+    marginBottom: 8,
   },
   quickButton: {
     flex: 1,
     borderWidth: 1,
-    borderRadius: 14,
+    borderRadius: 16,
     paddingVertical: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -297,13 +277,13 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderRadius: 18,
+    borderRadius: 16,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
   },
   button: {
-    borderRadius: 18,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 16,

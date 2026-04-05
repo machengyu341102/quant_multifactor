@@ -15,7 +15,7 @@ export function KlineSnapshot({
 }: KlineSnapshotProps) {
   const colorScheme = useColorScheme();
   const palette = Colors[colorScheme ?? 'light'];
-  const visibleBars = bars.slice(-8).reverse();
+  const visibleBars = bars.slice(-6).reverse();
 
   if (visibleBars.length === 0) {
     return <Text style={[styles.emptyText, { color: palette.subtext }]}>{emptyLabel}</Text>;
@@ -75,7 +75,7 @@ export function KlineSnapshot({
 
 const styles = StyleSheet.create({
   wrap: {
-    gap: 10,
+    gap: 8,
   },
   emptyText: {
     fontSize: 14,
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 10,
   },
   date: {
     width: 42,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   track: {
     flex: 1,
-    height: 18,
+    height: 16,
     borderRadius: 999,
     position: 'relative',
     overflow: 'hidden',
@@ -103,13 +103,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: 2,
     borderRadius: 999,
-    top: 8,
+    top: 7,
   },
   body: {
     position: 'absolute',
-    height: 8,
+    height: 7,
     borderRadius: 999,
-    top: 5,
+    top: 4.5,
     minWidth: 4,
   },
   close: {

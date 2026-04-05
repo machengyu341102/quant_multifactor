@@ -8,10 +8,10 @@ interface StatusPillProps {
 }
 
 const tones: Record<Tone, { backgroundColor: string; color: string }> = {
-  neutral: { backgroundColor: '#E7EDF4', color: '#0B1728' },
-  info: { backgroundColor: '#DCE8FF', color: '#155EEF' },
-  success: { backgroundColor: '#DDF5EA', color: '#0E9F6E' },
-  warning: { backgroundColor: '#FFF0D6', color: '#B45309' },
+  neutral: { backgroundColor: '#E7EFEA', color: '#183225' },
+  info: { backgroundColor: '#DFF4E7', color: '#14804A' },
+  success: { backgroundColor: '#D9F1E2', color: '#157347' },
+  warning: { backgroundColor: '#F8EED6', color: '#A16207' },
   danger: { backgroundColor: '#FEE2E2', color: '#B42318' },
 };
 
@@ -25,12 +25,12 @@ export function StatusPill({ label, tone = 'neutral' }: StatusPillProps) {
 
 const styles = StyleSheet.create({
   wrap: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
     borderRadius: 999,
   },
   text: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
   },
 });

@@ -172,10 +172,12 @@ def generate_morning_plan():
             plan_lines.append(f"  · [{tag}] {ev.get('title', '')[:60]}")
 
         heatmap = news_digest.get("heatmap", {})
-        if heatmap:
+        sector_scores = heatmap.get("sectors", {}) if isinstance(heatmap, dict) else {}
+        if sector_scores:
             hm_parts = []
-            for sector, val in list(heatmap.items())[:5]:
-                arrow = "↑" * min(int(abs(val)), 3) if val > 0 else "↓" * min(int(abs(val)), 3)
+            for sector, val in list(sector_scores.items())[:5]:
+                score = float(val)
+                arrow = "↑" * min(int(abs(score)), 3) if score > 0 else "↓" * min(int(abs(score)), 3)
                 hm_parts.append(f"{sector}{arrow}")
             plan_lines.append(f"  热力图: {' | '.join(hm_parts)}")
 

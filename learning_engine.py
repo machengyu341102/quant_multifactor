@@ -1381,11 +1381,32 @@ def check_learning_health() -> dict:
             GROUP BY rec_date ORDER BY rec_date DESC
         """)
         recent = cur.fetchall()
+        cur.execute("""
+            SELECT trade_date, COUNT(*) FROM trade_journal
+            WHERE trade_date >= date('now', 'localtime', '-3 days')
+            GROUP BY trade_date ORDER BY trade_date DESC
+        """)
+        recent_journal = cur.fetchall()
+        signals_path = os.path.join(_DIR, "signals_db.json")
+        signal_items = safe_load(signals_path, default=[]) if os.path.exists(signals_path) else []
+        signal_input_count = len(signal_items) if isinstance(signal_items, list) else 0
         if recent:
             latest_date = recent[0][0]
             latest_count = recent[0][1]
             checks.append({"check": "scorecard_freshness", "status": "ok",
                           "detail": f"最新{latest_date}: {latest_count}条"})
+        elif recent_journal:
+            latest_trade_date = recent_journal[0][0]
+            latest_trade_count = sum(int(item[1] or 0) for item in recent_journal)
+            checks.append({"check": "scorecard_freshness", "status": "warning",
+                          "detail": f"近3天无新回填，但输入侧仍有 {latest_trade_count} 条策略记录（最新 {latest_trade_date}）"})
+            if status == "ok":
+                status = "warning"
+        elif signal_input_count > 0:
+            checks.append({"check": "scorecard_freshness", "status": "warning",
+                          "detail": f"近3天无新回填，但 signals_db 仍有 {signal_input_count} 条待验证/存量信号"})
+            if status == "ok":
+                status = "warning"
         else:
             checks.append({"check": "scorecard_freshness", "status": "critical",
                           "detail": "近3天无新数据 → 学习引擎无输入"})

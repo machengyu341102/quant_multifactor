@@ -1,0 +1,63 @@
+import { Fonts } from '@/constants/theme';
+
+export const terminalTheme = {
+  colors: {
+    page: '#0B0F14',
+    panel: '#11161D',
+    panelMuted: '#151C24',
+    panelSoft: '#18222E',
+    border: '#243041',
+    borderStrong: '#314257',
+    hover: '#1B2430',
+    active: '#202B39',
+    text: '#E5EDF5',
+    subtext: '#8FA0B3',
+    muted: '#647485',
+    accent: '#3B82F6',
+    accentSoft: 'rgba(59,130,246,0.16)',
+    buy: '#16C784',
+    buySoft: 'rgba(22,199,132,0.14)',
+    sell: '#EA3943',
+    sellSoft: 'rgba(234,57,67,0.14)',
+    warning: '#F0B90B',
+    warningSoft: 'rgba(240,185,11,0.14)',
+    grid: '#1E2937',
+    chartBg: '#0F141B',
+    chartOverlay: 'rgba(11,15,20,0.64)',
+    focus: '#66A3FF',
+    shadow: 'rgba(0,0,0,0.35)',
+    white: '#FFFFFF',
+  },
+  radius: {
+    xs: 6,
+    sm: 8,
+    md: 10,
+    lg: 14,
+  },
+  spacing: {
+    xxs: 4,
+    xs: 6,
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 20,
+    xxl: 24,
+  },
+  layout: {
+    headerHeight: 54,
+    statusHeight: 28,
+    sidebarWidth: 272,
+    sidebarCompactWidth: 224,
+    rightRailWidth: 332,
+    rightRailCompactWidth: 284,
+    chartMinHeight: 440,
+    chartDesktopHeight: 520,
+    chartMobileHeight: 360,
+  },
+  fonts: {
+    sans: Fonts.sans,
+    mono: Fonts.mono,
+  },
+} as const;
+
+export type TerminalTheme = typeof terminalTheme;

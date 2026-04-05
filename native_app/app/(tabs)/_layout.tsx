@@ -41,12 +41,12 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: palette.surface,
           borderTopColor: palette.border,
-          height: 86,
-          paddingTop: 8,
+          height: 56,
+          paddingTop: 1,
         },
         tabBarLabelStyle: {
-          fontSize: 11,
-          fontWeight: '600',
+          fontSize: 9,
+          fontWeight: '500',
         },
       }}>
       <Tabs.Screen
@@ -54,7 +54,7 @@ export default function TabLayout() {
         options={{
           title: '首页',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons size={24} name={focused ? 'home' : 'home-outline'} color={color} />
+            <Ionicons size={22} name={focused ? 'home' : 'home-outline'} color={color} />
           ),
         }}
       />
@@ -63,7 +63,7 @@ export default function TabLayout() {
         options={{
           title: '推荐',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons size={24} name={focused ? 'flash' : 'flash-outline'} color={color} />
+            <Ionicons size={22} name={focused ? 'flash' : 'flash-outline'} color={color} />
           ),
         }}
       />
@@ -72,7 +72,7 @@ export default function TabLayout() {
         options={{
           title: '持仓',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons size={24} name={focused ? 'wallet' : 'wallet-outline'} color={color} />
+            <Ionicons size={22} name={focused ? 'wallet' : 'wallet-outline'} color={color} />
           ),
         }}
       />
@@ -81,17 +81,17 @@ export default function TabLayout() {
         options={{
           title: '决策',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons size={24} name={focused ? 'pulse' : 'pulse-outline'} color={color} />
+            <Ionicons size={22} name={focused ? 'pulse' : 'pulse-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: '控制',
+          title: '我的',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
-              size={24}
+              size={22}
               name={focused ? 'person-circle' : 'person-circle-outline'}
               color={color}
             />

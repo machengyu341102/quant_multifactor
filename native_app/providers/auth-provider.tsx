@@ -61,9 +61,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
     setIsSigningIn(true);
     try {
       const session = await login(username, password);
-      await setStoredValue(AUTH_TOKEN_KEY, session.accessToken);
       setToken(session.accessToken);
       setUser(session.user);
+      await setStoredValue(AUTH_TOKEN_KEY, session.accessToken);
     } finally {
       setIsSigningIn(false);
       setIsBooting(false);

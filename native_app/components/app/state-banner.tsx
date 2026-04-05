@@ -35,9 +35,9 @@ export function StateBanner({ error, isPending, loadingLabel }: StateBannerProps
 
 const styles = StyleSheet.create({
   card: {
-    paddingVertical: 14,
+    paddingVertical: 10,
   },
   text: {
-    fontSize: 14,
+    fontSize: 13,
   },
 });

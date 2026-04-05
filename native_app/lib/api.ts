@@ -15,6 +15,7 @@ import type {
   FeedbackSubmissionPayload,
   FeedbackSubmissionResult,
   HomeSnapshot,
+  HiddenAccumulationOpportunity,
   IndustryCapitalDirection,
   IndustryResearchPushStatus,
   IndustryCapitalResearchItem,
@@ -23,6 +24,8 @@ import type {
   LearningAdvanceStatus,
   LearningProgress,
   OpenSignalPositionPayload,
+  OperatingProfile,
+  OperatingProfileUpdatePayload,
   OpsSummary,
   PortfolioHistory,
   PortfolioActionResult,
@@ -33,6 +36,7 @@ import type {
   PolicyWatchItem,
   PositionRiskUpdatePayload,
   PositionTrade,
+  ProductionGuardSnapshot,
   RecommendationCompareDay,
   RecommendationCompareSnapshot,
   RecommendationCompareSummary,
@@ -56,6 +60,7 @@ import type {
   ThemeRadarItem,
   ThemeStageItem,
   TradeLedgerEntry,
+  WorldStateSnapshot,
 } from '@/types/trading';
 
 interface RequestOptions {
@@ -387,6 +392,48 @@ function normalizeStrongMoveCandidate(payload: {
     thesis: payload.thesis,
     nextStep: payload.next_step,
     reasons: payload.reasons,
+  };
+}
+
+function normalizeHiddenAccumulationOpportunity(payload: {
+  id: string;
+  code: string;
+  name: string;
+  market_phase: string;
+  market_phase_label: string;
+  float_mv_yi: number;
+  streak_days: number;
+  consolidation_width_pct: number;
+  streak_gain_pct: number;
+  setup_label: string;
+  tradability_label: string;
+  accumulation_score: number;
+  holding_window: string;
+  action: string;
+  thesis: string;
+  reasons?: string[];
+  recent_closes?: number[];
+  tail_pcts?: number[];
+}): HiddenAccumulationOpportunity {
+  return {
+    id: payload.id,
+    code: payload.code,
+    name: payload.name,
+    marketPhase: payload.market_phase,
+    marketPhaseLabel: payload.market_phase_label,
+    floatMvYi: payload.float_mv_yi,
+    streakDays: payload.streak_days,
+    consolidationWidthPct: payload.consolidation_width_pct,
+    streakGainPct: payload.streak_gain_pct,
+    setupLabel: payload.setup_label,
+    tradabilityLabel: payload.tradability_label,
+    accumulationScore: payload.accumulation_score,
+    holdingWindow: payload.holding_window,
+    action: payload.action,
+    thesis: payload.thesis,
+    reasons: payload.reasons ?? [],
+    recentCloses: payload.recent_closes ?? [],
+    tailPcts: payload.tail_pcts ?? [],
   };
 }
 
@@ -1450,6 +1497,495 @@ function normalizeOpsRouteStat(payload: {
   };
 }
 
+function normalizeWorldStateSnapshot(payload: {
+  regime: string;
+  regime_score: number;
+  market_phase: string;
+  market_phase_label: string;
+  valuation_regime: string;
+  capital_style: string;
+  strategic_direction: string | null;
+  technology_focus: string | null;
+  geopolitics_bias: string;
+  supply_chain_mode: string;
+  technology_breakthrough_score?: number;
+  technology_breakthrough_summary?: string | null;
+  phase_confidence: number;
+  style_bias: string;
+  horizon_hint: string;
+  limit_up_mode: string;
+  limit_up_allowed: boolean;
+  should_trade: boolean;
+  summary: string;
+  structural_summary: string | null;
+  dominant_component: string | null;
+  components: Array<{
+    key: string;
+    label: string;
+    score: number;
+    bias: string;
+    summary: string;
+    drivers: string[];
+  }>;
+  source_statuses?: Array<{
+    key: string;
+    label: string;
+    updated_at: string | null;
+    freshness_score: number;
+    freshness_label: string;
+    reliability_score?: number;
+    authority_score?: number;
+    timeliness_score?: number;
+    signal_count: number;
+    summary: string;
+    category?: string;
+    external?: boolean;
+    required?: boolean;
+    fetch_mode?: string;
+    remote_configured?: boolean;
+    degraded_to_derived?: boolean;
+    origin_mode?: string;
+    available?: boolean;
+    stale?: boolean;
+    data_quality_score?: number;
+    block_reason?: string | null;
+    live_probe_summary?: string | null;
+  }>;
+  top_directions?: Array<{
+    direction_id: string;
+    direction: string;
+    focus_sector: string | null;
+    policy_bucket: string | null;
+    total_score: number;
+    event_score: number;
+    official_score: number;
+    chain_control_score: number;
+    research_score: number;
+    timeline_score: number;
+    hard_source_score?: number;
+    technology_breakthrough_score?: number;
+    technology_focus: string | null;
+    summary: string;
+  }>;
+  cross_asset_signals?: Array<{
+    key: string;
+    label: string;
+    level: string;
+    score: number;
+    bias: string;
+    summary: string;
+    action_type?: string;
+    targets?: string[];
+    source_keys?: string[];
+  }>;
+  regional_pressures?: Array<{
+    region: string;
+    level: string;
+    score: number;
+    summary: string;
+    affected_countries?: string[];
+    affected_routes?: string[];
+    exposed_industries?: string[];
+  }>;
+  event_cascades?: Array<{
+    theme_key?: string;
+    event_id: string;
+    title: string;
+    trigger_type: string;
+    severity: string;
+    peak_severity?: string;
+    trade_bias: string;
+    immediate_action: string;
+    continuity_focus: string;
+    transport_focus: string;
+    follow_up_signal?: string;
+    confidence_score?: number;
+    restriction_scope?: string;
+    estimated_flow_impact_pct?: number;
+    affected_countries?: string[];
+    affected_routes?: string[];
+    direct_beneficiaries?: string[];
+    direct_losers?: string[];
+    exposed_industries?: string[];
+    second_order_impacts?: string[];
+    commodity_links?: string[];
+    evidence_count?: number;
+    source_timestamp?: string | null;
+  }>;
+  refresh_plan?: {
+    mode: string;
+    mode_label: string;
+    active_window: string;
+    active_window_label: string;
+    escalation_active?: boolean;
+    top_trigger?: string | null;
+    trigger_type?: string | null;
+    news_interval_minutes: number;
+    feeds_interval_minutes: number;
+    hard_source_interval_minutes?: number;
+    policy_interval_minutes: number;
+    overnight_watch?: boolean;
+    summary: string;
+    next_focus?: string[];
+    next_news_due_at?: string | null;
+    next_feeds_due_at?: string | null;
+    next_hard_sources_due_at?: string | null;
+    next_policy_due_at?: string | null;
+    overdue_sources?: string[];
+    generated_at?: string | null;
+  } | null;
+  actions?: Array<{
+    key: string;
+    level: string;
+    action_type: string;
+    priority: number;
+    title: string;
+    summary: string;
+    horizon: string;
+    source_keys?: string[];
+    targets?: string[];
+  }>;
+  operating_actions?: Array<{
+    key: string;
+    level: string;
+    action_type: string;
+    priority: number;
+    title: string;
+    summary: string;
+    horizon: string;
+    targets?: string[];
+  }>;
+  operating_profile?: {
+    company_name: string;
+    primary_industries?: string[];
+    operating_mode: string;
+    order_visibility_months: number;
+    capacity_utilization_pct: number;
+    inventory_days: number;
+    supplier_concentration_pct: number;
+    customer_concentration_pct: number;
+    overseas_revenue_pct: number;
+    sensitive_region_exposure_pct: number;
+    cash_buffer_months: number;
+    capex_flexibility: string;
+    inventory_strategy: string;
+    key_inputs?: string[];
+    key_routes?: string[];
+    strategic_projects?: string[];
+    completeness_score?: number;
+    completeness_label?: string;
+    profile_status?: string;
+    freshness_label?: string;
+    stale?: boolean;
+    missing_fields?: string[];
+    recommended_actions?: string[];
+    summary?: string | null;
+    updated_at?: string | null;
+  } | null;
+  checks?: Array<{
+    key: string;
+    level: string;
+    title: string;
+    message: string;
+    suggestion?: string | null;
+    source_keys?: string[];
+  }>;
+}): WorldStateSnapshot {
+  const normalizeOperatingProfilePayload = (profile: typeof payload.operating_profile): OperatingProfile | null =>
+    profile
+      ? {
+          companyName: profile.company_name,
+          primaryIndustries: profile.primary_industries ?? [],
+          operatingMode: profile.operating_mode,
+          orderVisibilityMonths: profile.order_visibility_months,
+          capacityUtilizationPct: profile.capacity_utilization_pct,
+          inventoryDays: profile.inventory_days,
+          supplierConcentrationPct: profile.supplier_concentration_pct,
+          customerConcentrationPct: profile.customer_concentration_pct,
+          overseasRevenuePct: profile.overseas_revenue_pct,
+          sensitiveRegionExposurePct: profile.sensitive_region_exposure_pct,
+          cashBufferMonths: profile.cash_buffer_months,
+          capexFlexibility: profile.capex_flexibility,
+          inventoryStrategy: profile.inventory_strategy,
+          keyInputs: profile.key_inputs ?? [],
+          keyRoutes: profile.key_routes ?? [],
+          strategicProjects: profile.strategic_projects ?? [],
+          completenessScore: profile.completeness_score ?? 0,
+          completenessLabel: profile.completeness_label ?? '待补齐',
+          profileStatus: profile.profile_status ?? 'warning',
+          freshnessLabel: profile.freshness_label ?? '未更新',
+          stale: profile.stale ?? false,
+          missingFields: profile.missing_fields ?? [],
+          recommendedActions: profile.recommended_actions ?? [],
+          summary: profile.summary ?? null,
+          updatedAt: profile.updated_at ?? null,
+        }
+      : null;
+
+  return {
+    regime: payload.regime,
+    regimeScore: payload.regime_score,
+    marketPhase: payload.market_phase,
+    marketPhaseLabel: payload.market_phase_label,
+    valuationRegime: payload.valuation_regime,
+    capitalStyle: payload.capital_style,
+    strategicDirection: payload.strategic_direction,
+    technologyFocus: payload.technology_focus,
+    geopoliticsBias: payload.geopolitics_bias,
+    supplyChainMode: payload.supply_chain_mode,
+    technologyBreakthroughScore: payload.technology_breakthrough_score ?? 50,
+    technologyBreakthroughSummary: payload.technology_breakthrough_summary ?? null,
+    phaseConfidence: payload.phase_confidence,
+    styleBias: payload.style_bias,
+    horizonHint: payload.horizon_hint,
+    limitUpMode: payload.limit_up_mode,
+    limitUpAllowed: payload.limit_up_allowed,
+    shouldTrade: payload.should_trade,
+    summary: payload.summary,
+    structuralSummary: payload.structural_summary,
+    dominantComponent: payload.dominant_component,
+    components: (payload.components ?? []).map((component) => ({
+      key: component.key,
+      label: component.label,
+      score: component.score,
+      bias: component.bias,
+      summary: component.summary,
+      drivers: component.drivers,
+    })),
+    sourceStatuses: (payload.source_statuses ?? []).map((item) => ({
+      key: item.key,
+      label: item.label,
+      updatedAt: item.updated_at,
+      freshnessScore: item.freshness_score,
+      freshnessLabel: item.freshness_label,
+      reliabilityScore: item.reliability_score ?? 50,
+      authorityScore: item.authority_score ?? 50,
+      timelinessScore: item.timeliness_score ?? item.freshness_score,
+      signalCount: item.signal_count,
+      summary: item.summary,
+      category: item.category ?? 'runtime',
+      external: item.external ?? false,
+      required: item.required ?? false,
+      fetchMode: item.fetch_mode ?? 'runtime',
+      remoteConfigured: item.remote_configured ?? false,
+      degradedToDerived: item.degraded_to_derived ?? false,
+      originMode: item.origin_mode ?? 'runtime',
+      available: item.available ?? true,
+      stale: item.stale ?? false,
+      dataQualityScore: item.data_quality_score ?? ((item.reliability_score ?? 50) + (item.authority_score ?? 50) + (item.timeliness_score ?? item.freshness_score)) / 3,
+      blockReason: item.block_reason ?? null,
+      liveProbeSummary: item.live_probe_summary ?? null,
+    })),
+    topDirections: (payload.top_directions ?? []).map((item) => ({
+      directionId: item.direction_id,
+      direction: item.direction,
+      focusSector: item.focus_sector,
+      policyBucket: item.policy_bucket,
+      totalScore: item.total_score,
+      eventScore: item.event_score,
+      officialScore: item.official_score,
+      chainControlScore: item.chain_control_score,
+      researchScore: item.research_score,
+      timelineScore: item.timeline_score,
+      hardSourceScore: item.hard_source_score ?? 50,
+      technologyBreakthroughScore: item.technology_breakthrough_score ?? 50,
+      technologyFocus: item.technology_focus,
+      summary: item.summary,
+    })),
+    crossAssetSignals: (payload.cross_asset_signals ?? []).map((item) => ({
+      key: item.key,
+      label: item.label,
+      level: item.level,
+      score: item.score,
+      bias: item.bias,
+      summary: item.summary,
+      actionType: item.action_type ?? 'observe',
+      targets: item.targets ?? [],
+      sourceKeys: item.source_keys ?? [],
+    })),
+    regionalPressures: (payload.regional_pressures ?? []).map((item) => ({
+      region: item.region,
+      level: item.level,
+      score: item.score,
+      summary: item.summary,
+      affectedCountries: item.affected_countries ?? [],
+      affectedRoutes: item.affected_routes ?? [],
+      exposedIndustries: item.exposed_industries ?? [],
+    })),
+    eventCascades: (payload.event_cascades ?? []).map((item) => ({
+      themeKey: item.theme_key ?? item.event_id,
+      eventId: item.event_id,
+      title: item.title,
+      triggerType: item.trigger_type,
+      severity: item.severity,
+      peakSeverity: item.peak_severity ?? item.severity,
+      tradeBias: item.trade_bias,
+      immediateAction: item.immediate_action,
+      continuityFocus: item.continuity_focus,
+      transportFocus: item.transport_focus,
+      followUpSignal: item.follow_up_signal ?? 'stable',
+      confidenceScore: item.confidence_score ?? 50,
+      restrictionScope: item.restriction_scope ?? 'normal',
+      estimatedFlowImpactPct: item.estimated_flow_impact_pct ?? 0,
+      affectedCountries: item.affected_countries ?? [],
+      affectedRoutes: item.affected_routes ?? [],
+      directBeneficiaries: item.direct_beneficiaries ?? [],
+      directLosers: item.direct_losers ?? [],
+      exposedIndustries: item.exposed_industries ?? [],
+      secondOrderImpacts: item.second_order_impacts ?? [],
+      commodityLinks: item.commodity_links ?? [],
+      evidenceCount: item.evidence_count ?? 0,
+      sourceTimestamp: item.source_timestamp ?? null,
+    })),
+    refreshPlan: payload.refresh_plan
+      ? {
+          mode: payload.refresh_plan.mode,
+          modeLabel: payload.refresh_plan.mode_label,
+          activeWindow: payload.refresh_plan.active_window,
+          activeWindowLabel: payload.refresh_plan.active_window_label,
+          escalationActive: payload.refresh_plan.escalation_active ?? false,
+          topTrigger: payload.refresh_plan.top_trigger ?? null,
+          triggerType: payload.refresh_plan.trigger_type ?? null,
+          newsIntervalMinutes: payload.refresh_plan.news_interval_minutes,
+          feedsIntervalMinutes: payload.refresh_plan.feeds_interval_minutes,
+          hardSourceIntervalMinutes: payload.refresh_plan.hard_source_interval_minutes ?? 30,
+          policyIntervalMinutes: payload.refresh_plan.policy_interval_minutes,
+          overnightWatch: payload.refresh_plan.overnight_watch ?? false,
+          summary: payload.refresh_plan.summary,
+          nextFocus: payload.refresh_plan.next_focus ?? [],
+          nextNewsDueAt: payload.refresh_plan.next_news_due_at ?? null,
+          nextFeedsDueAt: payload.refresh_plan.next_feeds_due_at ?? null,
+          nextHardSourcesDueAt: payload.refresh_plan.next_hard_sources_due_at ?? null,
+          nextPolicyDueAt: payload.refresh_plan.next_policy_due_at ?? null,
+          overdueSources: payload.refresh_plan.overdue_sources ?? [],
+          generatedAt: payload.refresh_plan.generated_at ?? null,
+        }
+      : null,
+    actions: (payload.actions ?? []).map((item) => ({
+      key: item.key,
+      level: item.level,
+      actionType: item.action_type,
+      priority: item.priority,
+      title: item.title,
+      summary: item.summary,
+      horizon: item.horizon,
+      sourceKeys: item.source_keys ?? [],
+      targets: item.targets ?? [],
+    })),
+    operatingActions: (payload.operating_actions ?? []).map((item) => ({
+      key: item.key,
+      level: item.level,
+      actionType: item.action_type,
+      priority: item.priority,
+      title: item.title,
+      summary: item.summary,
+      horizon: item.horizon,
+      targets: item.targets ?? [],
+    })),
+    operatingProfile: normalizeOperatingProfilePayload(payload.operating_profile),
+    checks: (payload.checks ?? []).map((item) => ({
+      key: item.key,
+      level: item.level,
+      title: item.title,
+      message: item.message,
+      suggestion: item.suggestion ?? null,
+      sourceKeys: item.source_keys ?? [],
+    })),
+  };
+}
+
+function normalizeOperatingProfile(payload: {
+  company_name: string;
+  primary_industries?: string[];
+  operating_mode: string;
+  order_visibility_months: number;
+  capacity_utilization_pct: number;
+  inventory_days: number;
+  supplier_concentration_pct: number;
+  customer_concentration_pct: number;
+  overseas_revenue_pct: number;
+  sensitive_region_exposure_pct: number;
+  cash_buffer_months: number;
+  capex_flexibility: string;
+  inventory_strategy: string;
+  key_inputs?: string[];
+  key_routes?: string[];
+  strategic_projects?: string[];
+  completeness_score?: number;
+  completeness_label?: string;
+  profile_status?: string;
+  freshness_label?: string;
+  stale?: boolean;
+  missing_fields?: string[];
+  recommended_actions?: string[];
+  summary?: string | null;
+  updated_at?: string | null;
+}): OperatingProfile {
+  return {
+    companyName: payload.company_name,
+    primaryIndustries: payload.primary_industries ?? [],
+    operatingMode: payload.operating_mode,
+    orderVisibilityMonths: payload.order_visibility_months,
+    capacityUtilizationPct: payload.capacity_utilization_pct,
+    inventoryDays: payload.inventory_days,
+    supplierConcentrationPct: payload.supplier_concentration_pct,
+    customerConcentrationPct: payload.customer_concentration_pct,
+    overseasRevenuePct: payload.overseas_revenue_pct,
+    sensitiveRegionExposurePct: payload.sensitive_region_exposure_pct,
+    cashBufferMonths: payload.cash_buffer_months,
+    capexFlexibility: payload.capex_flexibility,
+    inventoryStrategy: payload.inventory_strategy,
+    keyInputs: payload.key_inputs ?? [],
+    keyRoutes: payload.key_routes ?? [],
+    strategicProjects: payload.strategic_projects ?? [],
+    completenessScore: payload.completeness_score ?? 0,
+    completenessLabel: payload.completeness_label ?? '待补齐',
+    profileStatus: payload.profile_status ?? 'warning',
+    freshnessLabel: payload.freshness_label ?? '未更新',
+    stale: payload.stale ?? false,
+    missingFields: payload.missing_fields ?? [],
+    recommendedActions: payload.recommended_actions ?? [],
+    summary: payload.summary ?? null,
+    updatedAt: payload.updated_at ?? null,
+  };
+}
+
+function normalizeProductionGuardSnapshot(payload: {
+  market_phase: string;
+  market_phase_label: string;
+  hard_risk_gate: boolean;
+  blocked_additions: boolean;
+  auto_reduce_positions: boolean;
+  auto_exit_losers: boolean;
+  current_drawdown_pct: number;
+  max_drawdown_pct: number;
+  drawdown_days: number;
+  walk_forward_risk: string;
+  walk_forward_efficiency: number | null;
+  walk_forward_degradation: number | null;
+  unstable_strategies: string[];
+  summary: string;
+  actions: string[];
+}): ProductionGuardSnapshot {
+  return {
+    marketPhase: payload.market_phase,
+    marketPhaseLabel: payload.market_phase_label,
+    hardRiskGate: payload.hard_risk_gate,
+    blockedAdditions: payload.blocked_additions,
+    autoReducePositions: payload.auto_reduce_positions,
+    autoExitLosers: payload.auto_exit_losers,
+    currentDrawdownPct: payload.current_drawdown_pct,
+    maxDrawdownPct: payload.max_drawdown_pct,
+    drawdownDays: payload.drawdown_days,
+    walkForwardRisk: payload.walk_forward_risk,
+    walkForwardEfficiency: payload.walk_forward_efficiency,
+    walkForwardDegradation: payload.walk_forward_degradation,
+    unstableStrategies: payload.unstable_strategies,
+    summary: payload.summary,
+    actions: payload.actions,
+  };
+}
+
 function normalizeOpsSummary(payload: {
   service: string;
   version: string;
@@ -1488,11 +2024,79 @@ function normalizeOpsSummary(payload: {
     last_status: number;
     last_seen_at: string | null;
   }>;
+  world_state?: {
+    regime: string;
+    regime_score: number;
+    market_phase: string;
+    market_phase_label: string;
+    valuation_regime: string;
+    capital_style: string;
+    strategic_direction: string | null;
+    technology_focus: string | null;
+    geopolitics_bias: string;
+    supply_chain_mode: string;
+    phase_confidence: number;
+    style_bias: string;
+    horizon_hint: string;
+    limit_up_mode: string;
+    limit_up_allowed: boolean;
+    should_trade: boolean;
+    summary: string;
+    structural_summary: string | null;
+    dominant_component: string | null;
+    components: Array<{
+      key: string;
+      label: string;
+      score: number;
+      bias: string;
+      summary: string;
+      drivers: string[];
+    }>;
+  } | null;
   recommendations?: Array<{
     level: string;
     title: string;
     message: string;
   }>;
+  world_state_export?: {
+    period: string;
+    latest_export_at: string | null;
+    latest_export_id: string | null;
+    latest_manifest_route: string | null;
+    latest_report_route: string | null;
+    latest_bundle_route: string | null;
+    latest_asset_count: number;
+    history_count: number;
+    stale: boolean;
+  } | null;
+  execution_policy_export?: {
+    period: string;
+    latest_export_at: string | null;
+    latest_export_id: string | null;
+    latest_manifest_route: string | null;
+    latest_report_route: string | null;
+    latest_bundle_route: string | null;
+    latest_asset_count: number;
+    history_count: number;
+    stale: boolean;
+  } | null;
+  production_guard?: {
+    market_phase: string;
+    market_phase_label: string;
+    hard_risk_gate: boolean;
+    blocked_additions: boolean;
+    auto_reduce_positions: boolean;
+    auto_exit_losers: boolean;
+    current_drawdown_pct: number;
+    max_drawdown_pct: number;
+    drawdown_days: number;
+    walk_forward_risk: string;
+    walk_forward_efficiency: number | null;
+    walk_forward_degradation: number | null;
+    unstable_strategies: string[];
+    summary: string;
+    actions: string[];
+  } | null;
 }): OpsSummary {
   return {
     service: payload.service,
@@ -1523,12 +2127,170 @@ function normalizeOpsSummary(payload: {
       pushDevices: payload.data_status.push_devices,
     },
     routes: payload.routes.map(normalizeOpsRouteStat),
+    worldState: payload.world_state ? normalizeWorldStateSnapshot(payload.world_state) : null,
+    worldStateExport: payload.world_state_export
+      ? {
+          period: payload.world_state_export.period,
+          latestExportAt: payload.world_state_export.latest_export_at,
+          latestExportId: payload.world_state_export.latest_export_id,
+          latestManifestRoute: payload.world_state_export.latest_manifest_route,
+          latestReportRoute: payload.world_state_export.latest_report_route,
+          latestBundleRoute: payload.world_state_export.latest_bundle_route,
+          latestAssetCount: payload.world_state_export.latest_asset_count,
+          historyCount: payload.world_state_export.history_count,
+          stale: payload.world_state_export.stale,
+        }
+      : null,
+    executionPolicyExport: payload.execution_policy_export
+      ? {
+          period: payload.execution_policy_export.period,
+          latestExportAt: payload.execution_policy_export.latest_export_at,
+          latestExportId: payload.execution_policy_export.latest_export_id,
+          latestManifestRoute: payload.execution_policy_export.latest_manifest_route,
+          latestReportRoute: payload.execution_policy_export.latest_report_route,
+          latestBundleRoute: payload.execution_policy_export.latest_bundle_route,
+          latestAssetCount: payload.execution_policy_export.latest_asset_count,
+          historyCount: payload.execution_policy_export.history_count,
+          stale: payload.execution_policy_export.stale,
+        }
+      : null,
+    productionGuard: payload.production_guard ? normalizeProductionGuardSnapshot(payload.production_guard) : null,
     recommendations: (payload.recommendations ?? []).map((item) => ({
       level: item.level,
       title: item.title,
       message: item.message,
     })),
   };
+}
+
+export async function getWorldState(token?: string): Promise<WorldStateSnapshot> {
+  return normalizeWorldStateSnapshot(
+    await request<{
+      regime: string;
+      regime_score: number;
+      market_phase: string;
+      market_phase_label: string;
+      valuation_regime: string;
+      capital_style: string;
+      strategic_direction: string | null;
+      technology_focus: string | null;
+      geopolitics_bias: string;
+      supply_chain_mode: string;
+      phase_confidence: number;
+      style_bias: string;
+      horizon_hint: string;
+      limit_up_mode: string;
+      limit_up_allowed: boolean;
+      should_trade: boolean;
+      summary: string;
+      structural_summary: string | null;
+      dominant_component: string | null;
+      components: Array<{
+        key: string;
+        label: string;
+        score: number;
+        bias: string;
+        summary: string;
+        drivers: string[];
+      }>;
+    }>(appPath(token, '/world-state'), { token })
+  );
+}
+
+export async function getOperatingProfile(token?: string): Promise<OperatingProfile> {
+  return normalizeOperatingProfile(
+    await request<{
+      company_name: string;
+      primary_industries?: string[];
+      operating_mode: string;
+      order_visibility_months: number;
+      capacity_utilization_pct: number;
+      inventory_days: number;
+      supplier_concentration_pct: number;
+      customer_concentration_pct: number;
+      overseas_revenue_pct: number;
+      sensitive_region_exposure_pct: number;
+      cash_buffer_months: number;
+      capex_flexibility: string;
+      inventory_strategy: string;
+      key_inputs?: string[];
+      key_routes?: string[];
+      strategic_projects?: string[];
+      summary?: string | null;
+      updated_at?: string | null;
+    }>(appPath(token, '/operating-profile'), { token })
+  );
+}
+
+export async function updateOperatingProfile(
+  payload: OperatingProfileUpdatePayload,
+  token?: string
+): Promise<OperatingProfile> {
+  return normalizeOperatingProfile(
+    await request<{
+      company_name: string;
+      primary_industries?: string[];
+      operating_mode: string;
+      order_visibility_months: number;
+      capacity_utilization_pct: number;
+      inventory_days: number;
+      supplier_concentration_pct: number;
+      customer_concentration_pct: number;
+      overseas_revenue_pct: number;
+      sensitive_region_exposure_pct: number;
+      cash_buffer_months: number;
+      capex_flexibility: string;
+      inventory_strategy: string;
+      key_inputs?: string[];
+      key_routes?: string[];
+      strategic_projects?: string[];
+      summary?: string | null;
+      updated_at?: string | null;
+    }>(appPath(token, '/operating-profile'), {
+      token,
+      method: 'POST',
+      body: {
+        company_name: payload.companyName,
+        primary_industries: payload.primaryIndustries,
+        operating_mode: payload.operatingMode,
+        order_visibility_months: payload.orderVisibilityMonths,
+        capacity_utilization_pct: payload.capacityUtilizationPct,
+        inventory_days: payload.inventoryDays,
+        supplier_concentration_pct: payload.supplierConcentrationPct,
+        customer_concentration_pct: payload.customerConcentrationPct,
+        overseas_revenue_pct: payload.overseasRevenuePct,
+        sensitive_region_exposure_pct: payload.sensitiveRegionExposurePct,
+        cash_buffer_months: payload.cashBufferMonths,
+        capex_flexibility: payload.capexFlexibility,
+        inventory_strategy: payload.inventoryStrategy,
+        key_inputs: payload.keyInputs,
+        key_routes: payload.keyRoutes,
+        strategic_projects: payload.strategicProjects,
+      },
+    })
+  );
+}
+
+export async function getProductionGuard(token?: string): Promise<ProductionGuardSnapshot> {
+  return normalizeProductionGuardSnapshot(
+    await request<{
+      market_phase: string;
+      market_phase_label: string;
+      hard_risk_gate: boolean;
+      blocked_additions: boolean;
+      auto_reduce_positions: boolean;
+      auto_exit_losers: boolean;
+      current_drawdown_pct: number;
+      max_drawdown_pct: number;
+      drawdown_days: number;
+      walk_forward_risk: string;
+      walk_forward_efficiency: number | null;
+      walk_forward_degradation: number | null;
+      unstable_strategies: string[];
+      summary: string;
+      actions: string[];
+    }>(appPath(token, '/production-guard'), { token })
+  );
 }
 
 function normalizeKlineBar(payload: {
@@ -3106,11 +3868,46 @@ export async function decideFeedback(
   );
 }
 
+export async function getHiddenAccumulationOpportunities(
+  token?: string,
+  limit = 5
+): Promise<HiddenAccumulationOpportunity[]> {
+  return (
+    await request<
+      Array<{
+        id: string;
+        code: string;
+        name: string;
+        market_phase: string;
+        market_phase_label: string;
+        float_mv_yi: number;
+        streak_days: number;
+        consolidation_width_pct: number;
+        streak_gain_pct: number;
+        setup_label: string;
+        tradability_label: string;
+        accumulation_score: number;
+        holding_window: string;
+        action: string;
+        thesis: string;
+        reasons?: string[];
+        recent_closes?: number[];
+        tail_pcts?: number[];
+      }>
+    >(appPath(token, `/hidden-accumulation-opportunities?limit=${limit}`), {
+      token,
+    })
+  ).map(normalizeHiddenAccumulationOpportunity);
+}
+
 export async function getHomeSnapshot(token?: string): Promise<HomeSnapshot> {
-  const [system, learning, dailyAdvance, positioningPlan, positions, strategies, signals, compositePicks, compositeCompare, policyWatch, industryCapital, themeStages, strongMoves, alerts, messages, actionBoard] = await Promise.all([
+  const [system, learning, dailyAdvance, worldState, hiddenAccumulationOpportunities, productionGuard, positioningPlan, positions, strategies, signals, compositePicks, compositeCompare, policyWatch, industryCapital, themeStages, strongMoves, alerts, messages, actionBoard] = await Promise.all([
     getSystemStatus(token),
     getLearning(token),
     getLearningAdvanceStatus(token),
+    getWorldState(token),
+    getHiddenAccumulationOpportunities(token, 3),
+    getProductionGuard(token),
     getPositioningPlan(token),
     getPositions(token),
     getStrategies(token),
@@ -3130,6 +3927,9 @@ export async function getHomeSnapshot(token?: string): Promise<HomeSnapshot> {
     system,
     learning,
     dailyAdvance,
+    worldState,
+    hiddenAccumulationOpportunities,
+    productionGuard,
     positioningPlan,
     positions,
     strategies: strategies.sort((a, b) => b.signalCount - a.signalCount),

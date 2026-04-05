@@ -6,6 +6,7 @@ signal_tracker.py 测试
 import json
 import os
 import sys
+from datetime import date, timedelta
 
 import pytest
 
@@ -67,6 +68,10 @@ def _make_signal(date_str, strategy, code, score=0.7, verify=None, regime="bull"
         "status": "pending" if not verify else ("complete" if len(verify) == 3 else "partial"),
     }
     return sig
+
+
+def _recent_date(days_ago: int = 0) -> str:
+    return (date.today() - timedelta(days=days_ago)).isoformat()
 
 
 # ================================================================
@@ -314,17 +319,17 @@ class TestStats:
         """填充测试数据"""
         from json_store import safe_save
         signals = [
-            _make_signal("2026-03-01", "放量突破选股", "000001", 0.8, regime="bull",
+            _make_signal(_recent_date(2), "放量突破选股", "000001", 0.8, regime="bull",
                          verify={"t1": {"date": "d", "close": 10.5, "return_pct": 5.0, "result": "win"},
                                  "t3": {"date": "d", "close": 11.0, "return_pct": 10.0, "result": "win"},
                                  "t5": {"date": "d", "close": 10.8, "return_pct": 8.0, "result": "win"}}),
-            _make_signal("2026-03-01", "放量突破选股", "600036", 0.6, regime="bull",
+            _make_signal(_recent_date(2), "放量突破选股", "600036", 0.6, regime="bull",
                          verify={"t1": {"date": "d", "close": 9.5, "return_pct": -5.0, "result": "loss"},
                                  "t3": {"date": "d", "close": 9.0, "return_pct": -10.0, "result": "loss"},
                                  "t5": {"date": "d", "close": 9.8, "return_pct": -2.0, "result": "loss"}}),
-            _make_signal("2026-03-01", "集合竞价选股", "000002", 0.75, regime="bear",
+            _make_signal(_recent_date(2), "集合竞价选股", "000002", 0.75, regime="bear",
                          verify={"t1": {"date": "d", "close": 10.2, "return_pct": 2.0, "result": "win"}}),
-            _make_signal("2026-03-02", "集合竞价选股", "000003", 0.45, regime="bear",
+            _make_signal(_recent_date(1), "集合竞价选股", "000003", 0.45, regime="bear",
                          verify={"t1": {"date": "d", "close": 9.8, "return_pct": -2.0, "result": "loss"}}),
         ]
         safe_save(db_path, signals)
@@ -389,7 +394,7 @@ class TestFactorEffectiveness:
                 verify = {"t1": {"date": "d", "close": 9, "return_pct": -10, "result": "loss"}}
                 fs = {"s_momentum": 0.3, "s_volume": 0.5}
 
-            sig = _make_signal(f"2026-03-{i+1:02d}", "X", code, verify=verify)
+            sig = _make_signal(_recent_date(min(12 - i, 29)), "X", code, verify=verify)
             sig["factor_scores"] = fs
             signals.append(sig)
 
@@ -405,7 +410,7 @@ class TestFactorEffectiveness:
         """不足 10 条 → 返回空"""
         from json_store import safe_save
         import signal_tracker
-        safe_save(db_path, [_make_signal("2026-03-01", "X", "000001",
+        safe_save(db_path, [_make_signal(_recent_date(1), "X", "000001",
                                         verify={"t1": {"date": "d", "close": 11, "return_pct": 10, "result": "win"}})])
         factors = signal_tracker.get_factor_effectiveness(days=30)
         assert factors == {}
@@ -421,11 +426,11 @@ class TestMatrix:
         import signal_tracker
 
         signals = [
-            _make_signal("2026-03-01", "A策略", "000001", regime="bull",
+            _make_signal(_recent_date(2), "A策略", "000001", regime="bull",
                          verify={"t1": {"date": "d", "close": 11, "return_pct": 10, "result": "win"}}),
-            _make_signal("2026-03-01", "A策略", "000002", regime="bull",
+            _make_signal(_recent_date(2), "A策略", "000002", regime="bull",
                          verify={"t1": {"date": "d", "close": 9, "return_pct": -10, "result": "loss"}}),
-            _make_signal("2026-03-01", "A策略", "000003", regime="bear",
+            _make_signal(_recent_date(2), "A策略", "000003", regime="bear",
                          verify={"t1": {"date": "d", "close": 11, "return_pct": 10, "result": "win"}}),
         ]
         safe_save(db_path, signals)
@@ -450,9 +455,9 @@ class TestReport:
         import signal_tracker
 
         signals = [
-            _make_signal("2026-03-01", "放量突破选股", "000001", 0.8, regime="bull",
+            _make_signal(_recent_date(2), "放量突破选股", "000001", 0.8, regime="bull",
                          verify={"t1": {"date": "d", "close": 10.5, "return_pct": 5.0, "result": "win"}}),
-            _make_signal("2026-03-01", "集合竞价选股", "000002", 0.6, regime="bear",
+            _make_signal(_recent_date(2), "集合竞价选股", "000002", 0.6, regime="bear",
                          verify={"t1": {"date": "d", "close": 9.5, "return_pct": -5.0, "result": "loss"}}),
         ]
         safe_save(db_path, signals)
@@ -484,7 +489,7 @@ class TestFeedback:
                         "return_pct": 2.0 if i % 2 == 0 else -2.0,
                         "result": "win" if i % 2 == 0 else "loss"},
             }
-            sig = _make_signal(f"2026-03-{i+1:02d}", "放量突破选股", code,
+            sig = _make_signal(_recent_date(min(15 - i, 29)), "放量突破选股", code,
                                regime="bull" if i < 8 else "bear", verify=verify)
             signals.append(sig)
         safe_save(db_path, signals)

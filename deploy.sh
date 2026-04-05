@@ -189,7 +189,27 @@ Type=simple
 User=$USER
 WorkingDirectory=$APP_DIR
 Environment="PATH=$APP_DIR/venv/bin"
+Environment="WORLD_DATA_GATEWAY_BASE_URL=http://127.0.0.1:18080"
 ExecStart=$APP_DIR/venv/bin/python api_server.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# 世界硬源网关服务
+sudo tee /etc/systemd/system/alpha-ai-world-gateway.service > /dev/null <<EOF
+[Unit]
+Description=Alpha AI World Data Gateway
+After=network.target
+
+[Service]
+Type=simple
+User=$USER
+WorkingDirectory=$APP_DIR
+Environment="PATH=$APP_DIR/venv/bin"
+ExecStart=$APP_DIR/venv/bin/python world_data_gateway.py
 Restart=always
 RestartSec=10
 
@@ -200,6 +220,8 @@ EOF
 # 启动服务
 sudo systemctl daemon-reload
 sudo systemctl enable alpha-ai-backend
+sudo systemctl enable alpha-ai-world-gateway
+sudo systemctl start alpha-ai-world-gateway
 sudo systemctl start alpha-ai-backend
 
 # ================================================================

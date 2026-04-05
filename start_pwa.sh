@@ -19,9 +19,12 @@ fi
 # 进入项目目录
 cd "$(dirname "$0")"
 
+API_HOST="${ALPHA_API_HOST:-127.0.0.1}"
+API_PORT="${ALPHA_API_PORT:-18000}"
+
 # 启动后端
-echo "📡 启动后端 API 服务 (端口 8000)..."
-python3 api_server.py &
+echo "📡 启动后端 API 服务 (端口 ${API_PORT})..."
+ALPHA_API_HOST="${API_HOST}" ALPHA_API_PORT="${API_PORT}" python3 api_server.py &
 BACKEND_PID=$!
 echo "后端 PID: $BACKEND_PID"
 
@@ -46,8 +49,8 @@ echo "前端 PID: $FRONTEND_PID"
 echo ""
 echo "✅ 启动完成！"
 echo ""
-echo "📡 后端 API: http://localhost:8000"
-echo "📚 API 文档: http://localhost:8000/docs"
+echo "📡 后端 API: http://${API_HOST}:${API_PORT}"
+echo "📚 API 文档: http://${API_HOST}:${API_PORT}/docs"
 echo "📱 前端应用: http://localhost:3000"
 echo ""
 echo "按 Ctrl+C 停止所有服务"

@@ -3,8 +3,8 @@ Alpha AI 交易系统 - FastAPI 后端服务
 =====================================
 提供移动端PWA所需的RESTful API + WebSocket实时推送
 
-端口: 8000
-文档: http://localhost:8000/docs
+端口: 18000
+文档: http://localhost:18000/docs
 
 API模块:
   /api/system   - 系统状态
@@ -18,6 +18,7 @@ API模块:
 from __future__ import annotations
 
 import base64
+import csv
 import logging
 import hashlib
 import hmac
@@ -28,6 +29,7 @@ import time
 import urllib.error
 import urllib.request
 import uuid
+import zipfile
 from collections import deque
 from datetime import date, datetime, timedelta
 from threading import Lock, Thread
@@ -36,7 +38,7 @@ import jwt
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
@@ -118,9 +120,19 @@ _POLICY_DIRECTION_CATALOG = os.path.join(_DATA_DIR, "policy_direction_catalog.js
 _POLICY_OFFICIAL_WATCH = os.path.join(_DATA_DIR, "policy_official_watch.json")
 _POLICY_OFFICIAL_CARDS = os.path.join(_DATA_DIR, "policy_official_cards.json")
 _POLICY_OFFICIAL_INGEST = os.path.join(_DATA_DIR, "policy_official_ingest.json")
+_NATIVE_APP_CONFIG = os.path.join(_DIR, "native_app", "app.json")
+_EXPORTS_DIR = os.path.join(_DATA_DIR, "exports")
+_EXECUTION_POLICY_EXPORT_DIR = os.path.join(_EXPORTS_DIR, "execution_policy")
+_WORLD_STATE_EXPORT_DIR = os.path.join(_EXPORTS_DIR, "world_state")
 _POLICY_EXECUTION_TIMELINE = os.path.join(_DATA_DIR, "policy_execution_timeline.json")
 _INDUSTRY_CAPITAL_COMPANY_MAP = os.path.join(_DATA_DIR, "industry_capital_company_map.json")
 _INDUSTRY_CAPITAL_RESEARCH_LOG = os.path.join(_DATA_DIR, "industry_capital_research_log.json")
+_WORLD_OFFICIAL_FULLTEXT = os.path.join(_DATA_DIR, "world_official_fulltext.json")
+_WORLD_SHIPPING_AIS = os.path.join(_DATA_DIR, "world_shipping_ais.json")
+_WORLD_FREIGHT_RATES = os.path.join(_DATA_DIR, "world_freight_rates.json")
+_WORLD_COMMODITY_TERMINAL = os.path.join(_DATA_DIR, "world_commodity_terminal.json")
+_WORLD_MACRO_RATES_FX = os.path.join(_DATA_DIR, "world_macro_rates_fx.json")
+_OPERATING_PROFILE = os.path.join(_DATA_DIR, "operating_profile.json")
 _PUSH_STATE = os.path.join(_DATA_DIR, "push_state.json")
 
 _APP_AUTH_USERNAME = os.environ.get("APP_AUTH_USERNAME", "admin")
@@ -462,6 +474,75 @@ def _default_signal_risk_reward(price: float, stop_loss: float, target_price: fl
     risk = max(price - stop_loss, 0.01)
     reward = max(target_price - price, 0)
     return round(reward / risk, 2) if reward > 0 else 0.0
+
+
+def _tradeability_thresholds(strategy_family: str | None, strategy_name: str | None) -> tuple[float, float, float]:
+    label = f"{strategy_family or ''} {strategy_name or ''}".lower()
+    min_upside_pct = 0.04
+    min_price_band_pct = 0.065
+    min_risk_reward = 1.8
+
+    if any(keyword in label for keyword in ["trend", "趋势", "主线", "rotation", "轮动", "shrink", "缩量"]):
+        min_upside_pct = 0.05
+        min_price_band_pct = 0.08
+    elif any(keyword in label for keyword in ["dip", "低吸", "reversion", "回调"]):
+        min_upside_pct = 0.045
+        min_price_band_pct = 0.075
+    elif any(keyword in label for keyword in ["overnight", "隔夜", "auction", "竞价", "tail", "尾盘", "breakout", "突破"]):
+        min_upside_pct = 0.04
+        min_price_band_pct = 0.065
+
+    return (min_upside_pct, min_price_band_pct, min_risk_reward)
+
+
+def _trade_plan_metrics(
+    price: float,
+    buy_price: float,
+    stop_loss: float,
+    target_price: float,
+) -> dict[str, float]:
+    entry = buy_price if buy_price > 0 else price
+    risk_value = max(entry - stop_loss, 0.0)
+    reward_value = max(target_price - entry, 0.0)
+    upside_pct = reward_value / entry if entry > 0 else 0.0
+    downside_pct = risk_value / entry if entry > 0 else 0.0
+    price_band_pct = (target_price - stop_loss) / entry if entry > 0 else 0.0
+    return {
+        "entry": round(entry, 2),
+        "upside_pct": round(upside_pct, 4),
+        "downside_pct": round(downside_pct, 4),
+        "price_band_pct": round(price_band_pct, 4),
+        "reward_value": round(reward_value, 4),
+        "risk_value": round(risk_value, 4),
+    }
+
+
+def _is_trade_plan_actionable(
+    *,
+    price: float,
+    buy_price: float,
+    stop_loss: float,
+    target_price: float,
+    risk_reward: float,
+    strategy_family: str | None,
+    strategy_name: str | None,
+) -> bool:
+    metrics = _trade_plan_metrics(price, buy_price, stop_loss, target_price)
+    min_upside_pct, min_price_band_pct, min_risk_reward = _tradeability_thresholds(
+        strategy_family,
+        strategy_name,
+    )
+    if metrics["entry"] <= 0:
+        return False
+    if stop_loss <= 0 or target_price <= metrics["entry"] or stop_loss >= metrics["entry"]:
+        return False
+    if metrics["upside_pct"] < min_upside_pct:
+        return False
+    if metrics["price_band_pct"] < min_price_band_pct:
+        return False
+    if risk_reward < min_risk_reward:
+        return False
+    return True
 
 
 def _build_signal_record_from_pick(trade_date: str, strategy: str, regime: dict, pick: dict) -> Optional[dict]:
@@ -1956,6 +2037,12 @@ def _industry_capital_research_item_model(raw_item: dict) -> IndustryCapitalRese
 
 def _load_industry_capital_research_log() -> dict:
     def builder() -> dict:
+        try:
+            from world_state_feeds import ensure_world_state_feeds_fresh
+
+            ensure_world_state_feeds_fresh()
+        except Exception as exc:
+            logger.debug("ensure_world_state_feeds_fresh research failed: %s", exc)
         raw_box = safe_load(_INDUSTRY_CAPITAL_RESEARCH_LOG, default={})
         if not isinstance(raw_box, dict):
             raw_box = {}
@@ -2119,10 +2206,25 @@ def _research_log_source_weight(source: str) -> float:
     }.get(normalized, 0.8)
 
 
-def _industry_research_signal_label(score: float, has_items: bool) -> str:
+def _industry_research_signal_label(
+    score: float,
+    has_items: bool,
+    *,
+    verified_count: int = 0,
+    blocked_count: int = 0,
+    latest_status: str = "",
+) -> str:
     if not has_items:
         return "暂无回写"
+    normalized_latest = str(latest_status or "").strip()
     if score >= 62:
+        return "验证增强"
+    if (
+        verified_count > 0
+        and blocked_count == 0
+        and normalized_latest == "已验证"
+        and score >= 56
+    ):
         return "验证增强"
     if score <= 42:
         return "出现阻力"
@@ -2145,6 +2247,9 @@ def _build_industry_capital_research_signal(direction_id: str) -> dict[str, obje
     pending_count = 0
     raw_score = 50.0
     company_scores: dict[str, float] = {}
+    company_verified_counts: dict[str, int] = {}
+    company_blocked_counts: dict[str, int] = {}
+    company_latest_status: dict[str, str] = {}
     company_latest_notes: dict[str, str] = {}
 
     for item in items:
@@ -2163,6 +2268,11 @@ def _build_industry_capital_research_signal(direction_id: str) -> dict[str, obje
 
         if item.company_code:
             company_scores[item.company_code] = company_scores.get(item.company_code, 50.0) + signal_value * 14.0
+            if item.status == "已验证":
+                company_verified_counts[item.company_code] = company_verified_counts.get(item.company_code, 0) + 1
+            elif item.status == "有阻力":
+                company_blocked_counts[item.company_code] = company_blocked_counts.get(item.company_code, 0) + 1
+            company_latest_status.setdefault(item.company_code, item.status)
             company_latest_notes.setdefault(
                 item.company_code,
                 f"{item.source} / {item.status}：{_truncate_hint(item.note, limit=34)}",
@@ -2176,8 +2286,14 @@ def _build_industry_capital_research_signal(direction_id: str) -> dict[str, obje
         ),
         1,
     )
-    label = _industry_research_signal_label(direction_score, has_items=True)
     latest_item = items[0]
+    label = _industry_research_signal_label(
+        direction_score,
+        has_items=True,
+        verified_count=verified_count,
+        blocked_count=blocked_count,
+        latest_status=latest_item.status,
+    )
     latest_summary = _truncate_hint(latest_item.title, limit=24)
 
     if label == "验证增强":
@@ -2204,7 +2320,13 @@ def _build_industry_capital_research_signal(direction_id: str) -> dict[str, obje
         company_score = round(_clamp(raw_company_score, 28.0, 90.0), 1)
         companies[code] = {
             "score": company_score,
-            "label": _industry_research_signal_label(company_score, has_items=True),
+            "label": _industry_research_signal_label(
+                company_score,
+                has_items=True,
+                verified_count=company_verified_counts.get(code, 0),
+                blocked_count=company_blocked_counts.get(code, 0),
+                latest_status=company_latest_status.get(code, ""),
+            ),
             "note": company_latest_notes.get(code),
         }
 
@@ -2973,6 +3095,12 @@ class CompositePick(BaseModel):
     thesis: str
     action: str
     reasons: list[str]
+    governance_state: str = "observation"
+    discipline_label: str = "继续观察"
+    holding_window: Optional[str] = None
+    add_rule: Optional[str] = None
+    trim_rule: Optional[str] = None
+    exit_rule: Optional[str] = None
 
 
 def _clamp(value: float, low: float, high: float) -> float:
@@ -2993,6 +3121,11 @@ class PositioningPlan(BaseModel):
     mode: str
     regime: str
     regime_score: float
+    market_phase: Optional[str] = None
+    market_phase_label: Optional[str] = None
+    style_bias: Optional[str] = None
+    horizon_hint: Optional[str] = None
+    aggressiveness: Optional[str] = None
     event_bias: str = "中性"
     event_score: float = 50.0
     event_summary: Optional[str] = None
@@ -3000,6 +3133,10 @@ class PositioningPlan(BaseModel):
     current_exposure_pct: float
     target_exposure_pct: float
     deployable_exposure_pct: float
+    hard_risk_gate: bool = False
+    risk_budget_pct: Optional[float] = None
+    cash_buffer_pct: Optional[float] = None
+    risk_guard_summary: Optional[str] = None
     cash_balance: float
     total_assets: float
     deployable_cash: float
@@ -3014,6 +3151,10 @@ class PositioningPlan(BaseModel):
     reasons: list[str]
     actions: list[str]
     deployments: list[PositioningDeployment]
+    allowed_styles: list[str] = Field(default_factory=list)
+    blocked_styles: list[str] = Field(default_factory=list)
+    allowed_strategies: list[str] = Field(default_factory=list)
+    blocked_strategies: list[str] = Field(default_factory=list)
 
 
 class CompositeReplayItem(BaseModel):
@@ -3230,6 +3371,463 @@ class ActionBoardItem(BaseModel):
     source: str
     source_id: str
     created_at: str
+    discipline: Optional[str] = None
+
+
+class WorldStateDriver(BaseModel):
+    name: str
+    signal_key: str
+    score: float
+    interpretation: str
+
+
+class WorldStateComponent(BaseModel):
+    key: str
+    label: str
+    score: float
+    bias: str
+    summary: str
+    drivers: list[str] = Field(default_factory=list)
+
+
+class WorldStateSourceStatus(BaseModel):
+    key: str
+    label: str
+    updated_at: Optional[str] = None
+    freshness_score: float
+    freshness_label: str
+    reliability_score: float = 50.0
+    authority_score: float = 50.0
+    timeliness_score: float = 50.0
+    signal_count: int = 0
+    summary: str
+    category: str = "runtime"
+    external: bool = False
+    required: bool = False
+    fetch_mode: str = "runtime"
+    remote_configured: bool = False
+    degraded_to_derived: bool = False
+    origin_mode: str = "runtime"
+    available: bool = True
+    stale: bool = False
+    data_quality_score: float = 50.0
+
+
+class WorldCrossAssetSignal(BaseModel):
+    key: str
+    label: str
+    level: str
+    score: float
+    bias: str
+    summary: str
+    action_type: str = "observe"
+    targets: list[str] = Field(default_factory=list)
+    source_keys: list[str] = Field(default_factory=list)
+
+
+class WorldRegionalPressure(BaseModel):
+    region: str
+    level: str
+    score: float
+    summary: str
+    affected_countries: list[str] = Field(default_factory=list)
+    affected_routes: list[str] = Field(default_factory=list)
+    exposed_industries: list[str] = Field(default_factory=list)
+
+
+class WorldStateDirectionInsight(BaseModel):
+    direction_id: str
+    direction: str
+    focus_sector: Optional[str] = None
+    policy_bucket: Optional[str] = None
+    total_score: float
+    event_score: float
+    official_score: float
+    chain_control_score: float
+    research_score: float
+    timeline_score: float
+    hard_source_score: float = 50.0
+    technology_breakthrough_score: float = 50.0
+    technology_focus: Optional[str] = None
+    summary: str
+
+
+class WorldEventCascade(BaseModel):
+    theme_key: str = "theme:unknown"
+    event_id: str
+    title: str
+    trigger_type: str
+    severity: str
+    peak_severity: str = "info"
+    trade_bias: str
+    immediate_action: str
+    continuity_focus: str
+    transport_focus: str
+    follow_up_signal: str = "stable"
+    confidence_score: float = 50.0
+    restriction_scope: str = "normal"
+    estimated_flow_impact_pct: float = 0.0
+    affected_countries: list[str] = Field(default_factory=list)
+    affected_routes: list[str] = Field(default_factory=list)
+    direct_beneficiaries: list[str] = Field(default_factory=list)
+    direct_losers: list[str] = Field(default_factory=list)
+    exposed_industries: list[str] = Field(default_factory=list)
+    second_order_impacts: list[str] = Field(default_factory=list)
+    commodity_links: list[str] = Field(default_factory=list)
+    evidence_count: int = 0
+    source_timestamp: Optional[str] = None
+
+
+class WorldRefreshPlan(BaseModel):
+    mode: str
+    mode_label: str
+    active_window: str
+    active_window_label: str
+    escalation_active: bool = False
+    top_trigger: Optional[str] = None
+    trigger_type: Optional[str] = None
+    news_interval_minutes: int
+    feeds_interval_minutes: int
+    hard_source_interval_minutes: int = 30
+    policy_interval_minutes: int
+    overnight_watch: bool = False
+    summary: str
+    next_focus: list[str] = Field(default_factory=list)
+    next_news_due_at: Optional[str] = None
+    next_feeds_due_at: Optional[str] = None
+    next_hard_sources_due_at: Optional[str] = None
+    next_policy_due_at: Optional[str] = None
+    overdue_sources: list[str] = Field(default_factory=list)
+    generated_at: Optional[str] = None
+
+
+class WorldStateAction(BaseModel):
+    key: str
+    level: str
+    action_type: str
+    priority: int
+    title: str
+    summary: str
+    horizon: str
+    source_keys: list[str] = Field(default_factory=list)
+    targets: list[str] = Field(default_factory=list)
+
+
+class WorldOperatingAction(BaseModel):
+    key: str
+    level: str
+    action_type: str
+    priority: int
+    title: str
+    summary: str
+    horizon: str
+    targets: list[str] = Field(default_factory=list)
+
+
+class WorldOperatingProfile(BaseModel):
+    company_name: str = "实体经营画像"
+    primary_industries: list[str] = Field(default_factory=list)
+    operating_mode: str = "均衡经营"
+    order_visibility_months: float = 0.0
+    capacity_utilization_pct: float = 0.0
+    inventory_days: int = 0
+    supplier_concentration_pct: float = 0.0
+    customer_concentration_pct: float = 0.0
+    overseas_revenue_pct: float = 0.0
+    sensitive_region_exposure_pct: float = 0.0
+    cash_buffer_months: float = 0.0
+    capex_flexibility: str = "中性"
+    inventory_strategy: str = "按需补库"
+    key_inputs: list[str] = Field(default_factory=list)
+    key_routes: list[str] = Field(default_factory=list)
+    strategic_projects: list[str] = Field(default_factory=list)
+    completeness_score: float = 0.0
+    completeness_label: str = "待补齐"
+    profile_status: str = "warning"
+    freshness_label: str = "未更新"
+    stale: bool = False
+    missing_fields: list[str] = Field(default_factory=list)
+    recommended_actions: list[str] = Field(default_factory=list)
+    summary: Optional[str] = None
+    updated_at: Optional[str] = None
+
+
+class WorldOperatingProfileUpdateRequest(BaseModel):
+    company_name: Optional[str] = None
+    primary_industries: Optional[list[str]] = None
+    operating_mode: Optional[str] = None
+    order_visibility_months: Optional[float] = None
+    capacity_utilization_pct: Optional[float] = None
+    inventory_days: Optional[int] = None
+    supplier_concentration_pct: Optional[float] = None
+    customer_concentration_pct: Optional[float] = None
+    overseas_revenue_pct: Optional[float] = None
+    sensitive_region_exposure_pct: Optional[float] = None
+    cash_buffer_months: Optional[float] = None
+    capex_flexibility: Optional[str] = None
+    inventory_strategy: Optional[str] = None
+    key_inputs: Optional[list[str]] = None
+    key_routes: Optional[list[str]] = None
+    strategic_projects: Optional[list[str]] = None
+    summary: Optional[str] = None
+
+
+class WorldStateCheck(BaseModel):
+    key: str
+    level: str
+    title: str
+    message: str
+    suggestion: Optional[str] = None
+    source_keys: list[str] = Field(default_factory=list)
+
+
+class WorldStateSnapshot(BaseModel):
+    regime: str
+    regime_score: float
+    market_phase: str
+    market_phase_label: str
+    valuation_regime: str = "中性估值"
+    capital_style: str = "均衡轮动"
+    strategic_direction: Optional[str] = None
+    technology_focus: Optional[str] = None
+    geopolitics_bias: str = "中性"
+    supply_chain_mode: str = "均衡供需"
+    technology_breakthrough_score: float = 50.0
+    technology_breakthrough_summary: Optional[str] = None
+    phase_confidence: float = 50.0
+    style_bias: str
+    horizon_hint: str
+    limit_up_mode: str
+    limit_up_allowed: bool
+    should_trade: bool
+    summary: str
+    structural_summary: Optional[str] = None
+    drivers: list[WorldStateDriver] = Field(default_factory=list)
+    dominant_component: Optional[str] = None
+    components: list[WorldStateComponent] = Field(default_factory=list)
+    source_statuses: list[WorldStateSourceStatus] = Field(default_factory=list)
+    cross_asset_signals: list[WorldCrossAssetSignal] = Field(default_factory=list)
+    regional_pressures: list[WorldRegionalPressure] = Field(default_factory=list)
+    top_directions: list[WorldStateDirectionInsight] = Field(default_factory=list)
+    event_cascades: list[WorldEventCascade] = Field(default_factory=list)
+    refresh_plan: Optional[WorldRefreshPlan] = None
+    actions: list[WorldStateAction] = Field(default_factory=list)
+    operating_actions: list[WorldOperatingAction] = Field(default_factory=list)
+    operating_profile: Optional[WorldOperatingProfile] = None
+    checks: list[WorldStateCheck] = Field(default_factory=list)
+
+
+class StrategyGovernanceItem(BaseModel):
+    strategy_id: str
+    strategy_name: str
+    family: str
+    state: str
+    weight_pct: float
+    top_down_fit: float
+    recent_fit: float
+    sample_count: int
+    t1_win_rate: Optional[float] = None
+    t3_win_rate: Optional[float] = None
+    t5_win_rate: Optional[float] = None
+    avg_t1_return_pct: Optional[float] = None
+    avg_t3_return_pct: Optional[float] = None
+    avg_t5_return_pct: Optional[float] = None
+    holding_window_cap: str
+    discipline_label: str
+    reason: str
+
+
+class StrategyGovernanceSnapshot(BaseModel):
+    regime: str
+    market_phase: str
+    market_phase_label: str
+    summary: str
+    production_count: int
+    observation_count: int
+    disabled_count: int
+    items: list[StrategyGovernanceItem] = Field(default_factory=list)
+
+
+class ExecutionPolicySnapshot(BaseModel):
+    regime: str
+    market_phase: str
+    market_phase_label: str
+    style_bias: str
+    horizon_hint: str
+    aggressiveness: str
+    risk_budget_pct: float
+    cash_buffer_pct: float
+    limit_up_mode: str
+    limit_up_allowed: bool
+    allowed_styles: list[str] = Field(default_factory=list)
+    blocked_styles: list[str] = Field(default_factory=list)
+    allowed_strategies: list[str] = Field(default_factory=list)
+    observation_strategies: list[str] = Field(default_factory=list)
+    blocked_strategies: list[str] = Field(default_factory=list)
+    preferred_holding_windows: list[str] = Field(default_factory=list)
+    summary: str
+    key_actions: list[str] = Field(default_factory=list)
+
+
+class ExecutionPolicyExportAsset(BaseModel):
+    kind: str
+    filename: str
+    route: str
+    content_type: str
+    size_bytes: int
+
+
+class ExecutionPolicyExportManifest(BaseModel):
+    export_id: str
+    period: str
+    generated_at: str
+    market_phase: str
+    market_phase_label: str
+    aggressiveness: str
+    risk_budget_pct: float
+    cash_buffer_pct: float
+    allowed_styles: list[str] = Field(default_factory=list)
+    blocked_styles: list[str] = Field(default_factory=list)
+    allowed_strategies: list[str] = Field(default_factory=list)
+    observation_strategies: list[str] = Field(default_factory=list)
+    blocked_strategies: list[str] = Field(default_factory=list)
+    preferred_holding_windows: list[str] = Field(default_factory=list)
+    summary: str
+    key_actions: list[str] = Field(default_factory=list)
+    top_candidates: list[dict] = Field(default_factory=list)
+    limit_up_watchlist: list[dict] = Field(default_factory=list)
+    assets: list[ExecutionPolicyExportAsset] = Field(default_factory=list)
+
+
+class ExecutionPolicyExportStatus(BaseModel):
+    period: str
+    latest_export_at: Optional[str] = None
+    latest_export_id: Optional[str] = None
+    latest_manifest_route: Optional[str] = None
+    latest_report_route: Optional[str] = None
+    latest_bundle_route: Optional[str] = None
+    latest_asset_count: int = 0
+    history_count: int = 0
+    stale: bool = True
+
+
+class WorldStateExportAsset(BaseModel):
+    kind: str
+    filename: str
+    route: str
+    content_type: str
+    size_bytes: int
+
+
+class WorldStateExportManifest(BaseModel):
+    export_id: str
+    period: str
+    generated_at: str
+    market_phase: str
+    market_phase_label: str
+    dominant_component: Optional[str] = None
+    valuation_regime: str
+    capital_style: str
+    strategic_direction: Optional[str] = None
+    technology_focus: Optional[str] = None
+    geopolitics_bias: str
+    supply_chain_mode: str
+    technology_breakthrough_score: float
+    summary: str
+    structural_summary: str
+    top_action_titles: list[str] = Field(default_factory=list)
+    top_operating_action_titles: list[str] = Field(default_factory=list)
+    top_check_titles: list[str] = Field(default_factory=list)
+    assets: list[WorldStateExportAsset] = Field(default_factory=list)
+
+
+class WorldStateExportStatus(BaseModel):
+    period: str
+    latest_export_at: Optional[str] = None
+    latest_export_id: Optional[str] = None
+    latest_manifest_route: Optional[str] = None
+    latest_report_route: Optional[str] = None
+    latest_bundle_route: Optional[str] = None
+    latest_asset_count: int = 0
+    history_count: int = 0
+    stale: bool = True
+
+
+class ProductionGuardSnapshot(BaseModel):
+    market_phase: str
+    market_phase_label: str
+    hard_risk_gate: bool
+    blocked_additions: bool
+    auto_reduce_positions: bool
+    auto_exit_losers: bool
+    current_drawdown_pct: float
+    max_drawdown_pct: float
+    drawdown_days: int
+    walk_forward_risk: str
+    walk_forward_efficiency: Optional[float] = None
+    walk_forward_degradation: Optional[float] = None
+    unstable_strategies: list[str] = Field(default_factory=list)
+    summary: str
+    actions: list[str] = Field(default_factory=list)
+
+
+class ProductionGuardAction(BaseModel):
+    code: str
+    name: str
+    mode: str
+    summary: str
+    action_label: str
+    route: str
+    suggested_reduce_pct: int
+    suggested_reduce_quantity: int
+    priority_score: float
+    reasons: list[str] = Field(default_factory=list)
+
+
+class LimitUpOpportunity(BaseModel):
+    id: str
+    code: str
+    name: str
+    strategy: str
+    theme_sector: Optional[str]
+    market_phase: str
+    scenario_label: str
+    tradability_label: str
+    opportunity_score: float
+    leader_score: float
+    board_quality_score: float
+    tradability_score: float
+    board_pattern: str
+    leader_uniqueness_score: float
+    follow_through_score: float
+    failure_spread_score: float
+    risk_gate: str
+    entry_style: str
+    holding_window: str
+    trigger_summary: str
+    action: str
+    warnings: list[str] = Field(default_factory=list)
+
+
+class HiddenAccumulationOpportunity(BaseModel):
+    id: str
+    code: str
+    name: str
+    market_phase: str
+    market_phase_label: str
+    float_mv_yi: float
+    streak_days: int
+    consolidation_width_pct: float
+    streak_gain_pct: float
+    setup_label: str
+    tradability_label: str
+    accumulation_score: float
+    holding_window: str
+    action: str
+    thesis: str
+    reasons: list[str] = Field(default_factory=list)
+    recent_closes: list[float] = Field(default_factory=list)
+    tail_pcts: list[float] = Field(default_factory=list)
 
 
 class LearningProgress(BaseModel):
@@ -3491,6 +4089,10 @@ class OpsSummary(BaseModel):
     active_strategies: int
     data_status: OpsDataStatus
     routes: list[OpsRouteStat]
+    world_state: Optional[WorldStateSnapshot] = None
+    world_state_export: Optional[WorldStateExportStatus] = None
+    execution_policy_export: Optional[ExecutionPolicyExportStatus] = None
+    production_guard: Optional[ProductionGuardSnapshot] = None
     recommendations: list[OpsRecommendation] = Field(default_factory=list)
 
 
@@ -3784,6 +4386,7 @@ def _suggest_position_reduction(position: dict, guide_mode: str) -> tuple[int, i
 def _build_position_guide(raw_position: dict) -> PositionGuide:
     portfolio = _load_portfolio()
     positioning_plan = _build_positioning_plan(days=1, limit=3)
+    production_guard = _build_production_guard_snapshot()
     total_assets = _to_float(portfolio.get("total_assets")) or positioning_plan.total_assets or 0.0
     position_pct = _position_pct_of_assets(raw_position, total_assets)
     sector_bucket = _theme_bucket_name(str(raw_position.get("name", "")))
@@ -3855,8 +4458,20 @@ def _build_position_guide(raw_position: dict) -> PositionGuide:
         warnings.append(
             f"这笔仓位当前已占总资产 {position_pct:.1f}% ，高于单票上限 {positioning_plan.max_single_position_pct}%。"
         )
+    if production_guard.auto_reduce_positions:
+        warnings.append(f"生产风控：{production_guard.summary}")
+    if production_guard.auto_exit_losers and profit_loss_pct < 0:
+        warnings.append("当前风控要求优先清理失效单，浮亏仓位不适合继续拖延。")
 
-    if stop_buffer_pct is not None and stop_buffer_pct <= 0:
+    if production_guard.auto_exit_losers and profit_loss_pct < 0:
+        mode = "直接退出"
+        summary = "当前生产风控要求先清理亏损与失效仓位，不再继续等待反弹。"
+        next_action = "直接退出或快速降到试错仓，先把风险拿掉。"
+    elif production_guard.auto_reduce_positions and profit_loss_pct >= 0:
+        mode = "主动降仓"
+        summary = "当前生产风控要求主动回收风险预算，盈利仓位也以锁盈和降仓为先。"
+        next_action = "优先减一部分，把仓位压回安全区，再观察后续承接。"
+    elif stop_buffer_pct is not None and stop_buffer_pct <= 0:
         mode = "优先减仓或平仓"
         summary = "这笔仓位已经失守，先把风险砍掉，比继续找理由更重要。"
         next_action = "优先平掉或至少大幅减仓，再回头复盘为什么失效。"
@@ -3883,7 +4498,8 @@ def _build_position_guide(raw_position: dict) -> PositionGuide:
 
     suggested_reduce_pct, suggested_reduce_quantity = _suggest_position_reduction(raw_position, mode)
     can_add = (
-        event_bias != "偏空"
+        not production_guard.blocked_additions
+        and event_bias != "偏空"
         and position_pct < positioning_plan.max_single_position_pct
         and current_theme_exposure_pct <= positioning_plan.max_theme_exposure_pct
         and profit_loss_pct >= 0
@@ -3927,6 +4543,7 @@ def _build_signal_entry_guide(raw_signal: dict) -> SignalEntryGuide:
     composite_picks = _build_composite_picks(days=1, limit=12)
     composite_pick = _find_composite_pick_for_signal(signal_id, code, composite_picks)
     positioning_plan = _build_positioning_plan(days=1, limit=3)
+    production_guard = _build_production_guard_snapshot()
     portfolio = _load_portfolio()
 
     reference_price = _round_money(
@@ -3943,6 +4560,8 @@ def _build_signal_entry_guide(raw_signal: dict) -> SignalEntryGuide:
             recommended_first_position_pct,
             positioning_plan.max_single_position_pct,
         )
+    if production_guard.blocked_additions:
+        recommended_first_position_pct = 0
     recommended_first_position_pct = max(0, recommended_first_position_pct)
 
     suggested_amount = 0.0
@@ -3988,6 +4607,8 @@ def _build_signal_entry_guide(raw_signal: dict) -> SignalEntryGuide:
     )
 
     warnings: list[str] = []
+    if production_guard.blocked_additions:
+        warnings.append(f"生产风控：{production_guard.summary}")
     if event_bias == "偏空":
         warnings.append("事件总控当前偏空，新增仓位只能按轻仓纪律推进。")
     if positioning_plan.available_slots <= 0:
@@ -4013,6 +4634,10 @@ def _build_signal_entry_guide(raw_signal: dict) -> SignalEntryGuide:
         )
     if suggested_amount > 0 and suggested_quantity <= 0:
         warnings.append("按 A 股一手 100 股取整后，这笔首仓暂时不够一手。")
+    if composite_pick is not None and composite_pick.holding_window:
+        warnings.append(
+            f"当前纪律是 {composite_pick.discipline_label} / {composite_pick.holding_window}。"
+        )
 
     concentration_summary = None
     if sector_bucket:
@@ -4022,7 +4647,10 @@ def _build_signal_entry_guide(raw_signal: dict) -> SignalEntryGuide:
             f"当前主题上限是 {positioning_plan.max_theme_exposure_pct}% 。"
         )
 
-    if (
+    if production_guard.blocked_additions:
+        mode = "先观察"
+        summary = "当前生产风控已禁止新增，信号保留跟踪，不直接开新仓。"
+    elif (
         positioning_plan.deployable_cash <= 0
         or positioning_plan.available_slots <= 0
         or positioning_plan.target_exposure_pct <= 0
@@ -4042,15 +4670,20 @@ def _build_signal_entry_guide(raw_signal: dict) -> SignalEntryGuide:
         mode = "优先观察"
         summary = "这条票先留在观察区，等综合分或主线匹配更硬再出手。"
 
-    action = (
-        f"先按 {recommended_first_position_pct}% 首仓试错，"
-        f"单票上限 {positioning_plan.max_single_position_pct}% ，"
-        f"主题上限 {positioning_plan.max_theme_exposure_pct}% 。"
-    )
+    if production_guard.blocked_additions:
+        action = "当前先不新增仓位，优先处理存量持仓和风险回撤。"
+    else:
+        action = (
+            f"先按 {recommended_first_position_pct}% 首仓试错，"
+            f"单票上限 {positioning_plan.max_single_position_pct}% ，"
+            f"主题上限 {positioning_plan.max_theme_exposure_pct}% 。"
+        )
     if suggested_quantity > 0 and suggested_amount > 0:
         action += f" 按当前总资产估算，这一笔大约是 {suggested_quantity} 股 / {suggested_amount:.0f} 元。"
     elif suggested_amount > 0:
         action += " 但按 100 股一手取整后暂时不够一手，先别硬开。"
+    if composite_pick is not None and composite_pick.trim_rule:
+        action += f" 先看兑现纪律：{composite_pick.trim_rule}"
 
     return SignalEntryGuide(
         mode=mode,
@@ -4600,6 +5233,12 @@ def _load_policy_official_cards() -> dict[str, dict]:
 
 def _load_policy_official_ingest() -> dict[str, dict]:
     def builder() -> dict[str, dict]:
+        try:
+            from world_state_feeds import ensure_world_state_feeds_fresh
+
+            ensure_world_state_feeds_fresh()
+        except Exception as exc:
+            logger.debug("ensure_world_state_feeds_fresh official ingest failed: %s", exc)
         payload = safe_load(_POLICY_OFFICIAL_INGEST, default={})
         if not isinstance(payload, dict):
             return {}
@@ -4628,6 +5267,12 @@ def _load_policy_official_ingest() -> dict[str, dict]:
 
 def _load_policy_execution_timeline() -> dict[str, dict]:
     def builder() -> dict[str, dict]:
+        try:
+            from world_state_feeds import ensure_world_state_feeds_fresh
+
+            ensure_world_state_feeds_fresh()
+        except Exception as exc:
+            logger.debug("ensure_world_state_feeds_fresh timeline failed: %s", exc)
         payload = safe_load(_POLICY_EXECUTION_TIMELINE, default={})
         if not isinstance(payload, dict):
             return {}
@@ -4652,6 +5297,322 @@ def _load_policy_execution_timeline() -> dict[str, dict]:
         dependency_paths=_runtime_cache_paths(_POLICY_EXECUTION_TIMELINE),
         builder=builder,
     )
+
+
+def _load_world_official_fulltext() -> dict[str, object]:
+    def builder() -> dict[str, object]:
+        try:
+            from world_hard_source_feeds import ensure_world_hard_sources_fresh
+
+            ensure_world_hard_sources_fresh()
+        except Exception as exc:
+            logger.debug("ensure_world_hard_sources_fresh official fulltext failed: %s", exc)
+        payload = safe_load(_WORLD_OFFICIAL_FULLTEXT, default={})
+        return payload if isinstance(payload, dict) else {}
+
+    return _cached_runtime_value(
+        "load_world_official_fulltext",
+        "default",
+        ttl_seconds=20,
+        dependency_paths=_runtime_cache_paths(_WORLD_OFFICIAL_FULLTEXT),
+        builder=builder,
+    )
+
+
+def _load_world_shipping_ais() -> dict[str, object]:
+    def builder() -> dict[str, object]:
+        try:
+            from world_hard_source_feeds import ensure_world_hard_sources_fresh
+
+            ensure_world_hard_sources_fresh()
+        except Exception as exc:
+            logger.debug("ensure_world_hard_sources_fresh shipping failed: %s", exc)
+        payload = safe_load(_WORLD_SHIPPING_AIS, default={})
+        return payload if isinstance(payload, dict) else {}
+
+    return _cached_runtime_value(
+        "load_world_shipping_ais",
+        "default",
+        ttl_seconds=20,
+        dependency_paths=_runtime_cache_paths(_WORLD_SHIPPING_AIS),
+        builder=builder,
+    )
+
+
+def _load_world_freight_rates() -> dict[str, object]:
+    def builder() -> dict[str, object]:
+        try:
+            from world_hard_source_feeds import ensure_world_hard_sources_fresh
+
+            ensure_world_hard_sources_fresh()
+        except Exception as exc:
+            logger.debug("ensure_world_hard_sources_fresh freight failed: %s", exc)
+        payload = safe_load(_WORLD_FREIGHT_RATES, default={})
+        return payload if isinstance(payload, dict) else {}
+
+    return _cached_runtime_value(
+        "load_world_freight_rates",
+        "default",
+        ttl_seconds=20,
+        dependency_paths=_runtime_cache_paths(_WORLD_FREIGHT_RATES),
+        builder=builder,
+    )
+
+
+def _load_world_commodity_terminal() -> dict[str, object]:
+    def builder() -> dict[str, object]:
+        try:
+            from world_hard_source_feeds import ensure_world_hard_sources_fresh
+
+            ensure_world_hard_sources_fresh()
+        except Exception as exc:
+            logger.debug("ensure_world_hard_sources_fresh commodity failed: %s", exc)
+        payload = safe_load(_WORLD_COMMODITY_TERMINAL, default={})
+        return payload if isinstance(payload, dict) else {}
+
+    return _cached_runtime_value(
+        "load_world_commodity_terminal",
+        "default",
+        ttl_seconds=20,
+        dependency_paths=_runtime_cache_paths(_WORLD_COMMODITY_TERMINAL),
+        builder=builder,
+    )
+
+
+def _load_world_macro_rates_fx() -> dict[str, object]:
+    def builder() -> dict[str, object]:
+        try:
+            from world_hard_source_feeds import ensure_world_hard_sources_fresh
+
+            ensure_world_hard_sources_fresh()
+        except Exception as exc:
+            logger.debug("ensure_world_hard_sources_fresh macro failed: %s", exc)
+        payload = safe_load(_WORLD_MACRO_RATES_FX, default={})
+        return payload if isinstance(payload, dict) else {}
+
+    return _cached_runtime_value(
+        "load_world_macro_rates_fx",
+        "default",
+        ttl_seconds=20,
+        dependency_paths=_runtime_cache_paths(_WORLD_MACRO_RATES_FX),
+        builder=builder,
+    )
+
+
+_DEFAULT_OPERATING_PROFILE = {
+    "company_name": "实体经营画像",
+    "primary_industries": ["AI与数字基础设施", "工业自动化"],
+    "operating_mode": "增长与安全并重",
+    "order_visibility_months": 3.0,
+    "capacity_utilization_pct": 76.0,
+    "inventory_days": 28,
+    "supplier_concentration_pct": 34.0,
+    "customer_concentration_pct": 30.0,
+    "overseas_revenue_pct": 18.0,
+    "sensitive_region_exposure_pct": 10.0,
+    "cash_buffer_months": 9.0,
+    "capex_flexibility": "中等弹性",
+    "inventory_strategy": "关键物料安全库存",
+    "key_inputs": ["算力设备", "电力设备", "高端材料"],
+    "key_routes": ["亚欧干线", "中东能源航线"],
+    "strategic_projects": ["算力基础设施", "工业自动化升级"],
+    "summary": "当前经营画像偏增长与安全并重，既要抓技术扩散，也要盯住供应链韧性。",
+}
+
+
+def _build_operating_profile_summary(payload: dict[str, Any]) -> str:
+    company_name = str(payload.get("company_name") or "实体经营主体").strip()
+    order_visibility = _to_float(payload.get("order_visibility_months")) or 0.0
+    capacity = _to_float(payload.get("capacity_utilization_pct")) or 0.0
+    inventory_days = int(_to_float(payload.get("inventory_days")) or 0)
+    supplier_concentration = _to_float(payload.get("supplier_concentration_pct")) or 0.0
+    customer_concentration = _to_float(payload.get("customer_concentration_pct")) or 0.0
+    cash_buffer = _to_float(payload.get("cash_buffer_months")) or 0.0
+    return (
+        f"{company_name} 当前订单可见度约 {order_visibility:.1f} 个月，"
+        f"产能利用率 {capacity:.0f}% ，库存 {inventory_days} 天，"
+        f"供应商集中度 {supplier_concentration:.0f}% / 客户集中度 {customer_concentration:.0f}% ，"
+        f"现金缓冲约 {cash_buffer:.1f} 个月。"
+    )
+
+
+def _derive_operating_profile_health(payload: dict[str, Any]) -> dict[str, Any]:
+    company_name = str(payload.get("company_name") or "").strip()
+    primary_industries = [str(item).strip() for item in payload.get("primary_industries", []) if str(item).strip()]
+    order_visibility = _to_float(payload.get("order_visibility_months")) or 0.0
+    capacity = _to_float(payload.get("capacity_utilization_pct")) or 0.0
+    inventory_days = int(_to_float(payload.get("inventory_days")) or 0)
+    supplier_concentration = _to_float(payload.get("supplier_concentration_pct")) or 0.0
+    customer_concentration = _to_float(payload.get("customer_concentration_pct")) or 0.0
+    cash_buffer = _to_float(payload.get("cash_buffer_months")) or 0.0
+    key_inputs = [str(item).strip() for item in payload.get("key_inputs", []) if str(item).strip()]
+    key_routes = [str(item).strip() for item in payload.get("key_routes", []) if str(item).strip()]
+    checks = [
+        ("主体名称", bool(company_name)),
+        ("主营行业", bool(primary_industries)),
+        ("订单可见度", order_visibility > 0.0),
+        ("产能利用率", capacity > 0.0),
+        ("库存天数", inventory_days > 0),
+        ("供应商集中度", supplier_concentration > 0.0),
+        ("客户集中度", customer_concentration > 0.0),
+        ("现金缓冲", cash_buffer > 0.0),
+        ("关键原料", bool(key_inputs)),
+        ("关键航线", bool(key_routes)),
+    ]
+    completed = sum(1 for _, ok in checks if ok)
+    completeness_score = round((completed / max(len(checks), 1)) * 100.0, 1)
+    missing_fields = [label for label, ok in checks if not ok]
+    recommended_actions: list[str] = []
+
+    freshness_label = "未更新"
+    stale = False
+    updated_at = str(payload.get("updated_at") or "").strip()
+    if updated_at:
+        try:
+            updated = datetime.fromisoformat(updated_at.replace("Z", "+00:00"))
+            now = datetime.now(updated.tzinfo) if updated.tzinfo else datetime.now()
+            age_hours = max(0.0, (now - updated).total_seconds() / 3600.0)
+            if age_hours <= 72:
+                freshness_label = "最新"
+            elif age_hours <= 24 * 7:
+                freshness_label = "可用"
+            elif age_hours <= 24 * 30:
+                freshness_label = "偏旧"
+                stale = True
+            else:
+                freshness_label = "过期"
+                stale = True
+        except Exception:
+            freshness_label = "时间异常"
+            stale = True
+
+    if "主营行业" in missing_fields:
+        recommended_actions.append("先补主营行业，让世界引擎能把你放进正确产业链。")
+    if "订单可见度" in missing_fields or "产能利用率" in missing_fields:
+        recommended_actions.append("先补订单可见度和产能利用率，经营动作才能判断该扩还是该守。")
+    if "库存天数" in missing_fields or "关键原料" in missing_fields:
+        recommended_actions.append("先补库存天数和关键原料，供给冲击场景下系统才能判断要不要先锁料。")
+    if "供应商集中度" in missing_fields or "关键航线" in missing_fields:
+        recommended_actions.append("先补供应商集中度和关键航线，供应链双备份建议才有依据。")
+    if "客户集中度" in missing_fields or "现金缓冲" in missing_fields:
+        recommended_actions.append("先补客户集中度和现金缓冲，系统才能判断该扩表还是先保现金。")
+    if supplier_concentration >= 45.0:
+        recommended_actions.append("当前供应商集中度偏高，优先做关键料双备份和替代验证。")
+    if customer_concentration >= 40.0:
+        recommended_actions.append("当前客户集中度偏高，优先分散前两大客户和单一订单来源。")
+    if cash_buffer <= 6.0 and cash_buffer > 0:
+        recommended_actions.append("现金缓冲偏薄，先压可选 CAPEX 和慢回款项目。")
+    if inventory_days > 0 and inventory_days <= 21:
+        recommended_actions.append("安全库存偏薄，先补关键原料和替代运力冗余。")
+    if stale:
+        recommended_actions.append("经营画像已偏旧，先按本周最新订单、库存和暴露重刷一轮。")
+    if not recommended_actions:
+        recommended_actions.append("当前经营画像已可用，优先围绕主导方向校正关键项目和供应链假设。")
+    recommended_actions = list(dict.fromkeys(recommended_actions))[:5]
+
+    if completeness_score >= 85 and not stale:
+        completeness_label = "完整"
+        profile_status = "ready"
+    elif completeness_score >= 60 and not stale:
+        completeness_label = "可用"
+        profile_status = "ready"
+    elif completeness_score >= 60:
+        completeness_label = "待更新"
+        profile_status = "warning"
+    elif completeness_score >= 35:
+        completeness_label = "待补齐"
+        profile_status = "warning"
+    else:
+        completeness_label = "过弱"
+        profile_status = "warning"
+
+    return {
+        "completeness_score": completeness_score,
+        "completeness_label": completeness_label,
+        "profile_status": profile_status,
+        "freshness_label": freshness_label,
+        "stale": stale,
+        "missing_fields": missing_fields,
+        "recommended_actions": recommended_actions,
+    }
+
+
+def _normalize_operating_profile(payload: dict[str, Any] | None = None) -> dict[str, Any]:
+    payload = payload if isinstance(payload, dict) else {}
+    normalized = dict(_DEFAULT_OPERATING_PROFILE)
+    normalized.update({key: value for key, value in payload.items() if value is not None})
+    normalized["company_name"] = str(normalized.get("company_name") or _DEFAULT_OPERATING_PROFILE["company_name"]).strip()
+    normalized["primary_industries"] = [str(item).strip() for item in normalized.get("primary_industries", []) if str(item).strip()]
+    normalized["operating_mode"] = str(normalized.get("operating_mode") or _DEFAULT_OPERATING_PROFILE["operating_mode"]).strip()
+    normalized["order_visibility_months"] = round(max(0.0, _to_float(normalized.get("order_visibility_months")) or 0.0), 1)
+    normalized["capacity_utilization_pct"] = round(min(100.0, max(0.0, _to_float(normalized.get("capacity_utilization_pct")) or 0.0)), 1)
+    normalized["inventory_days"] = max(0, int(_to_float(normalized.get("inventory_days")) or 0))
+    normalized["supplier_concentration_pct"] = round(min(100.0, max(0.0, _to_float(normalized.get("supplier_concentration_pct")) or 0.0)), 1)
+    normalized["customer_concentration_pct"] = round(min(100.0, max(0.0, _to_float(normalized.get("customer_concentration_pct")) or 0.0)), 1)
+    normalized["overseas_revenue_pct"] = round(min(100.0, max(0.0, _to_float(normalized.get("overseas_revenue_pct")) or 0.0)), 1)
+    normalized["sensitive_region_exposure_pct"] = round(min(100.0, max(0.0, _to_float(normalized.get("sensitive_region_exposure_pct")) or 0.0)), 1)
+    normalized["cash_buffer_months"] = round(max(0.0, _to_float(normalized.get("cash_buffer_months")) or 0.0), 1)
+    normalized["capex_flexibility"] = str(normalized.get("capex_flexibility") or _DEFAULT_OPERATING_PROFILE["capex_flexibility"]).strip()
+    normalized["inventory_strategy"] = str(normalized.get("inventory_strategy") or _DEFAULT_OPERATING_PROFILE["inventory_strategy"]).strip()
+    normalized["key_inputs"] = [str(item).strip() for item in normalized.get("key_inputs", []) if str(item).strip()]
+    normalized["key_routes"] = [str(item).strip() for item in normalized.get("key_routes", []) if str(item).strip()]
+    normalized["strategic_projects"] = [str(item).strip() for item in normalized.get("strategic_projects", []) if str(item).strip()]
+    normalized["updated_at"] = str(normalized.get("updated_at") or "").strip() or None
+    summary = str(normalized.get("summary") or "").strip()
+    normalized["summary"] = summary or _build_operating_profile_summary(normalized)
+    normalized.update(_derive_operating_profile_health(normalized))
+    return normalized
+
+
+def _load_operating_profile() -> dict[str, Any]:
+    def builder() -> dict[str, Any]:
+        payload = safe_load(_OPERATING_PROFILE, default={})
+        return _normalize_operating_profile(payload)
+
+    return _cached_runtime_value(
+        "load_operating_profile",
+        "default",
+        ttl_seconds=30,
+        dependency_paths=_runtime_cache_paths(_OPERATING_PROFILE),
+        builder=builder,
+    )
+
+
+def _save_operating_profile(payload: dict[str, Any]) -> dict[str, Any]:
+    normalized = _normalize_operating_profile(payload)
+    normalized["updated_at"] = _iso_now()
+    if not str(normalized.get("summary") or "").strip():
+        normalized["summary"] = _build_operating_profile_summary(normalized)
+    safe_save(_OPERATING_PROFILE, normalized)
+    _invalidate_runtime_cache("load_operating_profile", "default")
+    _invalidate_runtime_cache(
+        "world_state",
+        "app_messages",
+        "action_board",
+        "strategy_governance",
+        "execution_policy",
+        "production_guard",
+        "production_guard_actions",
+        "limit_up_opportunities",
+        "industry_capital_map",
+        "industry_capital_detail",
+        "theme_stage",
+        "policy_watch",
+        "theme_radar",
+        "composite_picks",
+        "composite_compare",
+        "strong_moves",
+    )
+    for period in ("daily",):
+        try:
+            _write_world_state_export(period)
+        except Exception as exc:
+            logger.warning("refresh world_state export after operating profile update failed: %s", exc)
+        try:
+            _write_execution_policy_export(period)
+        except Exception as exc:
+            logger.warning("refresh execution_policy export after operating profile update failed: %s", exc)
+    return normalized
 
 
 def _load_industry_capital_company_map() -> dict[str, dict]:
@@ -5044,6 +6005,17 @@ def _build_composite_pick_from_record(
     strategy_name = str(signal.get("strategy", ""))
     strategy_perf = strategy_map.get(strategy_name)
     strategy_win_rate = strategy_perf.win_rate if strategy_perf else 50.0
+    world_state = _build_world_state_snapshot()
+    execution_policy = _build_execution_policy()
+    production_guard = _build_production_guard_snapshot()
+    governance = _strategy_governance_map().get(strategy_name)
+    governance_profile = _strategy_governance_profile(strategy_name)
+    governance_family = governance.family if governance is not None else str(governance_profile.get("family", "general"))
+    governance_state = governance.state if governance is not None else "observation"
+    if governance_state == "disabled":
+        return None
+    if execution_policy.blocked_strategies and strategy_name in execution_policy.blocked_strategies:
+        return None
     raw_factor_scores = signal.get("factor_scores", {})
     factor_scores = raw_factor_scores if isinstance(raw_factor_scores, dict) else {}
     trend_score = _factor_bucket(
@@ -5059,7 +6031,18 @@ def _build_composite_pick_from_record(
         ["s_fund_flow", "s_flow_1d", "s_flow_trend", "s_chip", "s_forecast", "s_fundamental"],
     )
     consensus_strength = min(max(_to_int(signal.get("consensus_count")), 1), 3) / 3
-    risk_reward = _to_float(signal.get("risk_reward")) or 0.0
+    buy_price = _to_float(signal.get("buy_price")) or price
+    stop_loss = _to_float(signal.get("stop_loss")) or _default_signal_stop_loss(buy_price)
+    if stop_loss >= buy_price:
+        stop_loss = _default_signal_stop_loss(buy_price)
+    target_price = _to_float(signal.get("target_price")) or _default_signal_target(buy_price, stop_loss)
+    if target_price <= buy_price:
+        target_price = _default_signal_target(buy_price, stop_loss)
+    risk_reward = _to_float(signal.get("risk_reward")) or _default_signal_risk_reward(
+        buy_price,
+        stop_loss,
+        target_price,
+    )
     rr_norm = min(max(risk_reward / 3.0, 0.0), 1.0)
     regime_support = (
         0.75 if str(signal.get("regime", "")).lower() in {"bull", "neutral", "震荡", "强势"} else 0.4
@@ -5072,6 +6055,16 @@ def _build_composite_pick_from_record(
     strong_move = strong_move_map.get(str(signal.get("code", "")))
     event_control = _build_event_control_snapshot(signal, theme_item)
     event_score = _to_float(event_control.get("score")) or 50.0
+    if not _is_trade_plan_actionable(
+        price=price,
+        buy_price=buy_price,
+        stop_loss=stop_loss,
+        target_price=target_price,
+        risk_reward=risk_reward,
+        strategy_family=governance_family,
+        strategy_name=strategy_name,
+    ):
+        return None
 
     strategy_score = round((score * 0.72 + strategy_quality * 0.28) * 100, 1)
     capital_score = round(
@@ -5109,6 +6102,14 @@ def _build_composite_pick_from_record(
     if strong_move:
         composite_score = composite_score * 0.8 + strong_move.composite_score * 0.2
     composite_score *= _to_float(event_control.get("multiplier")) or 1.0
+    if governance_state == "production":
+        composite_score *= 1.06
+    elif governance_state == "observation":
+        composite_score *= 0.94
+    else:
+        if theme_item is None and strong_move is None:
+            return None
+        composite_score *= 0.82
     composite_score = round(composite_score, 1)
 
     setup_label = _composite_setup_label(
@@ -5122,13 +6123,21 @@ def _build_composite_pick_from_record(
         risk_reward,
         theme_item.intensity if theme_item else None,
     )
+    if production_guard.blocked_additions:
+        first_position_pct = 0
+    budget_scale = _clamp(execution_policy.risk_budget_pct / 62.0, 0.48, 1.12)
+    first_position_pct = int(round(first_position_pct * budget_scale))
     first_position_pct = max(
-        6,
+        4 if execution_policy.risk_budget_pct <= 32 else 6,
         min(
             18,
             first_position_pct + _to_int(event_control.get("position_adjustment")),
         ),
     )
+    if governance_state == "observation":
+        first_position_pct = min(first_position_pct, 8 if execution_policy.risk_budget_pct <= 48 else 10)
+    if production_guard.blocked_additions:
+        first_position_pct = 0
     reasons = _build_composite_pick_reasons(
         theme_item=theme_item,
         strong_move=strong_move,
@@ -5141,6 +6150,14 @@ def _build_composite_pick_from_record(
     event_summary = str(event_control.get("summary", "")).strip()
     if event_summary:
         reasons.insert(0, event_summary)
+    if execution_policy.allowed_strategies and strategy_name in execution_policy.allowed_strategies:
+        reasons.insert(0, f"执行层：当前优先策略，风险预算 {execution_policy.risk_budget_pct:.1f}% 。")
+    elif execution_policy.blocked_strategies and strategy_name in execution_policy.blocked_strategies:
+        reasons.insert(0, "执行层：当前先压缩该策略，只保留观察/轻仓试错。")
+    if governance is not None:
+        reasons.insert(0, f"治理层：{governance.reason}")
+    if production_guard.blocked_additions:
+        reasons.insert(0, f"风控层：{production_guard.summary}")
     reasons = reasons[:3]
     action = _composite_action(
         theme_item=theme_item,
@@ -5148,6 +6165,19 @@ def _build_composite_pick_from_record(
         first_position_pct=first_position_pct,
         setup_label=setup_label,
     )
+    discipline = _discipline_from_family(
+        governance_family,
+        world_state.market_phase,
+        governance_state,
+        strategy_name,
+    )
+    trim_rule = str(discipline.get("trim_rule") or "")
+    if trim_rule:
+        action = f"{action} 先看兑现纪律：{trim_rule}"
+    if execution_policy.blocked_styles:
+        action = f"{action} 当前禁做：{' / '.join(execution_policy.blocked_styles[:2])}。"
+    if production_guard.blocked_additions:
+        action = "当前生产风控禁止新增，这只票保留观察，不直接开新仓。"
     source_category, source_label, horizon_label = _composite_source_profile(
         signal,
         theme_item=theme_item,
@@ -5187,14 +6217,20 @@ def _build_composite_pick_from_record(
         execution_score=execution_score,
         first_position_pct=first_position_pct,
         price=price,
-        buy_price=_to_float(signal.get("buy_price")) or price,
-        stop_loss=_to_float(signal.get("stop_loss")) or 0.0,
-        target_price=_to_float(signal.get("target_price")) or 0.0,
+        buy_price=buy_price,
+        stop_loss=stop_loss,
+        target_price=target_price,
         risk_reward=risk_reward,
         timestamp=str(signal.get("timestamp", "")),
         thesis=thesis,
         action=action,
         reasons=reasons,
+        governance_state=governance_state,
+        discipline_label=str(discipline.get("discipline_label") or "继续观察"),
+        holding_window=str(discipline.get("holding_window") or ""),
+        add_rule=str(discipline.get("add_rule") or "") or None,
+        trim_rule=trim_rule or None,
+        exit_rule=str(discipline.get("exit_rule") or "") or None,
     )
 
 
@@ -7982,6 +9018,11 @@ def _build_positioning_plan(days: int = 1, limit: int = 3) -> PositioningPlan:
     regime_params = regime_result.get("regime_params", {})
     if not isinstance(regime_params, dict):
         regime_params = {}
+    world_state = _build_world_state_snapshot()
+    execution_policy = _build_execution_policy()
+    production_guard = _build_production_guard_snapshot()
+    allowed_styles = execution_policy.allowed_styles
+    blocked_styles = execution_policy.blocked_styles
 
     composite_picks = _build_composite_picks(days=days, limit=max(limit + 2, 5))
     theme_radar = _build_theme_radar(limit=3)
@@ -8016,6 +9057,11 @@ def _build_positioning_plan(days: int = 1, limit: int = 3) -> PositioningPlan:
             min(90.0, max(0.0, base_target_exposure_pct - risk_penalty + opportunity_bonus)),
             1,
         )
+    target_exposure_pct = min(target_exposure_pct, execution_policy.risk_budget_pct)
+    if production_guard.hard_risk_gate:
+        target_exposure_pct = round(max(0.0, current_exposure_pct - 8.0), 1)
+    elif production_guard.blocked_additions:
+        target_exposure_pct = min(target_exposure_pct, current_exposure_pct)
 
     if not composite_picks and not positions:
         target_exposure_pct = min(target_exposure_pct, 30.0)
@@ -8039,6 +9085,8 @@ def _build_positioning_plan(days: int = 1, limit: int = 3) -> PositioningPlan:
                 first_entry_position_pct + _to_int(event_overlay.get("first_entry_adjustment")),
             ),
         )
+    if production_guard.blocked_additions:
+        first_entry_position_pct = 0
 
     base_single_cap = _to_int(RISK_PARAMS.get("single_position_pct")) or 15
     max_single_position_pct = 0
@@ -8051,6 +9099,8 @@ def _build_positioning_plan(days: int = 1, limit: int = 3) -> PositioningPlan:
                 + _to_int(event_overlay.get("single_cap_adjustment")),
             ),
         )
+    if production_guard.hard_risk_gate:
+        max_single_position_pct = min(max_single_position_pct or 12, 12)
 
     max_theme_exposure_pct = 0
     if target_exposure_pct > 0:
@@ -8062,6 +9112,8 @@ def _build_positioning_plan(days: int = 1, limit: int = 3) -> PositioningPlan:
                 + _to_int(event_overlay.get("theme_cap_adjustment")),
             ),
         )
+    if production_guard.hard_risk_gate:
+        max_theme_exposure_pct = min(max_theme_exposure_pct or 18, 18)
 
     recommended_new_positions = 0
     if first_entry_position_pct > 0:
@@ -8092,6 +9144,8 @@ def _build_positioning_plan(days: int = 1, limit: int = 3) -> PositioningPlan:
             f"当前更像 {mode} 日。优先保住现金和纪律，先把风险压住，"
             "不要为了追机会把节奏打乱。"
         )
+    if production_guard.blocked_additions:
+        focus = f"{focus} 当前生产风控禁止新增，先处理存量风险。"
     elif top_pick is not None:
         focus = (
             f"{top_pick.code} {top_pick.name} 是当前最值得先看的综合候选。"
@@ -8102,6 +9156,9 @@ def _build_positioning_plan(days: int = 1, limit: int = 3) -> PositioningPlan:
 
     reasons = [
         f"市场状态目前是 {_regime_display_name(regime)}，评分 {regime_score:.1f}。",
+        world_state.summary,
+        execution_policy.summary,
+        production_guard.summary,
         f"当前组合实仓 {current_exposure_pct:.1f}% ，目标总仓 {target_exposure_pct:.1f}% 。",
     ]
     if event_summary:
@@ -8121,7 +9178,16 @@ def _build_positioning_plan(days: int = 1, limit: int = 3) -> PositioningPlan:
 
     actions = [
         f"总仓先控在 {target_exposure_pct:.1f}% 左右，当前还可再部署 {deployable_exposure_pct:.1f}% / {deployable_cash:.0f} 元。",
+        f"当前优先做：{' / '.join(allowed_styles)}。",
     ]
+    if execution_policy.key_actions:
+        actions.append(execution_policy.key_actions[0])
+    if blocked_styles:
+        actions.append(f"当前先别做：{' / '.join(blocked_styles)}。")
+    if execution_policy.blocked_strategies:
+        actions.append(f"当前压缩策略：{' / '.join(execution_policy.blocked_strategies[:3])}。")
+    if production_guard.blocked_additions:
+        actions.append("生产风控：暂停新增，把仓位管理重心放到减仓和退出。")
     if first_entry_position_pct > 0:
         actions.append(
             f"单票先用 {first_entry_position_pct}% 首仓试错，单票满仓不要超过 {max_single_position_pct}% 。"
@@ -8165,6 +9231,11 @@ def _build_positioning_plan(days: int = 1, limit: int = 3) -> PositioningPlan:
         mode=mode,
         regime=regime,
         regime_score=regime_score,
+        market_phase=world_state.market_phase,
+        market_phase_label=world_state.market_phase_label,
+        style_bias=world_state.style_bias,
+        horizon_hint=world_state.horizon_hint,
+        aggressiveness=execution_policy.aggressiveness,
         event_bias=str(event_overlay.get("bias", "中性")),
         event_score=_to_float(event_overlay.get("score")) or 50.0,
         event_summary=event_summary or None,
@@ -8176,6 +9247,10 @@ def _build_positioning_plan(days: int = 1, limit: int = 3) -> PositioningPlan:
         current_exposure_pct=current_exposure_pct,
         target_exposure_pct=target_exposure_pct,
         deployable_exposure_pct=deployable_exposure_pct,
+        hard_risk_gate=production_guard.hard_risk_gate,
+        risk_budget_pct=execution_policy.risk_budget_pct,
+        cash_buffer_pct=execution_policy.cash_buffer_pct,
+        risk_guard_summary=production_guard.summary,
         cash_balance=cash_balance,
         total_assets=total_assets,
         deployable_cash=deployable_cash,
@@ -8190,6 +9265,10 @@ def _build_positioning_plan(days: int = 1, limit: int = 3) -> PositioningPlan:
         reasons=reasons,
         actions=actions,
         deployments=deployments,
+        allowed_styles=allowed_styles,
+        blocked_styles=blocked_styles,
+        allowed_strategies=execution_policy.allowed_strategies,
+        blocked_strategies=execution_policy.blocked_strategies,
     )
 
 
@@ -8241,6 +9320,20 @@ def _open_signal_position(signal_id: str, payload: SignalOpenRequest) -> Portfol
         raise HTTPException(status_code=400, detail="买入数量必须大于 0")
 
     signal = _build_signal_detail(signal_id)
+    entry_guide = signal.entry_guide
+    production_guard = _build_production_guard_snapshot()
+    governance = _build_strategy_governance()
+    disabled_strategies = {
+        item.strategy_name
+        for item in governance.items
+        if item.state == "disabled"
+    }
+    if signal.strategy in disabled_strategies:
+        raise HTTPException(status_code=409, detail=f"{signal.strategy} 当前已停用，禁止新增仓位。")
+    if production_guard.hard_risk_gate or production_guard.blocked_additions:
+        raise HTTPException(status_code=409, detail=production_guard.summary)
+    if entry_guide.mode in {"先观察", "优先观察"}:
+        raise HTTPException(status_code=409, detail=entry_guide.summary)
     execution_price = _round_money(
         payload.price if payload.price is not None else (signal.buy_price or signal.price)
     )
@@ -8262,6 +9355,22 @@ def _open_signal_position(signal_id: str, payload: SignalOpenRequest) -> Portfol
 
     portfolio = _load_portfolio()
     required_cash = _round_money(execution_price * quantity)
+    if entry_guide.suggested_quantity > 0 and quantity > entry_guide.suggested_quantity:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                f"当前建议首仓上限约 {entry_guide.suggested_quantity} 股，"
+                f"本次提交 {quantity} 股，超出执行纪律。"
+            ),
+        )
+    if entry_guide.suggested_amount > 0 and required_cash > entry_guide.suggested_amount + 1:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                f"当前建议首仓金额约 {entry_guide.suggested_amount:.2f}，"
+                f"本次下单 {required_cash:.2f}，超出执行纪律。"
+            ),
+        )
     if required_cash > portfolio.get("cash", 0):
         raise HTTPException(
             status_code=400,
@@ -8402,6 +9511,9 @@ def _update_position_risk(code: str, payload: PositionRiskUpdateRequest) -> Port
         raise HTTPException(status_code=404, detail="持仓不存在")
 
     position = dict(portfolio["positions"][position_index])
+    production_guard = _build_production_guard_snapshot()
+    current_stop_loss = _to_float(position.get("stop_loss")) or 0.0
+    current_take_profit = _to_float(position.get("take_profit")) or 0.0
     stop_loss = (
         _round_money(payload.stop_loss)
         if payload.stop_loss is not None
@@ -8419,6 +9531,12 @@ def _update_position_risk(code: str, payload: PositionRiskUpdateRequest) -> Port
     )
     if trailing_trigger_price < 0:
         raise HTTPException(status_code=400, detail="追踪触发价不能为负数")
+    if (production_guard.hard_risk_gate or production_guard.auto_reduce_positions) and payload.stop_loss is not None:
+        if current_stop_loss > 0 and stop_loss < current_stop_loss:
+            raise HTTPException(status_code=409, detail="当前生产风控下不允许下调止损。")
+    if (production_guard.hard_risk_gate or production_guard.auto_reduce_positions) and payload.take_profit is not None:
+        if current_take_profit > 0 and take_profit > current_take_profit:
+            raise HTTPException(status_code=409, detail="当前生产风控下不允许上调止盈目标。")
 
     _validate_risk_values(stop_loss, take_profit)
 
@@ -8737,7 +9855,39 @@ def _build_risk_alerts() -> list[RiskAlert]:
 def _build_app_messages(limit: int = 30) -> list[AppMessage]:
     def builder() -> list[AppMessage]:
         center = _load_app_message_center()
-        items = list(center.get("items", []))
+        hidden_titles = {"学习健康告警", "学习数据监控"}
+        items = [
+            item
+            for item in list(center.get("items", []))
+            if str(item.get("title") or "") not in hidden_titles
+        ]
+        world_state_message = _build_world_state_message()
+        if world_state_message:
+            items.append(world_state_message)
+        operating_profile_message = _build_operating_profile_message()
+        if operating_profile_message:
+            items.append(operating_profile_message)
+        production_guard_message = _build_production_guard_message()
+        if production_guard_message:
+            items.append(production_guard_message)
+        learning_health_message = _build_learning_health_message()
+        if learning_health_message:
+            items.append(learning_health_message)
+        learning_monitor_message = _build_learning_monitor_message()
+        if learning_monitor_message:
+            items.append(learning_monitor_message)
+        execution_policy_message = _build_execution_policy_message()
+        if execution_policy_message:
+            items.append(execution_policy_message)
+        world_state_export_message = _build_world_state_export_message()
+        if world_state_export_message:
+            items.append(world_state_export_message)
+        execution_policy_export_message = _build_execution_policy_export_message()
+        if execution_policy_export_message:
+            items.append(execution_policy_export_message)
+        hidden_accumulation_message = _build_hidden_accumulation_message()
+        if hidden_accumulation_message:
+            items.append(hidden_accumulation_message)
         takeover_message = _build_takeover_message()
         if takeover_message:
             items.append(takeover_message)
@@ -8767,7 +9917,10 @@ def _build_app_messages(limit: int = 30) -> list[AppMessage]:
             _POLICY_EXECUTION_TIMELINE,
             _INDUSTRY_CAPITAL_COMPANY_MAP,
             _SIGNAL_TRACKER,
+            _OPERATING_PROFILE,
             os.path.join(_DIR, "signals_db.json"),
+            _world_state_export_index_path("daily"),
+            _execution_policy_export_index_path("daily"),
             *_db_dependency_paths(),
         ),
         builder=builder,
@@ -8806,11 +9959,336 @@ def _composite_pick_level(pick: CompositePick) -> str:
     return "info"
 
 
+def _build_execution_policy_message() -> Optional[dict]:
+    policy = _build_execution_policy()
+    title = f"今日执行策略 {policy.market_phase_label}"
+    body_parts = [
+        policy.summary,
+        f"优先：{' / '.join(policy.allowed_styles)}。",
+    ]
+    if policy.allowed_strategies:
+        body_parts.append(f"生产层先做：{' / '.join(policy.allowed_strategies[:3])}。")
+    if policy.blocked_styles:
+        body_parts.append(f"禁做：{' / '.join(policy.blocked_styles[:2])}。")
+    if policy.blocked_strategies:
+        body_parts.append(f"压缩策略：{' / '.join(policy.blocked_strategies[:3])}。")
+    body = " ".join(body_parts)
+    return _normalize_app_message(
+        {
+            "id": f"msg_execution_policy_{policy.market_phase}",
+            "title": title,
+            "body": body,
+            "preview": _truncate_hint(body, limit=86),
+            "level": (
+                "warning"
+                if policy.risk_budget_pct <= 42 or policy.blocked_strategies
+                else "info"
+            ),
+            "channel": "system_focus",
+            "created_at": datetime.now().isoformat(timespec="seconds"),
+            "route": "/(tabs)/brain",
+        }
+    )
+
+
+def _build_world_state_message() -> Optional[dict]:
+    snapshot = _build_world_state_snapshot()
+    dominant = next(
+        (component for component in snapshot.components if component.key == snapshot.dominant_component),
+        snapshot.components[0] if snapshot.components else None,
+    )
+    body_parts = [
+        snapshot.summary,
+        f"当前阶段：{snapshot.market_phase_label} / {snapshot.style_bias} / {snapshot.horizon_hint}。",
+    ]
+    if dominant is not None:
+        body_parts.append(
+            f"当前主导：{dominant.label}（{dominant.bias}，评分 {dominant.score:.0f}）"
+            f" / {dominant.summary}"
+        )
+    if snapshot.structural_summary:
+        body_parts.append(snapshot.structural_summary)
+    if snapshot.event_cascades:
+        top_cascade = snapshot.event_cascades[0]
+        body_parts.append(
+            f"事件跟踪：{top_cascade.title} / {top_cascade.trade_bias} / {top_cascade.follow_up_signal} / 可信度 {top_cascade.confidence_score:.0f} / {top_cascade.immediate_action}"
+        )
+    if snapshot.actions:
+        top_action = snapshot.actions[0]
+        body_parts.append(f"动作：{top_action.title} / {top_action.summary}")
+    if snapshot.operating_actions:
+        top_operating = snapshot.operating_actions[0]
+        body_parts.append(f"经营：{top_operating.title} / {top_operating.summary}")
+    if snapshot.checks:
+        top_check = snapshot.checks[0]
+        body_parts.append(f"校验：{top_check.title} / {top_check.message}")
+    body = " ".join(part for part in body_parts if part)
+    return _normalize_app_message(
+        {
+            "id": f"msg_world_state_{snapshot.market_phase}_{snapshot.regime}",
+            "title": f"顶层世界状态 {snapshot.market_phase_label}",
+            "body": body,
+            "preview": _truncate_hint(body, limit=86),
+            "level": (
+                "warning"
+                if snapshot.valuation_regime == "折现率压制" or snapshot.geopolitics_bias == "博弈升温"
+                else "info"
+            ),
+            "channel": "system_focus",
+            "created_at": datetime.now().isoformat(timespec="seconds"),
+            "route": "/world",
+        }
+    )
+
+
+def _build_hidden_accumulation_message() -> Optional[dict]:
+    try:
+        items = _build_hidden_accumulation_opportunities(limit=3)
+    except Exception as exc:
+        logger.debug("hidden accumulation message skipped: %s", exc)
+        return None
+    if not items:
+        return None
+    top = items[0]
+    focus = " / ".join(f"{item.code} {item.name}" for item in items[:3])
+    body = " ".join(
+        part
+        for part in [
+            f"{top.market_phase_label} 下，当前更像弱市隐蔽吸筹。优先看：{focus}。",
+            f"头号候选 {top.code} {top.name}：连续 {top.streak_days} 天小阳，盘整宽度 {top.consolidation_width_pct:.2f}%，最近累计 {top.streak_gain_pct:.2f}%。",
+            top.action,
+        ]
+        if part
+    )
+    return _normalize_app_message(
+        {
+            "id": f"msg_hidden_accumulation_{top.market_phase}_{top.code}",
+            "title": "弱市隐蔽吸筹",
+            "body": body,
+            "preview": _truncate_hint(body, limit=86),
+            "level": "info",
+            "channel": "system_focus",
+            "created_at": datetime.now().isoformat(timespec="seconds"),
+            "route": "/hidden-accumulation",
+        }
+    )
+
+
+def _build_operating_profile_message() -> Optional[dict]:
+    profile = _load_operating_profile()
+    snapshot = _build_world_state_snapshot()
+    profile_checks = [
+        item
+        for item in snapshot.checks
+        if item.key in {"operating_profile_missing_fields", "operating_profile_stale", "operating_profile_timestamp_invalid"}
+    ]
+    if not profile_checks:
+        return None
+
+    body_parts = [
+        profile.get("summary") or "当前经营画像需要继续补齐。",
+        (
+            f"完整度 {float(profile.get('completeness_score') or 0.0):.0f} 分 / "
+            f"{profile.get('completeness_label') or '待补齐'} / "
+            f"{profile.get('freshness_label') or '未更新'}。"
+        ),
+        (
+            f"主体 {profile.get('company_name') or '暂无'} / "
+            f"订单 {profile.get('order_visibility_months', 0)} 月 / "
+            f"产能 {profile.get('capacity_utilization_pct', 0)}% / "
+            f"库存 {profile.get('inventory_days', 0)} 天 / "
+            f"现金 {profile.get('cash_buffer_months', 0)} 月。"
+        ),
+    ]
+    missing_fields = [str(item).strip() for item in profile.get("missing_fields", []) if str(item).strip()]
+    if missing_fields:
+        body_parts.append(f"缺口：{' / '.join(missing_fields[:4])}。")
+    recommended_actions = [str(item).strip() for item in profile.get("recommended_actions", []) if str(item).strip()]
+    if recommended_actions:
+        body_parts.append(f"下一步：{recommended_actions[0]}")
+    body_parts.append(f"校验：{profile_checks[0].title} / {profile_checks[0].message}")
+    if profile.get("updated_at"):
+        body_parts.append(f"最近更新时间 {profile.get('updated_at')}。")
+    body = " ".join(part for part in body_parts if part)
+    return _normalize_app_message(
+        {
+            "id": "msg_operating_profile_current",
+            "title": "经营画像维护",
+            "body": body,
+            "preview": _truncate_hint(body, limit=86),
+            "level": "warning",
+            "channel": "system_focus",
+            "created_at": datetime.now().isoformat(timespec="seconds"),
+            "route": "/operating-profile",
+        }
+    )
+
+
+def _build_production_guard_message() -> Optional[dict]:
+    guard = _build_production_guard_snapshot()
+    if not (guard.hard_risk_gate or guard.blocked_additions or guard.unstable_strategies):
+        return None
+
+    body_parts = [guard.summary]
+    if guard.actions:
+        body_parts.append(f"动作：{' / '.join(guard.actions[:3])}。")
+    if guard.unstable_strategies:
+        body_parts.append(f"继续压缩：{' / '.join(guard.unstable_strategies[:3])}。")
+    body = " ".join(body_parts)
+    return _normalize_app_message(
+        {
+            "id": f"msg_production_guard_{guard.market_phase}",
+            "title": f"生产风控 {guard.market_phase_label}",
+            "body": body,
+            "preview": _truncate_hint(body, limit=86),
+            "level": "critical" if guard.hard_risk_gate else "warning",
+            "channel": "system_focus",
+            "created_at": datetime.now().isoformat(timespec="seconds"),
+            "route": "/ops",
+        }
+    )
+
+
+def _build_learning_health_message() -> Optional[dict]:
+    health = _build_learning_health_snapshot()
+    checks = [item for item in health.get("checks", []) if isinstance(item, dict)]
+    if not checks:
+        return None
+    body_lines = ["学习系统健康告警", ""]
+    for item in checks[:6]:
+        raw_status = str(item.get("status") or "unknown")
+        icon = "❌" if raw_status in {"critical", "error"} else "⚠️" if raw_status == "warning" else "✅"
+        body_lines.append(f"{icon} {item.get('check')}: {item.get('detail')}")
+    body = "\n".join(body_lines)
+    return _normalize_app_message(
+        {
+            "id": "msg_learning_health_current",
+            "title": "学习健康告警",
+            "body": body,
+            "preview": _truncate_hint(body.replace("\n", " "), limit=86),
+            "level": "critical" if str(health.get("status") or "") == "critical" else "warning",
+            "channel": "system_focus",
+            "created_at": datetime.now().isoformat(timespec="seconds"),
+            "route": "/ops",
+        }
+    )
+
+
+def _build_learning_monitor_message() -> Optional[dict]:
+    learning = _build_learning_progress()
+    daily_advance = _build_learning_advance_status()
+    system = _build_system_status()
+    signals = _build_signals()
+    from db_store import load_scorecard
+
+    backfilled_count = len(load_scorecard(days=1))
+    visible_candidates = len(signals)
+    by_strategy: dict[str, int] = {}
+    for signal in signals:
+        by_strategy[signal.strategy] = by_strategy.get(signal.strategy, 0) + 1
+    distribution = ", ".join(f"{k}{v}条" for k, v in sorted(by_strategy.items(), key=lambda item: item[1], reverse=True)[:4]) or "当前暂无盘中候选"
+    advance_label = "已完成" if daily_advance.today_completed else "待收口"
+    on_track = (
+        "✅ 有数据流入"
+        if visible_candidates > 0 or system.today_signals > 0 or daily_advance.ingested_signals > 0 or backfilled_count > 0
+        else "⚠️ 当前暂无新增输入"
+    )
+    body = "\n".join(
+        [
+            f"📊 学习数据监控 ({datetime.now().strftime('%H:%M')})",
+            "",
+            f"盘中候选: {visible_candidates} 条 / 正式信号: {system.today_signals} 条 / 正式入库: {daily_advance.ingested_signals} 条 / 回填验证: {backfilled_count} 条 {on_track}",
+            "",
+            f"候选分布: {distribution}",
+            f"日日精进: {daily_advance.status} / {advance_label}",
+            f"学习轮次: {learning.today_cycles} / 准确率 {round(learning.decision_accuracy * 100, 1)}%",
+        ]
+    )
+    return _normalize_app_message(
+        {
+            "id": "msg_learning_monitor_current",
+            "title": "学习数据监控",
+            "body": body,
+            "preview": _truncate_hint(body.replace("\n", " "), limit=86),
+            "level": "warning" if not daily_advance.today_completed else "info",
+            "channel": "system_focus",
+            "created_at": datetime.now().isoformat(timespec="seconds"),
+            "route": "/ops",
+        }
+    )
+
+
+def _build_execution_policy_export_message() -> Optional[dict]:
+    status = _build_execution_policy_export_status(period="daily", ensure_fresh=False)
+    if status.latest_export_id is None:
+        body = "execution policy 固定导出还没有生成，当前只有即时策略状态，缺少日级留档。"
+        level = "warning"
+    elif status.stale:
+        body = (
+            f"最新 execution policy 导出是 {status.latest_export_id}，"
+            f"时间 {status.latest_export_at or '未知'}，当前已过期，建议刷新 daily 留档。"
+        )
+        level = "warning"
+    else:
+        body = (
+            f"最新 execution policy 导出 {status.latest_export_id} 已就位，"
+            f"历史 {status.history_count} 份，资产 {status.latest_asset_count} 个，"
+            f"bundle {status.latest_bundle_route or '暂无'}。"
+        )
+        level = "info"
+
+    return _normalize_app_message(
+        {
+            "id": f"msg_execution_policy_export_{status.period}",
+            "title": "执行策略归档",
+            "body": body,
+            "preview": _truncate_hint(body, limit=86),
+            "level": level,
+            "channel": "system_focus",
+            "created_at": datetime.now().isoformat(timespec="seconds"),
+            "route": "/world",
+        }
+    )
+
+
+def _build_world_state_export_message() -> Optional[dict]:
+    status = _build_world_state_export_status(period="daily", ensure_fresh=False)
+    if status.latest_export_id is None:
+        body = "world state 固定导出还没有生成，当前只有即时顶层判断，缺少日级留档。"
+        level = "warning"
+    elif status.stale:
+        body = (
+            f"最新 world state 导出是 {status.latest_export_id}，"
+            f"时间 {status.latest_export_at or '未知'}，当前已过期，建议刷新 daily 留档。"
+        )
+        level = "warning"
+    else:
+        body = (
+            f"最新 world state 导出 {status.latest_export_id} 已就位，"
+            f"历史 {status.history_count} 份，资产 {status.latest_asset_count} 个，"
+            f"bundle {status.latest_bundle_route or '暂无'}。"
+        )
+        level = "info"
+    return _normalize_app_message(
+        {
+            "id": f"msg_world_state_export_{status.period}",
+            "title": "顶层世界状态归档",
+            "body": body,
+            "preview": _truncate_hint(body, limit=86),
+            "level": level,
+            "channel": "system_focus",
+            "created_at": datetime.now().isoformat(timespec="seconds"),
+            "route": "/ops",
+        }
+    )
+
+
 def _build_composite_focus_message() -> Optional[dict]:
     composite_picks = _build_composite_picks(days=1, limit=8)
     if not composite_picks:
         return None
 
+    execution_policy = _build_execution_policy()
     top_theme_seed = next((item for item in composite_picks if item.source_category == "theme_seed"), None)
     top_swing = next(
         (item for item in composite_picks if item.horizon_label in {"中期波段", "连涨接力"}),
@@ -8849,7 +10327,13 @@ def _build_composite_focus_message() -> Optional[dict]:
     elif focus_pick.source_category not in {"theme_seed"}:
         next_step = "先去推荐页深看原因和风险，再决定是不是今天的首要机会。"
 
-    body = "；".join(summary_parts) + f"。下一步：{next_step}"
+    policy_parts = [f"当前节奏：{execution_policy.market_phase_label} / {execution_policy.aggressiveness}。"]
+    if execution_policy.allowed_styles:
+        policy_parts.append(f"优先做 {' / '.join(execution_policy.allowed_styles[:2])}。")
+    if execution_policy.blocked_styles:
+        policy_parts.append(f"先别做 {' / '.join(execution_policy.blocked_styles[:2])}。")
+
+    body = " ".join(policy_parts) + " " + "；".join(summary_parts) + f"。下一步：{next_step}"
     level = _composite_pick_level(focus_pick)
 
     return _normalize_app_message(
@@ -8869,8 +10353,17 @@ def _build_action_board(limit: int = 6) -> list[ActionBoardItem]:
     def builder() -> list[ActionBoardItem]:
         now = datetime.now().isoformat()
         items: list[ActionBoardItem] = []
+        execution_policy = _build_execution_policy()
+        portfolio = _load_portfolio()
+        position_codes = {
+            str(raw_position.get("code", "")).strip()
+            for raw_position in portfolio.get("positions", [])
+            if isinstance(raw_position, dict) and str(raw_position.get("code", "")).strip()
+        }
 
         for alert in _build_risk_alerts()[:3]:
+            if alert.source == "position" and alert.source_id in position_codes:
+                continue
             items.append(
                 ActionBoardItem(
                     id=f"action-alert-{alert.id}",
@@ -8886,7 +10379,28 @@ def _build_action_board(limit: int = 6) -> list[ActionBoardItem]:
                 )
             )
 
-        portfolio = _load_portfolio()
+        items.append(
+            ActionBoardItem(
+                id="action-execution-policy",
+                kind="execution_policy",
+                level=(
+                    "critical"
+                    if execution_policy.risk_budget_pct <= 24
+                    else "warning"
+                    if execution_policy.risk_budget_pct <= 42
+                    else "info"
+                ),
+                title=f"{execution_policy.market_phase_label} / {execution_policy.aggressiveness}",
+                summary=execution_policy.summary,
+                action_label="看执行矩阵",
+                route="/(tabs)/brain",
+                source="execution_policy",
+                source_id=execution_policy.market_phase,
+                created_at=now,
+                discipline=execution_policy.key_actions[0] if execution_policy.key_actions else None,
+            )
+        )
+
         for raw_position in portfolio.get("positions", []):
             if not isinstance(raw_position, dict) or _to_int(raw_position.get("quantity")) <= 0:
                 continue
@@ -8956,6 +10470,36 @@ def _build_action_board(limit: int = 6) -> list[ActionBoardItem]:
                     source="signal",
                     source_id=pick.signal_id,
                     created_at=pick.timestamp,
+                    discipline=(
+                        f"{pick.discipline_label} · {pick.holding_window}"
+                        if pick.holding_window
+                        else pick.discipline_label
+                    ),
+                )
+            )
+
+        limit_up_candidates = _build_limit_up_opportunities(days=1, limit=3)
+        if limit_up_candidates:
+            top_limit_up = limit_up_candidates[0]
+            items.append(
+                ActionBoardItem(
+                    id=f"action-limit-up-{top_limit_up.code}",
+                    kind="limit_up",
+                    level=(
+                        "critical"
+                        if top_limit_up.risk_gate in {"硬风控开启", "暂停新增仓位"}
+                        else "warning"
+                        if top_limit_up.tradability_label in {"只看不追", "禁止出手", "只做记录"}
+                        else "info"
+                    ),
+                    title=f"{top_limit_up.code} {top_limit_up.scenario_label}",
+                    summary=f"{top_limit_up.risk_gate} / {top_limit_up.tradability_label} / {top_limit_up.trigger_summary}",
+                    action_label="看强势计划",
+                    route="/signals",
+                    source="limit_up",
+                    source_id=top_limit_up.code,
+                    created_at=now,
+                    discipline=f"{top_limit_up.entry_style} · {top_limit_up.holding_window}",
                 )
             )
 
@@ -9044,7 +10588,21 @@ def _build_action_board(limit: int = 6) -> list[ActionBoardItem]:
             key=lambda item: (_action_priority(item.level, item.kind), str(item.created_at)),
             reverse=False,
         )
-        return items[: max(1, min(limit, 12))]
+        selected = items[: max(1, min(limit, 12))]
+        required_kinds = {"execution_policy", "composite_pick"}
+        for required_kind in ("execution_policy", "composite_pick"):
+            if not any(item.kind == required_kind for item in items):
+                continue
+            if any(item.kind == required_kind for item in selected):
+                continue
+            candidate = next(item for item in items if item.kind == required_kind)
+            replace_index = len(selected) - 1
+            for idx in range(len(selected) - 1, -1, -1):
+                if selected[idx].kind not in {"alert", "position", "industry_capital"} | required_kinds:
+                    replace_index = idx
+                    break
+            selected[replace_index] = candidate
+        return selected
 
     return _cached_runtime_value(
         "action_board",
@@ -9270,10 +10828,27 @@ def _persist_learning_advance_state(**updates: object) -> dict:
 
 def _build_learning_health_snapshot() -> dict:
     learning = safe_load(_LEARNING_STATE, default={})
-    health = learning.get("health")
-    if isinstance(health, dict) and health:
-        return health
-    return safe_load(os.path.join(_DIR, "learning_health.json"), default={})
+    embedded_health = learning.get("health")
+    file_health = safe_load(os.path.join(_DIR, "learning_health.json"), default={})
+
+    def _health_snapshot_sort_key(snapshot: object) -> tuple[float, int]:
+        if not isinstance(snapshot, dict) or not snapshot:
+            return (0.0, 0)
+        timestamp = snapshot.get("timestamp")
+        if isinstance(timestamp, str):
+            try:
+                return (datetime.fromisoformat(timestamp).timestamp(), 1)
+            except ValueError:
+                pass
+        return (0.0, 1)
+
+    embedded_key = _health_snapshot_sort_key(embedded_health)
+    file_key = _health_snapshot_sort_key(file_health)
+    if file_key >= embedded_key and isinstance(file_health, dict) and file_health:
+        return file_health
+    if isinstance(embedded_health, dict) and embedded_health:
+        return embedded_health
+    return file_health if isinstance(file_health, dict) else {}
 
 
 def _summarize_regime(regime: str, score: float) -> str:
@@ -9503,6 +11078,9 @@ def _build_ops_recommendations(
     data_status: OpsDataStatus,
     learning: LearningProgress,
     daily_advance: LearningAdvanceStatus,
+    world_state_export: Optional[WorldStateExportStatus] = None,
+    execution_policy_export: Optional[ExecutionPolicyExportStatus] = None,
+    production_guard: Optional[ProductionGuardSnapshot] = None,
 ) -> list[OpsRecommendation]:
     recommendations: list[OpsRecommendation] = []
 
@@ -9552,6 +11130,58 @@ def _build_ops_recommendations(
                 level="warning",
                 title="准确率需要复盘",
                 message=f"当前决策准确率 {round(learning.decision_accuracy * 100, 1)}%，说明模型和规则还要继续校正。",
+            )
+        )
+    if world_state_export is not None and (
+        world_state_export.latest_export_id is None or world_state_export.stale
+    ):
+        recommendations.append(
+            OpsRecommendation(
+                level="info" if world_state_export.latest_export_id else "warning",
+                title="顶层世界状态导出待刷新",
+                message=(
+                    "world state 导出还没有生成，建议先触发 latest 导出，固定留档。"
+                    if world_state_export.latest_export_id is None
+                    else f"{world_state_export.period} world state 导出已过期，建议重新生成最新导出。"
+                ),
+            )
+        )
+    if execution_policy_export is not None and (
+        execution_policy_export.latest_export_id is None or execution_policy_export.stale
+    ):
+        recommendations.append(
+            OpsRecommendation(
+                level="info" if execution_policy_export.latest_export_id else "warning",
+                title="执行策略导出待刷新",
+                message=(
+                    "execution policy 导出还没有生成，建议先触发 latest 导出，固定留档。"
+                    if execution_policy_export.latest_export_id is None
+                    else f"{execution_policy_export.period} execution policy 导出已过期，建议重新生成最新导出。"
+                ),
+            )
+        )
+    if production_guard is not None and production_guard.hard_risk_gate:
+        recommendations.append(
+            OpsRecommendation(
+                level="critical",
+                title="生产风控已触发",
+                message=production_guard.summary,
+            )
+        )
+    elif production_guard is not None and production_guard.blocked_additions:
+        recommendations.append(
+            OpsRecommendation(
+                level="warning",
+                title="当前禁止新增仓位",
+                message=production_guard.summary,
+            )
+        )
+    if production_guard is not None and production_guard.unstable_strategies:
+        recommendations.append(
+            OpsRecommendation(
+                level="info",
+                title="Walk-forward 不稳定策略待降级",
+                message=f"当前需要继续压缩：{' / '.join(production_guard.unstable_strategies[:3])}。",
             )
         )
 
@@ -9720,8 +11350,12 @@ def _build_ops_summary() -> OpsSummary:
     ready, readiness_issues = _readiness_snapshot()
     system = _build_system_status()
     data_status = _build_ops_data_status()
+    world_state = _build_world_state_snapshot()
     learning = _build_learning_progress()
     daily_advance = _build_learning_advance_status()
+    world_state_export = _build_world_state_export_status(period="daily", ensure_fresh=True)
+    execution_policy_export = _build_execution_policy_export_status(period="daily", ensure_fresh=True)
+    production_guard = _build_production_guard_snapshot()
 
     with _OPS_LOCK:
         request_count = int(_OPS_STATE["request_count"])
@@ -9757,7 +11391,7 @@ def _build_ops_summary() -> OpsSummary:
 
     return OpsSummary(
         service="Alpha AI Trading API",
-        version="1.0.0",
+        version=_runtime_app_version(),
         started_at=_RUNTIME_STARTED_AT.isoformat(),
         uptime_seconds=max(0, int((datetime.now() - _RUNTIME_STARTED_AT).total_seconds())),
         ready=ready,
@@ -9777,6 +11411,10 @@ def _build_ops_summary() -> OpsSummary:
         active_strategies=system.active_strategies,
         data_status=data_status,
         routes=route_items[:8],
+        world_state=world_state,
+        world_state_export=world_state_export,
+        execution_policy_export=execution_policy_export,
+        production_guard=production_guard,
         recommendations=_build_ops_recommendations(
             ready=ready,
             readiness_issues=readiness_issues,
@@ -9786,7 +11424,3826 @@ def _build_ops_summary() -> OpsSummary:
             data_status=data_status,
             learning=learning,
             daily_advance=daily_advance,
+            world_state_export=world_state_export,
+            execution_policy_export=execution_policy_export,
+            production_guard=production_guard,
         ),
+    )
+
+
+_WORLD_STATE_DRIVER_LABELS = {
+    "s1_ma_trend": "均线趋势",
+    "s2_momentum": "多周期动量",
+    "s3_volatility": "波动稳定度",
+    "s4_advance_decline": "涨跌广度",
+    "s5_limit_ratio": "涨跌停比",
+    "s6_northbound": "北向资金",
+    "s7_margin_trend": "融资趋势",
+    "s8_index_rsi": "指数 RSI",
+}
+
+_WORLD_STATE_TECH_FOCUS = (
+    ("AI/算力", ("ai", "人工智能", "算力", "服务器", "数据", "通信", "半导体", "芯片", "数字")),
+    ("自主可控/半导体", ("自主可控", "国产替代", "信创", "半导体", "芯片", "制程", "设备")),
+    ("电力/储能", ("电力", "储能", "电网", "光伏", "风电", "新能源")),
+    ("机器人/无人系统", ("机器人", "无人", "自动化", "智驾", "工业软件")),
+    ("安全/军工", ("军工", "国防", "卫星", "安全", "军贸")),
+    ("资源/能源安全", ("油气", "天然气", "稀土", "资源", "能源安全", "反制")),
+)
+
+_PRODUCTION_WF_STRATEGY_MAP = {
+    "放量突破选股": "breakout",
+    "集合竞价选股": "auction",
+    "尾盘短线选股": "afternoon",
+    "低吸回调选股": "dip_buy",
+    "缩量整理选股": "consolidation",
+    "趋势跟踪选股": "trend_follow",
+    "板块轮动选股": "sector_rotation",
+    "事件驱动选股": "news_event",
+    "期货趋势选股": "futures_trend",
+    "币圈趋势选股": "crypto_trend",
+    "美股收盘分析": "us_stock",
+}
+
+
+_STRATEGY_GOVERNANCE_PROFILES = {
+    "趋势跟踪选股": {
+        "family": "trend",
+        "holding_window_cap": "2-5天趋势跟踪",
+        "discipline_label": "主线滚动",
+        "phase_fit": {
+            "trend_markup": 0.95,
+            "breakout_expansion": 0.82,
+            "rotation_up": 0.86,
+            "range_rotation": 0.58,
+            "weak_chop": 0.42,
+            "ice_repair": 0.48,
+            "valuation_reset": 0.28,
+            "risk_off": 0.18,
+        },
+        "horizon_focus": "trend",
+    },
+    "低吸回调选股": {
+        "family": "dip",
+        "holding_window_cap": "1-3天反弹跟踪",
+        "discipline_label": "回踩反弹",
+        "phase_fit": {
+            "trend_markup": 0.58,
+            "breakout_expansion": 0.42,
+            "rotation_up": 0.72,
+            "range_rotation": 0.78,
+            "weak_chop": 0.76,
+            "ice_repair": 0.84,
+            "valuation_reset": 0.62,
+            "risk_off": 0.32,
+        },
+        "horizon_focus": "short",
+    },
+    "集合竞价选股": {
+        "family": "auction",
+        "holding_window_cap": "T+1/T+2 速决",
+        "discipline_label": "开盘速决",
+        "phase_fit": {
+            "trend_markup": 0.62,
+            "breakout_expansion": 0.88,
+            "rotation_up": 0.74,
+            "range_rotation": 0.66,
+            "weak_chop": 0.72,
+            "ice_repair": 0.76,
+            "valuation_reset": 0.34,
+            "risk_off": 0.18,
+        },
+        "horizon_focus": "short",
+    },
+    "缩量整理选股": {
+        "family": "swing",
+        "holding_window_cap": "2-4天结构确认",
+        "discipline_label": "整理待发",
+        "phase_fit": {
+            "trend_markup": 0.78,
+            "breakout_expansion": 0.64,
+            "rotation_up": 0.72,
+            "range_rotation": 0.64,
+            "weak_chop": 0.38,
+            "ice_repair": 0.42,
+            "valuation_reset": 0.26,
+            "risk_off": 0.14,
+        },
+        "horizon_focus": "swing",
+    },
+    "板块轮动选股": {
+        "family": "rotation",
+        "holding_window_cap": "1-3天轮动快切",
+        "discipline_label": "轮动快切",
+        "phase_fit": {
+            "trend_markup": 0.62,
+            "breakout_expansion": 0.58,
+            "rotation_up": 0.9,
+            "range_rotation": 0.82,
+            "weak_chop": 0.54,
+            "ice_repair": 0.58,
+            "valuation_reset": 0.28,
+            "risk_off": 0.16,
+        },
+        "horizon_focus": "short",
+    },
+    "事件驱动选股": {
+        "family": "event",
+        "holding_window_cap": "1-4天事件跟踪",
+        "discipline_label": "事件催化",
+        "phase_fit": {
+            "trend_markup": 0.7,
+            "breakout_expansion": 0.74,
+            "rotation_up": 0.68,
+            "range_rotation": 0.62,
+            "weak_chop": 0.56,
+            "ice_repair": 0.66,
+            "valuation_reset": 0.54,
+            "risk_off": 0.28,
+        },
+        "horizon_focus": "short",
+    },
+    "尾盘短线选股": {
+        "family": "afternoon",
+        "holding_window_cap": "T+1/T+2 尾盘试错",
+        "discipline_label": "尾盘快切",
+        "phase_fit": {
+            "trend_markup": 0.46,
+            "breakout_expansion": 0.62,
+            "rotation_up": 0.6,
+            "range_rotation": 0.7,
+            "weak_chop": 0.78,
+            "ice_repair": 0.72,
+            "valuation_reset": 0.36,
+            "risk_off": 0.18,
+        },
+        "horizon_focus": "short",
+    },
+    "放量突破选股": {
+        "family": "breakout",
+        "holding_window_cap": "1-2天强弱确认",
+        "discipline_label": "突破试错",
+        "phase_fit": {
+            "trend_markup": 0.68,
+            "breakout_expansion": 0.74,
+            "rotation_up": 0.56,
+            "range_rotation": 0.42,
+            "weak_chop": 0.24,
+            "ice_repair": 0.3,
+            "valuation_reset": 0.18,
+            "risk_off": 0.08,
+        },
+        "horizon_focus": "short",
+    },
+    "隔夜选股": {
+        "family": "overnight",
+        "holding_window_cap": "隔日兑现",
+        "discipline_label": "隔日速决",
+        "phase_fit": {
+            "trend_markup": 0.44,
+            "breakout_expansion": 0.56,
+            "rotation_up": 0.38,
+            "range_rotation": 0.34,
+            "weak_chop": 0.22,
+            "ice_repair": 0.3,
+            "valuation_reset": 0.12,
+            "risk_off": 0.05,
+        },
+        "horizon_focus": "short",
+    },
+}
+
+
+def _default_strategy_governance_profile(strategy_name: str) -> dict[str, object]:
+    if any(token in strategy_name for token in ("期货", "币圈", "美股", "港股", "可转债")):
+        return {
+            "family": "cross_asset",
+            "holding_window_cap": "观察为主",
+            "discipline_label": "跨市场观察",
+            "phase_fit": {key: 0.35 for key in (
+                "trend_markup",
+                "breakout_expansion",
+                "rotation_up",
+                "range_rotation",
+                "weak_chop",
+                "ice_repair",
+                "valuation_reset",
+                "risk_off",
+            )},
+            "horizon_focus": "short",
+        }
+    return {
+        "family": "general",
+        "holding_window_cap": "1-3天观察",
+        "discipline_label": "继续观察",
+        "phase_fit": {key: 0.5 for key in (
+            "trend_markup",
+            "breakout_expansion",
+            "rotation_up",
+            "range_rotation",
+            "weak_chop",
+            "ice_repair",
+            "valuation_reset",
+            "risk_off",
+        )},
+        "horizon_focus": "short",
+    }
+
+
+def _strategy_governance_profile(strategy_name: str) -> dict[str, object]:
+    profile = _STRATEGY_GOVERNANCE_PROFILES.get(strategy_name)
+    if profile is None:
+        profile = _default_strategy_governance_profile(strategy_name)
+    return dict(profile)
+
+
+def _world_driver_interpretation(score: float) -> str:
+    if score >= 0.66:
+        return "明显偏强"
+    if score >= 0.56:
+        return "轻度偏强"
+    if score <= 0.34:
+        return "明显偏弱"
+    if score <= 0.44:
+        return "轻度偏弱"
+    return "中性"
+
+
+def _world_state_direction_matches(text: str, entry: dict) -> bool:
+    haystack = str(text or "").lower()
+    if not haystack:
+        return False
+    direction = str(entry.get("direction", "")).strip()
+    if direction and direction.lower() in haystack:
+        return True
+    for sector in entry.get("focus_sectors", []) or []:
+        sector_text = str(sector).strip()
+        if sector_text and sector_text.lower() in haystack:
+            return True
+    for keyword in entry.get("keywords", []) or []:
+        keyword_text = str(keyword).strip().lower()
+        if keyword_text and keyword_text in haystack:
+            return True
+    return False
+
+
+def _world_state_component(
+    key: str,
+    label: str,
+    score: float,
+    bias: str,
+    summary: str,
+    drivers: list[str],
+) -> dict[str, object]:
+    return {
+        "key": key,
+        "label": label,
+        "score": round(_clamp(score, 0.0, 100.0), 1),
+        "bias": str(bias or "中性"),
+        "summary": str(summary or ""),
+        "drivers": [str(item).strip() for item in drivers if str(item).strip()][:4],
+    }
+
+
+def _world_state_parse_timestamp(value: object) -> Optional[datetime]:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    parsed = _parse_digest_timestamp(text)
+    if parsed is not None:
+        return parsed
+    for fmt in ("%Y-%m-%d", "%Y/%m/%d", "%Y.%m.%d"):
+        try:
+            return datetime.strptime(text, fmt)
+        except ValueError:
+            continue
+    return None
+
+
+def _world_state_freshness_score(value: object) -> float:
+    parsed = _world_state_parse_timestamp(value)
+    if parsed is None:
+        return 42.0
+    age_hours = max((datetime.now() - parsed).total_seconds() / 3600.0, 0.0)
+    if age_hours <= 6:
+        return 92.0
+    if age_hours <= 24:
+        return 84.0
+    if age_hours <= 72:
+        return 72.0
+    if age_hours <= 168:
+        return 58.0
+    return 44.0
+
+
+def _world_state_freshness_label(score: float) -> str:
+    if score >= 88:
+        return "实时"
+    if score >= 76:
+        return "新鲜"
+    if score >= 62:
+        return "近期待验证"
+    if score >= 50:
+        return "偏旧"
+    return "陈旧"
+
+
+def _world_state_latest_timestamp(values: list[object]) -> Optional[str]:
+    latest: Optional[datetime] = None
+    latest_text: Optional[str] = None
+    for value in values:
+        parsed = _world_state_parse_timestamp(value)
+        if parsed is None:
+            continue
+        if latest is None or parsed > latest:
+            latest = parsed
+            latest_text = str(value)
+    return latest_text
+
+
+def _world_state_source_status(
+    key: str,
+    label: str,
+    updated_at: object,
+    signal_count: int,
+    summary: str,
+    *,
+    reliability_score: float = 50.0,
+    authority_score: float = 50.0,
+    **extra: object,
+) -> dict[str, object]:
+    freshness_score = _world_state_freshness_score(updated_at)
+    payload = {
+        "key": key,
+        "label": label,
+        "updated_at": str(updated_at).strip() or None,
+        "freshness_score": round(freshness_score, 1),
+        "freshness_label": _world_state_freshness_label(freshness_score),
+        "reliability_score": round(_clamp(reliability_score, 0.0, 100.0), 1),
+        "authority_score": round(_clamp(authority_score, 0.0, 100.0), 1),
+        "timeliness_score": round(_clamp(freshness_score, 0.0, 100.0), 1),
+        "signal_count": max(0, signal_count),
+        "summary": summary,
+    }
+    payload.update(extra)
+    return payload
+
+
+def _world_state_direction_runtime_snapshot(
+    entry: dict,
+    *,
+    events: list[dict],
+    digest_heatmap: dict[str, object],
+    official_watch: dict[str, dict],
+    official_cards_map: dict[str, dict],
+    official_ingest_map: dict[str, dict],
+    execution_timeline: dict[str, dict],
+    company_map: dict[str, dict],
+    research_items: list[dict],
+) -> dict[str, object]:
+    direction_id = str(entry.get("id", "")).strip()
+    direction = str(entry.get("direction", "")).strip()
+    policy_bucket = str(entry.get("policy_bucket", "")).strip() or None
+    focus_sectors = [str(item).strip() for item in entry.get("focus_sectors", []) if str(item).strip()]
+    keywords = [str(item).strip() for item in entry.get("keywords", []) if str(item).strip()]
+    focus_sector = focus_sectors[0] if focus_sectors else None
+    matched_events = 0
+    bullish = 0.0
+    bearish = 0.0
+    event_signal = 0.0
+    event_titles: list[str] = []
+    event_timestamps: list[object] = []
+
+    heatmap_sectors = digest_heatmap.get("sectors", {}) if isinstance(digest_heatmap, dict) else {}
+    sector_heat_score = 0.0
+    if isinstance(heatmap_sectors, dict):
+        for sector_name, raw_score in heatmap_sectors.items():
+            if _match_policy_focus_sectors(tuple(focus_sectors), [str(sector_name)]):
+                sector_heat_score += abs(_to_float(raw_score) or 0.0)
+
+    for raw_event in events[:36]:
+        if not isinstance(raw_event, dict):
+            continue
+        text = " ".join(
+            [
+                str(raw_event.get("title", "")),
+                str(raw_event.get("strategy_implications", "")),
+                str(raw_event.get("summary", "")),
+                " ".join(str(item) for item in raw_event.get("affected_sectors", []) if str(item).strip()),
+            ]
+        )
+        if not _world_state_direction_matches(text, entry):
+            continue
+        matched_events += 1
+        magnitude = max(1.0, _to_float(raw_event.get("impact_magnitude")) or 1.0)
+        confidence = _clamp(_to_float(raw_event.get("confidence")) or 0.5, 0.25, 1.0)
+        urgency_label = str(raw_event.get("urgency", "normal")).lower()
+        urgency_weight = {"critical": 1.8, "urgent": 1.45, "high": 1.3, "normal": 1.0, "low": 0.75}.get(
+            urgency_label,
+            1.0,
+        )
+        recency_score = _world_state_freshness_score(raw_event.get("timestamp")) / 100.0
+        impact = magnitude * confidence * urgency_weight * max(0.55, recency_score)
+        direction_flag = str(raw_event.get("impact_direction", "")).lower()
+        if direction_flag == "bullish":
+            bullish += impact
+            event_signal += impact
+        elif direction_flag == "bearish":
+            bearish += impact
+            event_signal -= impact
+        else:
+            event_signal += impact * 0.2
+        title = str(raw_event.get("title", "")).strip()
+        if title and title not in event_titles:
+            event_titles.append(title)
+        if raw_event.get("timestamp"):
+            event_timestamps.append(raw_event.get("timestamp"))
+
+    official_watch_entry = official_watch.get(direction_id, {})
+    official_cards_entry = official_cards_map.get(direction_id, {})
+    official_ingest_entry = official_ingest_map.get(direction_id, {})
+    timeline_entry = execution_timeline.get(direction_id, {})
+    company_entry = company_map.get(direction_id, {})
+
+    official_sources = official_watch_entry.get("official_sources", []) if isinstance(official_watch_entry, dict) else []
+    official_watchpoints = (
+        official_watch_entry.get("official_watchpoints", []) if isinstance(official_watch_entry, dict) else []
+    )
+    official_cards = official_cards_entry.get("official_cards", []) if isinstance(official_cards_entry, dict) else []
+    official_source_entries = (
+        official_ingest_entry.get("official_source_entries", []) if isinstance(official_ingest_entry, dict) else []
+    )
+    manual_official_entries = [
+        item
+        for item in official_source_entries
+        if isinstance(item, dict)
+        and str(item.get("source_origin") or "").strip() != "auto_runtime"
+    ]
+    auto_official_entries = [
+        item
+        for item in official_source_entries
+        if isinstance(item, dict)
+        and str(item.get("source_origin") or "").strip() == "auto_runtime"
+    ]
+    official_dates = [
+        item.get("published_at")
+        for item in official_source_entries
+        if isinstance(item, dict) and str(item.get("published_at", "")).strip()
+    ]
+    latest_official_at = _world_state_latest_timestamp(official_dates)
+    official_freshness = _world_state_freshness_score(latest_official_at)
+    official_authority_bonus = 0.0
+    for raw_source in official_sources:
+        source_name = str(raw_source).strip()
+        if any(token in source_name for token in ("国务院", "国常会", "中央")):
+            official_authority_bonus += 8.0
+        elif any(token in source_name for token in ("发改委", "工信部", "财政部", "国家数据局", "央行")):
+            official_authority_bonus += 5.0
+        else:
+            official_authority_bonus += 2.0
+    official_score = round(
+        _clamp(
+            34.0
+            + min(len(official_sources), 4) * 6.0
+            + min(len(official_watchpoints), 4) * 4.0
+            + min(len(official_cards), 3) * 4.0
+            + min(len(manual_official_entries), 4) * 6.0
+            + min(len(auto_official_entries), 4) * 2.5
+            + min(official_authority_bonus, 18.0)
+            + official_freshness * 0.22,
+            24.0,
+            96.0,
+        ),
+        1,
+    )
+
+    timeline_checkpoints = timeline_entry.get("timeline_checkpoints", []) if isinstance(timeline_entry, dict) else []
+    official_documents = timeline_entry.get("official_documents", []) if isinstance(timeline_entry, dict) else []
+    timeline_events = timeline_entry.get("timeline_events", []) if isinstance(timeline_entry, dict) else []
+    latest_timeline_at = _world_state_latest_timestamp(
+        [
+            item.get("timestamp")
+            for item in timeline_events
+            if isinstance(item, dict)
+        ]
+    ) if isinstance(timeline_entry, dict) else None
+    timeline_freshness = _world_state_freshness_score(latest_timeline_at or latest_official_at)
+    timeline_score = round(
+        _clamp(
+            36.0
+            + min(len(timeline_checkpoints), 5) * 6.0
+            + min(len(official_documents), 4) * 4.0
+            + timeline_freshness * 0.18,
+            24.0,
+            96.0,
+        ),
+        1,
+    )
+
+    watchlist = company_entry.get("company_watchlist", []) if isinstance(company_entry, dict) else []
+    upstream_bonus = sum(
+        1
+        for item in watchlist
+        if isinstance(item, dict) and str(item.get("chain_position", "")).strip() == "上游"
+    )
+    core_role_bonus = sum(
+        1
+        for item in watchlist
+        if isinstance(item, dict)
+        and any(token in str(item.get("role", "")) for token in ("核心", "替代", "资源", "设备", "底座", "平台"))
+    )
+    chain_control_score = round(
+        _clamp(
+            40.0
+            + min(len(watchlist), 5) * 6.0
+            + min(upstream_bonus, 3) * 6.0
+            + min(core_role_bonus, 4) * 4.0
+            + min(len(entry.get("supply_drivers", []) or []), 4) * 3.0
+            + min(sector_heat_score, 4.0) * 4.0,
+            26.0,
+            96.0,
+        ),
+        1,
+    )
+
+    direction_research_items = [
+        item for item in research_items if isinstance(item, dict) and str(item.get("direction_id", "")).strip() == direction_id
+    ]
+    research_timestamps = [item.get("updated_at") for item in direction_research_items if item.get("updated_at")]
+    latest_research_at = _world_state_latest_timestamp(research_timestamps)
+    research_freshness = _world_state_freshness_score(latest_research_at)
+    status_score = 0.0
+    for item in direction_research_items[:24]:
+        status = str(item.get("status", "")).strip()
+        weight = {
+            "验证增强": 14.0,
+            "已验证": 12.0,
+            "继续验证": 7.0,
+            "待验证": 4.0,
+            "出现阻力": -12.0,
+        }.get(status, 2.0)
+        recency = max(0.5, _world_state_freshness_score(item.get("updated_at")) / 100.0)
+        status_score += weight * recency
+    research_score = round(
+        _clamp(
+            42.0
+            + min(len(direction_research_items), 4) * 4.0
+            + research_freshness * 0.16
+            + status_score,
+            18.0,
+            96.0,
+        ),
+        1,
+    )
+
+    merged = " ".join(
+        [
+            direction,
+            " ".join(focus_sectors),
+            " ".join(keywords),
+            " ".join(str(item) for item in entry.get("demand_drivers", []) if str(item).strip()),
+            " ".join(str(item) for item in entry.get("supply_drivers", []) if str(item).strip()),
+            " ".join(str(item) for item in entry.get("upstream", []) if str(item).strip()),
+            " ".join(str(item) for item in entry.get("midstream", []) if str(item).strip()),
+            " ".join(str(item) for item in entry.get("downstream", []) if str(item).strip()),
+        ]
+    ).lower()
+    technology_focus = None
+    for label, tokens in _WORLD_STATE_TECH_FOCUS:
+        if any(token in merged for token in tokens):
+            technology_focus = label
+            break
+
+    technology_breakthrough_events = 0
+    for raw_event in events[:36]:
+        if not isinstance(raw_event, dict):
+            continue
+        text = " ".join(
+            [
+                str(raw_event.get("title", "")),
+                str(raw_event.get("summary", "")),
+                str(raw_event.get("strategy_implications", "")),
+            ]
+        ).lower()
+        if not _world_state_direction_matches(text, entry):
+            continue
+        if any(
+            token in text
+            for token in ("突破", "提速", "量产", "迭代", "升级", "先进制程", "新模型", "算力建设", "capex", "资本开支")
+        ):
+            technology_breakthrough_events += 1
+    official_breakthrough_mentions = 0
+    for item in official_source_entries:
+        if not isinstance(item, dict):
+            continue
+        text = " ".join(
+            [
+                str(item.get("title", "")),
+                str(item.get("excerpt", "")),
+                " ".join(str(point) for point in item.get("key_points", []) if str(point).strip()),
+            ]
+        ).lower()
+        if any(
+            token in text
+            for token in ("突破", "升级", "先进制程", "算力", "量产", "国产替代", "资本开支", "试点")
+        ):
+            official_breakthrough_mentions += 1
+    research_breakthrough_mentions = 0
+    for item in direction_research_items[:24]:
+        text = " ".join(
+            [
+                str(item.get("title", "")),
+                str(item.get("note", "")),
+                str(item.get("status", "")),
+            ]
+        ).lower()
+        if any(token in text for token in ("突破", "验证增强", "订单", "交付", "客户", "量产", "落地")):
+            research_breakthrough_mentions += 1
+    technology_breakthrough_score = round(
+        _clamp(
+            38.0
+            + (10.0 if technology_focus is not None else 0.0)
+            + min(technology_breakthrough_events, 4) * 8.0
+            + min(official_breakthrough_mentions, 4) * 5.0
+            + min(research_breakthrough_mentions, 3) * 4.0
+            + min(sector_heat_score, 4.0) * 2.0,
+            18.0,
+            96.0,
+        ),
+        1,
+    )
+
+    total_score = round(
+        _clamp(
+            (48.0 + event_signal * 7.0 + sector_heat_score * 3.5)
+            * 0.28
+            + official_score * 0.18
+            + timeline_score * 0.12
+            + chain_control_score * 0.22
+            + research_score * 0.14
+            + technology_breakthrough_score * 0.06,
+            20.0,
+            96.0,
+        ),
+        1,
+    )
+    summary = (
+        f"{direction} 当前外部证据分 {total_score:.1f}。"
+        f" 事件 {matched_events} 条、官方口径 {len(manual_official_entries)}+自动跟踪 {len(auto_official_entries)} 条、"
+        f"公司链路 {len(watchlist)} 个、调研回写 {len(direction_research_items)} 条。"
+    )
+    return {
+        "direction_id": direction_id,
+        "direction": direction,
+        "policy_bucket": policy_bucket,
+        "focus_sector": focus_sector,
+        "technology_focus": technology_focus,
+        "event_score": round(_clamp(48.0 + event_signal * 7.0 + sector_heat_score * 3.5, 18.0, 96.0), 1),
+        "official_score": official_score,
+        "timeline_score": timeline_score,
+        "chain_control_score": chain_control_score,
+        "research_score": research_score,
+        "technology_breakthrough_score": technology_breakthrough_score,
+        "total_score": total_score,
+        "matched_events": matched_events,
+        "bullish": bullish,
+        "bearish": bearish,
+        "event_titles": event_titles[:3],
+        "latest_event_at": _world_state_latest_timestamp(event_timestamps),
+        "latest_official_at": latest_official_at,
+        "latest_research_at": latest_research_at,
+        "summary": summary,
+    }
+
+
+def _direction_merged_text(entry: dict) -> str:
+    return " ".join(
+        [
+            str(entry.get("direction", "")),
+            str(entry.get("policy_bucket", "")),
+            " ".join(str(item) for item in entry.get("focus_sectors", []) if str(item).strip()),
+            " ".join(str(item) for item in entry.get("keywords", []) if str(item).strip()),
+            " ".join(str(item) for item in entry.get("demand_drivers", []) if str(item).strip()),
+            " ".join(str(item) for item in entry.get("supply_drivers", []) if str(item).strip()),
+            " ".join(str(item) for item in entry.get("upstream", []) if str(item).strip()),
+            " ".join(str(item) for item in entry.get("midstream", []) if str(item).strip()),
+            " ".join(str(item) for item in entry.get("downstream", []) if str(item).strip()),
+        ]
+    ).lower()
+
+
+def _world_state_direction_hard_source_score(
+    entry: dict,
+    *,
+    official_fulltext: dict[str, object],
+    shipping_ais: dict[str, object],
+    freight_rates: dict[str, object],
+    commodity_terminal: dict[str, object],
+    macro_rates_fx: dict[str, object],
+) -> float:
+    merged = _direction_merged_text(entry)
+    score = 50.0
+
+    documents = official_fulltext.get("documents", []) if isinstance(official_fulltext.get("documents"), list) else []
+    doc_matches = 0
+    for item in documents[:60]:
+        if not isinstance(item, dict):
+            continue
+        text = " ".join(
+            [
+                str(item.get("title", "")),
+                str(item.get("excerpt", "")),
+                " ".join(str(v) for v in item.get("keywords", []) if str(v).strip()),
+                " ".join(str(v) for v in item.get("affected_directions", []) if str(v).strip()),
+            ]
+        ).lower()
+        if _world_state_direction_matches(text, entry):
+            doc_matches += 1
+    score += min(doc_matches, 5) * 5.0
+
+    routes = shipping_ais.get("routes", []) if isinstance(shipping_ais.get("routes"), list) else []
+    route_impact = max((_to_float(item.get("estimated_flow_impact_pct")) or 0.0) for item in routes) if routes else 0.0
+    if any(token in merged for token in ("能源", "油气", "油运", "航运", "军工", "资源", "黄金", "安全")):
+        score += min(18.0, route_impact * 0.24)
+    if any(token in merged for token in ("航空", "机场", "化工", "消费", "高估值", "科技成长")):
+        score -= min(16.0, route_impact * 0.22)
+
+    commodities = commodity_terminal.get("commodities", []) if isinstance(commodity_terminal.get("commodities"), list) else []
+    commodity_pressure = 0.0
+    energy_pressure = 0.0
+    for item in commodities[:24]:
+        if not isinstance(item, dict):
+            continue
+        name = str(item.get("name", "")).lower()
+        pressure = abs(_to_float(item.get("change_pct_1d")) or 0.0) * 4.0 + abs(_to_float(item.get("change_pct_5d")) or 0.0) * 1.5
+        commodity_pressure = max(commodity_pressure, pressure)
+        if any(token in name for token in ("原油", "天然气", "lng", "煤", "油")):
+            energy_pressure = max(energy_pressure, pressure)
+    if any(token in merged for token in ("能源", "油气", "煤炭", "有色", "资源", "黄金")):
+        score += min(14.0, energy_pressure * 0.35 + commodity_pressure * 0.1)
+    if any(token in merged for token in ("航空", "机场", "化工", "消费", "高估值", "科技成长")):
+        score -= min(14.0, energy_pressure * 0.32)
+
+    instruments = macro_rates_fx.get("instruments", []) if isinstance(macro_rates_fx.get("instruments"), list) else []
+    risk_appetite = 50.0
+    for item in instruments:
+        if not isinstance(item, dict):
+            continue
+        if str(item.get("key") or "") == "ca_risk_appetite":
+            risk_appetite = _to_float(item.get("score")) or 50.0
+            break
+    if risk_appetite <= 42.0:
+        if any(token in merged for token in ("高股息", "银行", "保险", "资源", "能源", "军工", "防御")):
+            score += min(12.0, (50.0 - risk_appetite) * 0.6)
+        if any(token in merged for token in ("人工智能", "算力", "半导体", "机器人", "科技")):
+            score -= min(12.0, (50.0 - risk_appetite) * 0.6)
+    elif risk_appetite >= 62.0:
+        if any(token in merged for token in ("人工智能", "算力", "半导体", "机器人", "科技")):
+            score += min(12.0, (risk_appetite - 50.0) * 0.5)
+        if any(token in merged for token in ("高股息", "银行", "资源", "防御")):
+            score -= min(8.0, (risk_appetite - 50.0) * 0.35)
+
+    lanes = freight_rates.get("lanes", []) if isinstance(freight_rates.get("lanes"), list) else []
+    freight_pressure = max(
+        (abs(_to_float(item.get("rate_change_pct_1d")) or 0.0) * 4.0 + (_to_float(item.get("insurance_premium_bp")) or 0.0) * 0.2)
+        for item in lanes
+    ) if lanes else 0.0
+    if any(token in merged for token in ("航运", "物流", "油运", "港口")):
+        score += min(10.0, freight_pressure * 0.25)
+    if any(token in merged for token in ("航空", "机场", "消费", "制造")):
+        score -= min(8.0, freight_pressure * 0.18)
+
+    return round(_clamp(score, 12.0, 96.0), 1)
+
+
+def _world_state_structural_context(
+    *,
+    market_phase: str,
+    style_bias: str,
+) -> dict[str, object]:
+    directions = _load_policy_direction_catalog()
+    digest = _load_news_digest()
+    events = digest.get("events", []) if isinstance(digest, dict) else []
+    heatmap = digest.get("heatmap", {}) if isinstance(digest, dict) else {}
+    company_map = _load_industry_capital_company_map()
+    official_watch = _load_policy_official_watch()
+    official_cards_map = _load_policy_official_cards()
+    official_ingest_map = _load_policy_official_ingest()
+    execution_timeline = _load_policy_execution_timeline()
+    research_box = _load_industry_capital_research_log()
+    research_items = research_box.get("items", []) if isinstance(research_box, dict) else []
+    official_fulltext = _load_world_official_fulltext()
+    shipping_ais = _load_world_shipping_ais()
+    freight_rates = _load_world_freight_rates()
+    commodity_terminal = _load_world_commodity_terminal()
+    macro_rates_fx = _load_world_macro_rates_fx()
+
+    ranked: list[dict[str, object]] = []
+    for entry in directions:
+        if not isinstance(entry, dict):
+            continue
+        snapshot = _world_state_direction_runtime_snapshot(
+            entry,
+            events=events,
+            digest_heatmap=heatmap,
+            official_watch=official_watch,
+            official_cards_map=official_cards_map,
+            official_ingest_map=official_ingest_map,
+            execution_timeline=execution_timeline,
+            company_map=company_map,
+            research_items=research_items if isinstance(research_items, list) else [],
+        )
+        hard_source_score = _world_state_direction_hard_source_score(
+            entry,
+            official_fulltext=official_fulltext,
+            shipping_ais=shipping_ais,
+            freight_rates=freight_rates,
+            commodity_terminal=commodity_terminal,
+            macro_rates_fx=macro_rates_fx,
+        )
+        snapshot["hard_source_score"] = hard_source_score
+        snapshot["total_score"] = round(
+            _clamp(
+                (_to_float(snapshot.get("total_score")) or 50.0) * 0.92
+                + hard_source_score * 0.08,
+                20.0,
+                96.0,
+            ),
+            1,
+        )
+        snapshot["summary"] = f"{snapshot.get('summary', '')} 硬源驱动分 {hard_source_score:.1f}。".strip()
+        ranked.append(snapshot)
+
+    ranked.sort(key=lambda item: (_to_float(item.get("total_score")) or 0.0, _to_float(item.get("event_score")) or 0.0), reverse=True)
+    top = ranked[0] if ranked else None
+    try:
+        from world_cross_asset_engine import build_cross_asset_signals_and_regions
+
+        cross_asset_payload = build_cross_asset_signals_and_regions(
+            macro_rates_fx=macro_rates_fx,
+            commodity_terminal=commodity_terminal,
+            shipping_ais=shipping_ais,
+            freight_rates=freight_rates,
+            official_fulltext=official_fulltext,
+            event_cascades=build_event_cascades(events),
+        )
+    except Exception as exc:
+        logger.debug("build_cross_asset_signals_and_regions failed: %s", exc)
+        cross_asset_payload = {"signals": [], "regional_pressures": []}
+    cross_asset_signals = [
+        item for item in cross_asset_payload.get("signals", []) if isinstance(item, dict)
+    ]
+    regional_pressures = [
+        item for item in cross_asset_payload.get("regional_pressures", []) if isinstance(item, dict)
+    ]
+    if not cross_asset_signals:
+        instruments = macro_rates_fx.get("instruments", []) if isinstance(macro_rates_fx.get("instruments"), list) else []
+        risk_score = 50.0
+        for item in instruments:
+            if not isinstance(item, dict):
+                continue
+            if str(item.get("key") or "").strip() == "ca_risk_appetite":
+                risk_score = _to_float(item.get("score")) or 50.0
+                break
+        cross_asset_signals.append(
+            {
+                "key": "macro_risk",
+                "label": "全球风险偏好",
+                "level": "warning" if risk_score <= 42.0 else "info",
+                "score": round(_clamp(risk_score, 0.0, 100.0), 1),
+                "bias": "risk_off" if risk_score <= 42.0 else "risk_on" if risk_score >= 62.0 else "neutral",
+                "summary": f"当前全球风险偏好 {risk_score:.1f} 分，先看估值和风格是否继续切换。",
+                "action_type": "reduce" if risk_score <= 42.0 else "observe",
+                "targets": ["高估值成长", "防御现金流"] if risk_score <= 42.0 else ["成长主线", "科技龙头"],
+                "source_keys": ["macro_rates_fx"],
+            }
+        )
+        routes = shipping_ais.get("routes", []) if isinstance(shipping_ais.get("routes"), list) else []
+        if routes:
+            route_impact = max((_to_float(item.get("estimated_flow_impact_pct")) or 0.0) for item in routes)
+            cross_asset_signals.append(
+                {
+                    "key": "shipping_pressure",
+                    "label": "航运与运力扰动",
+                    "level": "critical" if route_impact >= 60.0 else "warning" if route_impact >= 25.0 else "info",
+                    "score": round(_clamp(route_impact * 1.15, 0.0, 100.0), 1),
+                    "bias": "stress" if route_impact >= 25.0 else "monitor",
+                    "summary": "关键航线和放行范围仍在变化，继续跟踪运力与保险扩散。",
+                    "action_type": "add" if route_impact >= 25.0 else "observe",
+                    "targets": ["油运", "能源安全", "航空下游风险"],
+                    "source_keys": ["shipping_ais", "freight_rates"],
+                }
+            )
+        commodities = (
+            commodity_terminal.get("commodities", [])
+            if isinstance(commodity_terminal.get("commodities"), list)
+            else []
+        )
+        if commodities:
+            commodity_score = max(
+                abs(_to_float(item.get("change_pct_1d")) or 0.0) * 5.0
+                + abs(_to_float(item.get("change_pct_5d")) or 0.0) * 2.0
+                for item in commodities
+                if isinstance(item, dict)
+            )
+            cross_asset_signals.append(
+                {
+                    "key": "commodity_pressure",
+                    "label": "商品与通胀传导",
+                    "level": "warning" if commodity_score >= 48.0 else "info",
+                    "score": round(_clamp(commodity_score, 0.0, 100.0), 1),
+                    "bias": "inflation_up" if commodity_score >= 36.0 else "mixed",
+                    "summary": "商品终端波动已经出现，先看利润率承压链和资源链谁更占优。",
+                    "action_type": "reduce" if commodity_score >= 36.0 else "observe",
+                    "targets": ["高估值成长", "航空", "化工下游", "资源链"],
+                    "source_keys": ["commodity_terminal"],
+                }
+            )
+        documents = official_fulltext.get("documents", []) if isinstance(official_fulltext.get("documents"), list) else []
+        if documents:
+            cross_asset_signals.append(
+                {
+                    "key": "official_confirm",
+                    "label": "官方原文确认",
+                    "level": "info",
+                    "score": round(_clamp(len(documents) * 8.0, 0.0, 100.0), 1),
+                    "bias": "confirmed" if len(documents) >= 3 else "early",
+                    "summary": "当前已有官方全文/原文支撑，可继续沿权威口径确认主线。",
+                    "action_type": "add" if len(documents) >= 3 else "observe",
+                    "targets": ["政策主线", "预算兑现链"],
+                    "source_keys": ["official_fulltext"],
+                }
+            )
+    if not regional_pressures:
+        regional_map: dict[str, dict[str, object]] = {}
+        for route in shipping_ais.get("routes", []) if isinstance(shipping_ais.get("routes"), list) else []:
+            if not isinstance(route, dict):
+                continue
+            impact = _to_float(route.get("estimated_flow_impact_pct")) or 0.0
+            level = "critical" if impact >= 60.0 else "warning" if impact >= 25.0 else "info"
+            countries = [str(item).strip() for item in route.get("affected_countries", []) if str(item).strip()]
+            region = "全球"
+            if any(country in {"伊朗", "沙特", "阿联酋", "以色列"} for country in countries):
+                region = "中东"
+            elif any(country in {"中国", "日本", "韩国"} for country in countries):
+                region = "东亚"
+            bucket = regional_map.setdefault(
+                region,
+                {
+                    "region": region,
+                    "level": level,
+                    "score": 0.0,
+                    "summary": "",
+                    "affected_countries": [],
+                    "affected_routes": [],
+                    "exposed_industries": ["油运", "航空", "化工下游"],
+                },
+            )
+            bucket["score"] = max(float(bucket["score"]), round(_clamp(36.0 + impact * 0.7, 0.0, 100.0), 1))
+            if level == "critical" or bucket["level"] != "critical" and level == "warning":
+                bucket["level"] = level
+            for country in countries:
+                if country not in bucket["affected_countries"]:
+                    bucket["affected_countries"].append(country)
+            route_name = str(route.get("route") or "").strip()
+            if route_name and route_name not in bucket["affected_routes"]:
+                bucket["affected_routes"].append(route_name)
+        for item in regional_map.values():
+            item["summary"] = (
+                f"{item['region']} 当前更受通道和地缘扰动影响，"
+                f"重点看 {' / '.join(item['affected_routes'][:2]) or '关键路线'}。"
+            )
+            regional_pressures.append(item)
+
+    technology_focus = None
+    if top is not None:
+        technology_focus = str(top.get("technology_focus") or "").strip() or None
+
+    digest_sentiment = _to_float(heatmap.get("sentiment")) if isinstance(heatmap, dict) else None
+    if digest_sentiment is None:
+        digest_sentiment = _to_float(digest.get("sentiment")) if isinstance(digest, dict) else None
+    digest_sentiment = digest_sentiment or 0.0
+
+    geopolitical_events = 0
+    tech_events = 0
+    commodity_events = 0
+    geopolitical_titles: list[str] = []
+    for raw_event in events[:36]:
+        if not isinstance(raw_event, dict):
+            continue
+        title = str(raw_event.get("title", "")).strip()
+        category = str(raw_event.get("category", "")).lower()
+        text = " ".join(
+            [
+                title,
+                str(raw_event.get("strategy_implications", "")),
+                str(raw_event.get("summary", "")),
+            ]
+        ).lower()
+        if category in {"geopolitical", "trade"} or any(
+            token in text for token in ("制裁", "反制", "关税", "冲突", "军工", "航运", "能源安全", "脱钩")
+        ):
+            geopolitical_events += 1
+            if title and title not in geopolitical_titles:
+                geopolitical_titles.append(title)
+        if category == "tech" or any(token in text for token in ("ai", "人工智能", "算力", "芯片", "半导体", "机器人")):
+            tech_events += 1
+        if category == "commodity" or any(token in text for token in ("原油", "油价", "天然气", "煤炭", "稀土")):
+            commodity_events += 1
+
+    macro_risk_signal = next((item for item in cross_asset_signals if str(item.get("key") or "") == "macro_risk"), None)
+    shipping_signal = next((item for item in cross_asset_signals if str(item.get("key") or "") == "shipping_pressure"), None)
+    commodity_signal = next((item for item in cross_asset_signals if str(item.get("key") or "") == "commodity_pressure"), None)
+    official_confirm_signal = next((item for item in cross_asset_signals if str(item.get("key") or "") == "official_confirm"), None)
+    macro_risk_score = _to_float((macro_risk_signal or {}).get("score")) or 50.0
+    shipping_signal_score = _to_float((shipping_signal or {}).get("score")) or 0.0
+    commodity_signal_score = _to_float((commodity_signal or {}).get("score")) or 0.0
+    official_confirm_score = _to_float((official_confirm_signal or {}).get("score")) or 0.0
+    regional_pressure_score = max((_to_float(item.get("score")) or 0.0) for item in regional_pressures) if regional_pressures else 0.0
+
+    if market_phase in {"valuation_reset", "risk_off"}:
+        valuation_regime = "折现率压制"
+    elif technology_focus in {"AI/算力", "自主可控/半导体", "机器人/无人系统"} and digest_sentiment >= -0.15:
+        valuation_regime = "成长重估"
+    elif technology_focus in {"资源/能源安全", "安全/军工"} or commodity_events >= 2:
+        valuation_regime = "防守与资源重估"
+    else:
+        valuation_regime = "均衡定价"
+
+    if market_phase in {"risk_off", "valuation_reset"} or macro_risk_score <= 42.0:
+        capital_style = "防守现金流"
+    elif technology_focus in {"AI/算力", "自主可控/半导体", "机器人/无人系统"} and tech_events >= 1:
+        capital_style = "通用技术扩散"
+    elif top is not None and (_to_float(top.get("chain_control_score")) or 0.0) >= 72:
+        capital_style = "产业链卡位"
+    else:
+        capital_style = "均衡轮动"
+
+    geopolitics_bias = "中性"
+    supply_chain_mode = "均衡供需"
+    if top is not None:
+        merged = " ".join([str(top.get("direction", "")), str(top.get("policy_bucket", "")), str(top.get("summary", ""))])
+        if geopolitical_events >= 2 or any(
+            token in merged for token in ("中美", "制裁", "反制", "脱钩", "国防", "军工", "安全", "能源", "资源")
+        ):
+            geopolitics_bias = "博弈升温"
+        if any(token in merged for token in ("国产替代", "替代", "供给", "产能", "资源", "制裁", "脱钩")):
+            supply_chain_mode = "产业链重构"
+        elif (_to_float(top.get("bullish")) or 0.0) > (_to_float(top.get("bearish")) or 0.0):
+            supply_chain_mode = "盈利扩散"
+    if shipping_signal_score >= 48.0 or regional_pressure_score >= 52.0:
+        geopolitics_bias = "博弈升温"
+    if shipping_signal_score >= 42.0:
+        supply_chain_mode = "产业链重构"
+
+    top_total_score = _to_float(top.get("total_score")) if top is not None else 50.0
+    phase_confidence = round(
+        _clamp(
+            42.0
+            + ((top_total_score or 50.0) - 50.0) * 0.6
+            + (6.0 if style_bias and style_bias != "快切短拿" else 0.0),
+            30.0,
+            96.0,
+        ),
+        1,
+    )
+    strategic_direction = str(top.get("direction")) if top is not None and str(top.get("direction", "")).strip() else None
+    geopolitics_score = 48.0
+    if top is not None:
+        geopolitics_score = 42.0 + ((_to_float(top.get("bullish")) or 0.0) - (_to_float(top.get("bearish")) or 0.0)) * 8.0
+        if geopolitics_bias == "博弈升温":
+            geopolitics_score += 18.0
+        if supply_chain_mode == "产业链重构":
+            geopolitics_score += 10.0
+        geopolitics_score += min(12.0, geopolitical_events * 2.5)
+        geopolitics_score += min(18.0, shipping_signal_score * 0.18 + regional_pressure_score * 0.12)
+    technology_score = 44.0
+    if technology_focus in {"AI/算力", "自主可控/半导体", "机器人/无人系统", "新能源/电力"}:
+        technology_score = 74.0 if technology_focus in {"AI/算力", "自主可控/半导体"} else 66.0
+    if top is not None:
+        technology_score = round(
+            _clamp(
+                technology_score * 0.58 + (_to_float(top.get("official_score")) or 52.0) * 0.18 + (_to_float(top.get("research_score")) or 52.0) * 0.16 + tech_events * 2.5,
+                22.0,
+                96.0,
+            ),
+            1,
+        )
+    chain_control_score = (_to_float(top.get("chain_control_score")) or 52.0) if top is not None else 52.0
+    valuation_score = {
+        "成长重估": 76.0,
+        "防守与资源重估": 68.0,
+        "折现率压制": 28.0,
+        "均衡定价": 54.0,
+    }.get(valuation_regime, 54.0)
+    valuation_score = round(
+        _clamp(
+            valuation_score
+            + digest_sentiment * 12.0
+            - commodity_events * (4.0 if valuation_regime == "成长重估" else 1.5)
+            - max(0.0, (50.0 - macro_risk_score)) * (0.38 if valuation_regime == "成长重估" else 0.12)
+            - commodity_signal_score * (0.16 if valuation_regime == "成长重估" else 0.05),
+            18.0,
+            96.0,
+        ),
+        1,
+    )
+    capital_rotation_score = {
+        "通用技术扩散": 78.0,
+        "产业链卡位": 72.0,
+        "防守现金流": 34.0,
+        "均衡轮动": 56.0,
+    }.get(capital_style, 56.0)
+    capital_rotation_score = round(
+        _clamp(
+            capital_rotation_score
+            + (digest_sentiment * 10.0 if top is not None else 0.0)
+            + (((_to_float(top.get("event_score")) or 50.0) - 50.0) * 0.18 if top is not None else 0.0)
+            + (macro_risk_score - 50.0) * 0.22
+            + official_confirm_score * 0.04,
+            18.0,
+            96.0,
+        ),
+        1,
+    )
+    cross_asset_score = round(
+        _clamp(
+            max(macro_risk_score, shipping_signal_score, commodity_signal_score, official_confirm_score * 0.8),
+            18.0,
+            96.0,
+        ),
+        1,
+    )
+
+    components = [
+        _world_state_component(
+            "geopolitics",
+            "国别博弈",
+            geopolitics_score,
+            geopolitics_bias,
+            "实时看制裁/反制、能源安全、航运与安全冗余是否在重新定价。",
+            [
+                strategic_direction or "继续观察",
+                supply_chain_mode,
+                f"博弈状态：{geopolitics_bias}",
+                f"相关事件：{geopolitical_events} 条",
+            ],
+        ),
+        _world_state_component(
+            "technology",
+            "通用技术扩散",
+            technology_score,
+            technology_focus or "中性扩散",
+            "实时看 AI/半导体/电力/机器人 等通用技术是否进入资本开支和产业扩散阶段。",
+            [
+                technology_focus or "暂无单一技术主线",
+                strategic_direction or "继续观察",
+                f"技术事件：{tech_events} 条",
+            ],
+        ),
+        _world_state_component(
+            "chain_control",
+            "产业链控制力",
+            chain_control_score,
+            supply_chain_mode,
+            "实时看上游资源、设备、材料、标准与替代能力，判断谁掌握定价权。",
+            [
+                f"主线方向：{strategic_direction or '继续观察'}",
+                f"供给模式：{supply_chain_mode}",
+                f"链路卡位分：{chain_control_score:.1f}",
+            ],
+        ),
+        _world_state_component(
+            "valuation",
+            "估值重构",
+            valuation_score,
+            valuation_regime,
+            "动态区分当前是盈利上修、成长重估，还是折现率压制与防守重估。",
+            [
+                valuation_regime,
+                f"市场阶段：{market_phase}",
+                f"新闻情绪：{digest_sentiment:+.2f}",
+            ],
+        ),
+        _world_state_component(
+            "capital_flow",
+            "资金风格切换",
+            capital_rotation_score,
+            capital_style,
+            "动态看资金是往成长、产业链卡位，还是往防守现金流迁移。",
+            [
+                capital_style,
+                style_bias,
+                f"主线事件分：{(_to_float(top.get('event_score')) or 50.0):.1f}" if top is not None else "主线事件分：50.0",
+            ],
+        ),
+        _world_state_component(
+            "cross_asset",
+            "跨资产联动",
+            cross_asset_score,
+            "跨市场传导",
+            "动态看利率、汇率、商品、运价、航运通道和全球风险偏好如何共同传导到估值与行业。",
+            [
+                f"宏观风险偏好：{macro_risk_score:.1f}",
+                f"航运扰动：{shipping_signal_score:.1f}",
+                f"商品压力：{commodity_signal_score:.1f}",
+            ],
+        ),
+    ]
+    dominant_component = max(components, key=lambda item: _to_float(item.get("score")) or 0.0)["label"] if components else None
+    source_statuses = [
+        _world_state_source_status(
+            "news_digest",
+            "全球新闻摘要",
+            digest.get("timestamp") if isinstance(digest, dict) else None,
+            len(events) if isinstance(events, list) else 0,
+            "驱动事件、情绪热力图和行业受益/受损映射。",
+            reliability_score=round(
+                _clamp(
+                    56.0
+                    + min(len(events), 24) * 0.8
+                    + max(-8.0, min(8.0, digest_sentiment * 14.0)),
+                    38.0,
+                    84.0,
+                ),
+                1,
+            ),
+            authority_score=46.0,
+        ),
+        _world_state_source_status(
+            "official_ingest",
+            "官方口径入库",
+            _world_state_latest_timestamp(
+                [
+                    item.get("published_at")
+                    for entry in official_ingest_map.values()
+                    if isinstance(entry, dict)
+                    for item in entry.get("official_source_entries", [])
+                    if isinstance(item, dict)
+                ]
+            ),
+            sum(
+                len(entry.get("official_source_entries", []))
+                for entry in official_ingest_map.values()
+                if isinstance(entry, dict)
+            ),
+            "驱动政策方向、发布时间和官方原文新鲜度。",
+            reliability_score=round(
+                _clamp(
+                    52.0
+                    + min(
+                        sum(
+                            1
+                            for entry in official_ingest_map.values()
+                            if isinstance(entry, dict)
+                            for item in entry.get("official_source_entries", [])
+                            if isinstance(item, dict)
+                            and str(item.get("source_origin") or "").strip() != "auto_runtime"
+                        ),
+                        12,
+                    )
+                    * 2.4
+                    + min(
+                        sum(
+                            1
+                            for entry in official_ingest_map.values()
+                            if isinstance(entry, dict)
+                            for item in entry.get("official_source_entries", [])
+                            if isinstance(item, dict)
+                            and str(item.get("source_origin") or "").strip() == "auto_runtime"
+                        ),
+                        12,
+                    )
+                    * 0.8,
+                    36.0,
+                    92.0,
+                ),
+                1,
+            ),
+            authority_score=round(
+                _clamp(
+                    52.0
+                    + min(
+                        sum(
+                            8.0
+                            if any(token in str(source or "") for token in ("国务院", "国常会", "中央"))
+                            else 5.0
+                            if any(token in str(source or "") for token in ("发改委", "工信部", "财政部", "国家数据局", "央行"))
+                            else 2.0
+                            for entry in official_watch.values()
+                            if isinstance(entry, dict)
+                            for source in entry.get("official_sources", [])
+                        ),
+                        28.0,
+                    )
+                    + min(
+                        sum(
+                            1
+                            for entry in official_ingest_map.values()
+                            if isinstance(entry, dict)
+                            for item in entry.get("official_source_entries", [])
+                            if isinstance(item, dict)
+                            and str(item.get("source_origin") or "").strip() != "auto_runtime"
+                        ),
+                        10,
+                    )
+                    * 5.0
+                    + min(
+                        sum(
+                            1
+                            for entry in official_ingest_map.values()
+                            if isinstance(entry, dict)
+                            for item in entry.get("official_source_entries", [])
+                            if isinstance(item, dict)
+                            and str(item.get("source_origin") or "").strip() == "auto_runtime"
+                        ),
+                        10,
+                    )
+                    * 0.8,
+                    28.0,
+                    94.0,
+                ),
+                1,
+            ),
+        ),
+        _world_state_source_status(
+            "execution_timeline",
+            "执行时间线",
+            _world_state_latest_timestamp(
+                [
+                    item.get("timestamp")
+                    for entry in execution_timeline.values()
+                    if isinstance(entry, dict)
+                    for item in entry.get("timeline_events", [])
+                    if isinstance(item, dict)
+                ]
+            ),
+            sum(
+                len(entry.get("timeline_events", []))
+                for entry in execution_timeline.values()
+                if isinstance(entry, dict)
+            ),
+            "驱动阶段切换、兑现节点和项目/订单推进节奏。",
+            reliability_score=74.0,
+            authority_score=72.0,
+        ),
+        _world_state_source_status(
+            "industry_research",
+            "产业资本调研",
+            research_box.get("last_update") if isinstance(research_box, dict) else None,
+            len(research_items) if isinstance(research_items, list) else 0,
+            "驱动方向验证增强/阻力和公司层跟踪信号。",
+            reliability_score=round(
+                _clamp(
+                    52.0
+                    + min(len(research_items) if isinstance(research_items, list) else 0, 12) * 2.2
+                    + min(
+                        sum(
+                            1
+                            for item in (research_items if isinstance(research_items, list) else [])
+                            if isinstance(item, dict) and str(item.get("status", "")).strip() in {"已验证", "验证增强"}
+                        )
+                        * 4.0,
+                        18.0,
+                    ),
+                    36.0,
+                    88.0,
+                ),
+                1,
+            ),
+            authority_score=68.0,
+        ),
+        _world_state_source_status(
+            "official_fulltext",
+            "官方全文原文",
+            official_fulltext.get("updated_at") if isinstance(official_fulltext, dict) else None,
+            len(official_fulltext.get("documents", []))
+            if isinstance(official_fulltext.get("documents"), list)
+            else 0,
+            "优先读取官方全文和原文上下文，确认政策表述、预算力度和执行边界。",
+            reliability_score=82.0,
+            authority_score=96.0,
+            remote_configured=bool(official_fulltext.get("remote_url")) if isinstance(official_fulltext, dict) else False,
+            degraded_to_derived=bool(official_fulltext.get("degraded_to_derived")) if isinstance(official_fulltext, dict) else False,
+            origin_mode=str(official_fulltext.get("origin_mode") or "") if isinstance(official_fulltext, dict) else "runtime",
+            fetch_mode=str(official_fulltext.get("fetch_mode") or "remote_or_derived") if isinstance(official_fulltext, dict) else "remote_or_derived",
+        ),
+        _world_state_source_status(
+            "shipping_ais",
+            "航运/AIS 通道",
+            shipping_ais.get("updated_at") if isinstance(shipping_ais, dict) else None,
+            len(shipping_ais.get("routes", []))
+            if isinstance(shipping_ais.get("routes"), list)
+            else 0,
+            "跟踪关键航线、特定船型、放行范围和估计流量扰动。",
+            reliability_score=78.0,
+            authority_score=72.0,
+            remote_configured=bool(shipping_ais.get("remote_url")) if isinstance(shipping_ais, dict) else False,
+            degraded_to_derived=bool(shipping_ais.get("degraded_to_derived")) if isinstance(shipping_ais, dict) else False,
+            origin_mode=str(shipping_ais.get("origin_mode") or "") if isinstance(shipping_ais, dict) else "runtime",
+            fetch_mode=str(shipping_ais.get("fetch_mode") or "remote_or_derived") if isinstance(shipping_ais, dict) else "remote_or_derived",
+        ),
+        _world_state_source_status(
+            "freight_rates",
+            "运价与保费",
+            freight_rates.get("updated_at") if isinstance(freight_rates, dict) else None,
+            len(freight_rates.get("lanes", []))
+            if isinstance(freight_rates.get("lanes"), list)
+            else 0,
+            "跟踪运价、保费和绕航成本，判断通胀与产业链成本传导。",
+            reliability_score=76.0,
+            authority_score=70.0,
+            remote_configured=bool(freight_rates.get("remote_url")) if isinstance(freight_rates, dict) else False,
+            degraded_to_derived=bool(freight_rates.get("degraded_to_derived")) if isinstance(freight_rates, dict) else False,
+            origin_mode=str(freight_rates.get("origin_mode") or "") if isinstance(freight_rates, dict) else "runtime",
+            fetch_mode=str(freight_rates.get("fetch_mode") or "remote_or_derived") if isinstance(freight_rates, dict) else "remote_or_derived",
+        ),
+        _world_state_source_status(
+            "commodity_terminal",
+            "商品终端价格",
+            commodity_terminal.get("updated_at") if isinstance(commodity_terminal, dict) else None,
+            len(commodity_terminal.get("commodities", []))
+            if isinstance(commodity_terminal.get("commodities"), list)
+            else 0,
+            "跟踪原油、天然气、煤炭等关键商品价格，判断下游成本和估值压力。",
+            reliability_score=80.0,
+            authority_score=74.0,
+            remote_configured=bool(commodity_terminal.get("remote_url")) if isinstance(commodity_terminal, dict) else False,
+            degraded_to_derived=bool(commodity_terminal.get("degraded_to_derived")) if isinstance(commodity_terminal, dict) else False,
+            origin_mode=str(commodity_terminal.get("origin_mode") or "") if isinstance(commodity_terminal, dict) else "runtime",
+            fetch_mode=str(commodity_terminal.get("fetch_mode") or "remote_or_derived") if isinstance(commodity_terminal, dict) else "remote_or_derived",
+        ),
+        _world_state_source_status(
+            "macro_rates_fx",
+            "宏观利率汇率",
+            macro_rates_fx.get("updated_at") if isinstance(macro_rates_fx, dict) else None,
+            len(macro_rates_fx.get("instruments", []))
+            if isinstance(macro_rates_fx.get("instruments"), list)
+            else 0,
+            "跟踪风险偏好、利率、汇率和跨资产切换，判断全市场估值环境。",
+            reliability_score=84.0,
+            authority_score=76.0,
+            remote_configured=bool(macro_rates_fx.get("remote_url")) if isinstance(macro_rates_fx, dict) else False,
+            degraded_to_derived=bool(macro_rates_fx.get("degraded_to_derived")) if isinstance(macro_rates_fx, dict) else False,
+            origin_mode=str(macro_rates_fx.get("origin_mode") or "") if isinstance(macro_rates_fx, dict) else "runtime",
+            fetch_mode=str(macro_rates_fx.get("fetch_mode") or "remote_or_derived") if isinstance(macro_rates_fx, dict) else "remote_or_derived",
+        ),
+    ]
+    top_directions = [
+        {
+            "direction_id": str(item.get("direction_id", "")),
+            "direction": str(item.get("direction", "")),
+            "focus_sector": str(item.get("focus_sector", "")) or None,
+            "policy_bucket": str(item.get("policy_bucket", "")) or None,
+            "total_score": round(_to_float(item.get("total_score")) or 0.0, 1),
+            "event_score": round(_to_float(item.get("event_score")) or 0.0, 1),
+            "official_score": round(_to_float(item.get("official_score")) or 0.0, 1),
+            "chain_control_score": round(_to_float(item.get("chain_control_score")) or 0.0, 1),
+            "research_score": round(_to_float(item.get("research_score")) or 0.0, 1),
+            "timeline_score": round(_to_float(item.get("timeline_score")) or 0.0, 1),
+            "hard_source_score": round(_to_float(item.get("hard_source_score")) or 50.0, 1),
+            "technology_breakthrough_score": round(_to_float(item.get("technology_breakthrough_score")) or 0.0, 1),
+            "technology_focus": str(item.get("technology_focus", "")) or None,
+            "summary": str(item.get("summary", "")),
+        }
+        for item in ranked[:3]
+    ]
+    technology_breakthrough_score = round(_to_float(top.get("technology_breakthrough_score")) or technology_score, 1) if top is not None else round(technology_score, 1)
+    technology_breakthrough_summary = (
+        f"当前科技突破更偏向 {technology_focus or '继续观察'}，"
+        f"突破强度 {technology_breakthrough_score:.1f} 分。"
+        if technology_focus
+        else "当前没有单一科技突破主线压倒其他方向，继续观察 AI/半导体/电力/机器人线索。"
+    )
+    structural_summary = (
+        f"顶层上当前更像 {valuation_regime}，资本偏向 {capital_style}，"
+        f"主线方向更接近 {strategic_direction or '继续观察'}。"
+        f" 外部源里最近的主导方向是 {', '.join(str(item.get('direction', '')) for item in ranked[:2] if str(item.get('direction', '')).strip()) or '继续观察'}。"
+    )
+    return {
+        "valuation_regime": valuation_regime,
+        "capital_style": capital_style,
+        "strategic_direction": strategic_direction,
+        "technology_focus": technology_focus,
+        "geopolitics_bias": geopolitics_bias,
+        "supply_chain_mode": supply_chain_mode,
+        "technology_breakthrough_score": technology_breakthrough_score,
+        "technology_breakthrough_summary": technology_breakthrough_summary,
+        "phase_confidence": phase_confidence,
+        "structural_summary": structural_summary,
+        "top_score": _to_float(top.get("total_score")) if top is not None else None,
+        "dominant_component": dominant_component,
+        "components": components,
+        "source_statuses": source_statuses,
+        "cross_asset_signals": cross_asset_signals,
+        "regional_pressures": regional_pressures,
+        "top_directions": top_directions,
+    }
+
+
+def _build_world_state_snapshot() -> WorldStateSnapshot:
+    def builder() -> WorldStateSnapshot:
+        try:
+            from smart_trader import detect_market_regime
+            from world_action_engine import build_world_actions_and_checks
+            from world_event_cascade import build_event_cascades
+            from world_operating_engine import build_world_operating_actions
+            from world_refresh_planner import build_world_refresh_plan
+            from world_source_adapters import build_source_statuses
+
+            regime_payload = detect_market_regime() or {}
+        except Exception as exc:
+            logger.warning("detect_market_regime failed in world state: %s", exc)
+            regime_payload = {}
+            build_world_actions_and_checks = lambda **kwargs: {"actions": [], "checks": []}  # type: ignore
+            build_event_cascades = lambda events: []  # type: ignore
+            build_world_operating_actions = lambda **kwargs: []  # type: ignore
+            build_world_refresh_plan = lambda **kwargs: None  # type: ignore
+            build_source_statuses = lambda items: items  # type: ignore
+
+        regime = str(regime_payload.get("regime", "neutral"))
+        regime_score = round((_to_float(regime_payload.get("score")) or 0.5) * 100, 1)
+        market_phase = str(regime_payload.get("market_phase", "range_rotation"))
+        market_phase_label = str(regime_payload.get("market_phase_label", "震荡轮动"))
+        style_bias = str(regime_payload.get("style_bias", "快切短拿"))
+        horizon_hint = str(regime_payload.get("horizon_hint", "优先短拿观察。"))
+        limit_up_mode = str(regime_payload.get("limit_up_mode", "只做板前，不做板上"))
+        limit_up_allowed = bool(regime_payload.get("limit_up_allowed", False))
+        should_trade = bool(regime_payload.get("should_trade", True))
+        phase_summary = str(regime_payload.get("phase_summary", "")).strip()
+        raw_signals = regime_payload.get("signals", {})
+        signals = raw_signals if isinstance(raw_signals, dict) else {}
+
+        drivers: list[WorldStateDriver] = []
+        for key, label in _WORLD_STATE_DRIVER_LABELS.items():
+            score = _to_float(signals.get(key))
+            if score is None:
+                continue
+            drivers.append(
+                WorldStateDriver(
+                    name=label,
+                    signal_key=key,
+                    score=round(score * 100, 1),
+                    interpretation=_world_driver_interpretation(score),
+                )
+            )
+
+        drivers.sort(key=lambda item: abs(item.score - 50.0), reverse=True)
+        drivers = drivers[:4]
+        structural = _world_state_structural_context(
+            market_phase=market_phase,
+            style_bias=style_bias,
+        )
+        operating_profile_payload = _normalize_operating_profile(_load_operating_profile())
+        digest = _load_news_digest()
+        digest_events = digest.get("events", []) if isinstance(digest, dict) and isinstance(digest.get("events"), list) else []
+        event_cascades = build_event_cascades(digest_events)
+        refresh_plan_payload = build_world_refresh_plan(digest=digest)
+        source_statuses = build_source_statuses(
+            [item for item in structural.get("source_statuses", []) if isinstance(item, dict)]
+        )
+        components = [
+            WorldStateComponent(**item)
+            for item in structural.get("components", [])
+            if isinstance(item, dict)
+        ]
+        world_actions_payload = build_world_actions_and_checks(
+            market_phase=market_phase,
+            market_phase_label=market_phase_label,
+            valuation_regime=str(structural.get("valuation_regime") or "中性估值"),
+            capital_style=str(structural.get("capital_style") or "均衡轮动"),
+            strategic_direction=str(structural.get("strategic_direction") or "") or None,
+            technology_focus=str(structural.get("technology_focus") or "") or None,
+            geopolitics_bias=str(structural.get("geopolitics_bias") or "中性"),
+            supply_chain_mode=str(structural.get("supply_chain_mode") or "均衡供需"),
+            style_bias=style_bias,
+            horizon_hint=horizon_hint,
+            limit_up_allowed=limit_up_allowed,
+            components=[item.model_dump() for item in components],
+            source_statuses=source_statuses,
+            top_directions=[
+                item for item in structural.get("top_directions", []) if isinstance(item, dict)
+            ],
+            event_cascades=event_cascades,
+            operating_profile=operating_profile_payload,
+        )
+        world_operating_actions_payload = build_world_operating_actions(
+            valuation_regime=str(structural.get("valuation_regime") or "中性估值"),
+            capital_style=str(structural.get("capital_style") or "均衡轮动"),
+            strategic_direction=str(structural.get("strategic_direction") or "") or None,
+            technology_focus=str(structural.get("technology_focus") or "") or None,
+            geopolitics_bias=str(structural.get("geopolitics_bias") or "中性"),
+            supply_chain_mode=str(structural.get("supply_chain_mode") or "均衡供需"),
+            top_directions=[
+                item for item in structural.get("top_directions", []) if isinstance(item, dict)
+            ],
+            event_cascades=event_cascades,
+            operating_profile=operating_profile_payload,
+        )
+        top_score = _to_float(structural.get("top_score"))
+        if top_score is not None:
+            drivers.append(
+                WorldStateDriver(
+                    name="结构主线",
+                    signal_key="structural_direction",
+                    score=round(top_score, 1),
+                    interpretation=str(structural.get("strategic_direction") or "继续观察"),
+                )
+            )
+        summary = (
+            f"当前处于 {market_phase_label}，风格偏向 {style_bias}。"
+            f"{phase_summary} {horizon_hint}"
+        ).strip()
+        dominant_component = str(structural.get("dominant_component") or "").strip() or None
+        if dominant_component:
+            summary = f"{summary} 顶层主导变量：{dominant_component}。".strip()
+
+        return WorldStateSnapshot(
+            regime=regime,
+            regime_score=regime_score,
+            market_phase=market_phase,
+            market_phase_label=market_phase_label,
+            valuation_regime=str(structural.get("valuation_regime") or "中性估值"),
+            capital_style=str(structural.get("capital_style") or "均衡轮动"),
+            strategic_direction=str(structural.get("strategic_direction") or "") or None,
+            technology_focus=str(structural.get("technology_focus") or "") or None,
+            geopolitics_bias=str(structural.get("geopolitics_bias") or "中性"),
+            supply_chain_mode=str(structural.get("supply_chain_mode") or "均衡供需"),
+            technology_breakthrough_score=_to_float(structural.get("technology_breakthrough_score")) or 50.0,
+            technology_breakthrough_summary=str(structural.get("technology_breakthrough_summary") or "") or None,
+            phase_confidence=_to_float(structural.get("phase_confidence")) or 50.0,
+            style_bias=style_bias,
+            horizon_hint=horizon_hint,
+            limit_up_mode=limit_up_mode,
+            limit_up_allowed=limit_up_allowed,
+            should_trade=should_trade,
+            summary=summary,
+            structural_summary=str(structural.get("structural_summary") or summary),
+            drivers=drivers,
+            dominant_component=dominant_component,
+            components=components,
+            source_statuses=[
+                WorldStateSourceStatus(**item)
+                for item in source_statuses
+                if isinstance(item, dict)
+            ],
+            cross_asset_signals=[
+                WorldCrossAssetSignal(**item)
+                for item in structural.get("cross_asset_signals", [])
+                if isinstance(item, dict)
+            ],
+            regional_pressures=[
+                WorldRegionalPressure(**item)
+                for item in structural.get("regional_pressures", [])
+                if isinstance(item, dict)
+            ],
+            top_directions=[
+                WorldStateDirectionInsight(**item)
+                for item in structural.get("top_directions", [])
+                if isinstance(item, dict)
+            ],
+            event_cascades=[
+                WorldEventCascade(**item)
+                for item in event_cascades
+                if isinstance(item, dict)
+            ],
+            refresh_plan=WorldRefreshPlan(**refresh_plan_payload) if isinstance(refresh_plan_payload, dict) else None,
+            actions=[
+                WorldStateAction(**item)
+                for item in world_actions_payload.get("actions", [])
+                if isinstance(item, dict)
+            ],
+            operating_actions=[
+                WorldOperatingAction(**item)
+                for item in world_operating_actions_payload
+                if isinstance(item, dict)
+            ],
+            operating_profile=WorldOperatingProfile(**operating_profile_payload) if isinstance(operating_profile_payload, dict) else None,
+            checks=[
+                WorldStateCheck(**item)
+                for item in world_actions_payload.get("checks", [])
+                if isinstance(item, dict)
+            ],
+        )
+
+    return _cached_runtime_value(
+        "world_state",
+        "default",
+        ttl_seconds=20,
+        dependency_paths=_runtime_cache_paths(
+            _TUNABLE_PARAMS,
+            _NEWS_DIGEST,
+            _WORLD_OFFICIAL_FULLTEXT,
+            _WORLD_SHIPPING_AIS,
+            _WORLD_FREIGHT_RATES,
+            _WORLD_COMMODITY_TERMINAL,
+            _WORLD_MACRO_RATES_FX,
+            _OPERATING_PROFILE,
+            *_db_dependency_paths(),
+        ),
+        builder=builder,
+    )
+
+
+def _win_rate_fit(value: Optional[float]) -> float:
+    if value is None:
+        return 0.5
+    return _clamp(value / 100.0, 0.05, 0.95)
+
+
+def _return_fit(value: Optional[float]) -> float:
+    if value is None:
+        return 0.5
+    return _clamp(0.5 + value / 8.0, 0.05, 0.95)
+
+
+def _strategy_recent_fit(profile: dict[str, object], perf: dict, decay_info: dict | None) -> tuple[float, int]:
+    sample_count = _to_int(perf.get("total"))
+    if sample_count <= 0:
+        return 0.5, 0
+
+    t1_win = _win_rate_fit(_to_float(perf.get("t1_win_rate")))
+    t3_win = _win_rate_fit(_to_float(perf.get("t3_win_rate")))
+    t5_win = _win_rate_fit(_to_float(perf.get("t5_win_rate")))
+    t1_ret = _return_fit(_to_float(perf.get("avg_t1")))
+    t3_ret = _return_fit(_to_float(perf.get("avg_t3")))
+    t5_ret = _return_fit(_to_float(perf.get("avg_t5")))
+    horizon_focus = str(profile.get("horizon_focus", "short"))
+
+    if horizon_focus == "trend":
+        win_component = t1_win * 0.2 + t3_win * 0.35 + t5_win * 0.45
+        ret_component = t1_ret * 0.2 + t3_ret * 0.35 + t5_ret * 0.45
+    elif horizon_focus == "swing":
+        win_component = t1_win * 0.2 + t3_win * 0.45 + t5_win * 0.35
+        ret_component = t1_ret * 0.2 + t3_ret * 0.45 + t5_ret * 0.35
+    else:
+        win_component = t1_win * 0.55 + t3_win * 0.3 + t5_win * 0.15
+        ret_component = t1_ret * 0.55 + t3_ret * 0.3 + t5_ret * 0.15
+
+    base_score = win_component * 0.6 + ret_component * 0.4
+    confidence = min(1.0, sample_count / 12.0)
+    recent_fit = 0.5 * (1.0 - confidence) + base_score * confidence
+
+    decay = _to_float((decay_info or {}).get("decay"))
+    if decay is not None:
+        if horizon_focus in {"trend", "swing"} and decay > 1.0:
+            recent_fit -= min(0.18, decay / 15.0)
+        elif horizon_focus == "short" and decay < -0.8:
+            recent_fit -= 0.06
+
+    return round(_clamp(recent_fit, 0.05, 0.95), 4), sample_count
+
+
+def _strategy_governance_reason(
+    strategy_name: str,
+    state: str,
+    world_state: WorldStateSnapshot,
+    top_down_fit: float,
+    recent_fit: float,
+    perf: dict,
+) -> str:
+    sample_count = _to_int(perf.get("total"))
+    t1 = _to_float(perf.get("t1_win_rate"))
+    t3 = _to_float(perf.get("t3_win_rate"))
+    if state == "production":
+        return (
+            f"{strategy_name} 在 {world_state.market_phase_label} 下适配度较高，"
+            f"当前样本 {sample_count}，T+1/T+3 胜率 {t1 if t1 is not None else '—'} / {t3 if t3 is not None else '—'}。"
+        )
+    if state == "disabled":
+        return (
+            f"{strategy_name} 当前既不匹配 {world_state.market_phase_label}，"
+            f"也没有足够近期表现支撑，先停用避免消耗资金和注意力。"
+        )
+    return (
+        f"{strategy_name} 先保留观察位。顶层适配 {round(top_down_fit * 100, 1)} 分，"
+        f"近期表现 {round(recent_fit * 100, 1)} 分，继续积累样本再决定是否升级。"
+    )
+
+
+def _discipline_from_family(
+    family: str,
+    market_phase: str,
+    governance_state: str,
+    strategy_name: str,
+) -> dict[str, Optional[str]]:
+    if governance_state == "disabled":
+        return {
+            "discipline_label": "暂停观察",
+            "holding_window": "不参与执行",
+            "add_rule": "当前环境下不新增。",
+            "trim_rule": "如果已有利润，优先兑现而不是恋战。",
+            "exit_rule": "偏离当前主导逻辑就直接退出。",
+        }
+
+    if family == "trend":
+        if market_phase in {"trend_markup", "rotation_up", "breakout_expansion"}:
+            return {
+                "discipline_label": "主线滚动",
+                "holding_window": "2-5天趋势跟踪",
+                "add_rule": "主线继续强化、分时回踩不破关键位，再顺势加一笔。",
+                "trim_rule": "题材加速日先锁一部分；T+3 还不创新高先减仓。",
+                "exit_rule": "跌破关键位或主线失去承接时立即退出。",
+            }
+        return {
+            "discipline_label": "弱趋势短拿",
+            "holding_window": "1-3天弱趋势观察",
+            "add_rule": "只有放量站回关键位、承接同步转强才允许补仓。",
+            "trim_rule": "T+1/T+2 还不创新高先减半。",
+            "exit_rule": "冲高乏力或弱承接不补，转弱立即兑现。",
+        }
+
+    if family == "dip":
+        return {
+            "discipline_label": "回踩反弹",
+            "holding_window": "1-3天反弹跟踪",
+            "add_rule": "只在缩量止跌、承接回暖时补，不抄纯下坠刀。",
+            "trim_rule": "反弹到第一目标位先兑现一部分，不把修复票硬拿成波段。",
+            "exit_rule": "跌破前低或反弹承接断掉时退出。",
+        }
+
+    if family == "auction":
+        return {
+            "discipline_label": "开盘速决",
+            "holding_window": "T+1/T+2 速决",
+            "add_rule": "只在竞价强、开盘承接硬时参与，不追一致秒板。",
+            "trim_rule": "隔日不强化先减，冲高优先兑现。",
+            "exit_rule": "竞价转弱或开盘失守承接就退出。",
+        }
+
+    if family in {"afternoon", "event", "rotation"}:
+        return {
+            "discipline_label": "快切观察",
+            "holding_window": "1-3天快切",
+            "add_rule": "有二次催化或板块助攻才考虑加，不做孤票恋战。",
+            "trim_rule": "兑现优先于想象，冲高乏力先减。",
+            "exit_rule": "失去催化或轮动切换后直接离场。",
+        }
+
+    if family in {"breakout", "overnight"}:
+        return {
+            "discipline_label": "试错观察",
+            "holding_window": "1-2天试错",
+            "add_rule": "只有量能、承接、板块共振同时到位才考虑补。",
+            "trim_rule": "不强化就走，不把试错单拖成亏损单。",
+            "exit_rule": "不及预期当天或隔日立刻退出。",
+        }
+
+    return {
+        "discipline_label": "继续观察",
+        "holding_window": "1-3天观察",
+        "add_rule": "确认主线和承接后再考虑补仓。",
+        "trim_rule": "先看兑现纪律，再谈放大利润。",
+        "exit_rule": "逻辑和承接不同步就退出。",
+    }
+
+
+def _phase_allowed_blocked_styles(market_phase: str) -> tuple[list[str], list[str]]:
+    mapping = {
+        "trend_markup": (["趋势跟踪", "主线滚动", "板前确认"], ["高位一字追板", "隔夜硬扛"]),
+        "breakout_expansion": (["板前确认", "板后承接", "趋势主升"], ["缩量秒板追价"]),
+        "rotation_up": (["趋势跟踪", "轮动快切", "板前确认"], ["高位孤板接力"]),
+        "range_rotation": (["低吸回调", "集合竞价短拿", "轮动快切"], ["把短线票硬拿成波段"]),
+        "weak_chop": (["竞价短拿", "尾盘短线", "低吸修复"], ["高位接力", "突破硬追"]),
+        "ice_repair": (["修复试错", "板前确认"], ["追一致性秒板"]),
+        "valuation_reset": (["防守低估值", "事件防守"], ["高估值追涨", "强势接力"]),
+        "risk_off": (["现金与防守"], ["任何激进强势博弈"]),
+    }
+    return mapping.get(market_phase, (["继续观察"], ["情绪化追涨"]))
+
+
+def _execution_policy_profile(market_phase: str) -> tuple[float, str]:
+    mapping = {
+        "trend_markup": (82.0, "进攻"),
+        "breakout_expansion": (74.0, "积极"),
+        "rotation_up": (68.0, "均衡偏进攻"),
+        "range_rotation": (58.0, "均衡"),
+        "weak_chop": (42.0, "谨慎"),
+        "ice_repair": (36.0, "轻仓试错"),
+        "valuation_reset": (28.0, "防守"),
+        "risk_off": (16.0, "保守"),
+    }
+    return mapping.get(market_phase, (52.0, "均衡"))
+
+
+def _build_strategy_governance() -> StrategyGovernanceSnapshot:
+    def builder() -> StrategyGovernanceSnapshot:
+        world_state = _build_world_state_snapshot()
+        try:
+            from signal_tracker import get_feedback_for_learning, get_stats
+
+            stats = get_stats(days=84)
+            feedback = get_feedback_for_learning()
+        except Exception as exc:
+            logger.warning("strategy governance stats failed: %s", exc)
+            stats = {"by_strategy": {}}
+            feedback = {"strategy_regime_fit": {}, "signal_decay": {}}
+
+        by_strategy = stats.get("by_strategy", {}) if isinstance(stats, dict) else {}
+        strategy_fit_feedback = feedback.get("strategy_regime_fit", {}) if isinstance(feedback, dict) else {}
+        signal_decay = feedback.get("signal_decay", {}) if isinstance(feedback, dict) else {}
+        strategies = safe_load(_STRATEGIES_JSON, default=[])
+
+        rows: list[dict] = []
+        for raw in strategies:
+            if not isinstance(raw, dict):
+                continue
+            strategy_id = str(raw.get("id", "")).strip()
+            strategy_name = str(raw.get("name", strategy_id)).strip()
+            profile = _strategy_governance_profile(strategy_name)
+            phase_fit = profile.get("phase_fit", {})
+            top_down_fit = _to_float(phase_fit.get(world_state.market_phase)) or 0.5
+
+            fit_hint = strategy_fit_feedback.get(strategy_name, {})
+            if isinstance(fit_hint, dict):
+                if str(fit_hint.get("best_regime")) == world_state.regime:
+                    top_down_fit += 0.06
+                if str(fit_hint.get("worst_regime")) == world_state.regime:
+                    top_down_fit -= 0.08
+            top_down_fit = round(_clamp(top_down_fit, 0.05, 0.95), 4)
+
+            perf = by_strategy.get(strategy_name, {})
+            recent_fit, sample_count = _strategy_recent_fit(profile, perf, signal_decay.get(strategy_name))
+
+            family = str(profile.get("family", "general"))
+            state = "observation"
+            if family in {"breakout", "overnight"} and world_state.market_phase in {"weak_chop", "valuation_reset", "risk_off"}:
+                state = "disabled"
+            elif top_down_fit <= 0.32 and recent_fit <= 0.52:
+                state = "disabled"
+            elif recent_fit <= 0.32 and sample_count >= 6:
+                state = "disabled"
+            elif sample_count < 4 and top_down_fit < 0.72:
+                state = "observation"
+            elif top_down_fit >= 0.68 and recent_fit >= 0.5:
+                state = "production"
+            elif top_down_fit >= 0.58 and recent_fit >= 0.45 and family in {"trend", "dip", "auction"}:
+                state = "production"
+            elif world_state.market_phase in {"risk_off", "valuation_reset"} and family not in {"dip", "event"}:
+                state = "disabled" if family in {"breakout", "overnight", "auction", "afternoon"} else "observation"
+
+            discipline = _discipline_from_family(family, world_state.market_phase, state, strategy_name)
+            rows.append(
+                {
+                    "strategy_id": strategy_id,
+                    "strategy_name": strategy_name,
+                    "family": family,
+                    "state": state,
+                    "top_down_fit": top_down_fit,
+                    "recent_fit": recent_fit,
+                    "sample_count": sample_count,
+                    "t1_win_rate": _to_float(perf.get("t1_win_rate")),
+                    "t3_win_rate": _to_float(perf.get("t3_win_rate")),
+                    "t5_win_rate": _to_float(perf.get("t5_win_rate")),
+                    "avg_t1_return_pct": _to_float(perf.get("avg_t1")),
+                    "avg_t3_return_pct": _to_float(perf.get("avg_t3")),
+                    "avg_t5_return_pct": _to_float(perf.get("avg_t5")),
+                    "holding_window_cap": str(profile.get("holding_window_cap", "1-3天观察")),
+                    "discipline_label": str(discipline.get("discipline_label", "继续观察")),
+                    "reason": _strategy_governance_reason(
+                        strategy_name,
+                        state,
+                        world_state,
+                        top_down_fit,
+                        recent_fit,
+                        perf if isinstance(perf, dict) else {},
+                    ),
+                }
+            )
+
+        raw_weight_total = 0.0
+        for row in rows:
+            raw_weight = 0.0
+            if row["state"] == "production":
+                raw_weight = row["top_down_fit"] * 0.55 + row["recent_fit"] * 0.45
+                raw_weight *= 1.15
+            elif row["state"] == "observation":
+                raw_weight = row["top_down_fit"] * 0.5 + row["recent_fit"] * 0.5
+                raw_weight *= 0.65
+            row["_raw_weight"] = raw_weight
+            raw_weight_total += raw_weight
+
+        items: list[StrategyGovernanceItem] = []
+        for row in rows:
+            weight_pct = 0.0
+            if raw_weight_total > 0 and row["_raw_weight"] > 0:
+                weight_pct = round(row["_raw_weight"] / raw_weight_total * 100, 1)
+            items.append(
+                StrategyGovernanceItem(
+                    strategy_id=row["strategy_id"],
+                    strategy_name=row["strategy_name"],
+                    family=row["family"],
+                    state=row["state"],
+                    weight_pct=weight_pct,
+                    top_down_fit=round(row["top_down_fit"] * 100, 1),
+                    recent_fit=round(row["recent_fit"] * 100, 1),
+                    sample_count=row["sample_count"],
+                    t1_win_rate=row["t1_win_rate"],
+                    t3_win_rate=row["t3_win_rate"],
+                    t5_win_rate=row["t5_win_rate"],
+                    avg_t1_return_pct=row["avg_t1_return_pct"],
+                    avg_t3_return_pct=row["avg_t3_return_pct"],
+                    avg_t5_return_pct=row["avg_t5_return_pct"],
+                    holding_window_cap=row["holding_window_cap"],
+                    discipline_label=row["discipline_label"],
+                    reason=row["reason"],
+                )
+            )
+
+        items.sort(key=lambda item: (item.state != "production", -item.weight_pct, -item.top_down_fit))
+        production_names = [item.strategy_name for item in items if item.state == "production"][:3]
+        disabled_names = [item.strategy_name for item in items if item.state == "disabled"][:2]
+        summary = f"当前处于 {world_state.market_phase_label}，生产层优先 {', '.join(production_names) if production_names else '继续观察'}。"
+        if disabled_names:
+            summary += f" 先停用/压缩 {', '.join(disabled_names)}。"
+
+        return StrategyGovernanceSnapshot(
+            regime=world_state.regime,
+            market_phase=world_state.market_phase,
+            market_phase_label=world_state.market_phase_label,
+            summary=summary,
+            production_count=sum(1 for item in items if item.state == "production"),
+            observation_count=sum(1 for item in items if item.state == "observation"),
+            disabled_count=sum(1 for item in items if item.state == "disabled"),
+            items=items,
+        )
+
+    return _cached_runtime_value(
+        "strategy_governance",
+        "default",
+        ttl_seconds=30,
+        dependency_paths=_runtime_cache_paths(_STRATEGIES_JSON, _AGENT_MEMORY, _SIGNAL_TRACKER, *_db_dependency_paths()),
+        builder=builder,
+    )
+
+
+def _strategy_governance_map() -> dict[str, StrategyGovernanceItem]:
+    snapshot = _build_strategy_governance()
+    return {item.strategy_name: item for item in snapshot.items}
+
+
+def _build_execution_policy() -> ExecutionPolicySnapshot:
+    def builder() -> ExecutionPolicySnapshot:
+        world_state = _build_world_state_snapshot()
+        governance = _build_strategy_governance()
+        allowed_styles, blocked_styles = _phase_allowed_blocked_styles(world_state.market_phase)
+        base_risk_budget_pct, aggressiveness = _execution_policy_profile(world_state.market_phase)
+        component_map = {item.key: item for item in world_state.components}
+        valuation_component = component_map.get("valuation")
+        technology_component = component_map.get("technology")
+        chain_component = component_map.get("chain_control")
+        capital_component = component_map.get("capital_flow")
+        geopolitics_component = component_map.get("geopolitics")
+
+        production_items = [item for item in governance.items if item.state == "production"]
+        observation_items = [item for item in governance.items if item.state == "observation"]
+        disabled_items = [item for item in governance.items if item.state == "disabled"]
+
+        risk_budget_pct = base_risk_budget_pct
+        if not world_state.should_trade:
+            risk_budget_pct = min(risk_budget_pct, 22.0)
+        if valuation_component is not None and valuation_component.bias == "折现率压制":
+            risk_budget_pct = min(risk_budget_pct, 28.0)
+        if capital_component is not None and capital_component.bias == "防守现金流":
+            risk_budget_pct = min(risk_budget_pct, 34.0)
+        if geopolitics_component is not None and geopolitics_component.bias == "博弈升温":
+            risk_budget_pct = min(risk_budget_pct, 46.0)
+        if governance.production_count <= 1:
+            risk_budget_pct = max(12.0, risk_budget_pct - 6.0)
+        elif governance.production_count >= 4 and world_state.market_phase in {
+            "trend_markup",
+            "breakout_expansion",
+            "rotation_up",
+        }:
+            risk_budget_pct = min(88.0, risk_budget_pct + 4.0)
+        if (
+            technology_component is not None
+            and technology_component.score >= 72
+            and world_state.market_phase in {"trend_markup", "rotation_up"}
+        ):
+            risk_budget_pct = min(88.0, risk_budget_pct + 3.0)
+        if chain_component is not None and chain_component.score >= 72 and "产业链卡位" not in allowed_styles:
+            allowed_styles = allowed_styles + ["产业链卡位"]
+        if not world_state.limit_up_allowed and world_state.market_phase in {"valuation_reset", "risk_off"}:
+            risk_budget_pct = min(risk_budget_pct, 26.0)
+        critical_checks = [item for item in world_state.checks if item.level == "critical"]
+        warning_checks = [item for item in world_state.checks if item.level == "warning"]
+        if critical_checks:
+            risk_budget_pct = min(risk_budget_pct, 18.0)
+        elif warning_checks:
+            risk_budget_pct = max(10.0, risk_budget_pct - 3.0)
+        risk_budget_pct = round(_clamp(risk_budget_pct, 10.0, 88.0), 1)
+        cash_buffer_pct = round(max(0.0, 100.0 - risk_budget_pct), 1)
+
+        allowed_strategies = [item.strategy_name for item in production_items[:4]]
+        observation_strategies = [item.strategy_name for item in observation_items[:4]]
+        blocked_strategies = [item.strategy_name for item in disabled_items[:4]]
+
+        preferred_holding_windows: list[str] = []
+        for item in production_items:
+            window = str(item.holding_window_cap or "").strip()
+            if not window or window in preferred_holding_windows:
+                continue
+            preferred_holding_windows.append(window)
+            if len(preferred_holding_windows) >= 3:
+                break
+
+        summary = (
+            f"当前处于 {world_state.market_phase_label}，总体风险预算 {risk_budget_pct:.1f}%，"
+            f"更适合 {world_state.style_bias}。"
+        )
+        if world_state.dominant_component:
+            summary += f" 顶层主导变量是 {world_state.dominant_component}。"
+        if allowed_strategies:
+            summary += f" 生产层优先 {', '.join(allowed_strategies[:3])}。"
+        if blocked_strategies:
+            summary += f" 当前先禁用/压缩 {', '.join(blocked_strategies[:2])}。"
+
+        key_actions = [
+            f"总仓先按 {risk_budget_pct:.1f}% 风险预算控制，保留约 {cash_buffer_pct:.1f}% 现金缓冲。",
+            f"当前优先做：{' / '.join(allowed_styles)}。",
+            f"涨停纪律：{world_state.limit_up_mode}。",
+        ]
+        if blocked_styles:
+            key_actions.append(f"当前禁做：{' / '.join(blocked_styles)}。")
+        if valuation_component is not None and valuation_component.bias == "折现率压制":
+            key_actions.append("当前先把高估值追涨收掉，仓位更偏防守和兑现。")
+        elif technology_component is not None and technology_component.score >= 72:
+            key_actions.append(f"继续围绕 {technology_component.bias} 做主线扩散，不要被边缘题材带走。")
+        if critical_checks:
+            key_actions.append(f"先处理：{critical_checks[0].message}")
+        elif warning_checks:
+            key_actions.append(f"先确认：{warning_checks[0].message}")
+        if blocked_strategies:
+            key_actions.append(f"策略层先压缩：{' / '.join(blocked_strategies[:3])}。")
+        elif observation_strategies:
+            key_actions.append(f"观察层只做轻仓试错：{' / '.join(observation_strategies[:3])}。")
+        if world_state.actions:
+            top_action = world_state.actions[0]
+            key_actions.append(f"{top_action.title}：{top_action.summary}")
+
+        return ExecutionPolicySnapshot(
+            regime=world_state.regime,
+            market_phase=world_state.market_phase,
+            market_phase_label=world_state.market_phase_label,
+            style_bias=world_state.style_bias,
+            horizon_hint=world_state.horizon_hint,
+            aggressiveness=aggressiveness,
+            risk_budget_pct=risk_budget_pct,
+            cash_buffer_pct=cash_buffer_pct,
+            limit_up_mode=world_state.limit_up_mode,
+            limit_up_allowed=world_state.limit_up_allowed,
+            allowed_styles=allowed_styles,
+            blocked_styles=blocked_styles,
+            allowed_strategies=allowed_strategies,
+            observation_strategies=observation_strategies,
+            blocked_strategies=blocked_strategies,
+            preferred_holding_windows=preferred_holding_windows,
+            summary=summary,
+            key_actions=key_actions[:6],
+        )
+
+    return _cached_runtime_value(
+        "execution_policy",
+        "default",
+        ttl_seconds=20,
+        dependency_paths=_runtime_cache_paths(_STRATEGIES_JSON, _AGENT_MEMORY, *_db_dependency_paths()),
+        builder=builder,
+    )
+
+
+def _build_production_guard_snapshot() -> ProductionGuardSnapshot:
+    def builder() -> ProductionGuardSnapshot:
+        world_state = _build_world_state_snapshot()
+        execution_policy = _build_execution_policy()
+        governance = _build_strategy_governance()
+
+        try:
+            from portfolio_risk import calc_portfolio_drawdown
+
+            drawdown = calc_portfolio_drawdown() or {}
+        except Exception as exc:
+            logger.warning("production guard drawdown failed: %s", exc)
+            drawdown = {}
+
+        current_drawdown_pct = _to_float(drawdown.get("current_drawdown_pct")) or 0.0
+        max_drawdown_pct = _to_float(drawdown.get("max_drawdown_pct")) or 0.0
+        drawdown_days = max(0, _to_int(drawdown.get("drawdown_days")))
+        breached = bool(drawdown.get("breached"))
+
+        wf_risk_rank = {"low": 0, "unknown": 1, "medium": 2, "high": 3}
+        walk_forward_risk = "unknown"
+        unstable_strategies: list[str] = []
+        wf_efficiencies: list[float] = []
+        wf_degradations: list[float] = []
+        production_names = {
+            item.strategy_name: item
+            for item in governance.items
+            if item.state == "production"
+        }
+
+        try:
+            import walk_forward
+
+            for strategy_name in production_names:
+                wf_strategy = _PRODUCTION_WF_STRATEGY_MAP.get(strategy_name)
+                if not wf_strategy:
+                    continue
+                history = walk_forward.get_wf_history(strategy=wf_strategy, days=45)
+                if not history:
+                    continue
+                latest = history[-1] if isinstance(history[-1], dict) else {}
+                summary = latest.get("summary", {}) if isinstance(latest, dict) else {}
+                risk = str(summary.get("overfitting_risk", "unknown") or "unknown").lower()
+                if wf_risk_rank.get(risk, 1) > wf_risk_rank.get(walk_forward_risk, 1):
+                    walk_forward_risk = risk
+                efficiency = _to_float(summary.get("oos_efficiency"))
+                degradation = _to_float(summary.get("oos_degradation"))
+                if efficiency is not None:
+                    wf_efficiencies.append(efficiency)
+                if degradation is not None:
+                    wf_degradations.append(degradation)
+                if risk in {"high"} or (degradation is not None and degradation >= 0.65):
+                    unstable_strategies.append(strategy_name)
+        except Exception as exc:
+            logger.warning("production guard walk-forward failed: %s", exc)
+
+        walk_forward_efficiency = (
+            round(sum(wf_efficiencies) / len(wf_efficiencies), 2) if wf_efficiencies else None
+        )
+        walk_forward_degradation = (
+            round(sum(wf_degradations) / len(wf_degradations), 3) if wf_degradations else None
+        )
+
+        hard_risk_gate = (
+            breached
+            or world_state.market_phase in {"risk_off", "valuation_reset"}
+            or walk_forward_risk == "high"
+        )
+        blocked_additions = (
+            hard_risk_gate
+            or execution_policy.risk_budget_pct <= 18.0
+            or (current_drawdown_pct <= -4.0 and world_state.market_phase in {"weak_chop", "ice_repair"})
+        )
+        auto_reduce_positions = (
+            hard_risk_gate
+            or current_drawdown_pct <= -4.0
+            or walk_forward_risk == "high"
+            or (
+                world_state.market_phase in {"valuation_reset", "risk_off"}
+                and current_drawdown_pct < 0
+            )
+        )
+        auto_exit_losers = (
+            breached
+            or world_state.market_phase == "risk_off"
+            or walk_forward_risk == "high"
+        )
+
+        summary = (
+            f"当前市场处于 {world_state.market_phase_label}，组合当前回撤 {current_drawdown_pct:.2f}% ，"
+            f"历史最大回撤 {max_drawdown_pct:.2f}% 。"
+        )
+        if hard_risk_gate:
+            summary += " 已触发硬风控，新增仓位和激进节奏应立即收缩。"
+        elif blocked_additions:
+            summary += " 当前先暂停新增，把仓位管理优先级抬高。"
+        else:
+            summary += " 暂未触发硬风控，但仍应按风险预算推进。"
+
+        actions: list[str] = []
+        if hard_risk_gate:
+            actions.append("暂停新增仓位，把总仓压回安全区。")
+        if auto_reduce_positions:
+            actions.append("对弱承接和浮盈不稳仓位先做主动减仓。")
+        if auto_exit_losers:
+            actions.append("亏损仓位不再拖延，失效单优先退出。")
+        if unstable_strategies:
+            actions.append(f"Walk-forward 不稳定策略先降级：{' / '.join(unstable_strategies[:3])}。")
+        if not actions:
+            actions.append("维持当前风险预算，继续按生产策略推进。")
+
+        return ProductionGuardSnapshot(
+            market_phase=world_state.market_phase,
+            market_phase_label=world_state.market_phase_label,
+            hard_risk_gate=hard_risk_gate,
+            blocked_additions=blocked_additions,
+            auto_reduce_positions=auto_reduce_positions,
+            auto_exit_losers=auto_exit_losers,
+            current_drawdown_pct=round(current_drawdown_pct, 2),
+            max_drawdown_pct=round(max_drawdown_pct, 2),
+            drawdown_days=drawdown_days,
+            walk_forward_risk=walk_forward_risk,
+            walk_forward_efficiency=walk_forward_efficiency,
+            walk_forward_degradation=walk_forward_degradation,
+            unstable_strategies=unstable_strategies[:5],
+            summary=summary,
+            actions=actions[:4],
+        )
+
+    return _cached_runtime_value(
+        "production_guard",
+        "default",
+        ttl_seconds=20,
+        dependency_paths=_runtime_cache_paths(
+            _SCORECARD_JSON,
+            os.path.join(_DIR, "walk_forward_results.json"),
+            *_db_dependency_paths(),
+        ),
+        builder=builder,
+    )
+
+
+def _production_guard_mode_priority(mode: str) -> float:
+    priorities = {
+        "直接退出": 100.0,
+        "优先减仓或平仓": 95.0,
+        "主动降仓": 88.0,
+        "先降风险": 82.0,
+        "先锁盈": 72.0,
+        "锁盈观察": 64.0,
+    }
+    return priorities.get(mode, 0.0)
+
+
+def _build_production_guard_actions(limit: int = 5) -> list[ProductionGuardAction]:
+    def builder() -> list[ProductionGuardAction]:
+        production_guard = _build_production_guard_snapshot()
+        if not (
+            production_guard.hard_risk_gate
+            or production_guard.blocked_additions
+            or production_guard.auto_reduce_positions
+            or production_guard.auto_exit_losers
+        ):
+            return []
+
+        portfolio = _load_portfolio()
+        actions: list[ProductionGuardAction] = []
+        for raw_position in portfolio.get("positions", []):
+            if not isinstance(raw_position, dict) or _to_int(raw_position.get("quantity")) <= 0:
+                continue
+            detail = _position_detail_model(raw_position)
+            guide = detail.position_guide
+            base_priority = _production_guard_mode_priority(guide.mode)
+            if base_priority <= 0:
+                continue
+            reasons = list(guide.warnings[:3])
+            if production_guard.summary not in reasons:
+                reasons.insert(0, production_guard.summary)
+            action_label = "去处理仓位"
+            if guide.mode in {"直接退出", "优先减仓或平仓"}:
+                action_label = "去平仓/减仓"
+            elif guide.mode in {"主动降仓", "先降风险", "先锁盈", "锁盈观察"}:
+                action_label = "去锁盈/降仓"
+            priority_score = round(
+                base_priority
+                + max(0.0, abs(detail.profit_loss_pct))
+                + min(10.0, max(0.0, guide.position_pct / 1.5)),
+                1,
+            )
+            actions.append(
+                ProductionGuardAction(
+                    code=detail.code,
+                    name=detail.name,
+                    mode=guide.mode,
+                    summary=guide.summary,
+                    action_label=action_label,
+                    route=f"/position/{detail.code}",
+                    suggested_reduce_pct=guide.suggested_reduce_pct,
+                    suggested_reduce_quantity=guide.suggested_reduce_quantity,
+                    priority_score=priority_score,
+                    reasons=reasons,
+                )
+            )
+
+        actions.sort(key=lambda item: item.priority_score, reverse=True)
+        return actions[: max(1, min(limit, 12))]
+
+    return _cached_runtime_value(
+        "production_guard_actions",
+        limit,
+        ttl_seconds=20,
+        dependency_paths=_runtime_cache_paths(_PAPER_POSITIONS, _SCORECARD_JSON, *_db_dependency_paths()),
+        builder=builder,
+    )
+
+
+def _runtime_app_version() -> str:
+    payload = safe_load(_NATIVE_APP_CONFIG, default={})
+    if isinstance(payload, dict):
+        expo = payload.get("expo")
+        if isinstance(expo, dict):
+            version = str(expo.get("version", "")).strip()
+            if version:
+                return version
+        version = str(payload.get("version", "")).strip()
+        if version:
+            return version
+    return "1.0.0"
+
+
+def _normalize_export_period(period: str) -> str:
+    normalized = str(period or "daily").strip().lower()
+    return normalized if normalized in {"daily", "weekly"} else "daily"
+
+
+def _execution_policy_export_retention_limit(period: str) -> int:
+    return 20 if period == "daily" else 16
+
+
+def _execution_policy_export_period_hours(period: str) -> int:
+    return 30 if period == "daily" else 24 * 8
+
+
+def _execution_policy_export_dir(period: str) -> str:
+    target = os.path.join(_EXECUTION_POLICY_EXPORT_DIR, _normalize_export_period(period))
+    os.makedirs(target, exist_ok=True)
+    return target
+
+
+def _execution_policy_export_index_path(period: str) -> str:
+    return os.path.join(_execution_policy_export_dir(period), "latest.json")
+
+
+def _execution_policy_export_file_route(filename: str) -> str:
+    return f"/api/execution-policy/export/files/{filename}"
+
+
+def _world_state_export_file_route(filename: str) -> str:
+    return f"/api/world-state/export/files/{filename}"
+
+
+def _execution_policy_export_media_type(filename: str) -> str:
+    if filename.endswith(".json"):
+        return "application/json"
+    if filename.endswith(".md"):
+        return "text/markdown"
+    if filename.endswith(".csv"):
+        return "text/csv"
+    if filename.endswith(".zip"):
+        return "application/zip"
+    return "application/octet-stream"
+
+
+def _world_state_export_media_type(filename: str) -> str:
+    return _execution_policy_export_media_type(filename)
+
+
+def _world_state_export_retention_limit(period: str) -> int:
+    return _execution_policy_export_retention_limit(period)
+
+
+def _world_state_export_period_hours(period: str) -> int:
+    return _execution_policy_export_period_hours(period)
+
+
+def _world_state_export_dir(period: str) -> str:
+    target = os.path.join(_WORLD_STATE_EXPORT_DIR, _normalize_export_period(period))
+    os.makedirs(target, exist_ok=True)
+    return target
+
+
+def _world_state_export_index_path(period: str) -> str:
+    return os.path.join(_world_state_export_dir(period), "latest.json")
+
+
+def _cleanup_execution_policy_exports(period: str) -> None:
+    normalized_period = _normalize_export_period(period)
+    manifests = _list_execution_policy_exports(normalized_period, limit=256)
+    keep = _execution_policy_export_retention_limit(normalized_period)
+    stale_export_ids = {manifest.export_id for manifest in manifests[keep:]}
+    if not stale_export_ids:
+        return
+
+    export_dir = _execution_policy_export_dir(normalized_period)
+    for filename in os.listdir(export_dir):
+        if filename == "latest.json":
+            continue
+        if not any(
+            filename == f"{export_id}.manifest.json" or filename.startswith(f"{export_id}.")
+            for export_id in stale_export_ids
+        ):
+            continue
+        path = os.path.join(export_dir, filename)
+        try:
+            os.remove(path)
+        except FileNotFoundError:
+            continue
+        except OSError as exc:
+            logger.warning("execution policy export cleanup failed %s: %s", path, exc)
+
+
+def _execution_policy_export_payload(period: str) -> dict[str, object]:
+    policy = _build_execution_policy()
+    governance = _build_strategy_governance()
+    world_state = _build_world_state_snapshot()
+    production_guard = _build_production_guard_snapshot()
+    production_guard_actions = _build_production_guard_actions(limit=6)
+    picks = _build_composite_picks(days=1, limit=5)
+    limit_up = _build_limit_up_opportunities(days=1, limit=5)
+
+    top_candidates = [
+        {
+            "code": item.code,
+            "name": item.name,
+            "strategy": item.strategy,
+            "setup_label": item.setup_label,
+            "discipline_label": item.discipline_label,
+            "holding_window": item.holding_window,
+            "first_position_pct": item.first_position_pct,
+            "composite_score": item.composite_score,
+        }
+        for item in picks[:5]
+    ]
+    limit_up_watchlist = [
+        {
+            "code": item.code,
+            "name": item.name,
+            "strategy": item.strategy,
+            "scenario_label": item.scenario_label,
+            "tradability_label": item.tradability_label,
+            "board_pattern": item.board_pattern,
+            "leader_uniqueness_score": item.leader_uniqueness_score,
+            "follow_through_score": item.follow_through_score,
+            "failure_spread_score": item.failure_spread_score,
+            "risk_gate": item.risk_gate,
+            "holding_window": item.holding_window,
+            "opportunity_score": item.opportunity_score,
+        }
+        for item in limit_up[:5]
+    ]
+    return {
+        "period": period,
+        "generated_at": _iso_now(),
+        "policy": policy.model_dump(),
+        "world_state": world_state.model_dump(),
+        "production_guard": production_guard.model_dump(),
+        "production_guard_actions": [item.model_dump() for item in production_guard_actions],
+        "governance_summary": {
+            "production_count": governance.production_count,
+            "observation_count": governance.observation_count,
+            "disabled_count": governance.disabled_count,
+            "top_production": [item.strategy_name for item in governance.items if item.state == "production"][:5],
+            "top_disabled": [item.strategy_name for item in governance.items if item.state == "disabled"][:5],
+        },
+        "governance_items": [item.model_dump() for item in governance.items],
+        "top_candidates": top_candidates,
+        "limit_up_watchlist": limit_up_watchlist,
+    }
+
+
+def _render_execution_policy_markdown(payload: dict[str, object]) -> str:
+    policy = payload.get("policy", {}) if isinstance(payload.get("policy"), dict) else {}
+    world_state = payload.get("world_state", {}) if isinstance(payload.get("world_state"), dict) else {}
+    world_components = world_state.get("components", []) if isinstance(world_state.get("components"), list) else []
+    production_guard = (
+        payload.get("production_guard", {})
+        if isinstance(payload.get("production_guard"), dict)
+        else {}
+    )
+    production_guard_actions = (
+        payload.get("production_guard_actions", [])
+        if isinstance(payload.get("production_guard_actions"), list)
+        else []
+    )
+    governance = payload.get("governance_summary", {}) if isinstance(payload.get("governance_summary"), dict) else {}
+    top_candidates = payload.get("top_candidates", []) if isinstance(payload.get("top_candidates"), list) else []
+    limit_up_watchlist = payload.get("limit_up_watchlist", []) if isinstance(payload.get("limit_up_watchlist"), list) else []
+    lines = [
+        "# Execution Policy Report",
+        "",
+        f"- Period: {payload.get('period', 'daily')}",
+        f"- Generated At: {payload.get('generated_at', '')}",
+        f"- Market Phase: {policy.get('market_phase_label', '')}",
+        f"- Style Bias: {world_state.get('style_bias', '')}",
+        f"- Aggressiveness: {policy.get('aggressiveness', '')}",
+        f"- Risk Budget: {policy.get('risk_budget_pct', 0)}%",
+        f"- Cash Buffer: {policy.get('cash_buffer_pct', 0)}%",
+        "",
+        "## Summary",
+        str(policy.get("summary", "")).strip(),
+        "",
+        "## World State",
+        str(world_state.get("summary", "")).strip() or "(none)",
+        "",
+        "## Structural Components",
+    ]
+    if world_components:
+        for component in world_components:
+            if not isinstance(component, dict):
+                continue
+            drivers = " / ".join(str(item) for item in component.get("drivers", []) if str(item).strip()) or "(none)"
+            lines.append(
+                f"- {component.get('label', '')}: {component.get('bias', '')} / {component.get('score', 0)} / {drivers}"
+            )
+    else:
+        lines.append("- (none)")
+
+    lines.extend([
+        "",
+        "## Production Guard",
+        str(production_guard.get("summary", "")).strip() or "(none)",
+        "",
+        "## Guard Actions",
+    ])
+    if production_guard_actions:
+        for item in production_guard_actions:
+            if not isinstance(item, dict):
+                continue
+            lines.append(
+                f"- {item.get('code', '')} {item.get('name', '')} / {item.get('mode', '')} / "
+                f"减仓 {item.get('suggested_reduce_pct', 0)}% / {item.get('summary', '')}"
+            )
+    else:
+        lines.append("- (none)")
+
+    lines.extend([
+        "",
+        "## Allowed Styles",
+        "- " + "\n- ".join(policy.get("allowed_styles", []) or ["(none)"]),
+        "",
+        "## Blocked Styles",
+        "- " + "\n- ".join(policy.get("blocked_styles", []) or ["(none)"]),
+        "",
+        "## Strategy Matrix",
+        f"- Production: {', '.join(governance.get('top_production', []) or ['(none)'])}",
+        f"- Disabled: {', '.join(governance.get('top_disabled', []) or ['(none)'])}",
+        "",
+        "## Key Actions",
+        "- " + "\n- ".join(policy.get("key_actions", []) or ["(none)"]),
+        "",
+        "## Top Candidates",
+    ])
+    if top_candidates:
+        for item in top_candidates:
+            if not isinstance(item, dict):
+                continue
+            lines.append(
+                f"- {item.get('code', '')} {item.get('name', '')} / {item.get('strategy', '')} / "
+                f"{item.get('discipline_label', '')} / 首仓 {item.get('first_position_pct', 0)}%"
+            )
+    else:
+        lines.append("- (none)")
+
+    lines.extend(["", "## Limit-Up Watchlist"])
+    if limit_up_watchlist:
+        for item in limit_up_watchlist:
+            if not isinstance(item, dict):
+                continue
+            lines.append(
+                f"- {item.get('code', '')} {item.get('name', '')} / {item.get('scenario_label', '')} / "
+                f"{item.get('tradability_label', '')} / {item.get('board_pattern', '')} / "
+                f"延续 {item.get('follow_through_score', '')} / 风险 {item.get('failure_spread_score', '')} / "
+                f"{item.get('holding_window', '')}"
+            )
+    else:
+        lines.append("- (none)")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def _write_execution_policy_csv(path: str, rows: list[dict[str, object]], fieldnames: list[str]) -> None:
+    with open(path, "w", encoding="utf-8", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({key: row.get(key, "") for key in fieldnames})
+
+
+def _write_execution_policy_export(period: str = "daily") -> ExecutionPolicyExportManifest:
+    normalized_period = _normalize_export_period(period)
+    export_payload = _execution_policy_export_payload(normalized_period)
+    policy = export_payload["policy"]
+    generated_at = str(export_payload.get("generated_at") or _iso_now())
+    export_id = f"execution-policy-{normalized_period}-{generated_at.replace(':', '').replace('-', '')}"
+    export_dir = _execution_policy_export_dir(normalized_period)
+    json_filename = f"{export_id}.json"
+    md_filename = f"{export_id}.md"
+    governance_csv_filename = f"{export_id}.governance.csv"
+    candidates_csv_filename = f"{export_id}.candidates.csv"
+    limit_up_csv_filename = f"{export_id}.limit-up.csv"
+    guard_actions_csv_filename = f"{export_id}.guard-actions.csv"
+    bundle_filename = f"{export_id}.bundle.zip"
+    manifest_filename = f"{export_id}.manifest.json"
+    json_path = os.path.join(export_dir, json_filename)
+    md_path = os.path.join(export_dir, md_filename)
+    governance_csv_path = os.path.join(export_dir, governance_csv_filename)
+    candidates_csv_path = os.path.join(export_dir, candidates_csv_filename)
+    limit_up_csv_path = os.path.join(export_dir, limit_up_csv_filename)
+    guard_actions_csv_path = os.path.join(export_dir, guard_actions_csv_filename)
+    bundle_path = os.path.join(export_dir, bundle_filename)
+    manifest_path = os.path.join(export_dir, manifest_filename)
+
+    safe_save(json_path, export_payload)
+    markdown = _render_execution_policy_markdown(export_payload)
+    with open(md_path, "w", encoding="utf-8") as fh:
+        fh.write(markdown)
+
+    governance_items = export_payload.get("governance_items", [])
+    if isinstance(governance_items, list):
+        _write_execution_policy_csv(
+            governance_csv_path,
+            [item for item in governance_items if isinstance(item, dict)],
+            [
+                "strategy_id",
+                "strategy_name",
+                "family",
+                "state",
+                "weight_pct",
+                "top_down_fit",
+                "recent_fit",
+                "sample_count",
+                "holding_window_cap",
+                "discipline_label",
+                "reason",
+            ],
+        )
+    _write_execution_policy_csv(
+        candidates_csv_path,
+        [item for item in export_payload.get("top_candidates", []) if isinstance(item, dict)],
+        [
+            "code",
+            "name",
+            "strategy",
+            "setup_label",
+            "discipline_label",
+            "holding_window",
+            "first_position_pct",
+            "composite_score",
+        ],
+    )
+    _write_execution_policy_csv(
+        limit_up_csv_path,
+        [item for item in export_payload.get("limit_up_watchlist", []) if isinstance(item, dict)],
+        [
+            "code",
+            "name",
+            "strategy",
+            "scenario_label",
+            "tradability_label",
+            "board_pattern",
+            "leader_uniqueness_score",
+            "follow_through_score",
+            "failure_spread_score",
+            "risk_gate",
+            "holding_window",
+            "opportunity_score",
+        ],
+    )
+    _write_execution_policy_csv(
+        guard_actions_csv_path,
+        [item for item in export_payload.get("production_guard_actions", []) if isinstance(item, dict)],
+        [
+            "code",
+            "name",
+            "mode",
+            "action_label",
+            "suggested_reduce_pct",
+            "suggested_reduce_quantity",
+            "priority_score",
+            "summary",
+            "route",
+        ],
+    )
+
+    assets = [
+        ExecutionPolicyExportAsset(
+            kind="json",
+            filename=json_filename,
+            route=_execution_policy_export_file_route(json_filename),
+            content_type="application/json",
+            size_bytes=os.path.getsize(json_path),
+        ),
+        ExecutionPolicyExportAsset(
+            kind="markdown",
+            filename=md_filename,
+            route=_execution_policy_export_file_route(md_filename),
+            content_type="text/markdown",
+            size_bytes=os.path.getsize(md_path),
+        ),
+        ExecutionPolicyExportAsset(
+            kind="governance_csv",
+            filename=governance_csv_filename,
+            route=_execution_policy_export_file_route(governance_csv_filename),
+            content_type="text/csv",
+            size_bytes=os.path.getsize(governance_csv_path),
+        ),
+        ExecutionPolicyExportAsset(
+            kind="candidates_csv",
+            filename=candidates_csv_filename,
+            route=_execution_policy_export_file_route(candidates_csv_filename),
+            content_type="text/csv",
+            size_bytes=os.path.getsize(candidates_csv_path),
+        ),
+        ExecutionPolicyExportAsset(
+            kind="limit_up_csv",
+            filename=limit_up_csv_filename,
+            route=_execution_policy_export_file_route(limit_up_csv_filename),
+            content_type="text/csv",
+            size_bytes=os.path.getsize(limit_up_csv_path),
+        ),
+        ExecutionPolicyExportAsset(
+            kind="guard_actions_csv",
+            filename=guard_actions_csv_filename,
+            route=_execution_policy_export_file_route(guard_actions_csv_filename),
+            content_type="text/csv",
+            size_bytes=os.path.getsize(guard_actions_csv_path),
+        ),
+    ]
+
+    with zipfile.ZipFile(bundle_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for file_path, arcname in (
+            (json_path, json_filename),
+            (md_path, md_filename),
+            (governance_csv_path, governance_csv_filename),
+            (candidates_csv_path, candidates_csv_filename),
+            (limit_up_csv_path, limit_up_csv_filename),
+            (guard_actions_csv_path, guard_actions_csv_filename),
+        ):
+            archive.write(file_path, arcname=arcname)
+
+    assets.append(
+        ExecutionPolicyExportAsset(
+            kind="bundle",
+            filename=bundle_filename,
+            route=_execution_policy_export_file_route(bundle_filename),
+            content_type="application/zip",
+            size_bytes=os.path.getsize(bundle_path),
+        )
+    )
+
+    manifest = ExecutionPolicyExportManifest(
+        export_id=export_id,
+        period=normalized_period,
+        generated_at=generated_at,
+        market_phase=str(policy.get("market_phase", "")),
+        market_phase_label=str(policy.get("market_phase_label", "")),
+        aggressiveness=str(policy.get("aggressiveness", "")),
+        risk_budget_pct=_to_float(policy.get("risk_budget_pct")) or 0.0,
+        cash_buffer_pct=_to_float(policy.get("cash_buffer_pct")) or 0.0,
+        allowed_styles=[str(item) for item in policy.get("allowed_styles", []) if str(item).strip()],
+        blocked_styles=[str(item) for item in policy.get("blocked_styles", []) if str(item).strip()],
+        allowed_strategies=[str(item) for item in policy.get("allowed_strategies", []) if str(item).strip()],
+        observation_strategies=[str(item) for item in policy.get("observation_strategies", []) if str(item).strip()],
+        blocked_strategies=[str(item) for item in policy.get("blocked_strategies", []) if str(item).strip()],
+        preferred_holding_windows=[str(item) for item in policy.get("preferred_holding_windows", []) if str(item).strip()],
+        summary=str(policy.get("summary", "")),
+        key_actions=[str(item) for item in policy.get("key_actions", []) if str(item).strip()],
+        top_candidates=list(export_payload.get("top_candidates", [])),
+        limit_up_watchlist=list(export_payload.get("limit_up_watchlist", [])),
+        assets=assets,
+    )
+    safe_save(manifest_path, manifest.model_dump())
+    safe_save(_execution_policy_export_index_path(normalized_period), manifest.model_dump())
+    _cleanup_execution_policy_exports(normalized_period)
+    return manifest
+
+
+def _list_execution_policy_exports(period: str = "daily", limit: int = 10) -> list[ExecutionPolicyExportManifest]:
+    export_dir = _execution_policy_export_dir(period)
+    manifests: list[ExecutionPolicyExportManifest] = []
+    for filename in sorted(os.listdir(export_dir), reverse=True):
+        if not filename.endswith(".manifest.json"):
+            continue
+        data = safe_load(os.path.join(export_dir, filename), default={})
+        if not isinstance(data, dict) or not data.get("export_id"):
+            continue
+        manifests.append(ExecutionPolicyExportManifest(**data))
+        if len(manifests) >= max(1, limit):
+            break
+    return manifests
+
+
+def _build_execution_policy_export_status(
+    period: str = "daily",
+    *,
+    ensure_fresh: bool = False,
+) -> ExecutionPolicyExportStatus:
+    normalized_period = _normalize_export_period(period)
+    if ensure_fresh:
+        latest = safe_load(_execution_policy_export_index_path(normalized_period), default={})
+        generated_at = _parse_datetime(latest.get("generated_at")) if isinstance(latest, dict) else None
+        stale = generated_at is None or (datetime.now() - generated_at).total_seconds() / 3600 > _execution_policy_export_period_hours(normalized_period)
+        if stale:
+            _write_execution_policy_export(normalized_period)
+
+    latest = safe_load(_execution_policy_export_index_path(normalized_period), default={})
+    if not isinstance(latest, dict) or not latest.get("export_id"):
+        return ExecutionPolicyExportStatus(period=normalized_period)
+
+    generated_at = _parse_datetime(latest.get("generated_at"))
+    stale = generated_at is None or (datetime.now() - generated_at).total_seconds() / 3600 > _execution_policy_export_period_hours(normalized_period)
+    manifest = ExecutionPolicyExportManifest(**latest)
+    report_asset = next((item for item in manifest.assets if item.kind == "markdown"), None)
+    bundle_asset = next((item for item in manifest.assets if item.kind == "bundle"), None)
+    return ExecutionPolicyExportStatus(
+        period=normalized_period,
+        latest_export_at=manifest.generated_at,
+        latest_export_id=manifest.export_id,
+        latest_manifest_route=_execution_policy_export_file_route(f"{manifest.export_id}.manifest.json"),
+        latest_report_route=report_asset.route if report_asset else None,
+        latest_bundle_route=bundle_asset.route if bundle_asset else None,
+        latest_asset_count=len(manifest.assets),
+        history_count=len(_list_execution_policy_exports(normalized_period, limit=64)),
+        stale=stale,
+    )
+
+
+def _latest_execution_policy_export_manifest(
+    period: str = "daily",
+    *,
+    ensure_fresh: bool = True,
+) -> ExecutionPolicyExportManifest:
+    normalized_period = _normalize_export_period(period)
+    if ensure_fresh:
+        _build_execution_policy_export_status(normalized_period, ensure_fresh=True)
+    latest = safe_load(_execution_policy_export_index_path(normalized_period), default={})
+    if not isinstance(latest, dict) or not latest.get("export_id"):
+        raise HTTPException(status_code=404, detail="execution policy export not found")
+    return ExecutionPolicyExportManifest(**latest)
+
+
+def _resolve_execution_policy_export_file(filename: str) -> Optional[str]:
+    safe_name = os.path.basename(filename or "")
+    if not safe_name or safe_name != filename:
+        return None
+    for period in ("daily", "weekly"):
+        candidate = os.path.join(_execution_policy_export_dir(period), safe_name)
+        if os.path.exists(candidate) and os.path.isfile(candidate):
+            return candidate
+    return None
+
+
+def _cleanup_world_state_exports(period: str) -> None:
+    normalized_period = _normalize_export_period(period)
+    manifests = _list_world_state_exports(normalized_period, limit=256)
+    keep = _world_state_export_retention_limit(normalized_period)
+    stale_export_ids = {manifest.export_id for manifest in manifests[keep:]}
+    if not stale_export_ids:
+        return
+
+    export_dir = _world_state_export_dir(normalized_period)
+    for filename in os.listdir(export_dir):
+        if filename == "latest.json":
+            continue
+        if not any(
+            filename == f"{export_id}.manifest.json" or filename.startswith(f"{export_id}.")
+            for export_id in stale_export_ids
+        ):
+            continue
+        path = os.path.join(export_dir, filename)
+        try:
+            os.remove(path)
+        except FileNotFoundError:
+            continue
+        except OSError as exc:
+            logger.warning("world state export cleanup failed %s: %s", path, exc)
+
+
+def _world_state_export_payload(period: str) -> dict[str, object]:
+    snapshot = _build_world_state_snapshot()
+    return {
+        "generated_at": _iso_now(),
+        "period": _normalize_export_period(period),
+        "world_state": snapshot.model_dump(),
+        "source_statuses": [item.model_dump() for item in snapshot.source_statuses],
+        "top_directions": [item.model_dump() for item in snapshot.top_directions],
+        "event_cascades": [item.model_dump() for item in snapshot.event_cascades],
+        "actions": [item.model_dump() for item in snapshot.actions],
+        "operating_actions": [item.model_dump() for item in snapshot.operating_actions],
+        "checks": [item.model_dump() for item in snapshot.checks],
+    }
+
+
+def _render_world_state_markdown(payload: dict[str, object]) -> str:
+    world = payload.get("world_state", {})
+    if not isinstance(world, dict):
+        world = {}
+    lines = [
+        "# World State Export",
+        f"- 生成时间: {payload.get('generated_at') or _iso_now()}",
+        f"- 市场阶段: {world.get('market_phase_label', '')}",
+        f"- 估值: {world.get('valuation_regime', '')}",
+        f"- 资本风格: {world.get('capital_style', '')}",
+        f"- 主导方向: {world.get('strategic_direction') or '继续观察'}",
+        f"- 科技焦点: {world.get('technology_focus') or '继续观察'}",
+        f"- 地缘: {world.get('geopolitics_bias', '')}",
+        f"- 供应链: {world.get('supply_chain_mode', '')}",
+        "",
+        "## 摘要",
+        str(world.get("summary", "")),
+        str(world.get("structural_summary", "")),
+        "",
+        "## 顶层动作",
+    ]
+    actions = payload.get("actions", [])
+    if isinstance(actions, list) and actions:
+        for item in actions[:5]:
+            if isinstance(item, dict):
+                lines.append(f"- {item.get('title', '')}: {item.get('summary', '')}")
+    else:
+        lines.append("- 暂无。")
+    lines.extend(["", "## 经营动作"])
+    operating = payload.get("operating_actions", [])
+    if isinstance(operating, list) and operating:
+        for item in operating[:5]:
+            if isinstance(item, dict):
+                lines.append(f"- {item.get('title', '')}: {item.get('summary', '')}")
+    else:
+        lines.append("- 暂无。")
+    operating_profile = world.get("operating_profile", {})
+    if isinstance(operating_profile, dict) and operating_profile:
+        lines.extend(["", "## 经营画像"])
+        lines.append(f"- 主体: {operating_profile.get('company_name') or '暂无'}")
+        lines.append(f"- 行业: {' / '.join(operating_profile.get('primary_industries') or []) or '暂无'}")
+        lines.append(f"- 模式: {operating_profile.get('operating_mode') or '暂无'}")
+        lines.append(
+            f"- 订单/产能/库存: {operating_profile.get('order_visibility_months', 0)} 月 / "
+            f"{operating_profile.get('capacity_utilization_pct', 0)}% / "
+            f"{operating_profile.get('inventory_days', 0)} 天"
+        )
+        lines.append(
+            f"- 供应商/客户/现金: {operating_profile.get('supplier_concentration_pct', 0)}% / "
+            f"{operating_profile.get('customer_concentration_pct', 0)}% / "
+            f"{operating_profile.get('cash_buffer_months', 0)} 月"
+        )
+        lines.append(f"- 摘要: {operating_profile.get('summary') or '暂无'}")
+    lines.extend(["", "## 自检"])
+    checks = payload.get("checks", [])
+    if isinstance(checks, list) and checks:
+        for item in checks[:5]:
+            if isinstance(item, dict):
+                lines.append(f"- {item.get('title', '')}: {item.get('message', '')}")
+    else:
+        lines.append("- 暂无。")
+    return "\n".join(lines).strip() + "\n"
+
+
+def _write_world_state_export(period: str = "daily") -> WorldStateExportManifest:
+    normalized_period = _normalize_export_period(period)
+    export_payload = _world_state_export_payload(normalized_period)
+    world = export_payload["world_state"]
+    generated_at = str(export_payload.get("generated_at") or _iso_now())
+    export_id = f"world-state-{normalized_period}-{generated_at.replace(':', '').replace('-', '')}"
+    export_dir = _world_state_export_dir(normalized_period)
+    json_filename = f"{export_id}.json"
+    md_filename = f"{export_id}.md"
+    sources_csv_filename = f"{export_id}.sources.csv"
+    directions_csv_filename = f"{export_id}.directions.csv"
+    events_csv_filename = f"{export_id}.events.csv"
+    actions_csv_filename = f"{export_id}.actions.csv"
+    operating_profile_csv_filename = f"{export_id}.operating-profile.csv"
+    bundle_filename = f"{export_id}.bundle.zip"
+    manifest_filename = f"{export_id}.manifest.json"
+    json_path = os.path.join(export_dir, json_filename)
+    md_path = os.path.join(export_dir, md_filename)
+    sources_csv_path = os.path.join(export_dir, sources_csv_filename)
+    directions_csv_path = os.path.join(export_dir, directions_csv_filename)
+    events_csv_path = os.path.join(export_dir, events_csv_filename)
+    actions_csv_path = os.path.join(export_dir, actions_csv_filename)
+    operating_profile_csv_path = os.path.join(export_dir, operating_profile_csv_filename)
+    bundle_path = os.path.join(export_dir, bundle_filename)
+    manifest_path = os.path.join(export_dir, manifest_filename)
+
+    safe_save(json_path, export_payload)
+    with open(md_path, "w", encoding="utf-8") as fh:
+        fh.write(_render_world_state_markdown(export_payload))
+    _write_execution_policy_csv(
+        sources_csv_path,
+        [item for item in export_payload.get("source_statuses", []) if isinstance(item, dict)],
+        [
+            "key", "label", "freshness_label", "freshness_score", "reliability_score",
+            "authority_score", "timeliness_score", "data_quality_score", "signal_count",
+            "category", "required", "external", "fetch_mode", "remote_configured",
+            "degraded_to_derived", "origin_mode", "available", "stale",
+        ],
+    )
+    _write_execution_policy_csv(
+        directions_csv_path,
+        [item for item in export_payload.get("top_directions", []) if isinstance(item, dict)],
+        [
+            "direction_id", "direction", "focus_sector", "policy_bucket", "total_score",
+            "event_score", "official_score", "chain_control_score", "research_score",
+            "timeline_score", "technology_breakthrough_score", "technology_focus",
+        ],
+    )
+    _write_execution_policy_csv(
+        events_csv_path,
+        [item for item in export_payload.get("event_cascades", []) if isinstance(item, dict)],
+        [
+            "event_id", "title", "trigger_type", "severity", "trade_bias",
+            "restriction_scope", "estimated_flow_impact_pct", "continuity_focus",
+            "transport_focus",
+        ],
+    )
+    action_rows: list[dict[str, object]] = []
+    for item in export_payload.get("actions", []):
+        if isinstance(item, dict):
+            row = dict(item)
+            row["action_group"] = "trading"
+            action_rows.append(row)
+    for item in export_payload.get("operating_actions", []):
+        if isinstance(item, dict):
+            row = dict(item)
+            row["action_group"] = "operating"
+            action_rows.append(row)
+    _write_execution_policy_csv(
+        actions_csv_path,
+        action_rows,
+        ["action_group", "key", "level", "action_type", "priority", "title", "summary", "horizon"],
+    )
+    operating_profile_payload = world.get("operating_profile", {})
+    operating_profile_rows = [operating_profile_payload] if isinstance(operating_profile_payload, dict) and operating_profile_payload else []
+    if operating_profile_rows:
+        _write_execution_policy_csv(
+            operating_profile_csv_path,
+            operating_profile_rows,
+            [
+                "company_name",
+                "operating_mode",
+                "order_visibility_months",
+                "capacity_utilization_pct",
+                "inventory_days",
+                "supplier_concentration_pct",
+                "customer_concentration_pct",
+                "overseas_revenue_pct",
+                "sensitive_region_exposure_pct",
+                "cash_buffer_months",
+                "capex_flexibility",
+                "inventory_strategy",
+                "summary",
+                "updated_at",
+            ],
+        )
+
+    assets = [
+        WorldStateExportAsset(kind="json", filename=json_filename, route=_world_state_export_file_route(json_filename), content_type="application/json", size_bytes=os.path.getsize(json_path)),
+        WorldStateExportAsset(kind="markdown", filename=md_filename, route=_world_state_export_file_route(md_filename), content_type="text/markdown", size_bytes=os.path.getsize(md_path)),
+        WorldStateExportAsset(kind="sources_csv", filename=sources_csv_filename, route=_world_state_export_file_route(sources_csv_filename), content_type="text/csv", size_bytes=os.path.getsize(sources_csv_path)),
+        WorldStateExportAsset(kind="directions_csv", filename=directions_csv_filename, route=_world_state_export_file_route(directions_csv_filename), content_type="text/csv", size_bytes=os.path.getsize(directions_csv_path)),
+        WorldStateExportAsset(kind="events_csv", filename=events_csv_filename, route=_world_state_export_file_route(events_csv_filename), content_type="text/csv", size_bytes=os.path.getsize(events_csv_path)),
+        WorldStateExportAsset(kind="actions_csv", filename=actions_csv_filename, route=_world_state_export_file_route(actions_csv_filename), content_type="text/csv", size_bytes=os.path.getsize(actions_csv_path)),
+    ]
+    if operating_profile_rows:
+        assets.append(
+            WorldStateExportAsset(
+                kind="operating_profile_csv",
+                filename=operating_profile_csv_filename,
+                route=_world_state_export_file_route(operating_profile_csv_filename),
+                content_type="text/csv",
+                size_bytes=os.path.getsize(operating_profile_csv_path),
+            )
+        )
+    with zipfile.ZipFile(bundle_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for file_path, arcname in (
+            (json_path, json_filename),
+            (md_path, md_filename),
+            (sources_csv_path, sources_csv_filename),
+            (directions_csv_path, directions_csv_filename),
+            (events_csv_path, events_csv_filename),
+            (actions_csv_path, actions_csv_filename),
+        ):
+            archive.write(file_path, arcname=arcname)
+        if operating_profile_rows:
+            archive.write(operating_profile_csv_path, arcname=operating_profile_csv_filename)
+    assets.append(
+        WorldStateExportAsset(
+            kind="bundle",
+            filename=bundle_filename,
+            route=_world_state_export_file_route(bundle_filename),
+            content_type="application/zip",
+            size_bytes=os.path.getsize(bundle_path),
+        )
+    )
+
+    manifest = WorldStateExportManifest(
+        export_id=export_id,
+        period=normalized_period,
+        generated_at=generated_at,
+        market_phase=str(world.get("market_phase", "")),
+        market_phase_label=str(world.get("market_phase_label", "")),
+        dominant_component=str(world.get("dominant_component") or "") or None,
+        valuation_regime=str(world.get("valuation_regime", "")),
+        capital_style=str(world.get("capital_style", "")),
+        strategic_direction=str(world.get("strategic_direction") or "") or None,
+        technology_focus=str(world.get("technology_focus") or "") or None,
+        geopolitics_bias=str(world.get("geopolitics_bias", "")),
+        supply_chain_mode=str(world.get("supply_chain_mode", "")),
+        technology_breakthrough_score=_to_float(world.get("technology_breakthrough_score")) or 0.0,
+        summary=str(world.get("summary", "")),
+        structural_summary=str(world.get("structural_summary", "")),
+        top_action_titles=[str(item.get("title", "")) for item in export_payload.get("actions", []) if isinstance(item, dict) and str(item.get("title", "")).strip()][:5],
+        top_operating_action_titles=[str(item.get("title", "")) for item in export_payload.get("operating_actions", []) if isinstance(item, dict) and str(item.get("title", "")).strip()][:5],
+        top_check_titles=[str(item.get("title", "")) for item in export_payload.get("checks", []) if isinstance(item, dict) and str(item.get("title", "")).strip()][:5],
+        assets=assets,
+    )
+    safe_save(manifest_path, manifest.model_dump())
+    safe_save(_world_state_export_index_path(normalized_period), manifest.model_dump())
+    _cleanup_world_state_exports(normalized_period)
+    return manifest
+
+
+def _list_world_state_exports(period: str = "daily", limit: int = 10) -> list[WorldStateExportManifest]:
+    export_dir = _world_state_export_dir(period)
+    manifests: list[WorldStateExportManifest] = []
+    for filename in sorted(os.listdir(export_dir), reverse=True):
+        if not filename.endswith(".manifest.json"):
+            continue
+        data = safe_load(os.path.join(export_dir, filename), default={})
+        if not isinstance(data, dict) or not data.get("export_id"):
+            continue
+        manifests.append(WorldStateExportManifest(**data))
+        if len(manifests) >= max(1, limit):
+            break
+    return manifests
+
+
+def _build_world_state_export_status(period: str = "daily", *, ensure_fresh: bool = False) -> WorldStateExportStatus:
+    normalized_period = _normalize_export_period(period)
+    if ensure_fresh:
+        latest = safe_load(_world_state_export_index_path(normalized_period), default={})
+        generated_at = _parse_datetime(latest.get("generated_at")) if isinstance(latest, dict) else None
+        stale = generated_at is None or (datetime.now() - generated_at).total_seconds() / 3600 > _world_state_export_period_hours(normalized_period)
+        if stale:
+            _write_world_state_export(normalized_period)
+    latest = safe_load(_world_state_export_index_path(normalized_period), default={})
+    if not isinstance(latest, dict) or not latest.get("export_id"):
+        return WorldStateExportStatus(period=normalized_period)
+    generated_at = _parse_datetime(latest.get("generated_at"))
+    stale = generated_at is None or (datetime.now() - generated_at).total_seconds() / 3600 > _world_state_export_period_hours(normalized_period)
+    manifest = WorldStateExportManifest(**latest)
+    report_asset = next((item for item in manifest.assets if item.kind == "markdown"), None)
+    bundle_asset = next((item for item in manifest.assets if item.kind == "bundle"), None)
+    return WorldStateExportStatus(
+        period=normalized_period,
+        latest_export_at=manifest.generated_at,
+        latest_export_id=manifest.export_id,
+        latest_manifest_route=_world_state_export_file_route(f"{manifest.export_id}.manifest.json"),
+        latest_report_route=report_asset.route if report_asset else None,
+        latest_bundle_route=bundle_asset.route if bundle_asset else None,
+        latest_asset_count=len(manifest.assets),
+        history_count=len(_list_world_state_exports(normalized_period, limit=64)),
+        stale=stale,
+    )
+
+
+def _latest_world_state_export_manifest(period: str = "daily", *, ensure_fresh: bool = True) -> WorldStateExportManifest:
+    normalized_period = _normalize_export_period(period)
+    if ensure_fresh:
+        _build_world_state_export_status(normalized_period, ensure_fresh=True)
+    latest = safe_load(_world_state_export_index_path(normalized_period), default={})
+    if not isinstance(latest, dict) or not latest.get("export_id"):
+        raise HTTPException(status_code=404, detail="world state export not found")
+    return WorldStateExportManifest(**latest)
+
+
+def _resolve_world_state_export_file(filename: str) -> Optional[str]:
+    safe_name = os.path.basename(filename or "")
+    if not safe_name or safe_name != filename:
+        return None
+    for period in ("daily", "weekly"):
+        candidate = os.path.join(_world_state_export_dir(period), safe_name)
+        if os.path.exists(candidate) and os.path.isfile(candidate):
+            return candidate
+    return None
+
+
+def _hidden_accumulation_candidate_codes() -> list[str]:
+    candidates: list[str] = []
+    for code in range(600000, 606000):
+        candidates.append(f"sh{code:06d}")
+    for code in range(688000, 689000):
+        candidates.append(f"sh{code:06d}")
+    for code in range(1, 4000):
+        candidates.append(f"sz{code:06d}")
+    for code in range(300001, 302000):
+        candidates.append(f"sz{code:06d}")
+    return candidates
+
+
+def _http_get_text(url: str, *, timeout: int = 8) -> str:
+    request = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": "Mozilla/5.0",
+            "Referer": "https://stockapp.finance.qq.com/",
+        },
+        method="GET",
+    )
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        return response.read().decode("utf-8", errors="ignore")
+
+
+def _http_get_json(url: str, *, timeout: int = 8) -> dict:
+    payload = _http_get_text(url, timeout=timeout).strip()
+    if not payload:
+        return {}
+    try:
+        parsed = json.loads(payload)
+    except json.JSONDecodeError:
+        return {}
+    return parsed if isinstance(parsed, dict) else {}
+
+
+def _load_hidden_accumulation_small_float_universe(max_float_mv_yi: float = 300.0) -> list[dict]:
+    def builder() -> list[dict]:
+        items: list[dict] = []
+        codes = _hidden_accumulation_candidate_codes()
+        deadline = time.monotonic() + 2.0
+        failed_batches = 0
+        for start in range(0, len(codes), 80):
+            if time.monotonic() >= deadline:
+                break
+            batch = codes[start : start + 80]
+            try:
+                payload = _http_get_text("https://qt.gtimg.cn/q=" + ",".join(batch), timeout=1)
+            except Exception:
+                failed_batches += 1
+                if failed_batches >= 1 and not items:
+                    break
+                continue
+            failed_batches = 0
+            for line in payload.strip().split(";"):
+                if '="' not in line:
+                    continue
+                head, body = line.split('="', 1)
+                quote_fields = body.rstrip('"').split("~")
+                if len(quote_fields) < 46:
+                    continue
+                code_full = str(head.split("_", 1)[1]).strip()
+                stock_code = str(quote_fields[2]).strip()
+                name = str(quote_fields[1]).strip()
+                if not stock_code or not name or name == "-" or "ST" in name or "退" in name:
+                    continue
+                try:
+                    float_mv_yi = float(quote_fields[44])
+                except (TypeError, ValueError):
+                    continue
+                if float_mv_yi <= 0 or float_mv_yi > max_float_mv_yi:
+                    continue
+                items.append(
+                    {
+                        "code": stock_code,
+                        "market_code": code_full[:2] if len(code_full) >= 2 else ("sh" if stock_code.startswith(("6", "9")) else "sz"),
+                        "name": name,
+                        "float_mv_yi": round(float_mv_yi, 1),
+                    }
+                )
+        return items
+
+    return _cached_runtime_value(
+        "hidden_accumulation_small_float_universe",
+        round(max_float_mv_yi, 1),
+        ttl_seconds=180,
+        dependency_paths=(),
+        builder=builder,
+    )
+
+
+def _load_hidden_accumulation_daily_series(stock_code: str, *, count: int = 20) -> list[dict]:
+    market_code = "sh" if str(stock_code).startswith(("6", "9")) else "sz"
+
+    def builder() -> list[dict]:
+        url = (
+            "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?"
+            f"param={market_code}{stock_code},day,,,{max(count, 12)},qfq"
+        )
+        payload = _http_get_json(url, timeout=1)
+        block = payload.get("data", {}).get(f"{market_code}{stock_code}", {})
+        raw_rows = []
+        if isinstance(block, dict):
+            raw_rows = block.get("qfqday") or block.get("day") or []
+        if not isinstance(raw_rows, list):
+            return []
+
+        rows: list[dict] = []
+        prev_close: Optional[float] = None
+        for item in raw_rows:
+            if not isinstance(item, list) or len(item) < 6:
+                continue
+            try:
+                close_price = float(item[2])
+            except (TypeError, ValueError):
+                continue
+            pct_change = None
+            if prev_close and prev_close > 0:
+                pct_change = round((close_price / prev_close - 1.0) * 100.0, 2)
+            rows.append(
+                {
+                    "date": str(item[0]),
+                    "close": round(close_price, 2),
+                    "pct": pct_change,
+                }
+            )
+            prev_close = close_price
+        return [row for row in rows if row.get("pct") is not None]
+
+    return _cached_runtime_value(
+        "hidden_accumulation_daily_series",
+        (stock_code, max(count, 12)),
+        ttl_seconds=180,
+        dependency_paths=(),
+        builder=builder,
+    )
+
+
+def _build_hidden_accumulation_opportunities(limit: int = 5) -> list[HiddenAccumulationOpportunity]:
+    def builder() -> list[HiddenAccumulationOpportunity]:
+        world_state = _build_world_state_snapshot()
+        weak_market = world_state.market_phase in {"range_rotation", "valuation_reset", "risk_off"}
+        opportunities: list[HiddenAccumulationOpportunity] = []
+        deadline = time.monotonic() + 3.0
+
+        for item in _load_hidden_accumulation_small_float_universe(max_float_mv_yi=300.0):
+            if time.monotonic() >= deadline:
+                break
+            code = str(item.get("code", "")).strip()
+            if not code:
+                continue
+            rows = _load_hidden_accumulation_daily_series(code, count=20)
+            if len(rows) < 11:
+                continue
+
+            tail = rows[-12:]
+            streak = 0
+            for row in reversed(tail):
+                pct_change = _to_float(row.get("pct")) or 0.0
+                if 0 < pct_change <= 3.5:
+                    streak += 1
+                else:
+                    break
+            if streak < 2:
+                continue
+
+            tail_rows = tail[-streak:]
+            tail_pcts = [round(_to_float(row.get("pct")) or 0.0, 2) for row in tail_rows]
+            if not tail_pcts or max(tail_pcts) > 3.5 or sum(x for x in tail_pcts if x > 0) > 10.0:
+                continue
+
+            consolidation_rows = tail[-streak - 8 : -streak]
+            if len(consolidation_rows) < 8:
+                continue
+            consolidation_closes = [(_to_float(row.get("close")) or 0.0) for row in consolidation_rows]
+            consolidation_closes = [value for value in consolidation_closes if value > 0]
+            if len(consolidation_closes) < 8:
+                continue
+            consolidation_min = min(consolidation_closes)
+            consolidation_max = max(consolidation_closes)
+            if consolidation_min <= 0:
+                continue
+            consolidation_width_pct = (consolidation_max / consolidation_min - 1.0) * 100.0
+            if consolidation_width_pct > 12.0:
+                continue
+
+            float_mv_yi = _to_float(item.get("float_mv_yi")) or 0.0
+            streak_gain_pct = round(sum(x for x in tail_pcts if x > 0), 2)
+            recent_closes = [round(_to_float(row.get("close")) or 0.0, 2) for row in rows[-6:]]
+            accumulation_score = 58.0
+            accumulation_score += min(streak * 5.0, 20.0)
+            accumulation_score += max(0.0, 12.0 - consolidation_width_pct)
+            accumulation_score += max(0.0, min(12.0, (120.0 - float_mv_yi) / 20.0))
+            accumulation_score += 10.0 if weak_market else 2.0
+            accumulation_score -= max(0.0, streak_gain_pct - 4.0) * 1.5
+            accumulation_score = round(_clamp(accumulation_score, 0.0, 100.0), 1)
+
+            reasons = [
+                f"流通市值 {float_mv_yi:.1f} 亿，符合 300 亿以内小流通。",
+                f"尾部连续 {streak} 天小阳，最近涨幅 {streak_gain_pct:.2f}%。",
+                f"前段盘整宽度 {consolidation_width_pct:.2f}%，更像横住后慢抬。",
+            ]
+            if weak_market:
+                reasons.append(f"当前 {world_state.market_phase_label}，这类低拥挤小票更容易走相对强势。")
+
+            opportunities.append(
+                HiddenAccumulationOpportunity(
+                    id=f"hidden-accumulation-{code}",
+                    code=code,
+                    name=str(item.get("name", code)),
+                    market_phase=world_state.market_phase,
+                    market_phase_label=world_state.market_phase_label,
+                    float_mv_yi=round(float_mv_yi, 1),
+                    streak_days=streak,
+                    consolidation_width_pct=round(consolidation_width_pct, 2),
+                    streak_gain_pct=streak_gain_pct,
+                    setup_label="弱市隐蔽吸筹",
+                    tradability_label="先按 T+1/T+2 看承接" if weak_market else "先观察，不追高",
+                    accumulation_score=accumulation_score,
+                    holding_window="T+1/T+2 快切确认",
+                    action="回踩不破再看承接，连续小阳被放大成大阳后不追。",
+                    thesis=(
+                        f"{world_state.market_phase_label} 下，{code} {item.get('name', '')} "
+                        f"更像低拥挤小票在盘整后被持续轻推。"
+                    ),
+                    reasons=reasons,
+                    recent_closes=recent_closes,
+                    tail_pcts=tail_pcts,
+                )
+            )
+
+        opportunities.sort(
+            key=lambda item: (
+                item.streak_days,
+                item.accumulation_score,
+                -item.consolidation_width_pct,
+            ),
+            reverse=True,
+        )
+        return opportunities[: max(1, min(limit, 20))]
+
+    return _cached_runtime_value(
+        "hidden_accumulation_opportunities",
+        limit,
+        ttl_seconds=120,
+        dependency_paths=(),
+        builder=builder,
+    )
+
+
+def _build_limit_up_opportunities(days: int = 1, limit: int = 5) -> list[LimitUpOpportunity]:
+    def builder() -> list[LimitUpOpportunity]:
+        world_state = _build_world_state_snapshot()
+        production_guard = _build_production_guard_snapshot()
+        governance_map = _strategy_governance_map()
+        strategy_map = {item.name: item for item in _build_strategies()}
+        strong_moves = _build_strong_moves(days=days, limit=max(limit * 3, 12))
+        strong_move_map = {item.code: item for item in strong_moves}
+        theme_radar = _build_theme_radar(limit=8)
+        theme_by_code: dict[str, ThemeRadarItem] = {}
+        for item in theme_radar:
+            if item.linked_code:
+                theme_by_code[item.linked_code] = item
+            for follower in item.followers:
+                theme_by_code[follower.code] = item
+
+        opportunities: list[LimitUpOpportunity] = []
+        for signal in _load_signal_records(days=days):
+            code = str(signal.get("code", "")).strip()
+            if not code:
+                continue
+            price = _to_float(signal.get("price")) or 0.0
+            score = _to_float(signal.get("score")) or 0.0
+            if price <= 0 or score < 0.5:
+                continue
+
+            strategy_name = str(signal.get("strategy", ""))
+            governance = governance_map.get(strategy_name)
+            if governance is not None and governance.state == "disabled":
+                continue
+
+            raw_factor_scores = signal.get("factor_scores", {})
+            factor_scores = raw_factor_scores if isinstance(raw_factor_scores, dict) else {}
+            theme_item = theme_by_code.get(code)
+            strong_move = strong_move_map.get(code)
+            strategy_perf = strategy_map.get(strategy_name)
+            strategy_win_rate = strategy_perf.win_rate if strategy_perf is not None else 50.0
+            buy_price = _to_float(signal.get("buy_price")) or price
+            stop_loss = _to_float(signal.get("stop_loss")) or _default_signal_stop_loss(buy_price)
+            if stop_loss >= buy_price:
+                stop_loss = _default_signal_stop_loss(buy_price)
+            target_price = _to_float(signal.get("target_price")) or _default_signal_target(buy_price, stop_loss)
+            if target_price <= buy_price:
+                target_price = _default_signal_target(buy_price, stop_loss)
+            risk_reward = _to_float(signal.get("risk_reward")) or _default_signal_risk_reward(
+                buy_price,
+                stop_loss,
+                target_price,
+            )
+            if not _is_trade_plan_actionable(
+                price=price,
+                buy_price=buy_price,
+                stop_loss=stop_loss,
+                target_price=target_price,
+                risk_reward=risk_reward,
+                strategy_family=governance.family if governance is not None else None,
+                strategy_name=strategy_name,
+            ):
+                continue
+
+            trend_score = _factor_bucket(
+                factor_scores,
+                ["s_trend", "s_momentum", "s_ma_alignment", "s_relative_strength", "s_trend_score"],
+            )
+            heat_score = _factor_bucket(
+                factor_scores,
+                ["s_hot", "s_auction", "s_gap", "s_pm_gain", "s_volume_breakout", "s_volume_ratio", "s_turnover"],
+            )
+            flow_score = _factor_bucket(
+                factor_scores,
+                ["s_fund_flow", "s_flow_1d", "s_flow_trend", "s_chip", "s_forecast", "s_fundamental"],
+            )
+            consensus = min(max(_to_int(signal.get("consensus_count")), 1), 3) / 3
+            theme_bonus = 0.78 if theme_item and theme_item.intensity == "高热主线" else 0.58 if theme_item else 0.34
+            theme_followers = len(theme_item.followers) if theme_item is not None else 0
+            change_pct = _to_float(signal.get("change_pct")) or 0.0
+            change_abs = abs(change_pct)
+            if change_abs >= 9.2:
+                tradability_score = 0.12
+            elif change_abs >= 7.5:
+                tradability_score = 0.34
+            elif 3.0 <= change_abs <= 7.0:
+                tradability_score = 0.84
+            elif 0.8 <= change_abs < 3.0:
+                tradability_score = 0.66
+            else:
+                tradability_score = 0.48
+            if not world_state.limit_up_allowed:
+                tradability_score *= 0.6
+            if governance is not None and governance.state == "observation":
+                tradability_score *= 0.88
+            if production_guard.blocked_additions:
+                tradability_score *= 0.22
+            if production_guard.hard_risk_gate:
+                tradability_score *= 0.12
+
+            leader_score = round(
+                (
+                    heat_score * 0.28
+                    + trend_score * 0.22
+                    + flow_score * 0.18
+                    + consensus * 0.12
+                    + theme_bonus * 0.12
+                    + min(max(strategy_win_rate / 100.0, 0.0), 1.0) * 0.08
+                )
+                * 100,
+                1,
+            )
+            leader_uniqueness = round(
+                _clamp(
+                    42.0
+                    + (14.0 if theme_item and theme_item.linked_code == code else 0.0)
+                    + max(0, 3 - min(theme_followers, 3)) * 8.0
+                    + consensus * 16.0
+                    + theme_bonus * 12.0,
+                    20.0,
+                    96.0,
+                ),
+                1,
+            )
+            board_quality_score = round(
+                (
+                    _entry_window_score(change_pct) * 0.32
+                    + heat_score * 0.24
+                    + trend_score * 0.18
+                    + flow_score * 0.12
+                    + (min(max((_to_float(strong_move.composite_score) if strong_move else 55.0) / 100.0, 0.0), 1.0)) * 0.14
+                )
+                * 100,
+                1,
+            )
+            follow_through_score = round(
+                _clamp(
+                    leader_score * 0.32
+                    + board_quality_score * 0.28
+                    + leader_uniqueness * 0.2
+                    + min(max(strategy_win_rate, 0.0), 100.0) * 0.12
+                    + (8.0 if world_state.market_phase in {"trend_markup", "breakout_expansion", "rotation_up"} else 0.0)
+                    - (10.0 if production_guard.auto_reduce_positions else 0.0),
+                    12.0,
+                    96.0,
+                ),
+                1,
+            )
+            failure_spread_score = round(
+                _clamp(
+                    22.0
+                    + (18.0 if not world_state.limit_up_allowed else 0.0)
+                    + (20.0 if production_guard.blocked_additions else 0.0)
+                    + (18.0 if production_guard.hard_risk_gate else 0.0)
+                    + (12.0 if governance is not None and governance.state == "observation" else 0.0)
+                    + (10.0 if change_abs >= 9.2 else 0.0),
+                    8.0,
+                    98.0,
+                ),
+                1,
+            )
+            tradability_score_pct = round(_clamp(tradability_score, 0.0, 1.0) * 100, 1)
+            opportunity_score = round(
+                leader_score * 0.28
+                + board_quality_score * 0.24
+                + tradability_score_pct * 0.2
+                + follow_through_score * 0.18
+                + leader_uniqueness * 0.1
+                - failure_spread_score * 0.08,
+                1,
+            )
+            min_opportunity_score = 54.0
+            if production_guard.blocked_additions:
+                min_opportunity_score = 38.0
+            elif governance is not None and governance.state == "observation":
+                min_opportunity_score = 46.0
+            if opportunity_score < min_opportunity_score:
+                continue
+
+            scenario_label = "强势观察"
+            tradability_label = "继续观察"
+            entry_style = "先观察承接，再决定是否进入推荐主链。"
+            board_pattern = "分歧试板"
+            if change_abs >= 9.2 or tradability_score_pct <= 25:
+                board_pattern = "封板/一字临界"
+                scenario_label = "封板临界"
+                tradability_label = "只看不追"
+                entry_style = "这类票只看不追，等次日或分歧承接再说。"
+            elif change_abs >= 3.0 and leader_score >= 62:
+                board_pattern = "换手板前确认"
+                scenario_label = "板前确认"
+                tradability_label = "可做板前"
+                entry_style = "优先等放量确认与主线共振，不在板上成交。"
+            elif 0.8 <= change_abs < 3.0 and leader_score >= 56:
+                board_pattern = "分歧后承接"
+                scenario_label = "板后承接"
+                tradability_label = "只做承接"
+                entry_style = "更适合等次日分歧不死、回踩承接后再参与。"
+            risk_gate = "允许板前/板后承接"
+            if production_guard.hard_risk_gate:
+                scenario_label = "风险闸门"
+                tradability_label = "禁止出手"
+                entry_style = "当前硬风控已触发，这类机会只做记录，不做新增。"
+                risk_gate = "硬风控开启"
+            elif production_guard.blocked_additions:
+                tradability_label = "只做记录"
+                entry_style = "当前先暂停新增仓位，只保留观察和复盘。"
+                risk_gate = "暂停新增仓位"
+            elif governance is not None and governance.state == "observation":
+                risk_gate = "仅轻仓试错"
+
+            holding_window = (
+                governance.holding_window_cap
+                if governance is not None
+                else "T+1/T+2 观察"
+            )
+            warnings = []
+            if not world_state.limit_up_allowed:
+                warnings.append(f"当前 {world_state.market_phase_label}，禁做高位强势接力。")
+            if governance is not None and governance.state == "observation":
+                warnings.append("该策略当前仅在观察层，参与时只允许轻仓试错。")
+            if production_guard.blocked_additions:
+                warnings.append("当前生产风控禁止新增仓位，涨停机会只保留观察。")
+            if failure_spread_score >= 62:
+                warnings.append("高位亏钱效应在扩散，优先做回封确认，不抢一致性。")
+            if scenario_label == "封板临界":
+                warnings.append("封板临界不等于可交易，先等分歧和承接。")
+            if not warnings:
+                warnings.append("优先做板前或板后承接，不在板上成交。")
+
+            trigger_summary = (
+                f"{world_state.market_phase_label} 下，{code} {signal.get('name', '')} 更像 {scenario_label}。"
+                f" 领导力 {leader_score:.1f}，唯一性 {leader_uniqueness:.1f}，"
+                f"延续性 {follow_through_score:.1f}，风险扩散 {failure_spread_score:.1f}。"
+            )
+            action = (
+                f"{tradability_label}：{entry_style}"
+                f" 持有纪律按 {holding_window} 执行。"
+            )
+
+            opportunities.append(
+                LimitUpOpportunity(
+                    id=f"limit-up-{code}",
+                    code=code,
+                    name=str(signal.get("name", "")),
+                    strategy=strategy_name,
+                    theme_sector=theme_item.sector if theme_item else None,
+                    market_phase=world_state.market_phase,
+                    scenario_label=scenario_label,
+                    tradability_label=tradability_label,
+                    opportunity_score=opportunity_score,
+                    leader_score=leader_score,
+                    board_quality_score=board_quality_score,
+                    tradability_score=tradability_score_pct,
+                    board_pattern=board_pattern,
+                    leader_uniqueness_score=leader_uniqueness,
+                    follow_through_score=follow_through_score,
+                    failure_spread_score=failure_spread_score,
+                    risk_gate=risk_gate,
+                    entry_style=entry_style,
+                    holding_window=holding_window,
+                    trigger_summary=trigger_summary,
+                    action=action,
+                    warnings=warnings[:3],
+                )
+            )
+
+        opportunities.sort(
+            key=lambda item: (
+                item.scenario_label != "板前确认",
+                -item.opportunity_score,
+                -item.leader_score,
+            )
+        )
+        return opportunities[:limit]
+
+    return _cached_runtime_value(
+        "limit_up_opportunities",
+        (days, limit),
+        ttl_seconds=10,
+        dependency_paths=_runtime_cache_paths(
+            _NEWS_DIGEST,
+            _SECTOR_ALERTS,
+            _SIGNAL_TRACKER,
+            _STRATEGIES_JSON,
+            _AGENT_MEMORY,
+            *_db_dependency_paths(),
+        ),
+        builder=builder,
     )
 
 
@@ -9840,7 +15297,7 @@ def _render_metrics_text() -> str:
 
 @app.get("/")
 def root():
-    return {"message": "Alpha AI Trading API", "version": "1.0.0"}
+    return {"message": "Alpha AI Trading API", "version": _runtime_app_version()}
 
 
 @app.get("/health/live")
@@ -9887,6 +15344,108 @@ def get_metrics():
 @app.get("/api/ops/summary", response_model=OpsSummary)
 def get_ops_summary():
     return _build_ops_summary()
+
+
+@app.get("/api/world-state", response_model=WorldStateSnapshot)
+def get_world_state():
+    return _build_world_state_snapshot()
+
+
+@app.get("/api/operating-profile", response_model=WorldOperatingProfile)
+def get_operating_profile():
+    return WorldOperatingProfile(**_load_operating_profile())
+
+
+@app.get("/api/world-refresh-plan", response_model=WorldRefreshPlan)
+def get_world_refresh_plan():
+    snapshot = _build_world_state_snapshot()
+    if snapshot.refresh_plan is None:
+        raise HTTPException(status_code=503, detail="world refresh plan unavailable")
+    return snapshot.refresh_plan
+
+
+@app.get("/api/strategy-governance", response_model=StrategyGovernanceSnapshot)
+def get_strategy_governance():
+    return _build_strategy_governance()
+
+
+@app.get("/api/execution-policy", response_model=ExecutionPolicySnapshot)
+def get_execution_policy():
+    return _build_execution_policy()
+
+
+@app.get("/api/production-guard", response_model=ProductionGuardSnapshot)
+def get_production_guard():
+    return _build_production_guard_snapshot()
+
+
+@app.get("/api/production-guard/actions", response_model=list[ProductionGuardAction])
+def get_production_guard_actions(limit: int = 5):
+    return _build_production_guard_actions(limit=limit)
+
+
+@app.get("/api/execution-policy/export/status", response_model=ExecutionPolicyExportStatus)
+def get_execution_policy_export_status(period: str = "daily", ensure_fresh: bool = False):
+    return _build_execution_policy_export_status(period=period, ensure_fresh=ensure_fresh)
+
+
+@app.get("/api/execution-policy/export/latest", response_model=ExecutionPolicyExportManifest)
+def get_execution_policy_export_latest(period: str = "daily", ensure_fresh: bool = True):
+    return _latest_execution_policy_export_manifest(period=period, ensure_fresh=ensure_fresh)
+
+
+@app.get("/api/execution-policy/export/history", response_model=list[ExecutionPolicyExportManifest])
+def get_execution_policy_export_history(period: str = "daily", limit: int = 10):
+    return _list_execution_policy_exports(period=period, limit=limit)
+
+
+@app.get("/api/execution-policy/export/files/{filename}")
+def get_execution_policy_export_file(filename: str):
+    path = _resolve_execution_policy_export_file(filename)
+    if path is None:
+        raise HTTPException(status_code=404, detail="execution policy export file not found")
+    return FileResponse(
+        path,
+        media_type=_execution_policy_export_media_type(path),
+        filename=os.path.basename(path),
+    )
+
+
+@app.get("/api/world-state/export/status", response_model=WorldStateExportStatus)
+def get_world_state_export_status(period: str = "daily", ensure_fresh: bool = False):
+    return _build_world_state_export_status(period=period, ensure_fresh=ensure_fresh)
+
+
+@app.get("/api/world-state/export/latest", response_model=WorldStateExportManifest)
+def get_world_state_export_latest(period: str = "daily", ensure_fresh: bool = True):
+    return _latest_world_state_export_manifest(period=period, ensure_fresh=ensure_fresh)
+
+
+@app.get("/api/world-state/export/history", response_model=list[WorldStateExportManifest])
+def get_world_state_export_history(period: str = "daily", limit: int = 10):
+    return _list_world_state_exports(period=period, limit=limit)
+
+
+@app.get("/api/world-state/export/files/{filename}")
+def get_world_state_export_file(filename: str):
+    path = _resolve_world_state_export_file(filename)
+    if path is None:
+        raise HTTPException(status_code=404, detail="world state export file not found")
+    return FileResponse(
+        path,
+        media_type=_world_state_export_media_type(path),
+        filename=os.path.basename(path),
+    )
+
+
+@app.get("/api/limit-up-opportunities", response_model=list[LimitUpOpportunity])
+def get_limit_up_opportunities(days: int = 1, limit: int = 5):
+    return _build_limit_up_opportunities(days=days, limit=limit)
+
+
+@app.get("/api/hidden-accumulation-opportunities", response_model=list[HiddenAccumulationOpportunity])
+def get_hidden_accumulation_opportunities(limit: int = 5):
+    return _build_hidden_accumulation_opportunities(limit=limit)
 
 
 @app.post("/api/auth/login", response_model=LoginResponse)
@@ -10138,6 +15697,143 @@ def get_app_system(user: AppUser = Depends(_require_app_user)):
 @app.get("/api/app/ops/summary", response_model=OpsSummary)
 def get_app_ops_summary(user: AppUser = Depends(_require_app_user)):
     return _build_ops_summary()
+
+
+@app.get("/api/app/world-state", response_model=WorldStateSnapshot)
+def get_app_world_state(user: AppUser = Depends(_require_app_user)):
+    return _build_world_state_snapshot()
+
+
+@app.get("/api/app/operating-profile", response_model=WorldOperatingProfile)
+def get_app_operating_profile(user: AppUser = Depends(_require_app_user)):
+    return WorldOperatingProfile(**_load_operating_profile())
+
+
+@app.post("/api/app/operating-profile", response_model=WorldOperatingProfile)
+def update_app_operating_profile(
+    payload: WorldOperatingProfileUpdateRequest,
+    user: AppUser = Depends(_require_app_user),
+):
+    existing = _load_operating_profile()
+    merged = dict(existing)
+    merged.update({key: value for key, value in payload.model_dump().items() if value is not None})
+    saved = _save_operating_profile(merged)
+    return WorldOperatingProfile(**saved)
+
+
+@app.get("/api/app/world-refresh-plan", response_model=WorldRefreshPlan)
+def get_app_world_refresh_plan(user: AppUser = Depends(_require_app_user)):
+    return get_world_refresh_plan()
+
+
+@app.get("/api/app/strategy-governance", response_model=StrategyGovernanceSnapshot)
+def get_app_strategy_governance(user: AppUser = Depends(_require_app_user)):
+    return _build_strategy_governance()
+
+
+@app.get("/api/app/execution-policy", response_model=ExecutionPolicySnapshot)
+def get_app_execution_policy(user: AppUser = Depends(_require_app_user)):
+    return _build_execution_policy()
+
+
+@app.get("/api/app/production-guard", response_model=ProductionGuardSnapshot)
+def get_app_production_guard(user: AppUser = Depends(_require_app_user)):
+    return _build_production_guard_snapshot()
+
+
+@app.get("/api/app/production-guard/actions", response_model=list[ProductionGuardAction])
+def get_app_production_guard_actions(
+    limit: int = 5,
+    user: AppUser = Depends(_require_app_user),
+):
+    return _build_production_guard_actions(limit=limit)
+
+
+@app.get("/api/app/execution-policy/export/status", response_model=ExecutionPolicyExportStatus)
+def get_app_execution_policy_export_status(
+    period: str = "daily",
+    ensure_fresh: bool = False,
+    user: AppUser = Depends(_require_app_user),
+):
+    return _build_execution_policy_export_status(period=period, ensure_fresh=ensure_fresh)
+
+
+@app.get("/api/app/execution-policy/export/latest", response_model=ExecutionPolicyExportManifest)
+def get_app_execution_policy_export_latest(
+    period: str = "daily",
+    ensure_fresh: bool = True,
+    user: AppUser = Depends(_require_app_user),
+):
+    return _latest_execution_policy_export_manifest(period=period, ensure_fresh=ensure_fresh)
+
+
+@app.get("/api/app/execution-policy/export/history", response_model=list[ExecutionPolicyExportManifest])
+def get_app_execution_policy_export_history(
+    period: str = "daily",
+    limit: int = 10,
+    user: AppUser = Depends(_require_app_user),
+):
+    return _list_execution_policy_exports(period=period, limit=limit)
+
+
+@app.get("/api/app/execution-policy/export/files/{filename}")
+def get_app_execution_policy_export_file(
+    filename: str,
+    user: AppUser = Depends(_require_app_user),
+):
+    return get_execution_policy_export_file(filename)
+
+
+@app.get("/api/app/world-state/export/status", response_model=WorldStateExportStatus)
+def get_app_world_state_export_status(
+    period: str = "daily",
+    ensure_fresh: bool = False,
+    user: AppUser = Depends(_require_app_user),
+):
+    return _build_world_state_export_status(period=period, ensure_fresh=ensure_fresh)
+
+
+@app.get("/api/app/world-state/export/latest", response_model=WorldStateExportManifest)
+def get_app_world_state_export_latest(
+    period: str = "daily",
+    ensure_fresh: bool = True,
+    user: AppUser = Depends(_require_app_user),
+):
+    return _latest_world_state_export_manifest(period=period, ensure_fresh=ensure_fresh)
+
+
+@app.get("/api/app/world-state/export/history", response_model=list[WorldStateExportManifest])
+def get_app_world_state_export_history(
+    period: str = "daily",
+    limit: int = 10,
+    user: AppUser = Depends(_require_app_user),
+):
+    return _list_world_state_exports(period=period, limit=limit)
+
+
+@app.get("/api/app/world-state/export/files/{filename}")
+def get_app_world_state_export_file(
+    filename: str,
+    user: AppUser = Depends(_require_app_user),
+):
+    return get_world_state_export_file(filename)
+
+
+@app.get("/api/app/limit-up-opportunities", response_model=list[LimitUpOpportunity])
+def get_app_limit_up_opportunities(
+    days: int = 1,
+    limit: int = 5,
+    user: AppUser = Depends(_require_app_user),
+):
+    return _build_limit_up_opportunities(days=days, limit=limit)
+
+
+@app.get("/api/app/hidden-accumulation-opportunities", response_model=list[HiddenAccumulationOpportunity])
+def get_app_hidden_accumulation_opportunities(
+    limit: int = 5,
+    user: AppUser = Depends(_require_app_user),
+):
+    return _build_hidden_accumulation_opportunities(limit=limit)
 
 
 @app.get("/api/app/strategies", response_model=list[StrategyPerformance])
@@ -10437,7 +16133,9 @@ async def websocket_endpoint(websocket: WebSocket):
 
 if __name__ == "__main__":
     import uvicorn
+    host = os.environ.get("ALPHA_API_HOST", "0.0.0.0")
+    port = int(os.environ.get("ALPHA_API_PORT", "18000"))
     print("🚀 Alpha AI Trading API 启动中...")
-    print("📖 API文档: http://localhost:8000/docs")
-    print("🔌 WebSocket: ws://localhost:8000/ws")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    print(f"📖 API文档: http://{host}:{port}/docs")
+    print(f"🔌 WebSocket: ws://{host}:{port}/ws")
+    uvicorn.run(app, host=host, port=port)

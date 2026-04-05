@@ -3,15 +3,14 @@ import { ActivityIndicator, Alert, Pressable, StyleSheet, Text, TextInput, View 
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
 import { AppScreen } from '@/components/app/app-screen';
-import { KlineSnapshot } from '@/components/app/kline-snapshot';
 import { SectionHeading } from '@/components/app/section-heading';
 import { StateBanner } from '@/components/app/state-banner';
 import { StatusPill } from '@/components/app/status-pill';
 import { SurfaceCard } from '@/components/app/surface-card';
-import { Colors, Spacing } from '@/constants/theme';
+import { Colors } from '@/constants/theme';
 import { buildActionReceiptHref } from '@/lib/action-receipt';
 import { formatCurrency, formatPercent, formatTimestamp } from '@/lib/format';
-import { closePosition, getKlineBars, getPositionDetail, updatePositionRisk } from '@/lib/api';
+import { closePosition, getPositionDetail, updatePositionRisk } from '@/lib/api';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useRemoteResource } from '@/hooks/use-remote-resource';
 import { useAuth } from '@/providers/auth-provider';
@@ -37,8 +36,7 @@ function getTargetGapPct(position: PositionDetail): number | null {
 }
 
 function buildPositionDecision(
-  position: PositionDetail,
-  hasAlignedKline: boolean
+  position: PositionDetail
 ): {
   verdict: string;
   tone: Tone;
@@ -68,10 +66,6 @@ function buildPositionDecision(
 
   if (targetGapPct !== null && targetGapPct <= 0.03) {
     warnings.push(`距离止盈只剩 ${formatPercent(Math.max(targetGapPct, 0))}，要考虑锁盈。`);
-  }
-
-  if (!hasAlignedKline) {
-    warnings.push('真实行情和持仓快照偏差过大，K 线已隐藏，先以持仓纪律为准。');
   }
 
   if (stopBufferPct !== null && stopBufferPct <= 0) {
@@ -208,20 +202,13 @@ export default function PositionDetailScreen() {
       }
 
       const position = await getPositionDetail(code, token ?? undefined);
-      const klines = await getKlineBars(position.code, 60, token ?? undefined);
-      return { position, klines };
+      return { position };
     },
     [code, token, apiBaseUrl]
   );
 
   const position = data?.position;
-  const klines = data?.klines ?? [];
-  const latestClose = klines.at(-1)?.close;
-  const hasAlignedKline =
-    position && latestClose
-      ? Math.abs(latestClose / position.currentPrice - 1) <= 0.35
-      : klines.length > 0;
-  const decision = position ? buildPositionDecision(position, hasAlignedKline) : null;
+  const decision = position ? buildPositionDecision(position) : null;
   const positionCallout = position && decision ? getPositionCallout(position, decision) : null;
   const guide = position?.positionGuide ?? null;
   const stopBufferPct = position ? getStopBufferPct(position) : null;
@@ -379,29 +366,6 @@ export default function PositionDetailScreen() {
     setStopLossDraft(guide.suggestedStopLoss.toFixed(2));
   }
 
-  function applySuggestedTakeProfit() {
-    if (!guide || guide.suggestedTakeProfit <= 0) {
-      return;
-    }
-    setTakeProfitDraft(guide.suggestedTakeProfit.toFixed(2));
-  }
-
-  function applyLockProfitStop() {
-    if (!position) {
-      return;
-    }
-
-    setStopLossDraft((position.currentPrice * 0.97).toFixed(2));
-  }
-
-  function applyStretchTarget() {
-    if (!position) {
-      return;
-    }
-
-    setTakeProfitDraft((position.currentPrice * 1.06).toFixed(2));
-  }
-
   function setCloseFraction(fraction: number) {
     if (!position) {
       return;
@@ -427,124 +391,40 @@ export default function PositionDetailScreen() {
         style={styles.backButton}>
         <Text style={[styles.backText, { color: palette.tint }]}>返回持仓列表</Text>
       </Pressable>
-      <Pressable
-        onPress={() => {
-          router.push({
-            pathname: '/feedback',
-            params: {
-              title: position ? `${position.code} 持仓页反馈` : '持仓页反馈',
-              message: position
-                ? `我在持仓页管理 ${position.code} ${position.name} 时，建议优化：`
-                : '我在持仓页使用时，建议优化：',
-              category: 'risk',
-              sourceType: 'position',
-              sourceId: code ?? '',
-              sourceRoute: code ? `/position/${code}` : '/position',
-            },
-          });
-        }}
-        style={styles.feedbackButton}>
-        <Text style={[styles.feedbackButtonText, { color: palette.tint }]}>提意见</Text>
-      </Pressable>
-
-      <View style={[styles.hero, { backgroundColor: palette.hero }]}>
-        <Text style={styles.heroEyebrow}>POSITION DETAIL</Text>
-        <Text style={styles.heroTitle}>
-          {position?.code ?? '--'} {position?.name ?? ''}
-        </Text>
-        <Text style={styles.heroCopy}>
-          {decision?.summary ?? '先把仓位判断、风险边界和动作放到一屏，再决定是否处理。'}
-        </Text>
-        <View style={styles.heroPills}>
-          {position ? (
-            <>
-              <StatusPill label={decision?.verdict ?? '等待数据'} tone={decision?.tone ?? 'neutral'} />
-              {guide ? (
-                <StatusPill label={guide.mode} tone={getGuideTone(guide.mode, guide.eventBias)} />
-              ) : null}
-              <StatusPill
-                label={formatPercent(position.profitLossPct / 100)}
-                tone={position.profitLossPct >= 0 ? 'success' : 'warning'}
-              />
-              <StatusPill label={position.strategy} tone="neutral" />
-            </>
-          ) : null}
+      <SurfaceCard style={styles.sectionCard}>
+        <View style={styles.summaryHeader}>
+          <View style={styles.summaryCopy}>
+            <Text style={[styles.summaryTitle, { color: palette.text }]}>
+              {position?.code ?? '--'} {position?.name ?? ''}
+            </Text>
+            <Text style={[styles.summaryText, { color: palette.subtext }]}>
+              {positionCallout?.summary ?? decision?.summary ?? '先看结论和纪律，再决定要不要动。'}
+            </Text>
+          </View>
+          <StatusPill label={decision?.verdict ?? '等待数据'} tone={decision?.tone ?? 'neutral'} />
         </View>
-      </View>
+        {position ? (
+          <View style={styles.summaryPills}>
+            {guide ? (
+              <StatusPill label={guide.mode} tone={getGuideTone(guide.mode, guide.eventBias)} />
+            ) : null}
+            <StatusPill
+              label={formatPercent(position.profitLossPct / 100)}
+              tone={position.profitLossPct >= 0 ? 'success' : 'warning'}
+            />
+            <StatusPill label={`持有 ${position.holdDays} 天`} tone="info" />
+          </View>
+        ) : null}
+        {decision?.nextStep ? (
+          <Text style={[styles.summaryHint, { color: palette.subtext }]}>{decision.nextStep}</Text>
+        ) : null}
+      </SurfaceCard>
 
       <StateBanner error={error} isPending={isPending && !data} loadingLabel="正在读取持仓详情" />
 
       {position && decision ? (
         <>
-          <SectionHeading
-            title="一页持仓摘要"
-            subtitle="先把结论、纪律、风险边界和下一动作压成一页，再往下看详细处理。"
-          />
-          <SurfaceCard style={styles.sectionCard}>
-            <View style={styles.summaryHeader}>
-              <View style={styles.summaryCopy}>
-                <Text style={[styles.summaryTitle, { color: palette.text }]}>{positionCallout?.title}</Text>
-                <Text style={[styles.summaryText, { color: palette.subtext }]}>
-                  {positionCallout?.summary}
-                </Text>
-              </View>
-              <StatusPill label={decision.verdict} tone={positionCallout?.tone ?? decision.tone} />
-            </View>
-
-            <View style={styles.snapshotGrid}>
-              <View style={[styles.snapshotCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                <Text style={[styles.snapshotStep, { color: palette.tint }]}>01 当前判断</Text>
-                <Text style={[styles.snapshotTitle, { color: palette.text }]}>{decision.verdict}</Text>
-                <Text style={[styles.snapshotCopy, { color: palette.subtext }]}>
-                  浮盈亏 {formatCurrency(position.profitLoss)} / 收益率 {formatPercent(position.profitLossPct / 100)}
-                </Text>
-                <Text style={[styles.snapshotBody, { color: palette.text }]}>{decision.summary}</Text>
-              </View>
-
-              <View style={[styles.snapshotCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                <Text style={[styles.snapshotStep, { color: palette.tint }]}>02 组合纪律</Text>
-                <Text style={[styles.snapshotTitle, { color: palette.text }]}>
-                  {guide?.mode ?? '等待纪律数据'}
-                </Text>
-                <Text style={[styles.snapshotCopy, { color: palette.subtext }]}>
-                  {guide
-                    ? `事件 ${guide.eventBias} / 总仓 ${guide.currentExposurePct.toFixed(1)}% / 单票 ${guide.positionPct.toFixed(1)}%`
-                    : '先看总仓、事件和主题集中度。'}
-                </Text>
-                <Text style={[styles.snapshotBody, { color: palette.text }]}>
-                  {guide?.summary ?? '纪律层会决定这笔仓位现在该维持、减仓还是平仓。'}
-                </Text>
-              </View>
-
-              <View style={[styles.snapshotCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                <Text style={[styles.snapshotStep, { color: palette.tint }]}>03 风险边界</Text>
-                <Text style={[styles.snapshotTitle, { color: palette.text }]}>
-                  止损 {position.stopLoss.toFixed(2)} / 止盈 {position.takeProfit > 0 ? position.takeProfit.toFixed(2) : '未设'}
-                </Text>
-                <Text style={[styles.snapshotCopy, { color: palette.subtext }]}>
-                  距止损 {stopBufferPct === null ? '--' : formatPercent(stopBufferPct)} / 距止盈 {targetGapPct === null ? '--' : formatPercent(targetGapPct)}
-                </Text>
-                <Text style={[styles.snapshotBody, { color: palette.text }]}>
-                  {decision.warnings[0] ?? '先把保护线看清楚，再谈动作。'}
-                </Text>
-              </View>
-
-              <View style={[styles.snapshotCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                <Text style={[styles.snapshotStep, { color: palette.tint }]}>04 下一动作</Text>
-                <Text style={[styles.snapshotTitle, { color: palette.text }]}>
-                  {guide?.nextAction ? '按纪律推进' : '继续跟踪'}
-                </Text>
-                <Text style={[styles.snapshotCopy, { color: palette.subtext }]}>
-                  持有 {position.holdDays} 天 / 数量 {position.quantity} 股
-                </Text>
-                <Text style={[styles.snapshotBody, { color: palette.text }]}>
-                  {guide?.nextAction ?? decision.nextStep}
-                </Text>
-              </View>
-            </View>
-          </SurfaceCard>
-
-          <SectionHeading title="当前判断" subtitle="先把该不该动、为什么动、先动哪一步说清楚。" />
+          <SectionHeading title="持仓结论" />
           <SurfaceCard style={styles.sectionCard}>
             <View style={styles.summaryHeader}>
               <View style={styles.summaryCopy}>
@@ -557,146 +437,43 @@ export default function PositionDetailScreen() {
               />
             </View>
 
-            <View style={[styles.insightBox, { backgroundColor: palette.surfaceMuted }]}>
-              <Text style={[styles.insightTitle, { color: palette.text }]}>下一步先做什么</Text>
-              <Text style={[styles.insightText, { color: palette.subtext }]}>{decision.nextStep}</Text>
-            </View>
+            <Text style={[styles.summaryHint, { color: palette.text }]}>{decision.nextStep}</Text>
+            <Text style={[styles.summaryHint, { color: palette.subtext }]}>{decision.reasons[0]}</Text>
 
-            <View style={styles.listGroup}>
-              <Text style={[styles.listHeading, { color: palette.text }]}>当前依据</Text>
-              {decision.reasons.map((reason) => (
-                <View key={reason} style={styles.listRow}>
-                  <View style={[styles.dot, { backgroundColor: palette.tint }]} />
-                  <Text style={[styles.listText, { color: palette.text }]}>{reason}</Text>
-                </View>
-              ))}
-            </View>
-
-            <View style={styles.listGroup}>
-              <Text style={[styles.listHeading, { color: palette.text }]}>当前风险</Text>
-              {decision.warnings.map((warning) => (
-                <View key={warning} style={styles.listRow}>
-                  <View style={[styles.dot, { backgroundColor: palette.warning }]} />
-                  <Text style={[styles.listText, { color: palette.text }]}>{warning}</Text>
-                </View>
-              ))}
-            </View>
-          </SurfaceCard>
-
-          {guide ? (
-            <>
-              <SectionHeading title="组合纪律" subtitle="先看事件、总仓和主题集中度，再决定这笔仓位怎么处理。" />
-              <SurfaceCard style={styles.sectionCard}>
-                <View style={styles.summaryHeader}>
-                  <View style={styles.summaryCopy}>
-                    <Text style={[styles.summaryTitle, { color: palette.text }]}>{guide.mode}</Text>
-                    <Text style={[styles.summaryText, { color: palette.subtext }]}>{guide.summary}</Text>
-                  </View>
-                  <StatusPill label={`事件 ${guide.eventBias}`} tone={getGuideTone(guide.mode, guide.eventBias)} />
-                </View>
-
-                <View style={styles.metricGrid}>
-                  <View style={styles.metricBlock}>
-                    <Text style={[styles.metricLabel, { color: palette.subtext }]}>当前总仓</Text>
-                    <Text style={[styles.metricValue, { color: palette.text }]}>{guide.currentExposurePct.toFixed(1)}%</Text>
-                  </View>
-                  <View style={styles.metricBlock}>
-                    <Text style={[styles.metricLabel, { color: palette.subtext }]}>目标总仓</Text>
-                    <Text style={[styles.metricValue, { color: palette.text }]}>{guide.targetExposurePct.toFixed(1)}%</Text>
-                  </View>
-                  <View style={styles.metricBlock}>
-                    <Text style={[styles.metricLabel, { color: palette.subtext }]}>单票占比</Text>
-                    <Text style={[styles.metricValue, { color: palette.text }]}>{guide.positionPct.toFixed(1)}%</Text>
-                  </View>
-                  <View style={styles.metricBlock}>
-                    <Text style={[styles.metricLabel, { color: palette.subtext }]}>主题占比</Text>
-                    <Text style={[styles.metricValue, { color: palette.text }]}>
-                      {guide.currentThemeExposurePct.toFixed(1)}% / {guide.maxThemeExposurePct}%
-                    </Text>
-                  </View>
-                </View>
-
-                <View style={[styles.insightBox, { backgroundColor: palette.surfaceMuted }]}>
-                  <Text style={[styles.insightTitle, { color: palette.text }]}>下一步先做什么</Text>
-                  <Text style={[styles.insightText, { color: palette.subtext }]}>{guide.nextAction}</Text>
-                </View>
-
+            {guide ? (
+              <>
                 <View style={styles.rowBetween}>
-                  <Text style={[styles.rowLabel, { color: palette.subtext }]}>主线匹配</Text>
+                  <Text style={[styles.rowLabel, { color: palette.subtext }]}>组合纪律</Text>
+                  <Text style={[styles.rowValue, { color: palette.text }]}>{guide.mode}</Text>
+                </View>
+                <View style={styles.rowBetween}>
+                  <Text style={[styles.rowLabel, { color: palette.subtext }]}>总仓 / 单票</Text>
                   <Text style={[styles.rowValue, { color: palette.text }]}>
-                    {guide.sectorBucket
-                      ? `${guide.sectorBucket} · ${guide.themeAlignment}`
-                      : guide.themeAlignment}
+                    {guide.currentExposurePct.toFixed(1)}% / {guide.positionPct.toFixed(1)}%
                   </Text>
                 </View>
                 <View style={styles.rowBetween}>
-                  <Text style={[styles.rowLabel, { color: palette.subtext }]}>是否允许加仓</Text>
-                  <Text style={[styles.rowValue, { color: palette.text }]}>{guide.canAdd ? '允许观察后加仓' : '当前不建议加仓'}</Text>
+                  <Text style={[styles.rowLabel, { color: palette.subtext }]}>主题占比</Text>
+                  <Text style={[styles.rowValue, { color: palette.text }]}>
+                    {guide.currentThemeExposurePct.toFixed(1)}% / {guide.maxThemeExposurePct}%
+                  </Text>
                 </View>
-                {guide.concentrationSummary ? (
-                  <View style={[styles.insightBox, { backgroundColor: palette.surfaceMuted }]}>
-                    <Text style={[styles.insightTitle, { color: palette.text }]}>集中度提醒</Text>
-                    <Text style={[styles.insightText, { color: palette.subtext }]}>{guide.concentrationSummary}</Text>
-                  </View>
-                ) : null}
-                {guide.eventSummary ? (
-                  <View style={[styles.insightBox, { backgroundColor: palette.surfaceMuted }]}>
-                    <Text style={[styles.insightTitle, { color: palette.text }]}>事件总控</Text>
-                    <Text style={[styles.insightText, { color: palette.subtext }]}>
-                      {guide.eventSummary} 事件分 {guide.eventScore.toFixed(1)}。
-                    </Text>
-                  </View>
-                ) : null}
+                <Text style={[styles.summaryHint, { color: palette.subtext }]}>
+                  {guide.nextAction}
+                  {guide.warnings[0] ? ` ${guide.warnings[0]}` : ''}
+                </Text>
+              </>
+            ) : null}
+          </SurfaceCard>
 
-                {guide.warnings.length > 0 ? (
-                  <View style={styles.listGroup}>
-                    <Text style={[styles.listHeading, { color: palette.text }]}>当前先防什么</Text>
-                    {guide.warnings.map((warning) => (
-                      <View key={warning} style={styles.listRow}>
-                        <View style={[styles.dot, { backgroundColor: palette.warning }]} />
-                        <Text style={[styles.listText, { color: palette.text }]}>{warning}</Text>
-                      </View>
-                    ))}
-                  </View>
-                ) : null}
-              </SurfaceCard>
-            </>
-          ) : null}
-
-          <SectionHeading title="风险边界" subtitle="价格、止损、止盈和持有状态要一眼看懂。" />
+          <SectionHeading title="风险边界" />
           <SurfaceCard style={styles.sectionCard}>
-            <View style={styles.metricGrid}>
-              <View style={styles.metricBlock}>
-                <Text style={[styles.metricLabel, { color: palette.subtext }]}>现价 / 成本</Text>
-                <Text style={[styles.metricValue, { color: palette.text }]}>
-                  {position.currentPrice.toFixed(2)} / {position.costPrice.toFixed(2)}
-                </Text>
-              </View>
-              <View style={styles.metricBlock}>
-                <Text style={[styles.metricLabel, { color: palette.subtext }]}>距离止损</Text>
-                <Text
-                  style={[
-                    styles.metricValue,
-                    {
-                      color:
-                        stopBufferPct !== null && stopBufferPct <= 0.02 ? palette.danger : palette.text,
-                    },
-                  ]}>
-                  {stopBufferPct === null ? '--' : formatPercent(stopBufferPct)}
-                </Text>
-              </View>
-              <View style={styles.metricBlock}>
-                <Text style={[styles.metricLabel, { color: palette.subtext }]}>距离止盈</Text>
-                <Text style={[styles.metricValue, { color: palette.success }]}>
-                  {targetGapPct === null ? '--' : formatPercent(targetGapPct)}
-                </Text>
-              </View>
-              <View style={styles.metricBlock}>
-                <Text style={[styles.metricLabel, { color: palette.subtext }]}>持有天数</Text>
-                <Text style={[styles.metricValue, { color: palette.text }]}>{position.holdDays} 天</Text>
-              </View>
+            <View style={styles.rowBetween}>
+              <Text style={[styles.rowLabel, { color: palette.subtext }]}>现价 / 成本</Text>
+              <Text style={[styles.rowValue, { color: palette.text }]}>
+                {position.currentPrice.toFixed(2)} / {position.costPrice.toFixed(2)}
+              </Text>
             </View>
-
             <View style={styles.rowBetween}>
               <Text style={[styles.rowLabel, { color: palette.subtext }]}>止损 / 止盈</Text>
               <Text style={[styles.rowValue, { color: palette.text }]}>
@@ -704,25 +481,19 @@ export default function PositionDetailScreen() {
               </Text>
             </View>
             <View style={styles.rowBetween}>
-              <Text style={[styles.rowLabel, { color: palette.subtext }]}>买入时间</Text>
+              <Text style={[styles.rowLabel, { color: palette.subtext }]}>距离止损 / 止盈</Text>
               <Text style={[styles.rowValue, { color: palette.text }]}>
-                {position.buyTime ? formatTimestamp(position.buyTime.replace(' ', 'T')) : '暂无'}
+                {stopBufferPct === null ? '--' : formatPercent(stopBufferPct)} / {targetGapPct === null ? '--' : formatPercent(targetGapPct)}
               </Text>
             </View>
             <View style={styles.rowBetween}>
-              <Text style={[styles.rowLabel, { color: palette.subtext }]}>追踪止盈</Text>
+              <Text style={[styles.rowLabel, { color: palette.subtext }]}>持有 / 追踪止盈</Text>
               <Text style={[styles.rowValue, { color: palette.text }]}>
-                {position.trailingStop
-                  ? `已启用 / 触发价 ${position.trailingTriggerPrice.toFixed(2)}`
-                  : '未启用'}
+                {position.holdDays} 天 / {position.trailingStop ? `已启用 ${position.trailingTriggerPrice.toFixed(2)}` : '未启用'}
               </Text>
             </View>
-          </SurfaceCard>
-
-          <SectionHeading title="处理动作" subtitle="先给你常用预设，再保留手动细调，不让动作链太长。" />
-          <SurfaceCard style={styles.sectionCard}>
             <View style={styles.formBlock}>
-              <Text style={[styles.inputLabel, { color: palette.subtext }]}>快速预设</Text>
+              <Text style={[styles.inputLabel, { color: palette.subtext }]}>快速动作</Text>
               <View style={styles.presetRow}>
                 {guide?.suggestedStopLoss ? (
                   <Pressable
@@ -731,34 +502,10 @@ export default function PositionDetailScreen() {
                     <Text style={[styles.presetChipText, { color: palette.text }]}>建议止损</Text>
                   </Pressable>
                 ) : null}
-                {guide?.suggestedTakeProfit ? (
-                  <Pressable
-                    onPress={applySuggestedTakeProfit}
-                    style={[styles.presetChip, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                    <Text style={[styles.presetChipText, { color: palette.text }]}>建议止盈</Text>
-                  </Pressable>
-                ) : null}
                 <Pressable
                   onPress={applyBreakEvenStop}
                   style={[styles.presetChip, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
                   <Text style={[styles.presetChipText, { color: palette.text }]}>止损到保本</Text>
-                </Pressable>
-                <Pressable
-                  onPress={applyLockProfitStop}
-                  style={[styles.presetChip, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                  <Text style={[styles.presetChipText, { color: palette.text }]}>止损上移 3%</Text>
-                </Pressable>
-                <Pressable
-                  onPress={applyStretchTarget}
-                  style={[styles.presetChip, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                  <Text style={[styles.presetChipText, { color: palette.text }]}>目标 +6%</Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => {
-                    setTakeProfitDraft('');
-                  }}
-                  style={[styles.presetChip, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                  <Text style={[styles.presetChipText, { color: palette.text }]}>清空止盈</Text>
                 </Pressable>
               </View>
             </View>
@@ -815,13 +562,6 @@ export default function PositionDetailScreen() {
                 ) : null}
                 <Pressable
                   onPress={() => {
-                    setCloseFraction(30);
-                  }}
-                  style={[styles.presetChip, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                  <Text style={[styles.presetChipText, { color: palette.text }]}>减 30%</Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => {
                     setCloseFraction(50);
                   }}
                   style={[styles.presetChip, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
@@ -853,14 +593,11 @@ export default function PositionDetailScreen() {
             </View>
 
             {guide ? (
-              <View style={[styles.insightBox, { backgroundColor: palette.surfaceMuted }]}>
-                <Text style={[styles.insightTitle, { color: palette.text }]}>动作提醒</Text>
-                <Text style={[styles.insightText, { color: palette.subtext }]}>
-                  {guide.canAdd
-                    ? '当前系统不反对继续持有或观察后加仓，但前提是先把保护线设好。'
-                    : '当前系统不建议加仓，先按减仓、锁盈或收缩风险的动作走。'}
-                </Text>
-              </View>
+              <Text style={[styles.summaryHint, { color: palette.subtext }]}>
+                {guide.canAdd
+                  ? '当前仍可观察后加仓，但前提是先把保护线设好。'
+                  : '当前不建议加仓，先按减仓、锁盈或收缩风险的动作走。'}
+              </Text>
             ) : null}
 
             <View style={styles.buttonRow}>
@@ -904,45 +641,12 @@ export default function PositionDetailScreen() {
             ) : null}
           </SurfaceCard>
 
-          <SectionHeading title="持仓证据" subtitle="关键信息和图形证据放在一起，避免误判。" />
-          <SurfaceCard style={styles.sectionCard}>
-            <View style={styles.rowBetween}>
-              <Text style={[styles.rowLabel, { color: palette.subtext }]}>日内高低</Text>
-              <Text style={[styles.rowValue, { color: palette.text }]}>
-                {position.lowPrice.toFixed(2)} - {position.highPrice.toFixed(2)}
-              </Text>
-            </View>
-            <View style={styles.rowBetween}>
-              <Text style={[styles.rowLabel, { color: palette.subtext }]}>总市值</Text>
-              <Text style={[styles.rowValue, { color: palette.text }]}>
-                {formatCurrency(position.marketValue)}
-              </Text>
-            </View>
-            <View style={styles.rowBetween}>
-              <Text style={[styles.rowLabel, { color: palette.subtext }]}>K 线状态</Text>
-              <Text style={[styles.rowValue, { color: palette.text }]}>
-                {hasAlignedKline ? '真实行情已对齐' : '已隐藏，避免误导'}
-              </Text>
-            </View>
-          </SurfaceCard>
-
-          <SurfaceCard>
-            <KlineSnapshot
-              bars={hasAlignedKline ? klines : []}
-              emptyLabel={
-                hasAlignedKline
-                  ? '历史 K 线暂不可用，后端行情源恢复后这里会自动显示。'
-                  : '真实行情与持仓快照价格偏差过大，当前更像测试样本，已隐藏 K 线避免误导。'
-              }
-            />
-          </SurfaceCard>
-
-          <SectionHeading title="交易记录" subtitle="最后再看动作历史，确认这笔仓位是怎么走到现在的。" />
+          <SectionHeading title="交易记录" />
           <SurfaceCard style={styles.sectionCard}>
             {position.trades.length === 0 ? (
               <Text style={[styles.emptyText, { color: palette.subtext }]}>当前没有交易记录。</Text>
             ) : (
-              position.trades.map((trade) => (
+              position.trades.slice(0, 2).map((trade) => (
                 <View key={`${trade.time}-${trade.type}`} style={styles.tradeRow}>
                   <View style={styles.tradeMain}>
                     <Text style={[styles.tradeType, { color: palette.text }]}>{tradeTypeLabel(trade.type)}</Text>
@@ -983,32 +687,14 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
   },
-  hero: {
-    borderRadius: 28,
-    padding: 24,
-    gap: 12,
-  },
-  heroEyebrow: {
-    color: '#8CC7FF',
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 1.4,
-  },
-  heroTitle: {
-    color: '#F7FBFF',
-    fontSize: 28,
-    fontWeight: '800',
-    lineHeight: 34,
-  },
-  heroCopy: {
-    color: '#C8D8EB',
-    fontSize: 15,
-    lineHeight: 22,
-  },
-  heroPills: {
+  summaryPills: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 10,
+  },
+  summaryHint: {
+    fontSize: 13,
+    lineHeight: 20,
   },
   sectionCard: {
     gap: 14,
@@ -1026,34 +712,6 @@ const styles = StyleSheet.create({
   },
   summaryText: {
     fontSize: 15,
-    lineHeight: 22,
-  },
-  snapshotGrid: {
-    gap: 12,
-  },
-  snapshotCard: {
-    borderWidth: 1,
-    borderRadius: 20,
-    padding: 14,
-    gap: 8,
-  },
-  snapshotStep: {
-    fontSize: 12,
-    fontWeight: '800',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
-  },
-  snapshotTitle: {
-    fontSize: 17,
-    fontWeight: '800',
-    lineHeight: 23,
-  },
-  snapshotCopy: {
-    fontSize: 13,
-    lineHeight: 20,
-  },
-  snapshotBody: {
-    fontSize: 14,
     lineHeight: 22,
   },
   insightBox: {
@@ -1091,28 +749,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     lineHeight: 22,
-  },
-  metricGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: Spacing.gap,
-  },
-  metricBlock: {
-    flexBasis: '47%',
-    borderRadius: 18,
-    padding: 14,
-    backgroundColor: 'rgba(21, 94, 239, 0.07)',
-    gap: 4,
-  },
-  metricLabel: {
-    fontSize: 12,
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
-  },
-  metricValue: {
-    fontSize: 20,
-    fontWeight: '800',
-    lineHeight: 26,
   },
   rowBetween: {
     flexDirection: 'row',

@@ -229,6 +229,18 @@ pip install gunicorn
 ExecStart=/opt/alpha-ai/venv/bin/gunicorn -w 4 -k uvicorn.workers.UvicornWorker api_server:app --bind 0.0.0.0:8000
 ```
 
+### 世界硬源网关
+```bash
+# 启动 world gateway
+python3 world_data_gateway.py
+
+# 或作为独立 systemd 服务运行
+ExecStart=/opt/alpha-ai/venv/bin/python world_data_gateway.py
+
+# 后端接本机 gateway
+Environment="WORLD_DATA_GATEWAY_BASE_URL=http://127.0.0.1:18080"
+```
+
 ---
 
 ## 🔍 故障排查

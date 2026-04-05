@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 
-import { Colors, Spacing } from '@/constants/theme';
+import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 interface SurfaceCardProps extends PropsWithChildren {
@@ -19,7 +19,7 @@ export function SurfaceCard({ children, style }: SurfaceCardProps) {
         {
           backgroundColor: palette.surface,
           borderColor: palette.border,
-          shadowColor: colorScheme === 'dark' ? '#000000' : '#0B1728',
+          shadowColor: colorScheme === 'dark' ? '#000000' : '#123222',
         },
         style,
       ]}>
@@ -31,11 +31,11 @@ export function SurfaceCard({ children, style }: SurfaceCardProps) {
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    borderRadius: 24,
-    padding: Spacing.card,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.08,
-    shadowRadius: 24,
-    elevation: 3,
+    borderRadius: 9,
+    padding: 10,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.012,
+    shadowRadius: 2,
+    elevation: 0,
   },
 });

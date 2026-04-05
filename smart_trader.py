@@ -242,6 +242,156 @@ def _score_to_regime(score: float) -> str:
         return "bear"
 
 
+_MARKET_PHASE_TRAITS = {
+    "trend_markup": {
+        "label": "趋势主升",
+        "style_bias": "趋势/波段优先",
+        "horizon_hint": "主线与趋势票更适合按 T+3/T+5 跟踪。",
+        "limit_up_mode": "只做板前和分歧承接",
+        "limit_up_allowed": True,
+        "summary": "趋势结构和增量资金更重要，优先交易主升而不是纯情绪脉冲。",
+    },
+    "breakout_expansion": {
+        "label": "连板扩散",
+        "style_bias": "强势接力优先",
+        "horizon_hint": "首板/二板优先看 T+1/T+2，主线龙头才允许延长持有。",
+        "limit_up_mode": "可做板前和板后承接",
+        "limit_up_allowed": True,
+        "summary": "情绪扩散和龙头唯一性占优，强势股生态允许更积极一些。",
+    },
+    "rotation_up": {
+        "label": "轮动走强",
+        "style_bias": "轮动+趋势兼顾",
+        "horizon_hint": "更适合按 T+2/T+3 跟踪，追高板不如做板前确认。",
+        "limit_up_mode": "只做板前确认",
+        "limit_up_allowed": True,
+        "summary": "市场并非单线主升，先做轮动主线和趋势确认，再谈扩大战果。",
+    },
+    "range_rotation": {
+        "label": "震荡轮动",
+        "style_bias": "快切短拿",
+        "horizon_hint": "更适合按 T+1/T+2 快切，不宜把多数票拖成波段。",
+        "limit_up_mode": "只做板前，不做板上",
+        "limit_up_allowed": True,
+        "summary": "强弱切换快，赚的是节奏和兑现，不是长趋势幻想。",
+    },
+    "weak_chop": {
+        "label": "弱势拉扯",
+        "style_bias": "轻仓短拿",
+        "horizon_hint": "尾盘短线和竞价修复更适合按 T1 跟踪。",
+        "limit_up_mode": "只做板前确认，不追板",
+        "limit_up_allowed": True,
+        "summary": "指数并不强，但活口会集中在少数方向，快进快出比久拿更重要。",
+    },
+    "ice_repair": {
+        "label": "冰点修复",
+        "style_bias": "修复试错",
+        "horizon_hint": "只做 T+1 修复，不把修复票硬拿成波段。",
+        "limit_up_mode": "可做修复板前，但仓位要轻",
+        "limit_up_allowed": True,
+        "summary": "修复正在发生，但更像试错窗口，先确认承接再说。",
+    },
+    "valuation_reset": {
+        "label": "杀估值",
+        "style_bias": "防守/低估值优先",
+        "horizon_hint": "高估值进攻票只宜看不宜做，优先看低估值和防守链条。",
+        "limit_up_mode": "禁做高位强势接力",
+        "limit_up_allowed": False,
+        "summary": "当前主导项是折现率和风险溢价，先避开高估值与远期故事。",
+    },
+    "risk_off": {
+        "label": "退潮避险",
+        "style_bias": "现金与防守优先",
+        "horizon_hint": "先防守，不做强势接力和高弹性追价。",
+        "limit_up_mode": "禁做强势板",
+        "limit_up_allowed": False,
+        "summary": "退潮期先保命，任何激进打法都会放大回撤。",
+    },
+}
+
+
+def _market_phase_traits(phase: str) -> dict:
+    return _MARKET_PHASE_TRAITS.get(phase, _MARKET_PHASE_TRAITS["range_rotation"]).copy()
+
+
+def _market_phase_driver_summary(signals: dict) -> list[str]:
+    driver_map = {
+        "s1_ma_trend": "均线趋势",
+        "s2_momentum": "多周期动量",
+        "s3_volatility": "波动率稳定度",
+        "s4_advance_decline": "涨跌广度",
+        "s5_limit_ratio": "涨跌停比",
+        "s6_northbound": "北向资金",
+        "s7_margin_trend": "融资趋势",
+        "s8_index_rsi": "指数 RSI",
+    }
+    ranked = sorted(signals.items(), key=lambda item: abs((item[1] or 0.5) - 0.5), reverse=True)
+    lines: list[str] = []
+    for key, value in ranked[:4]:
+        label = driver_map.get(key, key)
+        if value >= 0.62:
+            lines.append(f"{label}偏强")
+        elif value <= 0.38:
+            lines.append(f"{label}偏弱")
+    return lines[:3]
+
+
+def _classify_market_phase(signals: dict, regime: str, score: float) -> dict:
+    trend = float(signals.get("s1_ma_trend", 0.5))
+    momentum = float(signals.get("s2_momentum", 0.5))
+    vol_stability = float(signals.get("s3_volatility", 0.5))
+    breadth = float(signals.get("s4_advance_decline", 0.5))
+    limit_ratio = float(signals.get("s5_limit_ratio", 0.5))
+    northbound = float(signals.get("s6_northbound", 0.5))
+    margin = float(signals.get("s7_margin_trend", 0.5))
+    rsi = float(signals.get("s8_index_rsi", 0.5))
+
+    if regime == "bull":
+        if limit_ratio >= 0.68 and breadth >= 0.58 and momentum >= 0.58:
+            phase = "breakout_expansion"
+        elif trend >= 0.68 and momentum >= 0.56 and northbound >= 0.5 and vol_stability >= 0.42:
+            phase = "trend_markup"
+        else:
+            phase = "rotation_up"
+    elif regime == "neutral":
+        if trend >= 0.62 and momentum >= 0.54 and breadth >= 0.5:
+            phase = "rotation_up"
+        elif limit_ratio >= 0.56 and breadth < 0.5 and momentum < 0.52:
+            phase = "ice_repair"
+        else:
+            phase = "range_rotation"
+    elif regime == "weak":
+        if limit_ratio >= 0.53 and breadth <= 0.48:
+            phase = "ice_repair"
+        elif vol_stability <= 0.28 or (momentum <= 0.35 and breadth <= 0.4 and rsi <= 0.38):
+            phase = "valuation_reset"
+        else:
+            phase = "weak_chop"
+    else:
+        if limit_ratio >= 0.5 and breadth >= 0.42:
+            phase = "ice_repair"
+        elif vol_stability <= 0.24 or (momentum <= 0.32 and breadth <= 0.38):
+            phase = "risk_off"
+        else:
+            phase = "valuation_reset"
+
+    traits = _market_phase_traits(phase)
+    drivers = _market_phase_driver_summary(signals)
+    if not drivers:
+        drivers = [f"环境评分 {round(score * 100, 1)}"]
+
+    return {
+        "market_phase": phase,
+        "market_phase_label": traits["label"],
+        "style_bias": traits["style_bias"],
+        "horizon_hint": traits["horizon_hint"],
+        "limit_up_mode": traits["limit_up_mode"],
+        "limit_up_allowed": traits["limit_up_allowed"],
+        "phase_summary": traits["summary"],
+        "top_drivers": drivers,
+    }
+
+
 def get_regime_params(regime: str) -> dict:
     """根据市场状态返回策略参数"""
     return REGIME_STRATEGY_PARAMS.get(regime, REGIME_STRATEGY_PARAMS["neutral"]).copy()
@@ -321,6 +471,7 @@ def detect_market_regime() -> dict:
         score = _compute_regime_score(signals, signal_weights)
         regime = _score_to_regime(score)
         rp = get_regime_params(regime)
+        phase_payload = _classify_market_phase(signals, regime, score)
 
         result = {
             "regime": regime,
@@ -331,6 +482,7 @@ def detect_market_regime() -> dict:
             "signal_weights": signal_weights,
             "regime_params": rp,
             "index_close": float(closes[-1]),
+            **phase_payload,
         }
 
     except Exception as e:
@@ -364,6 +516,7 @@ def detect_market_regime() -> dict:
 def _fallback_regime(error_msg: str) -> dict:
     """异常/数据不足时的回退结果"""
     rp = get_regime_params("neutral")
+    phase_payload = _classify_market_phase({}, "neutral", 0.5)
     return {
         "regime": "neutral",
         "score": 0.5,
@@ -372,6 +525,7 @@ def _fallback_regime(error_msg: str) -> dict:
         "signals": {},
         "regime_params": rp,
         "error": error_msg,
+        **phase_payload,
     }
 
 
@@ -409,6 +563,7 @@ def detect_market_regime_backtest(index_closes: np.ndarray, idx: int,
     score = _compute_regime_score(signals, MARKET_SIGNAL_WEIGHTS_BACKTEST)
     regime = _score_to_regime(score)
     rp = get_regime_params(regime)
+    phase_payload = _classify_market_phase(signals, regime, score)
 
     return {
         "regime": regime,
@@ -417,6 +572,7 @@ def detect_market_regime_backtest(index_closes: np.ndarray, idx: int,
         "should_trade": rp["position_scale"] > 0,
         "signals": {k: round(v, 4) for k, v in signals.items()},
         "regime_params": rp,
+        **phase_payload,
     }
 
 

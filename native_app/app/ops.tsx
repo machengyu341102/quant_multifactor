@@ -1,14 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import { useRouter } from 'expo-router';
+import Constants from 'expo-constants';
 
 import { AppScreen } from '@/components/app/app-screen';
-import { ExecutiveSummaryGrid } from '@/components/app/executive-summary-grid';
-import { MetricCard } from '@/components/app/metric-card';
-import { SectionHeading } from '@/components/app/section-heading';
 import { StateBanner } from '@/components/app/state-banner';
-import { StatusPill } from '@/components/app/status-pill';
 import { SurfaceCard } from '@/components/app/surface-card';
-import { Colors, Spacing } from '@/constants/theme';
+import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useRemoteResource } from '@/hooks/use-remote-resource';
 import { getOpsSummary } from '@/lib/api';
@@ -24,10 +21,8 @@ function formatLatency(value: number) {
   return `${value.toFixed(0)} ms`;
 }
 
-function formatUptime(seconds: number) {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  return `${hours}h ${minutes}m`;
+function formatExportFreshness(stale: boolean) {
+  return stale ? '待刷新' : '最新';
 }
 
 export default function OpsScreen() {
@@ -38,7 +33,14 @@ export default function OpsScreen() {
   const { apiBaseUrl } = useRuntimeConfig();
   const { data, error, isPending, refreshing, refresh } = useRemoteResource(
     () => getOpsSummary(token ?? undefined),
-    [token, apiBaseUrl]
+    [token, apiBaseUrl],
+    { refreshOnFocus: true }
+  );
+  const installedAppVersion = Constants.expoConfig?.version ?? '未知';
+  const installedBuildVersion = String(
+    Constants.expoConfig?.android?.versionCode ??
+      Constants.expoConfig?.ios?.buildNumber ??
+      '未知'
   );
 
   return (
@@ -51,97 +53,35 @@ export default function OpsScreen() {
         <Text style={[styles.backText, { color: palette.tint }]}>返回我的</Text>
       </Pressable>
 
-      <SectionHeading
-        eyebrow="Ops"
-        title="运维诊断"
-        subtitle="这里不讲故事，直接看服务活性、就绪、延迟、错误率和数据源状态。"
-      />
-
-      <View style={[styles.hero, { backgroundColor: palette.hero }]}>
-        <Text style={styles.heroEyebrow}>OPS OVERVIEW</Text>
-        <Text style={styles.heroTitle}>
+      <SurfaceCard style={styles.summaryCard}>
+        <Text style={[styles.cardTitle, { color: palette.text }]}>
           {data?.ready ? '系统当前可用' : '系统存在降级项'}
         </Text>
-        <Text style={styles.heroCopy}>
+        <Text style={[styles.cardBody, { color: palette.subtext }]}>
           {data
-            ? `就绪 ${data.ready ? '通过' : '降级'}，健康分 ${data.systemHealthScore}，平均延迟 ${formatLatency(data.avgLatencyMs)}。`
-            : '先看系统是不是活着、快不快、有没有明显降级，再谈更细的指标。'}
+            ? `应用 v${installedAppVersion} / 服务 ${data.service} v${data.version} / 健康分 ${data.systemHealthScore} / 平均延迟 ${formatLatency(data.avgLatencyMs)}。`
+            : '先看系统是不是活着、快不快、有没有明显降级。'}
         </Text>
-        <View style={styles.pillRow}>
-          <StatusPill
-            label={data?.ready ? '就绪正常' : '就绪降级'}
-            tone={data?.ready ? 'success' : 'warning'}
-          />
-          <StatusPill
-            label={`系统 ${data?.systemStatus ?? '未知'}`}
-            tone={data?.systemHealthScore && data.systemHealthScore >= 80 ? 'success' : 'warning'}
-          />
-          <StatusPill
-            label={`WebSocket ${data?.websocketConnections ?? 0}`}
-            tone="info"
-          />
-        </View>
-      </View>
+        <Text style={[styles.cardBody, { color: palette.text }]}>
+          {data?.ready ? '就绪正常' : '就绪降级'} / 系统 {data?.systemStatus ?? '未知'} / WebSocket {data?.websocketConnections ?? 0}
+        </Text>
+      </SurfaceCard>
 
       <StateBanner error={error} isPending={isPending && !data} loadingLabel="正在读取运维摘要" />
 
       {data ? (
         <>
-          <SectionHeading
-            title="一页运维判断"
-            subtitle="先把服务可用性、延迟、数据活性和当前建议压成一页，再往下看细项。"
-          />
-          <SurfaceCard style={styles.summaryCard}>
-            <ExecutiveSummaryGrid
-              items={[
-                {
-                  key: 'ops-status',
-                  step: '01 当前状态',
-                  title: data.ready ? '当前系统可用' : '存在就绪降级',
-                  meta: `服务 ${data.service} / v${data.version}`,
-                  body: data.ready
-                    ? '核心服务、数据源和接口链当前都能工作。'
-                    : '虽然服务还活着，但 readiness 已经提示这不是完全可交付状态。',
-                },
-                {
-                  key: 'ops-performance',
-                  step: '02 性能表现',
-                  title: `平均 ${formatLatency(data.avgLatencyMs)} / P95 ${formatLatency(data.p95LatencyMs)}`,
-                  meta: `请求 ${data.requestCount} / 错误 ${data.errorCount}`,
-                  body: `错误率 ${formatPercentValue(data.errorRate)}，运行时长 ${formatUptime(data.uptimeSeconds)}。`,
-                },
-                {
-                  key: 'ops-data',
-                  step: '03 数据活性',
-                  title: `信号 ${data.dataStatus.signalCount} / 持仓 ${data.dataStatus.activePositions}`,
-                  meta: `Scorecard ${data.dataStatus.scorecardRecords} / Feedback ${data.dataStatus.feedbackItems}`,
-                  body: '至少要确认脑子在持续吃数据、写反馈、保留推送设备，而不只是页面亮着。',
-                },
-                {
-                  key: 'ops-recommendation',
-                  step: '04 当前建议',
-                  title: data.recommendations[0]?.title ?? '当前暂无额外建议',
-                  meta: `最近错误 ${data.lastErrorAt ? formatTimestamp(data.lastErrorAt) : '暂无'}`,
-                  body: data.recommendations[0]?.message ?? '当前没有额外需要立即处理的运维动作。',
-                },
-              ]}
-            />
+          <SurfaceCard>
+            <Text style={[styles.cardBody, { color: palette.text }]}>
+              请求 {data.requestCount} / 错误率 {formatPercentValue(data.errorRate)} / 延迟 {formatLatency(data.avgLatencyMs)} / 健康分 {data.systemHealthScore}
+            </Text>
           </SurfaceCard>
-
-          <SectionHeading title="服务摘要" subtitle="这是你现在能盯住的最核心 8 个指标。" />
-          <View style={styles.metricGrid}>
-            <MetricCard label="请求量" value={`${data.requestCount}`} tone="neutral" />
-            <MetricCard label="错误数" value={`${data.errorCount}`} tone="warning" />
-            <MetricCard label="错误率" value={formatPercentValue(data.errorRate)} tone="warning" />
-            <MetricCard label="平均延迟" value={formatLatency(data.avgLatencyMs)} tone="info" />
-            <MetricCard label="P95 延迟" value={formatLatency(data.p95LatencyMs)} tone="info" />
-            <MetricCard label="健康分" value={`${data.systemHealthScore}`} tone="success" />
-            <MetricCard label="今日信号" value={`${data.todaySignals}`} tone="success" />
-            <MetricCard label="运行时长" value={formatUptime(data.uptimeSeconds)} tone="neutral" />
-          </View>
 
           <SurfaceCard>
             <Text style={[styles.cardTitle, { color: palette.text }]}>运行上下文</Text>
+            <Text style={[styles.cardBody, { color: palette.subtext }]}>
+              应用版本 v{installedAppVersion} / build {installedBuildVersion}
+            </Text>
             <Text style={[styles.cardBody, { color: palette.subtext }]}>
               服务 {data.service} / v{data.version}
             </Text>
@@ -156,93 +96,169 @@ export default function OpsScreen() {
             </Text>
           </SurfaceCard>
 
-          <SectionHeading title="数据源状态" subtitle="至少要知道脑子有没有在吃数据，而不是页面看着亮。 " />
-          <View style={styles.metricGrid}>
-            <MetricCard
-              label="Scorecard"
-              value={`${data.dataStatus.scorecardRecords}`}
-              tone="neutral"
-            />
-            <MetricCard
-              label="TradeJournal"
-              value={`${data.dataStatus.tradeJournalRecords}`}
-              tone="neutral"
-            />
-            <MetricCard label="Signals" value={`${data.dataStatus.signalCount}`} tone="success" />
-            <MetricCard
-              label="Positions"
-              value={`${data.dataStatus.activePositions}`}
-              tone="info"
-            />
-            <MetricCard
-              label="Feedback"
-              value={`${data.dataStatus.feedbackItems}`}
-              tone="warning"
-            />
-            <MetricCard
-              label="PushDevices"
-              value={`${data.dataStatus.pushDevices}`}
-              tone="info"
-            />
-          </View>
-
-          <SectionHeading title="就绪检查" subtitle="这些项一旦挂了，页面还能开，也不算真正可用。" />
           <SurfaceCard>
-            {data.readinessIssues.length === 0 ? (
-              <Text style={[styles.cardBody, { color: palette.success }]}>
-                当前 readiness 通过，没有发现核心数据源加载失败。
-              </Text>
-            ) : (
-              data.readinessIssues.map((issue) => (
-                <Text key={issue} style={[styles.issueText, { color: palette.danger }]}>
-                  {issue}
+            {data.worldState ? (
+              <>
+                <Text style={[styles.cardTitle, { color: palette.text }]}>
+                  {data.worldState.marketPhaseLabel} / {data.worldState.dominantComponent ?? '结构观察'}
                 </Text>
-              ))
+                <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                  {data.worldState.structuralSummary ?? data.worldState.summary}
+                </Text>
+                <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                  估值 {data.worldState.valuationRegime} / 资金 {data.worldState.capitalStyle} / 技术 {data.worldState.technologyFocus ?? '继续观察'}
+                </Text>
+                <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                  国别博弈 {data.worldState.geopoliticsBias} / 供应链 {data.worldState.supplyChainMode} / 置信度 {data.worldState.phaseConfidence}
+                </Text>
+                <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                  科技突破 {data.worldState.technologyBreakthroughScore.toFixed(1)} / {data.worldState.technologyBreakthroughSummary ?? '继续观察技术突破。'}
+                </Text>
+                {data.worldState.refreshPlan ? (
+                  <Text style={[styles.cardBody, { color: data.worldState.refreshPlan.escalationActive ? palette.tint : palette.subtext }]}>
+                    抓取节奏 {data.worldState.refreshPlan.modeLabel} / {data.worldState.refreshPlan.activeWindowLabel} / 新闻 {data.worldState.refreshPlan.newsIntervalMinutes}m / 世界 {data.worldState.refreshPlan.feedsIntervalMinutes}m / 硬源 {data.worldState.refreshPlan.hardSourceIntervalMinutes}m / 官方 {data.worldState.refreshPlan.policyIntervalMinutes}m
+                  </Text>
+                ) : null}
+                {data.worldState.refreshPlan?.overdueSources.length ? (
+                  <Text style={[styles.cardBody, { color: palette.danger }]}>
+                    待补抓 {data.worldState.refreshPlan.overdueSources.join(' / ')}
+                  </Text>
+                ) : null}
+                {data.worldState.sourceStatuses.slice(0, 1).map((source) => (
+                  <Text key={source.key} style={[styles.cardBody, { color: palette.subtext }]}>
+                    - 数据源 {source.label}：可靠 {source.reliabilityScore} / 权威 {source.authorityScore} / 及时 {source.timelinessScore} / 质量 {source.dataQualityScore} / {source.freshnessLabel} / {source.originMode === 'remote_live' ? '远端直连' : source.degradedToDerived ? '派生兜底' : source.remoteConfigured ? '已配待直连' : source.external ? '远端未配' : '本地派生'}
+                  </Text>
+                ))}
+                {data.worldState.topDirections.slice(0, 1).map((direction) => (
+                  <Text key={direction.directionId} style={[styles.cardBody, { color: palette.subtext }]}>
+                    - 主导方向 {direction.direction}：总分 {direction.totalScore} / 官方 {direction.officialScore} / 链路 {direction.chainControlScore} / 硬源 {direction.hardSourceScore} / 突破 {direction.technologyBreakthroughScore}
+                  </Text>
+                ))}
+                {data.worldState.crossAssetSignals.slice(0, 1).map((signal) => (
+                  <Text key={signal.key} style={[styles.cardBody, { color: palette.subtext }]}>
+                    - 跨资产 {signal.label}：{signal.bias} / {signal.score} / {signal.summary}
+                  </Text>
+                ))}
+                {data.worldState.eventCascades.slice(0, 1).map((event) => (
+                  <Text key={event.eventId} style={[styles.cardBody, { color: palette.subtext }]}>
+                    - 事件跟踪 {event.title}：{event.followUpSignal} / 可信度 {event.confidenceScore.toFixed(0)} / {event.restrictionScope} / 影响 {event.estimatedFlowImpactPct.toFixed(0)}%
+                  </Text>
+                ))}
+                {data.worldState.operatingActions.slice(0, 1).map((action) => (
+                  <Text key={action.key} style={[styles.cardBody, { color: palette.subtext }]}>
+                    - 经营动作 {action.title}：{action.summary}
+                  </Text>
+                ))}
+                {data.worldState.actions.slice(0, 1).map((action) => (
+                  <Text key={action.key} style={[styles.cardBody, { color: palette.text }]}>
+                    - 顶层动作 {action.title}：{action.summary}
+                  </Text>
+                ))}
+                {data.worldState.checks.slice(0, 1).map((check) => (
+                  <Text key={check.key} style={[styles.cardBody, { color: check.level === 'critical' ? palette.danger : palette.subtext }]}>
+                    - 自检 {check.title}：{check.message}
+                  </Text>
+                ))}
+              </>
+            ) : (
+              <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                当前还没有顶层世界状态快照，执行层缺少更高一层的结构判断。
+              </Text>
             )}
           </SurfaceCard>
 
-          <SectionHeading title="系统建议" subtitle="先给出该做什么，不只是堆指标。" />
-          <SurfaceCard>
-            {data.recommendations.map((item) => (
-              <View key={`${item.level}-${item.title}`} style={styles.routeRow}>
-                <Text style={[styles.routeTitle, { color: palette.text }]}>{item.title}</Text>
-                <Text style={[styles.cardBody, { color: palette.subtext }]}>{item.message}</Text>
-              </View>
-            ))}
+          <SurfaceCard style={styles.summaryCard}>
+            {data.worldStateExport ? (
+              <>
+                <Text style={[styles.cardTitle, { color: palette.text }]}>
+                  顶层归档：{data.worldStateExport.latestExportId ?? '未生成'}
+                </Text>
+                <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                  周期 {data.worldStateExport.period} / 状态 {formatExportFreshness(data.worldStateExport.stale)} / 历史 {data.worldStateExport.historyCount} 份 / 资产 {data.worldStateExport.latestAssetCount} 个
+                </Text>
+                <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                  最新 {data.worldStateExport.latestExportAt ? formatTimestamp(data.worldStateExport.latestExportAt) : '暂无'} / Bundle {data.worldStateExport.latestBundleRoute ?? '暂无'}
+                </Text>
+              </>
+            ) : (
+              <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                当前还没有 world state 固定导出，顶层世界判断只能看即时值，缺少稳定归档。
+              </Text>
+            )}
+            {data.executionPolicyExport ? (
+              <>
+                <Text style={[styles.cardTitle, { color: palette.text }]}>
+                  执行归档：{data.executionPolicyExport.latestExportId ?? '未生成'}
+                </Text>
+                <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                  周期 {data.executionPolicyExport.period} / 状态 {formatExportFreshness(data.executionPolicyExport.stale)} / 历史 {data.executionPolicyExport.historyCount} 份 / 资产 {data.executionPolicyExport.latestAssetCount} 个
+                </Text>
+                <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                  最新 {data.executionPolicyExport.latestExportAt ? formatTimestamp(data.executionPolicyExport.latestExportAt) : '暂无'} / Bundle {data.executionPolicyExport.latestBundleRoute ?? '暂无'}
+                </Text>
+              </>
+            ) : (
+              <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                当前还没有 execution policy 固定导出，运维页只能看到即时状态，缺少可回溯留档。
+              </Text>
+            )}
           </SurfaceCard>
 
-          <SectionHeading title="热点接口" subtitle="优先盯错误多和请求多的路由。" />
           <SurfaceCard>
-            {data.routes.map((route) => (
-              <View key={`${route.method}-${route.path}`} style={styles.routeRow}>
-                <View style={styles.routeMain}>
-                  <Text style={[styles.routeTitle, { color: palette.text }]}>
-                    {route.method} {route.path}
+            {data.productionGuard ? (
+              <>
+                <Text style={[styles.cardTitle, { color: palette.text }]}>
+                  {data.productionGuard.hardRiskGate
+                    ? '硬风控已触发'
+                    : data.productionGuard.blockedAdditions
+                    ? '当前禁止新增'
+                    : '当前未触发硬风控'}
+                </Text>
+                <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                  {data.productionGuard.marketPhaseLabel} / 当前回撤 {data.productionGuard.currentDrawdownPct}% / 历史最大回撤 {data.productionGuard.maxDrawdownPct}%
+                </Text>
+                <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                  Walk-forward 风险 {data.productionGuard.walkForwardRisk} / 退化 {data.productionGuard.walkForwardDegradation ?? '暂无'}
+                </Text>
+                <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                  {data.productionGuard.summary}
+                </Text>
+                {data.productionGuard.unstableStrategies.length > 0 ? (
+                  <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                    不稳定策略 {data.productionGuard.unstableStrategies.join(' / ')}
                   </Text>
-                  <Text style={[styles.routeMeta, { color: palette.subtext }]}>
-                    最近访问 {route.lastSeenAt ? formatTimestamp(route.lastSeenAt) : '暂无'}
+                ) : null}
+                {data.productionGuard.actions.map((action) => (
+                  <Text key={action} style={[styles.cardBody, { color: palette.subtext }]}>
+                    - {action}
                   </Text>
-                </View>
-                <View style={styles.routeSide}>
-                  <Text style={[styles.routeValue, { color: palette.text }]}>
-                    {route.count} 次 / {route.errorCount} 错
-                  </Text>
-                  <Text style={[styles.routeMeta, { color: palette.subtext }]}>
-                    平均 {formatLatency(route.avgLatencyMs)} / Max {formatLatency(route.maxLatencyMs)}
-                  </Text>
-                </View>
-              </View>
-            ))}
+                ))}
+              </>
+            ) : (
+              <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                当前还没有 production guard 快照，执行层还缺自动风控闭环。
+              </Text>
+            )}
           </SurfaceCard>
-
           <SurfaceCard>
-            <Text style={[styles.cardTitle, { color: palette.text }]}>SLA 结论</Text>
+            <Text style={[styles.cardTitle, { color: palette.text }]}>当前阻塞</Text>
+            {data.readinessIssues.length === 0 ? (
+              <Text style={[styles.cardBody, { color: palette.success }]}>
+                核心就绪通过。
+              </Text>
+            ) : (
+              <Text style={[styles.issueText, { color: palette.danger }]}>
+                {data.readinessIssues[0]}
+              </Text>
+            )}
             <Text style={[styles.cardBody, { color: palette.subtext }]}>
-              这套现在已经可维护、可监控，但还是单机 + 文件存储形态，不能对外承诺 99.99%。
+              数据 {data.dataStatus.signalCount} / 持仓 {data.dataStatus.activePositions} / 反馈 {data.dataStatus.feedbackItems}
             </Text>
-            <Text style={[styles.cardBody, { color: palette.subtext }]}>
-              真要碰 99.99%，至少还要补双实例、反向代理健康探针、Postgres/Redis、进程守护、外部告警和灰度发布。
-            </Text>
+            {data.recommendations[0] ? (
+              <Text style={[styles.cardBody, { color: palette.subtext }]}>
+                下一步：{data.recommendations[0].message}
+              </Text>
+            ) : null}
           </SurfaceCard>
         </>
       ) : null}
@@ -258,40 +274,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
   },
-  hero: {
-    borderRadius: 28,
-    padding: 24,
-    gap: 12,
-  },
-  heroEyebrow: {
-    color: '#8CC7FF',
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 1.4,
-  },
-  heroTitle: {
-    color: '#F7FBFF',
-    fontSize: 28,
-    fontWeight: '800',
-    lineHeight: 34,
-  },
-  heroCopy: {
-    color: '#C8D8EB',
-    fontSize: 15,
-    lineHeight: 22,
-  },
-  pillRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
   summaryCard: {
     gap: 14,
-  },
-  metricGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: Spacing.gap,
   },
   cardTitle: {
     fontSize: 16,
@@ -306,29 +290,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 21,
     marginBottom: 6,
-  },
-  routeRow: {
-    gap: 6,
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#D5E0EB',
-  },
-  routeMain: {
-    gap: 4,
-  },
-  routeSide: {
-    gap: 2,
-  },
-  routeTitle: {
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  routeValue: {
-    fontSize: 14,
-    fontWeight: '700',
-  },
-  routeMeta: {
-    fontSize: 12,
-    lineHeight: 18,
   },
 });

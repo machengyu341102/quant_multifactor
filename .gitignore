@@ -31,6 +31,10 @@ native_app/ios/
 native_app/dist/
 native_app/web-build/
 native_app/.kotlin/
+native_app/.gradle-home/
+native_app/android/*.keystore
+native_app/android/keystore.properties
+native_app/android/ci-release.keystore
 
 # Data, models, logs, and runtime state
 logs/
@@ -92,9 +96,14 @@ afternoon_result_*.csv
 breakout_result_*.csv
 overnight_result*.csv
 multifactor_result*.csv
+exports/
 ths_export/
 public_release/*.apk
+public_release/*.sha256
 public_release/releases/
+release_bundle/
+operating_profile.json
+world_*.json
 
 # IDE
 .vscode/
@@ -105,3 +114,7 @@ public_release/releases/
 # System
 .DS_Store
 Thumbs.db
+.codex_tmp/
+.github/.tmp/
+launchd/com.quant.api.plist
+launchd/com.quant.tunnel.plist

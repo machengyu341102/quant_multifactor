@@ -5,9 +5,9 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PUBLIC_DIR="$ROOT_DIR/public_release"
 RELEASES_DIR="$PUBLIC_DIR/releases"
-DEFAULT_APK="$ROOT_DIR/native_app/android/app/build/outputs/apk/release/alpha-ai-v1.0.1.apk"
+DEFAULT_APK="$ROOT_DIR/native_app/android/app/build/outputs/apk/release/app-release.apk"
 APK_PATH="${1:-$DEFAULT_APK}"
-VERSION="${2:-1.0.1}"
+PUBLIC_BASE_URL="${PUBLIC_RELEASE_BASE_URL:-}"
 
 if [ ! -f "$APK_PATH" ]; then
   echo "APK 不存在: $APK_PATH" >&2
@@ -17,30 +17,34 @@ fi
 python3 "$ROOT_DIR/scripts/refresh_official_ingest.py"
 
 mkdir -p "$RELEASES_DIR"
+python3 "$ROOT_DIR/scripts/create_android_release_bundle.py" \
+  --apk "$APK_PATH" \
+  --output-dir "$PUBLIC_DIR" \
+  --app-json "$ROOT_DIR/native_app/app.json" \
+  --build-gradle "$ROOT_DIR/native_app/android/app/build.gradle" \
+  --public-base-url "$PUBLIC_BASE_URL"
 
-APK_NAME="alpha-ai-v${VERSION}.apk"
-TARGET_APK="$RELEASES_DIR/$APK_NAME"
-ROOT_ALIAS_APK="$PUBLIC_DIR/$APK_NAME"
+LATEST_APK="$PUBLIC_DIR/alpha-ai-latest.apk"
+VERSIONED_APK="$(python3 - <<'PY'
+import json
+from pathlib import Path
+import os
+root = Path(os.environ["ROOT_DIR"])
+payload = json.loads((root / "public_release" / "releases" / "release.json").read_text())
+print(root / "public_release" / "releases" / payload["apkName"])
+PY
+)"
+SHA256="$(python3 - <<'PY'
+import json
+from pathlib import Path
+import os
+root = Path(os.environ["ROOT_DIR"])
+payload = json.loads((root / "public_release" / "releases" / "release.json").read_text())
+print(payload["sha256"])
+PY
+)"
 
-cp "$APK_PATH" "$TARGET_APK"
-ln -sfn "releases/$APK_NAME" "$ROOT_ALIAS_APK"
-ln -sfn "releases/$APK_NAME" "$PUBLIC_DIR/alpha-ai-latest.apk"
-
-FILE_SIZE_BYTES=$(wc -c < "$TARGET_APK" | tr -d ' ')
-SHA256=$(shasum -a 256 "$TARGET_APK" | awk '{print $1}')
-PUBLISHED_AT=$(date +"%Y-%m-%dT%H:%M:%S%z")
-
-cat > "$RELEASES_DIR/release.json" <<EOF
-{
-  "version": "$VERSION",
-  "apk_name": "$APK_NAME",
-  "apk_path": "releases/$APK_NAME",
-  "latest_path": "alpha-ai-latest.apk",
-  "size_bytes": $FILE_SIZE_BYTES,
-  "sha256": "$SHA256",
-  "published_at": "$PUBLISHED_AT"
-}
-EOF
-
-echo "发布完成: $TARGET_APK"
+chmod 644 "$LATEST_APK" "$VERSIONED_APK" "$PUBLIC_DIR/releases/release.json"
+echo "发布完成: $VERSIONED_APK"
+echo "latest: $LATEST_APK"
 echo "SHA-256: $SHA256"

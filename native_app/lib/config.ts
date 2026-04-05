@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import Constants from 'expo-constants';
 
 const fallbackBaseUrl =
-  Platform.OS === 'android' ? 'http://10.0.2.2:8000' : 'http://127.0.0.1:8000';
+  Platform.OS === 'android' ? 'http://10.0.2.2:18000' : 'http://127.0.0.1:18000';
 
 const extra = Constants.expoConfig?.extra as
   | {

@@ -3,7 +3,6 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 
 import { AppScreen } from '@/components/app/app-screen';
-import { MetricCard } from '@/components/app/metric-card';
 import { SectionHeading } from '@/components/app/section-heading';
 import { StateBanner } from '@/components/app/state-banner';
 import { StatusPill } from '@/components/app/status-pill';
@@ -18,29 +17,6 @@ import { useRuntimeConfig } from '@/providers/runtime-config-provider';
 import type { IndustryCapitalDirection, IndustryCapitalResearchItem } from '@/types/trading';
 
 type Tone = 'success' | 'warning' | 'danger' | 'info' | 'neutral';
-
-function getTone(item: IndustryCapitalDirection): Tone {
-  if (item.strategicLabel === '逆风跟踪') {
-    return 'warning';
-  }
-  if (item.participationLabel === '中期波段' || item.participationLabel === '连涨接力') {
-    return 'success';
-  }
-  return 'info';
-}
-
-function getResearchTone(label: string): Tone {
-  if (label === '验证增强') {
-    return 'success';
-  }
-  if (label === '出现阻力') {
-    return 'warning';
-  }
-  if (label === '继续验证') {
-    return 'info';
-  }
-  return 'neutral';
-}
 
 function getTimelineTone(emphasis: string): Tone {
   if (emphasis === 'success') {
@@ -210,406 +186,112 @@ export default function IndustryCapitalDetailScreen() {
         <Text style={[styles.backText, { color: palette.tint }]}>返回上一页</Text>
       </Pressable>
 
-      <SectionHeading
-        eyebrow="Industry Capital"
-        title="方向深页"
-        subtitle="把政策、供需、产业链和资金偏好拆开看，先确认这是事业机会、资本机会，还是只该跟踪。"
-      />
+      <SectionHeading title="方向" />
 
       <StateBanner error={error} isPending={isPending && !direction} loadingLabel="正在同步方向深页" />
 
       {direction ? (
         <>
-          <View style={[styles.hero, { backgroundColor: palette.hero }]}>
-            <Text style={styles.heroEyebrow}>STRATEGIC DIRECTION</Text>
-            <Text style={styles.heroTitle}>{direction.direction}</Text>
-            <Text style={styles.heroCopy}>{direction.summary}</Text>
-            <View style={styles.heroPills}>
-              <StatusPill label={direction.policyBucket} tone="neutral" />
-              <StatusPill label={direction.focusSector} tone="info" />
-              <StatusPill label={direction.strategicLabel} tone={getTone(direction)} />
-              <StatusPill label={direction.participationLabel} tone={getTone(direction)} />
-            </View>
-          </View>
-
-          <SectionHeading
-            title="一页决策摘要"
-            subtitle="先用一页把方向口径、动作和验证门槛讲清楚，再往下看详细证据。"
-          />
           <SurfaceCard style={styles.cardGap}>
             <View style={styles.summaryHead}>
               <View style={styles.summaryMain}>
-                <Text style={[styles.sectionTitle, { color: palette.text }]}>{directionCallout?.title}</Text>
+                <Text style={[styles.sectionTitle, { color: palette.text }]}>{direction.direction}</Text>
                 <Text style={[styles.bodyText, { color: palette.subtext }]}>
-                  {directionCallout?.summary}
+                  {directionCallout?.summary ?? direction.summary}
                 </Text>
-              </View>
-              <StatusPill
-                label={`${direction.strategicLabel} / ${direction.participationLabel}`}
-                tone={directionCallout?.tone ?? getTone(direction)}
-              />
-            </View>
-
-            <View style={styles.summaryGrid}>
-              <View style={[styles.summaryCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                <Text style={[styles.summaryStep, { color: palette.tint }]}>01 官方定调</Text>
-                <Text style={[styles.summaryTitle, { color: palette.text }]}>
-                  {direction.latestCatalystTitle}
-                </Text>
-                <Text style={[styles.summaryCopy, { color: palette.subtext }]}>
-                  {direction.currentTimelineStage}
-                  {direction.officialSourceEntries[0]?.publishedAt
-                    ? ` / ${direction.officialSourceEntries[0].publishedAt}`
-                    : ''}
-                </Text>
-                <Text style={[styles.summaryBody, { color: palette.text }]}>
-                  {direction.latestCatalystSummary}
-                </Text>
-              </View>
-
-              <View style={[styles.summaryCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                <Text style={[styles.summaryStep, { color: palette.tint }]}>02 事业动作</Text>
-                <Text style={[styles.summaryTitle, { color: palette.text }]}>
-                  {direction.businessHorizon}
-                </Text>
-                <Text style={[styles.summaryCopy, { color: palette.subtext }]}>
-                  {direction.focusSector} / {direction.industryPhase}
-                </Text>
-                <Text style={[styles.summaryBody, { color: palette.text }]}>
-                  {direction.businessAction}
-                </Text>
-              </View>
-
-              <View style={[styles.summaryCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                <Text style={[styles.summaryStep, { color: palette.tint }]}>03 资本动作</Text>
-                <Text style={[styles.summaryTitle, { color: palette.text }]}>
-                  {direction.capitalHorizon}
-                </Text>
-                <Text style={[styles.summaryCopy, { color: palette.subtext }]}>
-                  优先级 {direction.priorityScore.toFixed(1)} / 资金偏好 {direction.capitalPreferenceScore.toFixed(1)}
-                </Text>
-                <Text style={[styles.summaryBody, { color: palette.text }]}>
-                  {direction.capitalAction}
-                </Text>
-              </View>
-
-              <View style={[styles.summaryCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                <Text style={[styles.summaryStep, { color: palette.tint }]}>04 验证门槛</Text>
-                <Text style={[styles.summaryTitle, { color: palette.text }]}>
-                  {direction.researchSignalLabel}
-                </Text>
-                <Text style={[styles.summaryCopy, { color: palette.subtext }]}>
-                  官方新鲜度 {direction.officialFreshnessScore.toFixed(1)} / 调研 {direction.researchSignalScore.toFixed(1)}
-                </Text>
-                <Text style={[styles.summaryBody, { color: palette.text }]}>
-                  {direction.researchNextAction}
+                <Text style={[styles.bodyText, { color: palette.text }]}>
+                  {direction.strategicLabel} / {direction.participationLabel}
                 </Text>
               </View>
             </View>
 
-            <View style={styles.heroPills}>
-              <StatusPill label={`政策 ${direction.policyScore.toFixed(1)}`} tone="neutral" />
-              <StatusPill label={`需求 ${direction.demandScore.toFixed(1)}`} tone="success" />
-              <StatusPill label={`供给 ${direction.supplyScore.toFixed(1)}`} tone="warning" />
-              <StatusPill label={`战略 ${direction.strategicScore.toFixed(1)}`} tone="info" />
-            </View>
+            <Text style={[styles.bodyText, { color: palette.subtext }]}>
+              {direction.policyBucket} / {direction.focusSector} / {direction.latestCatalystTitle} / {direction.researchSignalLabel}
+            </Text>
           </SurfaceCard>
 
           <SurfaceCard style={styles.cardGap}>
-            <View style={styles.headlineRow}>
-              <View style={styles.headlineMain}>
-                <Text style={[styles.headlineTitle, { color: palette.text }]}>方向判断</Text>
-                <Text style={[styles.headlineMeta, { color: palette.subtext }]}>
-                  {direction.industryPhase} / 事业 {direction.businessHorizon} / 资本 {direction.capitalHorizon}
-                </Text>
-              </View>
-              <StatusPill label={direction.capitalHorizon} tone={getTone(direction)} />
-            </View>
-
+            <Text style={[styles.sectionTitle, { color: palette.text }]}>方向动作</Text>
             <Text style={[styles.bodyText, { color: palette.text }]}>{direction.businessAction}</Text>
             <Text style={[styles.bodyText, { color: palette.subtext }]}>{direction.capitalAction}</Text>
             <Text style={[styles.bodyText, { color: palette.danger }]}>{direction.riskNote}</Text>
-            <View style={styles.heroPills}>
-              <StatusPill label={`阶段 ${direction.currentTimelineStage}`} tone="neutral" />
-              <StatusPill label={direction.researchSignalLabel} tone={getResearchTone(direction.researchSignalLabel)} />
-              <StatusPill label={`调研 ${direction.researchSignalScore.toFixed(1)}`} tone="neutral" />
-            </View>
             <Text style={[styles.bodyText, { color: palette.text }]}>{direction.researchSummary}</Text>
             <Text style={[styles.bodyText, { color: palette.tint }]}>{direction.researchNextAction}</Text>
-            <View
-              style={[styles.officialCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-              <View style={styles.companyHeader}>
-                <View style={styles.companyMain}>
-                  <Text style={[styles.companyTitle, { color: palette.text }]}>最新催化</Text>
-                  <Text style={[styles.companyMeta, { color: palette.subtext }]}>{direction.latestCatalystTitle}</Text>
+          </SurfaceCard>
+
+          <SurfaceCard style={styles.cardGap}>
+            <Text style={[styles.sectionTitle, { color: palette.text }]}>证据与时间轴</Text>
+            <Text style={[styles.bodyText, { color: palette.text }]}>
+              最新催化：{direction.latestCatalystTitle} / {direction.latestCatalystSummary}
+            </Text>
+            {direction.officialSourceEntries[0] ? (
+              <Text style={[styles.bodyText, { color: palette.subtext }]}>
+                官方：{direction.officialSourceEntries[0].issuer}
+                {direction.officialSourceEntries[0].publishedAt ? ` / ${direction.officialSourceEntries[0].publishedAt}` : ''}
+              </Text>
+            ) : null}
+            <DetailList title="官方观察点" items={direction.officialWatchpoints.slice(0, 2)} palette={palette} dotColor={palette.success} />
+            <DetailList title="兑现时间轴" items={direction.timelineCheckpoints.slice(0, 2)} palette={palette} dotColor={palette.warning} />
+            {direction.timelineEvents.slice(0, 1).map((item) => (
+              <View
+                key={item.id}
+                style={[styles.companyCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
+                <View style={styles.companyHeader}>
+                  <View style={styles.companyMain}>
+                    <Text style={[styles.companyTitle, { color: palette.text }]}>{item.title}</Text>
+                    <Text style={[styles.companyMeta, { color: palette.subtext }]}>
+                      {item.source ?? item.lane}
+                      {item.timestamp ? ` / ${formatTimestamp(item.timestamp)}` : ''}
+                    </Text>
+                  </View>
+                  <StatusPill label={item.signalLabel} tone={getTimelineTone(item.emphasis)} />
                 </View>
-                <StatusPill label={direction.currentTimelineStage} tone="info" />
+                <Text style={[styles.bodyText, { color: palette.text }]}>{item.summary}</Text>
               </View>
-              <Text style={[styles.bodyText, { color: palette.text }]}>{direction.latestCatalystSummary}</Text>
-            </View>
-
-            <View style={styles.metricGrid}>
-              <MetricCard label="优先级" value={direction.priorityScore.toFixed(1)} tone="info" />
-              <MetricCard label="战略" value={direction.strategicScore.toFixed(1)} tone="info" />
-              <MetricCard label="政策" value={direction.policyScore.toFixed(1)} tone="neutral" />
-              <MetricCard label="需求" value={direction.demandScore.toFixed(1)} tone="success" />
-              <MetricCard label="供给" value={direction.supplyScore.toFixed(1)} tone="warning" />
-              <MetricCard label="资金偏好" value={direction.capitalPreferenceScore.toFixed(1)} tone="info" />
-              <MetricCard label="官方新鲜度" value={direction.officialFreshnessScore.toFixed(1)} tone="warning" />
-            </View>
+            ))}
           </SurfaceCard>
 
           <SurfaceCard style={styles.cardGap}>
-            <Text style={[styles.sectionTitle, { color: palette.text }]}>官方原文与兑现时间轴</Text>
-            {direction.officialCards.length > 0 ? (
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>官方原文卡片</Text>
-                {direction.officialCards.map((card) => (
-                  <View
-                    key={`${direction.id}-${card.title}`}
-                    style={[styles.officialCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                    <View style={styles.companyHeader}>
-                      <View style={styles.companyMain}>
-                        <Text style={[styles.companyTitle, { color: palette.text }]}>{card.title}</Text>
-                        <Text style={[styles.companyMeta, { color: palette.subtext }]}>{card.source}</Text>
-                      </View>
-                      <StatusPill label="官方卡片" tone="neutral" />
-                    </View>
-                    <Text style={[styles.bodyText, { color: palette.text }]}>{card.excerpt}</Text>
-                    <Text style={[styles.bodyText, { color: palette.subtext }]}>为什么重要：{card.whyItMatters}</Text>
-                    <Text style={[styles.bodyText, { color: palette.tint }]}>下一步：{card.nextWatch}</Text>
+            <Text style={[styles.sectionTitle, { color: palette.text }]}>对象与清单</Text>
+            {direction.companyWatchlist[0] ? (
+              <View
+                style={[styles.companyCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
+                <View style={styles.companyHeader}>
+                  <View style={styles.companyMain}>
+                    <Text style={[styles.companyTitle, { color: palette.text }]}>
+                      {direction.companyWatchlist[0].code ? `${direction.companyWatchlist[0].code} ` : ''}
+                      {direction.companyWatchlist[0].name}
+                    </Text>
+                    <Text style={[styles.companyMeta, { color: palette.subtext }]}>
+                      {direction.companyWatchlist[0].role} / {direction.companyWatchlist[0].chainPosition}
+                    </Text>
                   </View>
-                ))}
+                  <StatusPill label={direction.companyWatchlist[0].priorityLabel} tone="info" />
+                </View>
+                <Text style={[styles.bodyText, { color: palette.text }]}>{direction.companyWatchlist[0].trackingReason}</Text>
+                <Text style={[styles.bodyText, { color: palette.tint }]}>下一步：{direction.companyWatchlist[0].nextCheck}</Text>
               </View>
             ) : null}
-            {direction.officialSourceEntries.length > 0 ? (
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>官方原文 ingest</Text>
-                {direction.officialSourceEntries.map((item) => (
-                  <View
-                    key={`${direction.id}-${item.title}`}
-                    style={[styles.officialCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                    <View style={styles.companyHeader}>
-                      <View style={styles.companyMain}>
-                        <Text style={[styles.companyTitle, { color: palette.text }]}>{item.title}</Text>
-                        <Text style={[styles.companyMeta, { color: palette.subtext }]}>
-                          {item.issuer}
-                          {item.publishedAt ? ` / ${item.publishedAt}` : ''}
-                        </Text>
-                      </View>
-                      <StatusPill label={item.sourceType} tone="neutral" />
-                    </View>
-                    <Text style={[styles.bodyText, { color: palette.text }]}>{item.excerpt}</Text>
-                    {item.reference ? (
-                      <Text style={[styles.bodyText, { color: palette.subtext }]}>参考：{item.reference}</Text>
-                    ) : null}
-                    {item.referenceUrl ? (
-                      <Text style={[styles.bodyText, { color: palette.tint }]}>链接：{item.referenceUrl}</Text>
-                    ) : null}
-                    {item.keyPoints.map((point) => (
-                      <View key={`${item.title}-${point}`} style={styles.rowWithDot}>
-                        <View style={[styles.dot, { backgroundColor: palette.success }]} />
-                        <Text style={[styles.bodyText, { color: palette.text }]}>{point}</Text>
-                      </View>
-                    ))}
-                    {item.watchTags.length > 0 ? (
-                      <View style={styles.heroPills}>
-                        {item.watchTags.map((tag) => (
-                          <StatusPill key={`${item.title}-${tag}`} label={tag} tone="info" />
-                        ))}
-                      </View>
-                    ) : null}
-                  </View>
-                ))}
-              </View>
-            ) : null}
-            <DetailList
-              title="官方原文线索"
-              items={direction.officialDocuments}
-              palette={palette}
-              dotColor={palette.tint}
-            />
-            <DetailList
-              title="官方观察点"
-              items={direction.officialWatchpoints}
-              palette={palette}
-              dotColor={palette.success}
-            />
-            <DetailList
-              title="兑现时间轴"
-              items={direction.timelineCheckpoints}
-              palette={palette}
-              dotColor={palette.warning}
-            />
-            {direction.timelineEvents.length > 0 ? (
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>方向时间轴</Text>
-                {direction.timelineEvents.map((item) => (
-                  <View
-                    key={item.id}
-                    style={[styles.companyCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                    <View style={styles.companyHeader}>
-                      <View style={styles.companyMain}>
-                        <Text style={[styles.companyTitle, { color: palette.text }]}>{item.title}</Text>
-                        <Text style={[styles.companyMeta, { color: palette.subtext }]}>
-                          {item.source ?? item.lane}
-                          {item.timestamp ? ` / ${formatTimestamp(item.timestamp)}` : ''}
-                        </Text>
-                      </View>
-                      <StatusPill label={item.signalLabel} tone={getTimelineTone(item.emphasis)} />
-                    </View>
-                    <View style={styles.heroPills}>
-                      <StatusPill label={item.stage} tone="neutral" />
-                      <StatusPill label={item.lane === 'research' ? '调研节点' : item.lane === 'official' ? '官方节点' : '兑现节点'} tone="info" />
-                    </View>
-                    <Text style={[styles.bodyText, { color: palette.text }]}>{item.summary}</Text>
-                    {item.nextAction ? (
-                      <Text style={[styles.bodyText, { color: palette.tint }]}>下一步：{item.nextAction}</Text>
-                    ) : null}
-                  </View>
-                ))}
-              </View>
-            ) : null}
-            <DetailList
-              title="官方来源"
-              items={direction.officialSources}
-              palette={palette}
-              dotColor={palette.tint}
-            />
-          </SurfaceCard>
-
-          <SurfaceCard style={styles.cardGap}>
-            <Text style={[styles.sectionTitle, { color: palette.text }]}>产业链与机会落点</Text>
-            <DetailList title="上游" items={direction.upstream} palette={palette} dotColor={palette.tint} />
-            <DetailList title="中游" items={direction.midstream} palette={palette} dotColor={palette.success} />
-            <DetailList title="下游" items={direction.downstream} palette={palette} dotColor={palette.warning} />
-            <DetailList
-              title="传导路径"
-              items={direction.transmissionPaths}
-              palette={palette}
-              dotColor={palette.tint}
-            />
-            <DetailList
-              title="机会落点"
-              items={direction.opportunities}
-              palette={palette}
-              dotColor={palette.success}
-            />
-          </SurfaceCard>
-
-          <SurfaceCard style={styles.cardGap}>
-            <Text style={[styles.sectionTitle, { color: palette.text }]}>事业调研与合作清单</Text>
-            {direction.companyWatchlist.length > 0 ? (
-              <View style={styles.listGroup}>
-                <Text style={[styles.subTitle, { color: palette.text }]}>公司映射与跟踪名单</Text>
-                {direction.companyWatchlist.map((item) => (
-                  <View
-                    key={`${direction.id}-${item.code || item.name}`}
-                    style={[styles.companyCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
-                    <View style={styles.companyHeader}>
-                      <View style={styles.companyMain}>
-                        <Text style={[styles.companyTitle, { color: palette.text }]}>
-                          {item.code ? `${item.code} ` : ''}
-                          {item.name}
-                        </Text>
-                        <Text style={[styles.companyMeta, { color: palette.subtext }]}>
-                          {item.role} / {item.chainPosition}
-                        </Text>
-                      </View>
-                      <StatusPill label={item.priorityLabel} tone="info" />
-                    </View>
-                    <View style={styles.heroPills}>
-                      <StatusPill label={`跟踪分 ${item.trackingScore.toFixed(1)}`} tone="success" />
-                      <StatusPill label={item.marketAlignment} tone="neutral" />
-                      <StatusPill label={item.timelineAlignment} tone="warning" />
-                      <StatusPill label={item.researchSignalLabel} tone={getResearchTone(item.researchSignalLabel)} />
-                      {item.linkedSetupLabel ? <StatusPill label={item.linkedSetupLabel} tone="warning" /> : null}
-                    </View>
-                    <Text style={[styles.bodyText, { color: palette.text }]}>{item.trackingReason}</Text>
-                    <Text style={[styles.bodyText, { color: palette.subtext }]}>{item.action}</Text>
-                    {item.catalystHint ? (
-                      <Text style={[styles.bodyText, { color: palette.subtext }]}>最新催化：{item.catalystHint}</Text>
-                    ) : null}
-                    {item.recentResearchNote ? (
-                      <Text style={[styles.bodyText, { color: palette.tint }]}>最近调研：{item.recentResearchNote}</Text>
-                    ) : null}
-                    <Text style={[styles.bodyText, { color: palette.tint }]}>下一步验证：{item.nextCheck}</Text>
-                  </View>
-                ))}
-              </View>
-            ) : null}
-            <DetailList
-              title="事业调研清单"
-              items={direction.businessChecklist}
-              palette={palette}
-              dotColor={palette.warning}
-            />
-            <DetailList
-              title="重点调研对象"
-              items={direction.researchTargets}
-              palette={palette}
-              dotColor={palette.tint}
-            />
-            <DetailList
-              title="合作对象"
-              items={direction.cooperationTargets}
-              palette={palette}
-              dotColor={palette.success}
-            />
-            <DetailList
-              title="合作方式"
-              items={direction.cooperationModes}
-              palette={palette}
-              dotColor={palette.tint}
-            />
-          </SurfaceCard>
-
-          <SurfaceCard style={styles.cardGap}>
-            <Text style={[styles.sectionTitle, { color: palette.text }]}>资本验证与驱动</Text>
-            <DetailList
-              title="资本验证清单"
-              items={direction.capitalChecklist}
-              palette={palette}
-              dotColor={palette.danger}
-            />
-            <DetailList
-              title="关键验证信号"
-              items={direction.validationSignals}
-              palette={palette}
-              dotColor={palette.warning}
-            />
-            <DetailList title="核心驱动" items={direction.drivers} palette={palette} dotColor={palette.tint} />
-            <View style={styles.actionRow}>
-              <Pressable
-                onPress={() => {
-                  if (direction.linkedSignalId && !direction.linkedSignalId.startsWith('theme-seed-')) {
-                    router.push({ pathname: '/signal/[id]', params: { id: direction.linkedSignalId } });
-                    return;
-                  }
-                  router.push('/(tabs)/brain');
-                }}
-                style={[styles.primaryAction, { backgroundColor: palette.tint }]}>
-                <Text style={styles.primaryActionText}>
-                  {direction.linkedSignalId && !direction.linkedSignalId.startsWith('theme-seed-')
-                    ? '看交易焦点'
-                    : '回决策台复核'}
-                </Text>
-              </Pressable>
-              <Pressable
-                onPress={() => {
-                  router.push('/(tabs)/brain');
-                }}
-                style={[styles.secondaryAction, { borderColor: palette.border }]}>
-                <Text style={[styles.secondaryActionText, { color: palette.tint }]}>回决策台</Text>
-              </Pressable>
-            </View>
+            <DetailList title="机会落点" items={direction.opportunities.slice(0, 1)} palette={palette} dotColor={palette.success} />
+            <DetailList title="关键驱动" items={direction.drivers.slice(0, 1)} palette={palette} dotColor={palette.tint} />
+            <DetailList title="资本验证" items={direction.validationSignals.slice(0, 1)} palette={palette} dotColor={palette.warning} />
+            <Pressable
+              onPress={() => {
+                if (direction.linkedSignalId && !direction.linkedSignalId.startsWith('theme-seed-')) {
+                  router.push({ pathname: '/signal/[id]', params: { id: direction.linkedSignalId } });
+                  return;
+                }
+                router.push('/(tabs)/brain');
+              }}
+              style={[styles.primaryAction, { backgroundColor: palette.tint }]}>
+              <Text style={styles.primaryActionText}>
+                {direction.linkedSignalId && !direction.linkedSignalId.startsWith('theme-seed-') ? '看交易焦点' : '回决策台'}
+              </Text>
+            </Pressable>
           </SurfaceCard>
 
           <SurfaceCard style={styles.cardGap}>
             <Text style={[styles.sectionTitle, { color: palette.text }]}>方向调研记录</Text>
-            <Text style={[styles.bodyText, { color: palette.subtext }]}>
-              把政策、客户、供应链、订单和价格验证记录回写，方向深页才会越来越像真正的智库档案。
-            </Text>
             <TextInput
               value={titleDraft}
               onChangeText={setTitleDraft}
@@ -631,7 +313,7 @@ export default function IndustryCapitalDetailScreen() {
               ]}
             />
             <View style={styles.heroPills}>
-              {['产业调研', '客户反馈', '供应链验证', '政策跟踪'].map((item) => (
+              {['产业调研', '客户反馈', '供应链验证'].map((item) => (
                 <Pressable
                   key={item}
                   onPress={() => setSourceDraft(item)}
@@ -695,7 +377,7 @@ export default function IndustryCapitalDetailScreen() {
             {researchItems.length > 0 ? (
               <View style={styles.listGroup}>
                 <Text style={[styles.subTitle, { color: palette.text }]}>最近调研</Text>
-                {researchItems.map((item) => (
+                {researchItems.slice(0, 1).map((item) => (
                   <View
                     key={item.id}
                     style={[styles.companyCard, { backgroundColor: palette.surfaceMuted, borderColor: palette.border }]}>
@@ -739,28 +421,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
   },
-  hero: {
-    borderRadius: 28,
-    padding: 24,
-    gap: 12,
-  },
-  heroEyebrow: {
-    color: '#8CC7FF',
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 1.4,
-  },
-  heroTitle: {
-    color: '#F7FBFF',
-    fontSize: 28,
-    fontWeight: '800',
-    lineHeight: 34,
-  },
-  heroCopy: {
-    color: '#C8D8EB',
-    fontSize: 15,
-    lineHeight: 22,
-  },
   heroPills: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -779,61 +439,9 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 6,
   },
-  summaryGrid: {
-    gap: 12,
-  },
-  summaryCard: {
-    borderWidth: 1,
-    borderRadius: 20,
-    padding: 14,
-    gap: 8,
-  },
-  summaryStep: {
-    fontSize: 12,
-    fontWeight: '800',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
-  },
-  summaryTitle: {
-    fontSize: 17,
-    fontWeight: '800',
-    lineHeight: 23,
-  },
-  summaryCopy: {
-    fontSize: 13,
-    lineHeight: 20,
-  },
-  summaryBody: {
-    fontSize: 14,
-    lineHeight: 22,
-  },
-  headlineRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 12,
-    alignItems: 'flex-start',
-  },
-  headlineMain: {
-    flex: 1,
-    gap: 4,
-  },
-  headlineTitle: {
-    fontSize: 22,
-    fontWeight: '800',
-    lineHeight: 28,
-  },
-  headlineMeta: {
-    fontSize: 13,
-    lineHeight: 20,
-  },
   bodyText: {
     fontSize: 14,
     lineHeight: 22,
-  },
-  metricGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
   },
   sectionTitle: {
     fontSize: 18,

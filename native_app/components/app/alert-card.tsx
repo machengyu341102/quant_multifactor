@@ -51,9 +51,9 @@ export function AlertCard({ alert, onPress }: AlertCardProps) {
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    borderRadius: 24,
-    padding: 18,
-    gap: 10,
+    borderRadius: 16,
+    padding: 14,
+    gap: 8,
   },
   pressed: {
     opacity: 0.92,
@@ -69,12 +69,12 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   title: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '800',
   },
   message: {
-    fontSize: 14,
-    lineHeight: 22,
+    fontSize: 13,
+    lineHeight: 20,
   },
   action: {
     fontSize: 13,
