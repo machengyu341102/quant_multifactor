@@ -70,6 +70,21 @@ jobs:
         run: |
           echo "${{ env.HAS_ANDROID_KEYSTORE_BASE64 }}" | base64 -d > native_app/android/ci-release.keystore
 
+      - name: Generate fallback debug keystore
+        if: ${{ env.HAS_ANDROID_KEYSTORE_BASE64 == '' }}
+        shell: bash
+        run: |
+          keytool -genkeypair -v \
+            -storetype PKCS12 \
+            -keystore native_app/android/app/debug.keystore \
+            -storepass android \
+            -keypass android \
+            -alias androiddebugkey \
+            -dname "CN=Android Debug,O=Android,C=US" \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000
+
       - name: Build Android release APK
         working-directory: native_app/android
         env:

@@ -26,15 +26,19 @@ mobile_app/dist/
 native_app/node_modules/
 native_app/.expo/
 native_app/.vscode/
-native_app/android/
 native_app/ios/
 native_app/dist/
 native_app/web-build/
 native_app/.kotlin/
 native_app/.gradle-home/
+native_app/android/.gradle/
+native_app/android/build/
+native_app/android/app/build/
 native_app/android/*.keystore
+native_app/android/app/debug.keystore
 native_app/android/keystore.properties
 native_app/android/ci-release.keystore
+native_app/android/local.properties
 
 # Data, models, logs, and runtime state
 logs/
