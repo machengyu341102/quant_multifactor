@@ -87,6 +87,7 @@ jobs:
       - name: Build Android release APK
         working-directory: native_app/android
         env:
+          EXPO_USE_COMMUNITY_AUTOLINKING: "1"
           ALPHA_RELEASE_STORE_FILE: ${{ github.workspace }}/native_app/android/ci-release.keystore
           ALPHA_RELEASE_STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ALPHA_RELEASE_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
